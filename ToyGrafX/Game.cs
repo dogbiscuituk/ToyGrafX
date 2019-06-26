@@ -18,10 +18,8 @@
 
             //Code goes here
             VertexBufferObject = GL.GenBuffer();
-
             GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBufferObject);
             GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
-
             shader = new Shader("shader.vert", "shader.frag");
 
             base.OnLoad(e);
