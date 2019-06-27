@@ -3,24 +3,39 @@
     using System;
     using OpenTK;
     using OpenTK.Graphics;
-    using OpenTK.Graphics.ES20;
+    using OpenTK.Graphics.ES30;
     using OpenTK.Input;
 
     public class Game : GameWindow
     {
+        #region Public Interface
+
         public Game(int width, int height, string title) :
             base(width, height, GraphicsMode.Default, title)
         { }
 
+        #endregion
+
+        #region Protected Overrides
+
         protected override void OnLoad(EventArgs e)
         {
             GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+            //GL.ClearColor(1.0f, 1.0f, 1.0f, 1.0f); // White background
 
-            //Code goes here
             VertexBufferObject = GL.GenBuffer();
+
+            shader = new Shader("shader.vert", "shader.frag");
+
+            // ..:: Initialization code (done once (unless your object frequently changes)) :: ..
+            // 1. bind Vertex Array Object
+            GL.BindVertexArray(VertexArrayObject);
+            // 2. copy our vertices array in a buffer for OpenGL to use
             GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBufferObject);
             GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
-            shader = new Shader("shader.vert", "shader.frag");
+            // 3. then set our vertex attributes pointers
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
+            GL.EnableVertexAttribArray(0);
 
             base.OnLoad(e);
         }
@@ -29,7 +44,9 @@
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            //Code goes here.
+            shader.Use();
+            GL.BindVertexArray(VertexArrayObject);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
 
             Context.SwapBuffers();
             base.OnRenderFrame(e);
@@ -59,7 +76,13 @@
             base.OnUpdateFrame(e);
         }
 
+        #endregion
+
+        #region Private Properties
+
+        int VertexArrayObject;
         int VertexBufferObject;
+
         float[] vertices =
         {
             -0.5f, -0.5f, 0.0f, //Bottom-left vertex
@@ -68,5 +91,7 @@
         };
 
         Shader shader;
+
+        #endregion
     }
 }

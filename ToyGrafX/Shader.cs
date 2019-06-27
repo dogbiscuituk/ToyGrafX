@@ -1,6 +1,6 @@
 ﻿namespace ToyGrafX
 {
-    using OpenTK.Graphics.ES20;
+    using OpenTK.Graphics.ES30;
     using System;
     using System.IO;
     using System.Text;
@@ -14,35 +14,22 @@
             int VertexShader, FragmentShader;
 
             string VertexShaderSource;
-
-            using (StreamReader reader = new StreamReader(vertexPath, Encoding.UTF8))
-            {
+            using (var reader = new StreamReader(vertexPath, Encoding.UTF8))
                 VertexShaderSource = reader.ReadToEnd();
-            }
-
-            string FragmentShaderSource;
-
-            using (StreamReader reader = new StreamReader(fragmentPath, Encoding.UTF8))
-            {
-                FragmentShaderSource = reader.ReadToEnd();
-            }
-
             VertexShader = GL.CreateShader(ShaderType.VertexShader);
             GL.ShaderSource(VertexShader, VertexShaderSource);
-
-            FragmentShader = GL.CreateShader(ShaderType.FragmentShader);
-            GL.ShaderSource(FragmentShader, FragmentShaderSource);
-
             GL.CompileShader(VertexShader);
-
             string infoLogVert = GL.GetShaderInfoLog(VertexShader);
             if (infoLogVert != string.Empty)
                 Console.WriteLine(infoLogVert);
 
+            string FragmentShaderSource;
+            using (var reader = new StreamReader(fragmentPath, Encoding.UTF8))
+                FragmentShaderSource = reader.ReadToEnd();
+            FragmentShader = GL.CreateShader(ShaderType.FragmentShader);
+            GL.ShaderSource(FragmentShader, FragmentShaderSource);
             GL.CompileShader(FragmentShader);
-
             string infoLogFrag = GL.GetShaderInfoLog(FragmentShader);
-
             if (infoLogFrag != string.Empty)
                 Console.WriteLine(infoLogFrag);
 
@@ -59,7 +46,7 @@
             GL.DeleteShader(VertexShader);
         }
 
-        void Use()
+        public void Use()
         {
             GL.UseProgram(Handle);
         }
@@ -71,16 +58,11 @@
             if (!disposedValue)
             {
                 GL.DeleteProgram(Handle);
-
                 disposedValue = true;
             }
         }
 
-        ~Shader()
-        {
-            GL.DeleteProgram(Handle);
-        }
-
+        ~Shader() => GL.DeleteProgram(Handle);
 
         public void Dispose()
         {
