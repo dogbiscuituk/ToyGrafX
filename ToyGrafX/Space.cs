@@ -40,7 +40,7 @@
             Renderer = new Renderer();
             Shader = new Shader("shader.vert", "shader.frag");
 
-            int xc = 100, yc = 100;
+            int xc = 1000, yc = 1000;
             var vertices = Grid.GetVertexCoords(xc, yc).ToArray();
 
             Model = Loader.LoadToVAO(vertices);

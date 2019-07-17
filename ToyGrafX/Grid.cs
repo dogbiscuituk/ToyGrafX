@@ -18,8 +18,10 @@
         ///     ---1 4 7---x
         ///        0 3 6
         ///          |
-        /// 
+        ///
         /// </summary>
+        /// <param name="cx">The number of steps along the x axis.</param>
+        /// <param name="cy">The number of steps along the y axis.</param>
         /// <returns>
         /// A total of 3(cx+1)(cy+1) floats, being the xyz coordinates of the grid, with z=0.
         /// </returns>
@@ -30,8 +32,8 @@
                 var x = 2f * i / cx - 1;
                 for (int j = 0; j <= cy; j++)
                 {
-                    yield return /* x= */ 0.9f * (x);
-                    yield return /* y= */ 0.9f * (2f * j / cy - 1);
+                    yield return /* x= */ x;
+                    yield return /* y= */ 2f * j / cy - 1;
                     yield return /* z= */ 0;
                 }
             }
@@ -53,7 +55,8 @@
         /// victory. The result describes a single triangle strip, covering the entire grid, though
         /// with degenerate or "null" triangles at 02-05-08, 03-06-09, 08-11-14, and 09-12-15. This
         /// pattern has CX-2 such triangles, so a 1001x1001 grid (CX=CY=1000) will have more than 2
-        /// million triangles, less than a thousand of these degenerate.
+        /// million triangles, less than a thousand of which are degenerate. Hence, any performance
+        /// improvement from further grid optimization will be limited to less than 0.05%.
         /// 
         ///     02--05--08--11--14--17
         ///       \    /  \    /  \
@@ -64,6 +67,8 @@
         ///     00--03--06--09--12--15
         /// 
         /// </summary>
+        /// <param name="cx">The number of steps along the x axis.</param>
+        /// <param name="cy">The number of steps along the y axis.</param>
         /// <returns>
         /// A total of CX*(2CY+1)+1 ints, ranging from 0 to 3(CX+1)(CY+1)-1 inclusive. These are the
         /// required vertex indices. Note that these must be multiplied by 3 to index the float data
