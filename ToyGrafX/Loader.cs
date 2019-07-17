@@ -5,12 +5,13 @@
 
     public class Loader
     {
-        public Model LoadToVAO(float[] positions)
+        public Model LoadToVAO(float[] positions, int[] indices)
         {
             int vaoID = CreateVAO();
+            BindIndicesBuffer(indices);
             StoreDataInAttributeList(0, positions);
             UnbindVAO();
-            return new Model(vaoID, positions.Length / 3);
+            return new Model(vaoID, indices.Length);
         }
 
         public void Cleanup()
@@ -25,6 +26,15 @@
 
         private readonly List<int> VAOs = new List<int>();
         private readonly List<int> VBOs = new List<int>();
+
+        private void BindIndicesBuffer(int[] indices)
+        {
+            GL.GenBuffers(1, out int vboID);
+            VBOs.Add(vboID);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, vboID);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(int), indices, BufferUsageHint.StaticDraw);
+
+        }
 
         private int CreateVAO()
         {

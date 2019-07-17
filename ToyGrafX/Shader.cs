@@ -7,39 +7,39 @@
 
     public class Shader
     {
+        #region Public Interface
+
         public Shader(string vertexPath, string fragmentPath)
         {
-            int VertexShader, FragmentShader;
-
-            string VertexShaderSource;
-            using (var reader = new StreamReader(vertexPath, Encoding.UTF8))
-                VertexShaderSource = reader.ReadToEnd();
-            VertexShader = GL.CreateShader(ShaderType.VertexShader);
-            GL.ShaderSource(VertexShader, VertexShaderSource);
-            GL.CompileShader(VertexShader);
-#if DEBUG
-            WriteShaderLog(VertexShader);
-#endif
-            string FragmentShaderSource;
-            using (var reader = new StreamReader(fragmentPath, Encoding.UTF8))
-                FragmentShaderSource = reader.ReadToEnd();
-            FragmentShader = GL.CreateShader(ShaderType.FragmentShader);
-            GL.ShaderSource(FragmentShader, FragmentShaderSource);
-            GL.CompileShader(FragmentShader);
-#if DEBUG
-            WriteShaderLog(FragmentShader);
-#endif
+            var vertexShader = LoadShader(vertexPath, ShaderType.VertexShader);
+            var fragmentShader = LoadShader(fragmentPath, ShaderType.FragmentShader);
             Handle = GL.CreateProgram();
-            GL.AttachShader(Handle, VertexShader);
-            GL.AttachShader(Handle, FragmentShader);
+            GL.AttachShader(Handle, vertexShader);
+            GL.AttachShader(Handle, fragmentShader);
             GL.LinkProgram(Handle);
 #if DEBUG
             WriteProgramLog(Handle);
 #endif
-            GL.DetachShader(Handle, VertexShader);
-            GL.DetachShader(Handle, FragmentShader);
-            GL.DeleteShader(FragmentShader);
-            GL.DeleteShader(VertexShader);
+            GL.DetachShader(Handle, vertexShader);
+            GL.DetachShader(Handle, fragmentShader);
+            GL.DeleteShader(vertexShader);
+            GL.DeleteShader(fragmentShader);
+        }
+
+        #endregion
+
+        private int LoadShader(string shaderPath, ShaderType shaderType)
+        {
+            string shaderSource;
+            using (var reader = new StreamReader(shaderPath, Encoding.UTF8))
+                shaderSource = reader.ReadToEnd();
+            var shader = GL.CreateShader(shaderType);
+            GL.ShaderSource(shader, shaderSource);
+            GL.CompileShader(shader);
+#if DEBUG
+            WriteShaderLog(shader);
+#endif
+            return shader;
         }
 
         public void Use()

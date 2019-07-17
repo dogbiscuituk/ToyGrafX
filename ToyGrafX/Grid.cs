@@ -39,6 +39,26 @@
             }
         }
 
+        public static IEnumerable<int> GetTriangleIndices(int cx, int cy)
+        {
+            var p = 0;
+            for (var i = 0; i < cx; i++)
+            {
+                for (var j = 0; j < cy; j++)
+                {
+                    yield return p;
+                    yield return p + cy + 1;
+                    p++;
+                    yield return p;
+                    yield return p;
+                    yield return p + cy;
+                    yield return p + cy + 1;
+                }
+                p++;
+            }
+        }
+
+
         /// <summary>
         /// Get the order of vertices required to draw a single continuous triangle strip covering
         /// the grid. This method uses the vertex return order implemented by GetVertexCoords, and

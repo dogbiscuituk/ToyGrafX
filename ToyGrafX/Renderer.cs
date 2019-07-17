@@ -15,7 +15,10 @@
             shader.Use();
             GL.BindVertexArray(model.VaoID);
             GL.EnableVertexAttribArray(0);
-            GL.DrawArrays(PrimitiveType.LineStrip, 0, model.VertexCount);
+
+            //GL.DrawArrays(PrimitiveType.LineStrip, 0, model.VertexCount);
+            GL.DrawElements(BeginMode.Triangles, model.VertexCount, DrawElementsType.UnsignedInt, 0);
+
             GL.DisableVertexAttribArray(0);
             GL.BindVertexArray(0);
         }

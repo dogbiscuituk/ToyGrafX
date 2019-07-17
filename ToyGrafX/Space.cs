@@ -19,8 +19,7 @@
 
         public Space(int width, int height, string title)
             : base(width, height, GraphicsMode, title)
-        {
-        }
+        { }
 
         private static readonly GraphicsMode GraphicsMode = new GraphicsMode(
             color: new ColorFormat(8, 8, 8, 8),
@@ -42,8 +41,9 @@
 
             int xc = 1000, yc = 1000;
             var vertices = Grid.GetVertexCoords(xc, yc).ToArray();
+            var indices = Grid.GetTriangleIndices(xc, yc).ToArray();
 
-            Model = Loader.LoadToVAO(vertices);
+            Model = Loader.LoadToVAO(vertices, indices);
 
             base.OnLoad(e);
         }
