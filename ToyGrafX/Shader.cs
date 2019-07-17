@@ -1,14 +1,12 @@
 ﻿namespace ToyGrafX
 {
-    using OpenTK.Graphics.ES30;
+    using OpenTK.Graphics.OpenGL;
     using System;
     using System.IO;
     using System.Text;
 
     public class Shader
     {
-        int Handle;
-
         public Shader(string vertexPath, string fragmentPath)
         {
             int VertexShader, FragmentShader;
@@ -19,27 +17,25 @@
             VertexShader = GL.CreateShader(ShaderType.VertexShader);
             GL.ShaderSource(VertexShader, VertexShaderSource);
             GL.CompileShader(VertexShader);
-            string infoLogVert = GL.GetShaderInfoLog(VertexShader);
-            if (infoLogVert != string.Empty)
-                Console.WriteLine(infoLogVert);
-
+#if DEBUG
+            WriteShaderLog(VertexShader);
+#endif
             string FragmentShaderSource;
             using (var reader = new StreamReader(fragmentPath, Encoding.UTF8))
                 FragmentShaderSource = reader.ReadToEnd();
             FragmentShader = GL.CreateShader(ShaderType.FragmentShader);
             GL.ShaderSource(FragmentShader, FragmentShaderSource);
             GL.CompileShader(FragmentShader);
-            string infoLogFrag = GL.GetShaderInfoLog(FragmentShader);
-            if (infoLogFrag != string.Empty)
-                Console.WriteLine(infoLogFrag);
-
+#if DEBUG
+            WriteShaderLog(FragmentShader);
+#endif
             Handle = GL.CreateProgram();
-
             GL.AttachShader(Handle, VertexShader);
             GL.AttachShader(Handle, FragmentShader);
-
             GL.LinkProgram(Handle);
-
+#if DEBUG
+            WriteProgramLog(Handle);
+#endif
             GL.DetachShader(Handle, VertexShader);
             GL.DetachShader(Handle, FragmentShader);
             GL.DeleteShader(FragmentShader);
@@ -50,6 +46,8 @@
         {
             GL.UseProgram(Handle);
         }
+
+        private int Handle;
 
         private bool disposedValue = false;
 
@@ -69,5 +67,16 @@
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+#if DEBUG
+        private static void WriteLog(string s)
+        {
+            if (!string.IsNullOrWhiteSpace(s))
+                System.Diagnostics.Debug.WriteLine(s);
+        }
+
+        private static void WriteProgramLog(int program) => WriteLog(GL.GetProgramInfoLog(program));
+        private static void WriteShaderLog(int shader) => WriteLog(GL.GetShaderInfoLog(shader));
+#endif
     }
 }

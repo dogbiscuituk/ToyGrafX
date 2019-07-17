@@ -14,13 +14,14 @@
                 if (d != null)
                     Console.WriteLine($"{d.Width}x{d.Height}x{d.BitsPerPixel}bpp @{d.RefreshRate}Hz {displayIndex} display");
             }
-            // This line creates a new instance, and wraps the instance in a using statement so it's
-            // automatically disposed once we've exited the block.
-            using (Space game = new Space(800, 600, Application.ProductName))
+
+            foreach (var p in Grid.GetTriangleStripIndices(4, 4))
+                Console.Write($"{p}, ");
+            Console.WriteLine();
+
+            using (Space game = new Space(100, 100, Application.ProductName))
             {
-                //Run takes a double, which is how many frames per second it should strive to reach.
-                //You can leave that out and it'll just update as fast as the hardware will allow it.
-                game.Run(60.0);
+                game.Run(60.0); // target fps (optional)
             }
         }
     }
