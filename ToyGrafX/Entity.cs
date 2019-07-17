@@ -2,7 +2,7 @@
 {
     using OpenTK;
 
-    public abstract class Entity
+    public class Entity
     {
         public Entity(Model model, Vector3 position, float rotX, float rotY, float rotZ, float scale)
         {
@@ -26,14 +26,19 @@
             RotZ += dz;
         }
 
-        public Model Model { get; set; }
-        protected Vector3 Position { get; set; }
-        protected float RotX { get; set; }
-        protected float RotY { get; set; }
-        protected float RotZ { get; set; }
-        protected float Scale { get; set; }
+        public void ScaleBy(float scale)
+        {
+            Scale *= scale;
+        }
 
-        protected abstract string FragmentShaderText { get; }
-        protected abstract string VertexShaderText { get; }
+        public Model Model { get; set; }
+        public Vector3 Position { get; set; }
+        public float RotX { get; set; }
+        public float RotY { get; set; }
+        public float RotZ { get; set; }
+        public float Scale { get; set; }
+
+        //protected abstract string FragmentShaderText { get; }
+        //protected abstract string VertexShaderText { get; }
     }
 }

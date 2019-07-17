@@ -14,8 +14,10 @@
 
         private Loader Loader;
         private Model Model;
+        private Entity Entity;
         private Renderer Renderer;
         private Shader Shader;
+        private Camera Camera = new Camera();
 
         public Space(int width, int height, string title)
             : base(width, height, GraphicsMode, title)
@@ -36,22 +38,29 @@
             GL.ClearColor(Color.White);
 
             Loader = new Loader();
-            Renderer = new Renderer();
             Shader = new Shader("shader.vert", "shader.frag");
+            Renderer = new Renderer(Shader);
 
             int xc = 1000, yc = 1000;
             var vertices = Grid.GetVertexCoords(xc, yc).ToArray();
             var indices = Grid.GetTriangleIndices(xc, yc).ToArray();
 
             Model = Loader.LoadToVAO(vertices, indices);
+            Entity = new Entity(Model, new Vector3(0, 0, 0), 0, 0, 0, 1);
 
             base.OnLoad(e);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            Entity.MoveBy(0, 0, -0.001f);
+            //Entity.RotateBy(0, 0, 1);
+
+            Camera.Move();
+
             Renderer.Prepare();
-            Renderer.Render(Model, Shader);
+            Shader.LoadViewMatrix(Camera);
+            Renderer.Render(Entity, Shader);
 
             Context.SwapBuffers();
             base.OnRenderFrame(e);

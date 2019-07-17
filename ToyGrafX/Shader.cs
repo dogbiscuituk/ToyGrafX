@@ -1,5 +1,6 @@
 ﻿namespace ToyGrafX
 {
+    using OpenTK;
     using OpenTK.Graphics.OpenGL;
     using System;
     using System.IO;
@@ -11,22 +12,54 @@
 
         public Shader(string vertexPath, string fragmentPath)
         {
-            var vertexShader = LoadShader(vertexPath, ShaderType.VertexShader);
-            var fragmentShader = LoadShader(fragmentPath, ShaderType.FragmentShader);
+            int vertexShaderID = LoadShader(vertexPath, ShaderType.VertexShader),
+                fragmentShaderID = LoadShader(fragmentPath, ShaderType.FragmentShader);
             Handle = GL.CreateProgram();
-            GL.AttachShader(Handle, vertexShader);
-            GL.AttachShader(Handle, fragmentShader);
+            GL.AttachShader(Handle, vertexShaderID);
+            GL.AttachShader(Handle, fragmentShaderID);
+            BindAttributes();
             GL.LinkProgram(Handle);
+            GL.ValidateProgram(Handle);
+            GetAllUniformLocations();
 #if DEBUG
             WriteProgramLog(Handle);
 #endif
-            GL.DetachShader(Handle, vertexShader);
-            GL.DetachShader(Handle, fragmentShader);
-            GL.DeleteShader(vertexShader);
-            GL.DeleteShader(fragmentShader);
+            GL.DetachShader(Handle, vertexShaderID);
+            GL.DetachShader(Handle, fragmentShaderID);
+            GL.DeleteShader(vertexShaderID);
+            GL.DeleteShader(fragmentShaderID);
         }
 
         #endregion
+
+        protected virtual void BindAttributes()
+        {
+        }
+
+        protected void LoadFloat(int location, float value) => GL.Uniform1(location, value);
+        protected void LoadVector(int location, Vector3 vector) => GL.Uniform3(location, vector);
+        protected void LoadBoolean(int location, bool value) => GL.Uniform1(location, value ? 1f : 0f);
+        protected void LoadMatrix(int location, Matrix4 value) => GL.UniformMatrix4(location, false, ref value);
+
+        protected int GetUniformLocation(string uniformName)
+        {
+            return GL.GetUniformLocation(Handle, uniformName);
+        }
+
+        private int location_projectionMatrix;
+        private int location_transformationMatrix;
+        private int location_viewMatrix;
+
+        protected virtual void GetAllUniformLocations()
+        {
+            location_projectionMatrix = GetUniformLocation("projectionMatrix");
+            location_transformationMatrix = GetUniformLocation("transformationMatrix");
+            location_viewMatrix = GetUniformLocation("viewMatrix");
+        }
+
+        public void LoadProjectionMatrix(Matrix4 matrix) => LoadMatrix(location_projectionMatrix, matrix);
+        public void LoadTransformationMatrix(Matrix4 matrix) => LoadMatrix(location_transformationMatrix, matrix);
+        public void LoadViewMatrix(Camera camera) => LoadMatrix(location_viewMatrix, Maths.CreateViewMatrix(camera));
 
         private int LoadShader(string shaderPath, ShaderType shaderType)
         {
