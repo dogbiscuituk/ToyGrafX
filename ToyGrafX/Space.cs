@@ -54,7 +54,7 @@
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             Entity.MoveBy(0, 0, -0.001f);
-            //Entity.RotateBy(0, 0, 1);
+            Entity.RotateBy(1, 2, 3);
 
             Camera.Move();
 
