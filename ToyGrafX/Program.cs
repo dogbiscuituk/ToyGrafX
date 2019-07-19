@@ -14,12 +14,7 @@
                 if (d != null)
                     Console.WriteLine($"{d.Width}x{d.Height}x{d.BitsPerPixel}bpp @{d.RefreshRate}Hz {displayIndex} display");
             }
-
-            foreach (var p in Grid.GetTriangleStripIndices(4, 4))
-                Console.Write($"{p}, ");
-            Console.WriteLine();
-
-            using (Space game = new Space(100, 100, Application.ProductName))
+            using (Space game = new Space(1024, 768, Application.ProductName))
             {
                 game.Run(60.0); // target fps (optional)
             }

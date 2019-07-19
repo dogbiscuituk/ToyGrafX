@@ -9,12 +9,9 @@
         {
             CreateProjectionMatrix();
 
-            //shader.Start();
-            shader.Use();
-
+            shader.Start();
             shader.LoadProjectionMatrix(ProjectionMatrix);
-
-            //shader.Stop();
+            shader.Stop();
         }
 
         public void Prepare()
@@ -27,7 +24,6 @@
         public void Render(Entity entity, Shader shader)
         {
             var model = entity.Model;
-            shader.Use();
             GL.BindVertexArray(model.VaoID);
             GL.EnableVertexAttribArray(0);
 

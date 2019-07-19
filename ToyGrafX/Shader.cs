@@ -2,53 +2,61 @@
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
-    using System;
     using System.IO;
     using System.Text;
 
-    public class Shader
+    public abstract class Shader
     {
         #region Public Interface
 
         public Shader(string vertexPath, string fragmentPath)
         {
-            int vertexShaderID = LoadShader(vertexPath, ShaderType.VertexShader),
-                fragmentShaderID = LoadShader(fragmentPath, ShaderType.FragmentShader);
-            Handle = GL.CreateProgram();
-            GL.AttachShader(Handle, vertexShaderID);
-            GL.AttachShader(Handle, fragmentShaderID);
+            VertexShaderID = LoadShader(vertexPath, ShaderType.VertexShader);
+            FragmentShaderID = LoadShader(fragmentPath, ShaderType.FragmentShader);
+            ProgramID = GL.CreateProgram();
+            GL.AttachShader(ProgramID, VertexShaderID);
+            GL.AttachShader(ProgramID, FragmentShaderID);
             BindAttributes();
-            GL.LinkProgram(Handle);
-            GL.ValidateProgram(Handle);
+            GL.LinkProgram(ProgramID);
+            GL.ValidateProgram(ProgramID);
             GetAllUniformLocations();
 #if DEBUG
-            WriteProgramLog(Handle);
+            WriteProgramLog(ProgramID);
 #endif
-            GL.DetachShader(Handle, vertexShaderID);
-            GL.DetachShader(Handle, fragmentShaderID);
-            GL.DeleteShader(vertexShaderID);
-            GL.DeleteShader(fragmentShaderID);
+            GL.DetachShader(ProgramID, VertexShaderID);
+            GL.DetachShader(ProgramID, FragmentShaderID);
+            GL.DeleteShader(VertexShaderID);
+            GL.DeleteShader(FragmentShaderID);
         }
+
+        public void Start() => GL.UseProgram(ProgramID);
+        public void Stop() => GL.UseProgram(0);
 
         #endregion
 
-        protected virtual void BindAttributes()
-        {
-        }
+        protected void BindAttribute(int attributeIndex, string variableName) =>
+            GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
 
+        protected abstract void BindAttributes();
+        protected int GetUniformLocation(string uniformName) => GL.GetUniformLocation(ProgramID, uniformName);
         protected void LoadFloat(int location, float value) => GL.Uniform1(location, value);
         protected void LoadVector(int location, Vector3 vector) => GL.Uniform3(location, vector);
         protected void LoadBoolean(int location, bool value) => GL.Uniform1(location, value ? 1f : 0f);
         protected void LoadMatrix(int location, Matrix4 value) => GL.UniformMatrix4(location, false, ref value);
 
-        protected int GetUniformLocation(string uniformName)
-        {
-            return GL.GetUniformLocation(Handle, uniformName);
-        }
+        #region Private Properties
 
-        private int location_projectionMatrix;
-        private int location_transformationMatrix;
-        private int location_viewMatrix;
+        private int
+            ProgramID,
+            VertexShaderID,
+            FragmentShaderID;
+
+        private int
+            location_projectionMatrix,
+            location_transformationMatrix,
+            location_viewMatrix;
+
+        #endregion
 
         protected virtual void GetAllUniformLocations()
         {
@@ -66,39 +74,22 @@
             string shaderSource;
             using (var reader = new StreamReader(shaderPath, Encoding.UTF8))
                 shaderSource = reader.ReadToEnd();
-            var shader = GL.CreateShader(shaderType);
-            GL.ShaderSource(shader, shaderSource);
-            GL.CompileShader(shader);
+            var shaderID = GL.CreateShader(shaderType);
+            GL.ShaderSource(shaderID, shaderSource);
+            GL.CompileShader(shaderID);
 #if DEBUG
-            WriteShaderLog(shader);
+            WriteShaderLog(shaderID);
 #endif
-            return shader;
+            return shaderID;
         }
 
-        public void Use()
+        public void Cleanup()
         {
-            GL.UseProgram(Handle);
-        }
-
-        private int Handle;
-
-        private bool disposedValue = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                GL.DeleteProgram(Handle);
-                disposedValue = true;
-            }
-        }
-
-        ~Shader() => GL.DeleteProgram(Handle);
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            GL.DetachShader(ProgramID, VertexShaderID);
+            GL.DetachShader(ProgramID, FragmentShaderID);
+            GL.DeleteShader(VertexShaderID);
+            GL.DeleteShader(FragmentShaderID);
+            GL.DeleteProgram(ProgramID);
         }
 
 #if DEBUG
@@ -108,8 +99,8 @@
                 System.Diagnostics.Debug.WriteLine(s);
         }
 
-        private static void WriteProgramLog(int program) => WriteLog(GL.GetProgramInfoLog(program));
-        private static void WriteShaderLog(int shader) => WriteLog(GL.GetShaderInfoLog(shader));
+        private static void WriteProgramLog(int programID) => WriteLog(GL.GetProgramInfoLog(programID));
+        private static void WriteShaderLog(int shaderID) => WriteLog(GL.GetShaderInfoLog(shaderID));
 #endif
     }
 }
