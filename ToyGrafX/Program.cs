@@ -14,10 +14,7 @@
                 if (d != null)
                     Console.WriteLine($"{d.Width}x{d.Height}x{d.BitsPerPixel}bpp @{d.RefreshRate}Hz {displayIndex} display");
             }
-            using (Space game = new Space(1024, 768, Application.ProductName))
-            {
-                game.Run(60.0); // target fps (optional)
-            }
+            new GameWindowController(1024, 768, "Cleo").GameWindow.Run(60); // target fps (optional)
         }
     }
 }
