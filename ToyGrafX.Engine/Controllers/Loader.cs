@@ -1,7 +1,8 @@
-﻿namespace ToyGrafX
+﻿namespace ToyGrafX.Engine.Controllers
 {
     using OpenTK.Graphics.OpenGL;
     using System.Collections.Generic;
+    using ToyGrafX.Engine.Entities;
 
     public class Loader
     {

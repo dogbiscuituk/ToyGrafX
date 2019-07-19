@@ -1,4 +1,4 @@
-﻿namespace ToyGrafX
+﻿namespace ToyGrafX.Engine.Utility
 {
     using System;
 

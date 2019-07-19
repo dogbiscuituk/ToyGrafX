@@ -1,8 +1,9 @@
 ﻿namespace ToyGrafX
 {
     using OpenTK;
+    using ToyGrafX.Engine.Controllers;
 
-    public class GameWindowController : DisplayController
+    public class GameWindowController : Controller
     {
         public GameWindowController(int width, int height, string title) =>
             GameWindow = new GameWindow(width, height, GraphicsMode, title);

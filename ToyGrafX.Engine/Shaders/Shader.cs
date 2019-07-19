@@ -1,9 +1,11 @@
-﻿namespace ToyGrafX
+﻿namespace ToyGrafX.Engine.Shaders
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
     using System.IO;
     using System.Text;
+    using ToyGrafX.Engine.Controllers;
+    using ToyGrafX.Engine.Utility;
 
     public abstract class Shader
     {

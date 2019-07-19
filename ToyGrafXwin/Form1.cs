@@ -12,7 +12,7 @@ namespace ToyGrafXwin
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var foo = new OpenTK.GLControl();
+            var foo = this.glControl;
         }
     }
 }

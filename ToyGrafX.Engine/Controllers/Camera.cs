@@ -1,4 +1,4 @@
-﻿namespace ToyGrafX
+﻿namespace ToyGrafX.Engine.Controllers
 {
     using OpenTK;
     using OpenTK.Input;

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGrafX", "ToyGrafX\ToyGra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGrafXwin", "ToyGrafXwin\ToyGrafXwin.csproj", "{0F7D0F9E-2439-45BF-A273-7F0D23889C31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGrafX.Engine", "ToyGrafX.Engine\ToyGrafX.Engine.csproj", "{C5D021E6-196F-45E1-915B-CDF7020CE226}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0F7D0F9E-2439-45BF-A273-7F0D23889C31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F7D0F9E-2439-45BF-A273-7F0D23889C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F7D0F9E-2439-45BF-A273-7F0D23889C31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5D021E6-196F-45E1-915B-CDF7020CE226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5D021E6-196F-45E1-915B-CDF7020CE226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5D021E6-196F-45E1-915B-CDF7020CE226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5D021E6-196F-45E1-915B-CDF7020CE226}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

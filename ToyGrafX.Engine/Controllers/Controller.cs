@@ -1,4 +1,4 @@
-﻿namespace ToyGrafX
+﻿namespace ToyGrafX.Engine.Controllers
 {
     using OpenTK;
     using OpenTK.Graphics;
@@ -7,8 +7,11 @@
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
+    using ToyGrafX.Engine.Entities;
+    using ToyGrafX.Engine.Shaders;
+    using ToyGrafX.Engine.Utility;
 
-    public abstract class DisplayController
+    public abstract class Controller
     {
         #region Protected Interface
 
@@ -24,10 +27,12 @@
             Loader = new Loader();
             Shader = new StaticShader();
             Renderer = new Renderer(Shader);
-            int xc = 1000, yc = 1000;
+
+            int xc = 10, yc = 10;
             var vertices = Grid.GetVertexCoords(xc, yc).ToArray();
             var indices = Grid.GetTriangleIndices(xc, yc).ToArray();
             Model = Loader.LoadToVAO(vertices, indices);
+
             Entities.Add(new Entity(Model, new Vector3(0, 0, 0), 0, 0, 0, 1));
             Entities.Add(new Entity(Model, new Vector3(-3, 0, 0), 0, 0, 0, 1));
             Entities.Add(new Entity(Model, new Vector3(+3, 0, 0), 0, 0, 0, 1));

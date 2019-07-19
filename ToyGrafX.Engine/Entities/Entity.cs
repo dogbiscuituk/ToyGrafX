@@ -1,4 +1,4 @@
-﻿namespace ToyGrafX
+﻿namespace ToyGrafX.Engine.Entities
 {
     using OpenTK;
 

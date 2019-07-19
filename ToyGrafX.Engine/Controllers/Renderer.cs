@@ -1,14 +1,16 @@
-﻿namespace ToyGrafX
+﻿namespace ToyGrafX.Engine.Controllers
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
+    using ToyGrafX.Engine.Entities;
+    using ToyGrafX.Engine.Shaders;
+    using ToyGrafX.Engine.Utility;
 
     public class Renderer
     {
         public Renderer(Shader shader)
         {
             CreateProjectionMatrix();
-
             shader.Start();
             shader.LoadProjectionMatrix(ProjectionMatrix);
             shader.Stop();
@@ -26,13 +28,12 @@
             var model = entity.Model;
             GL.BindVertexArray(model.VaoID);
             GL.EnableVertexAttribArray(0);
-
             var transformationMatrix = Maths.CreateTransformationMatrix(
                 entity.Position, entity.RotX, entity.RotY, entity.RotZ, entity.Scale);
             shader.LoadTransformationMatrix(transformationMatrix);
 
             //GL.DrawArrays(PrimitiveType.LineStrip, 0, model.VertexCount);
-            GL.DrawElements(BeginMode.Triangles, model.VertexCount, DrawElementsType.UnsignedInt, 0);
+            GL.DrawElements(BeginMode.LineStrip, model.VertexCount, DrawElementsType.UnsignedInt, 0);
 
             GL.DisableVertexAttribArray(0);
             GL.BindVertexArray(0);

@@ -1,6 +1,7 @@
-﻿namespace ToyGrafX
+﻿namespace ToyGrafX.Engine.Utility
 {
     using OpenTK;
+    using ToyGrafX.Engine.Controllers;
 
     public static class Maths
     {
