@@ -13,7 +13,8 @@
                 if (d != null)
                     Console.WriteLine($"{d.Width}x{d.Height}x{d.BitsPerPixel}bpp @{d.RefreshRate}Hz {displayIndex} display");
             }
-            new GameWindowController(1024, 768, "Cleo").GameWindow.Run(60); // target fps (optional)
+            var controller = new GameWindowController(1024, 768, "Cleo");
+            controller.GameWindow.Run(60); // target fps (optional)
         }
     }
 }

@@ -13,6 +13,12 @@
 
     public abstract class Controller
     {
+        #region Public Interface
+
+        public void AddEntity(Entity entity) => Entities.Add(entity);
+
+        #endregion
+
         #region Protected Interface
 
         protected virtual GraphicsMode GraphicsMode => new GraphicsMode(
@@ -31,11 +37,13 @@
             int xc = 10, yc = 10;
             var vertices = Grid.GetVertexCoords(xc, yc).ToArray();
             var indices = Grid.GetTriangleIndices(xc, yc).ToArray();
-            Model = Loader.LoadToVAO(vertices, indices);
 
-            Entities.Add(new Entity(Model, new Vector3(0, 0, 0), 0, 0, 0, 1));
-            Entities.Add(new Entity(Model, new Vector3(-3, 0, 0), 0, 0, 0, 1));
-            Entities.Add(new Entity(Model, new Vector3(+3, 0, 0), 0, 0, 0, 1));
+            var model = Loader.LoadToVAO(vertices, indices);
+            Models.Add(model);
+
+            Entities.Add(new Entity(model, new Vector3(0, 0, -2), 0, 0, 0, 1));
+            Entities.Add(new Entity(model, new Vector3(-3, 0, 0), 0, 0, 0, 1));
+            Entities.Add(new Entity(model, new Vector3(+3, 0, 0), 0, 0, 0, 1));
         }
 
         protected virtual void RenderFrame()
@@ -83,10 +91,11 @@
 
         #region Private Properties
 
-        private Camera Camera = new Camera();
         private readonly List<Entity> Entities = new List<Entity>();
+        private readonly List<Model> Models = new List<Model>();
+
+        private Camera Camera = new Camera();
         private Loader Loader;
-        private Model Model;
         private Renderer Renderer;
         private Shader Shader;
 
