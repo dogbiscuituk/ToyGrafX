@@ -45,10 +45,10 @@
         #region Private Event Handlers
 
         private void GameWindow_Load(object sender, System.EventArgs e) => Load();
-        private void GameWindow_RenderFrame(object sender, FrameEventArgs e) => RenderFrame();
+        private void GameWindow_RenderFrame(object sender, FrameEventArgs e) => RenderFrame(e.Time);
         private void GameWindow_Resize(object sender, System.EventArgs e) => Resize();
         private void GameWindow_Unload(object sender, System.EventArgs e) => Unload();
-        private void GameWindow_UpdateFrame(object sender, FrameEventArgs e) => UpdateFrame();
+        private void GameWindow_UpdateFrame(object sender, FrameEventArgs e) => UpdateFrame(e.Time);
 
         protected override int DisplayWidth => GameWindow.Width;
         protected override int DisplayHeight => GameWindow.Height;

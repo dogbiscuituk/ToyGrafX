@@ -2,8 +2,6 @@
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
-    using System.IO;
-    using System.Text;
     using ToyGrafX.Engine.Controllers;
     using ToyGrafX.Engine.Utility;
 
@@ -11,10 +9,20 @@
     {
         #region Public Interface
 
-        public Shader(string vertexPath, string fragmentPath)
+        public void Start() => GL.UseProgram(ProgramID);
+        public void Stop() => GL.UseProgram(0);
+
+        #endregion
+
+        protected void BindAttribute(int attributeIndex, string variableName) =>
+            GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
+
+        protected abstract void BindAttributes();
+
+        protected void CreateProgram()
         {
-            VertexShaderID = LoadShader(vertexPath, ShaderType.VertexShader);
-            FragmentShaderID = LoadShader(fragmentPath, ShaderType.FragmentShader);
+            VertexShaderID = CreateShader(ShaderType.VertexShader);
+            FragmentShaderID = CreateShader(ShaderType.FragmentShader);
             ProgramID = GL.CreateProgram();
             GL.AttachShader(ProgramID, VertexShaderID);
             GL.AttachShader(ProgramID, FragmentShaderID);
@@ -31,15 +39,6 @@
             GL.DeleteShader(FragmentShaderID);
         }
 
-        public void Start() => GL.UseProgram(ProgramID);
-        public void Stop() => GL.UseProgram(0);
-
-        #endregion
-
-        protected void BindAttribute(int attributeIndex, string variableName) =>
-            GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
-
-        protected abstract void BindAttributes();
         protected int GetUniformLocation(string uniformName) => GL.GetUniformLocation(ProgramID, uniformName);
         protected void LoadFloat(int location, float value) => GL.Uniform1(location, value);
         protected void LoadVector(int location, Vector3 vector) => GL.Uniform3(location, vector);
@@ -51,6 +50,7 @@
         private int
             ProgramID,
             VertexShaderID,
+            GeometryShaderID,
             FragmentShaderID;
 
         private int
@@ -59,6 +59,20 @@
             location_viewMatrix;
 
         #endregion
+
+        private int CreateShader(ShaderType shaderType)
+        {
+            var shaderSource = GetShaderSource(shaderType);
+            if (string.IsNullOrWhiteSpace(shaderSource))
+                return 0;
+            var shaderID = GL.CreateShader(shaderType);
+            GL.ShaderSource(shaderID, shaderSource);
+            GL.CompileShader(shaderID);
+#if DEBUG
+            WriteShaderLog(shaderID);
+#endif
+            return shaderID;
+        }
 
         protected virtual void GetAllUniformLocations()
         {
@@ -71,25 +85,18 @@
         public void LoadTransformationMatrix(Matrix4 matrix) => LoadMatrix(location_transformationMatrix, matrix);
         public void LoadViewMatrix(Camera camera) => LoadMatrix(location_viewMatrix, Maths.CreateViewMatrix(camera));
 
-        private int LoadShader(string shaderPath, ShaderType shaderType)
-        {
-            string shaderSource;
-            using (var reader = new StreamReader(shaderPath, Encoding.UTF8))
-                shaderSource = reader.ReadToEnd();
-            var shaderID = GL.CreateShader(shaderType);
-            GL.ShaderSource(shaderID, shaderSource);
-            GL.CompileShader(shaderID);
-#if DEBUG
-            WriteShaderLog(shaderID);
-#endif
-            return shaderID;
-        }
+        protected abstract string GetShaderSource(ShaderType shaderType);
 
         public void Cleanup()
         {
             GL.DetachShader(ProgramID, VertexShaderID);
-            GL.DetachShader(ProgramID, FragmentShaderID);
             GL.DeleteShader(VertexShaderID);
+            if (GeometryShaderID != 0)
+            {
+                GL.DetachShader(ProgramID, GeometryShaderID);
+                GL.DeleteShader(GeometryShaderID);
+            }
+            GL.DetachShader(ProgramID, FragmentShaderID);
             GL.DeleteShader(FragmentShaderID);
             GL.DeleteProgram(ProgramID);
         }

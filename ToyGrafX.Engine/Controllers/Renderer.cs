@@ -2,6 +2,7 @@
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
+    using System.Drawing;
     using ToyGrafX.Engine.Entities;
     using ToyGrafX.Engine.Shaders;
     using ToyGrafX.Engine.Utility;
@@ -19,7 +20,8 @@
         public void Prepare()
         {
             GL.Enable(EnableCap.DepthTest);
-            GL.ClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            GL.Enable(EnableCap.Texture2D);
+            GL.ClearColor(Color.White);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
@@ -29,7 +31,7 @@
             GL.BindVertexArray(model.VaoID);
             GL.EnableVertexAttribArray(0);
             var transformationMatrix = Maths.CreateTransformationMatrix(
-                entity.Position, entity.RotX, entity.RotY, entity.RotZ, entity.Scale);
+                entity.Position, entity.Rotation, entity.Scale);
             shader.LoadTransformationMatrix(transformationMatrix);
 
             //GL.DrawArrays(PrimitiveType.LineStrip, 0, model.VertexCount);

@@ -30,27 +30,31 @@
         protected virtual void Load()
         {
             GL.ClearColor(Color.White);
-            Loader = new Loader();
             Shader = new StaticShader();
             Renderer = new Renderer(Shader);
 
-            int xc = 10, yc = 10;
+            int xc = 100, yc = 100;
             var vertices = Grid.GetVertexCoords(xc, yc).ToArray();
             var indices = Grid.GetTriangleIndices(xc, yc).ToArray();
 
-            var model = Loader.LoadToVAO(vertices, indices);
+            var model = new Model(vertices, indices);
             Models.Add(model);
 
-            Entities.Add(new Entity(model, new Vector3(0, 0, -2), 0, 0, 0, 1));
-            Entities.Add(new Entity(model, new Vector3(-3, 0, 0), 0, 0, 0, 1));
-            Entities.Add(new Entity(model, new Vector3(+3, 0, 0), 0, 0, 0, 1));
+            Entities.Add(new Entity(model, new Vector3(0, 0, -2), new Vector3(0, 0, 0), 1));
+            Entities.Add(new Entity(model, new Vector3(-3, 0, 0), new Vector3(0, 0, 0), 1));
+            Entities.Add(new Entity(model, new Vector3(+3, 0, 0), new Vector3(0, 0, 0), 1));
         }
 
-        protected virtual void RenderFrame()
+        protected virtual void RenderFrame(double time)
         {
+            Time += time;
             Camera.Move();
             Renderer.Prepare();
+
             Shader.Start();
+
+            GL.VertexAttrib1(1, (float)Time);
+
             Shader.LoadViewMatrix(Camera);
             foreach (var entity in Entities)
             {
@@ -63,15 +67,14 @@
         }
 
         protected virtual void Resize() => GL.Viewport(0, 0, DisplayWidth, DisplayHeight);
-        
+
         protected virtual void Unload()
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             Shader.Cleanup();
-            Loader.Cleanup();
         }
 
-        protected virtual void UpdateFrame()
+        protected virtual void UpdateFrame(double time)
         {
             var input = Keyboard.GetState();
             if (input.IsKeyDown(Key.Escape))
@@ -94,8 +97,8 @@
         private readonly List<Entity> Entities = new List<Entity>();
         private readonly List<Model> Models = new List<Model>();
 
+        private double Time;
         private Camera Camera = new Camera();
-        private Loader Loader;
         private Renderer Renderer;
         private Shader Shader;
 
