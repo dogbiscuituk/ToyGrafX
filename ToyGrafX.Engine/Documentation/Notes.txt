@@ -36,6 +36,8 @@ Has no state, other than the Projection Matrix:
 
 This functionality should be rolled into another object.
 
+00:25 22/07/2019 done.
+
 
 Shader
 ======
