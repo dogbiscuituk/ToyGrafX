@@ -53,7 +53,6 @@
     <Compile Include="Utility\Maths.cs" />
     <Compile Include="Entities\Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\Renderer.cs" />
     <Compile Include="Shaders\Shader.cs" />
     <Compile Include="Shaders\StaticShader.cs" />
   </ItemGroup>

@@ -20,10 +20,13 @@ This functionality should be rolled into other objects:
 (2) VboIDs is referenced twice, in BindIndicesBuffer() and StoreDataInAttributeList().
     Again, LoadToVAO() is the root caller, so the Model can take control of these.
 
+23:13 21/07/2019 done.
+
+
 Renderer
 ========
 
-Has no state, other than the Projection Matrix.
+Has no state, other than the Projection Matrix:
 
         private Matrix4 ProjectionMatrix;
         private float
@@ -41,4 +44,3 @@ Holds IDs for its program, and various shaders (vertex, geometry, fragment).
 Again, these are only needed for housekeeping (final disposal).
 This functionality should be rolled into another object.
 
-22:43 20/07/2019

@@ -31,7 +31,13 @@
         {
             GL.ClearColor(Color.White);
             Shader = new StaticShader();
-            Renderer = new Renderer(Shader);
+
+            lock (this)
+                UpdateProjectionMatrix();
+            Shader.Start();
+            lock (this)
+                LoadProjectionMatrix();
+            Shader.Stop();
 
             int xc = 100, yc = 100;
             var vertices = Grid.GetVertexCoords(xc, yc).ToArray();
@@ -40,7 +46,7 @@
             var model = new Model(vertices, indices);
             Models.Add(model);
 
-            Entities.Add(new Entity(model, new Vector3(0, 0, -2), new Vector3(0, 0, 0), 1));
+            Entities.Add(new Entity(model, new Vector3(0, 0, -2), new Vector3(45, 45, 0), 1));
             Entities.Add(new Entity(model, new Vector3(-3, 0, 0), new Vector3(0, 0, 0), 1));
             Entities.Add(new Entity(model, new Vector3(+3, 0, 0), new Vector3(0, 0, 0), 1));
         }
@@ -49,9 +55,20 @@
         {
             Time += time;
             Camera.Move();
-            Renderer.Prepare();
+
+            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.Texture2D);
+            GL.ClearColor(Color.White);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             Shader.Start();
+
+            lock (this)
+                if (OldProjectionMatrix != NewProjectionMatrix)
+                {
+                    OldProjectionMatrix = NewProjectionMatrix;
+                    LoadProjectionMatrix();
+                }
 
             GL.VertexAttrib1(1, (float)Time);
 
@@ -60,7 +77,19 @@
             {
                 entity.MoveBy(0, 0, -0.01f);
                 entity.RotateBy(1, 2, 3);
-                Renderer.Render(entity, Shader);
+
+                var model = entity.Model;
+                GL.BindVertexArray(model.VaoID);
+                GL.EnableVertexAttribArray(0);
+                var transformationMatrix = Maths.CreateTransformationMatrix(
+                    entity.Position, entity.Rotation, entity.Scale);
+                Shader.LoadTransformationMatrix(transformationMatrix);
+
+                //GL.DrawArrays(PrimitiveType.LineStrip, 0, model.VertexCount);
+                GL.DrawElements(BeginMode.Triangles, model.VertexCount, DrawElementsType.UnsignedInt, 0);
+
+                GL.DisableVertexAttribArray(0);
+                GL.BindVertexArray(0);
             }
             Shader.Stop();
             SwapBuffers();
@@ -99,8 +128,99 @@
 
         private double Time;
         private Camera Camera = new Camera();
-        private Renderer Renderer;
         private Shader Shader;
+
+        #endregion
+
+        #region Projection Matrix
+
+        #region Public Properties
+
+        public float FarPlaneDistance
+        {
+            get => _FarPlaneDistance;
+            set
+            {
+                if (FarPlaneDistance != value)
+                {
+                    _FarPlaneDistance = value;
+                    lock (this)
+                        UpdateProjectionMatrix();
+                }
+            }
+        }
+
+        public float FieldOfViewDegreesY
+        {
+            get => _FieldOfViewDegreesY;
+            set
+            {
+                if (FieldOfViewDegreesY != value)
+                {
+                    _FieldOfViewDegreesY = value;
+                    lock (this)
+                        UpdateProjectionMatrix();
+                }
+            }
+        }
+
+        public float NearPlaneDistance
+        {
+            get => _NearPlaneDistance;
+            set
+            {
+                if (NearPlaneDistance != value)
+                {
+                    _NearPlaneDistance = value;
+                    lock (this)
+                        UpdateProjectionMatrix();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Private Properties
+
+        private float
+            _FarPlaneDistance = 1000,
+            _FieldOfViewDegreesY = 70,
+            _NearPlaneDistance = 0.1f;
+
+        private Matrix4
+            NewProjectionMatrix,
+            OldProjectionMatrix;
+
+        #endregion
+
+        #region Private Methods
+
+        private void LoadProjectionMatrix() => Shader.LoadProjectionMatrix(NewProjectionMatrix);
+
+        /// <summary>
+        /// Create a Projection Matrix given values: aspect ratio = A, field of view = FOVy radians,
+        /// near plane = Znear, and far plane = Zfar. Then the frustrum length is zm = Zfar - Znear.
+        /// Also, let zp = Zfar + Znear. Then we have the following matrix formula:
+        /// 
+        /// [ x_scale     0      0       0                 ]
+        /// [    0     y_scale   0       0                 ]
+        /// [    0        0     -zp/zm  -(2*Zfar*Znear)/zm ]
+        /// [    0        0     -1       0                 ]
+        /// 
+        /// where y_scale = cot(FOVy/2), and x_scale = y_scale/A.
+        /// </summary>
+        private void UpdateProjectionMatrix()
+        {
+            var fieldOfViewRadiansY = MathHelper.DegreesToRadians(FieldOfViewDegreesY);
+            var aspectRatio = 1920f / 1080f;
+            NewProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(
+                fieldOfViewRadiansY,
+                aspectRatio,
+                NearPlaneDistance,
+                FarPlaneDistance);
+        }
+
+        #endregion
 
         #endregion
     }

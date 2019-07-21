@@ -12,7 +12,7 @@ void main()
 {
     float x = position.x, y = position.y, z = position.z;
 	z = sqrt(x*x+y*y);
-	z = cos(20*z+10*time)*exp(-3*z);
+	z = cos(20*z-10*time)*exp(-3*z);
     gl_Position = projectionMatrix * viewMatrix * transformationMatrix * vec4(x, y, z, 1.0);
 	colour = vec3((x + 1) / 2, (y + 1) / 2, 0.5);
 }
