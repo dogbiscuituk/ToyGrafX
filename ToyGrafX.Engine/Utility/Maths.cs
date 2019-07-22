@@ -14,9 +14,9 @@
             Matrix4.CreateTranslation(translation);
 
         public static Matrix4 CreateViewMatrix(Camera camera) =>
-            Matrix4.CreateTranslation(-camera.GetPosition()) *
-            Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(camera.Pitch)) *
+            Matrix4.CreateTranslation(-camera.Position) *
+            Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(camera.Roll)) *
             Matrix4.CreateRotationY(MathHelper.DegreesToRadians(camera.Yaw)) *
-            Matrix4.CreateRotationX(MathHelper.DegreesToRadians(camera.Roll));
+            Matrix4.CreateRotationX(MathHelper.DegreesToRadians(camera.Pitch));
     }
 }
