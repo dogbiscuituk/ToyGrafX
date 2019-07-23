@@ -58,13 +58,21 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\CameraController.cs" />
+    <Compile Include="Controllers\HostController.cs" />
     <Compile Include="Controllers\JsonController.cs" />
     <Compile Include="Controllers\MruController.cs" />
+    <Compile Include="Controllers\PropertyGridController.cs" />
     <Compile Include="Controllers\SdiController.cs" />
+    <Compile Include="Controllers\EntityTableController.cs" />
+    <Compile Include="FilterIndex.cs" />
+    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Structs\Options.cs" />
     <Compile Include="Views\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\AboutDialog.Designer.cs" />
+    <Compile Include="Views\AboutDialog.Designer.cs">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\CameraForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +80,12 @@
       <DependentUpon>CameraForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\SceneController.cs" />
+    <Compile Include="Views\HostForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\HostForm.Designer.cs">
+      <DependentUpon>HostForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\SceneForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,9 +95,14 @@
     <Compile Include="Controllers\GLControlRenderer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Views\AboutDialog.resx" />
+    <EmbeddedResource Include="Views\AboutDialog.resx">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\CameraForm.resx">
       <DependentUpon>CameraForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\HostForm.resx">
+      <DependentUpon>HostForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SceneForm.resx">
       <DependentUpon>SceneForm.cs</DependentUpon>

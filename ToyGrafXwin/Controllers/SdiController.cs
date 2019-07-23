@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.IO;
     using System.Windows.Forms;
+    using ToyGrafXwin.Models;
 
     /// <summary>
     /// "Single Document Interface" Controller.

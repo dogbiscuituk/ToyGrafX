@@ -16,23 +16,22 @@
             get => _Control;
             private set
             {
-                if (Control != value)
+                if (Control == value)
+                    return;
+                if (Control != null)
                 {
-                    if (Control != null)
-                    {
-                        Control.Load -= Control_Load;
-                        Control.Paint -= Control_Paint;
-                        Control.Resize -= Control_Resize;
-                        Application.Idle -= Application_Idle;
-                    }
-                    _Control = value;
-                    if (Control != null)
-                    {
-                        Control.Load += Control_Load;
-                        Control.Paint += Control_Paint;
-                        Control.Resize += Control_Resize;
-                        Application.Idle += Application_Idle;
-                    }
+                    Control.Load -= Control_Load;
+                    Control.Paint -= Control_Paint;
+                    Control.Resize -= Control_Resize;
+                    Application.Idle -= Application_Idle;
+                }
+                _Control = value;
+                if (Control != null)
+                {
+                    Control.Load += Control_Load;
+                    Control.Paint += Control_Paint;
+                    Control.Resize += Control_Resize;
+                    Application.Idle += Application_Idle;
                 }
             }
         }

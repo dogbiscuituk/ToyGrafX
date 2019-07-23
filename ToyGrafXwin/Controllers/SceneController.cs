@@ -1,7 +1,9 @@
 ﻿namespace ToyGrafXwin.Controllers
 {
+    using System.Collections.Generic;
     using System.Windows.Forms;
     using ToyGrafX.Engine.Controllers;
+    using ToyGrafX.Engine.Entities;
     using ToyGrafXwin.Views;
 
     public class SceneController
@@ -10,10 +12,12 @@
         {
             SceneForm = new SceneForm();
             Renderer = new GLControlRenderer(SceneForm.GLControl);
+            new PropertyGridController(this);
+            new EntityTableController(this);
         }
 
         private SceneForm _SceneForm;
-        private SceneForm SceneForm
+        internal SceneForm SceneForm
         {
             get => _SceneForm;
             set
@@ -54,6 +58,8 @@
         internal GLControlRenderer Renderer;
 
         private readonly JsonController JsonController;
+
+        internal List<Entity> Entities = new List<Entity>();
 
         #region Private Event Handlers
 

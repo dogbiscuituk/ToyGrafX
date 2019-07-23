@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Windows.Forms;
     using ToyGrafX.Controls;
+    using ToyGrafXwin.Models;
     using Win32 = Microsoft.Win32;
 
     /// <summary>
@@ -43,7 +44,7 @@
 
         #region Protected Properties
 
-        protected readonly Model Model;
+        protected Model Model;
 
         #endregion
 

@@ -2,10 +2,11 @@
 {
     using Newtonsoft.Json;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
     using System.Windows.Forms;
+    using ToyGrafX.Engine.Utility;
+    using ToyGrafXwin.Models;
 
     /// <summary>
     /// Extend SdiController to provide concrete I/O methods using Json data format.
@@ -17,7 +18,7 @@
         #region Internal Interface
 
         internal JsonController(Model model, Control view, ToolStripDropDownItem recentMenu)
-            : base(model, Properties.Settings.Default.GraphFilter, "LibraryMRU", recentMenu)
+            : base(model, Properties.Settings.Default.FileFilter, "LibraryMRU", recentMenu)
         {
             Model.PropertyChanged += Model_PropertyChanged;
             View = view;
@@ -47,10 +48,7 @@
             bool result;
             using (var streamer = new StreamReader(stream))
             using (var reader = new JsonTextReader(streamer))
-                result = UseStream(() => Model.Graph = GetSerializer().Deserialize<Graph>(reader));
-            Graph.PropertyChanged += Model.Graph_PropertyChanged;
-            foreach (var trace in Traces)
-                trace.PropertyChanged += Graph.Trace_PropertyChanged;
+                result = UseStream(() => Model = GetSerializer().Deserialize<Model>(reader));
             return result;
         }
 
@@ -63,15 +61,13 @@
         {
             using (var streamer = new StreamWriter(stream))
             using (var writer = new JsonTextWriter(streamer))
-                return UseStream(() => GetSerializer().Serialize(writer, Model.Graph));
+                return UseStream(() => GetSerializer().Serialize(writer, Model));
         }
 
         #endregion
 
         #region Private Implementation
 
-        private Graph Graph { get => Model.Graph; }
-        private List<Trace> Traces { get => Graph.Traces; }
         private readonly Control View;
 
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
