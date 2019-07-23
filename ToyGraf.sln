@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGraf.Console", "ToyGraf.Console\ToyGraf.Console.csproj", "{943A3A00-5E3A-4EE0-8389-A5FF942D2CDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGraf.Controls", "ToyGraf.Controls\ToyGraf.Controls.csproj", "{65F81BEC-DA42-416A-9B90-2C27F94A4A86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGraf.Engine", "ToyGraf.Engine\ToyGraf.Engine.csproj", "{EAAA782B-3C65-4ED7-BCB6-E94F1618F1A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGraf", "ToyGraf\ToyGraf.csproj", "{3CF52784-3703-4E94-8903-B0E18B68A44D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{943A3A00-5E3A-4EE0-8389-A5FF942D2CDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943A3A00-5E3A-4EE0-8389-A5FF942D2CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943A3A00-5E3A-4EE0-8389-A5FF942D2CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943A3A00-5E3A-4EE0-8389-A5FF942D2CDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65F81BEC-DA42-416A-9B90-2C27F94A4A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65F81BEC-DA42-416A-9B90-2C27F94A4A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65F81BEC-DA42-416A-9B90-2C27F94A4A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65F81BEC-DA42-416A-9B90-2C27F94A4A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAAA782B-3C65-4ED7-BCB6-E94F1618F1A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAAA782B-3C65-4ED7-BCB6-E94F1618F1A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAAA782B-3C65-4ED7-BCB6-E94F1618F1A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAAA782B-3C65-4ED7-BCB6-E94F1618F1A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CF52784-3703-4E94-8903-B0E18B68A44D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CF52784-3703-4E94-8903-B0E18B68A44D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CF52784-3703-4E94-8903-B0E18B68A44D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CF52784-3703-4E94-8903-B0E18B68A44D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5EC7F495-E17E-4022-BC88-81E39F4E71D8}
+	EndGlobalSection
+EndGlobal
