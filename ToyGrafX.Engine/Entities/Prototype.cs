@@ -4,11 +4,11 @@
     using System;
     using System.Collections.Generic;
 
-    public class Model : IDisposable
+    public class Prototype : IDisposable
     {
         #region Public Interface
 
-        public Model(float[] positions, int[] indices)
+        public Prototype(float[] positions, int[] indices)
         {
             VaoID = CreateVao();
             VertexCount = indices.Length;
@@ -61,7 +61,7 @@
 
         #region IDisposable Support
 
-        ~Model() => Dispose(false);
+        ~Prototype() => Dispose(false);
 
         public void Dispose()
         {

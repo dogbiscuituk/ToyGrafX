@@ -9,7 +9,11 @@
     {
         #region Public Interface
 
-        public GLControlRenderer(GLControl control) : base() { Control = control; }
+        public GLControlRenderer(GLControl control) : base()
+        {
+            Control = control;
+            Start();
+        }
 
         public GLControl Control
         {
@@ -23,7 +27,6 @@
                     Control.Load -= Control_Load;
                     Control.Paint -= Control_Paint;
                     Control.Resize -= Control_Resize;
-                    Application.Idle -= Application_Idle;
                 }
                 _Control = value;
                 if (Control != null)
@@ -31,10 +34,12 @@
                     Control.Load += Control_Load;
                     Control.Paint += Control_Paint;
                     Control.Resize += Control_Resize;
-                    Application.Idle += Application_Idle;
                 }
             }
         }
+
+        public void Start() => Application.Idle += Application_Idle;
+        public void Stop() => Application.Idle -= Application_Idle;
 
         #endregion
 
@@ -68,8 +73,9 @@
 
         private void Idle()
         {
-            while (Control.IsIdle)
-                Paint();
+            if (Control != null)
+                while (Control.IsIdle)
+                    Paint();
         }
 
         private void Paint()

@@ -4,6 +4,7 @@
     using System.Windows.Forms;
     using ToyGrafX.Engine.Controllers;
     using ToyGrafX.Engine.Entities;
+    using ToyGrafXwin.Models;
     using ToyGrafXwin.Views;
 
     public class SceneController
@@ -11,9 +12,12 @@
         public SceneController()
         {
             SceneForm = new SceneForm();
+            Model = new Model();
             Renderer = new GLControlRenderer(SceneForm.GLControl);
-            new PropertyGridController(this);
-            new EntityTableController(this);
+            EntityTableController = new EntityTableController(this);
+            FullScreenController = new FullScreenController(this);
+            JsonController = new JsonController(Model, SceneForm, SceneForm.FileReopen);
+            PropertyGridController = new PropertyGridController(this);
         }
 
         private SceneForm _SceneForm;
@@ -55,8 +59,13 @@
         }
 
         internal Camera Camera => Renderer.Camera;
+        internal readonly Model Model;
         internal GLControlRenderer Renderer;
 
+        internal readonly EntityTableController EntityTableController;
+        internal readonly PropertyGridController PropertyGridController;
+
+        private readonly FullScreenController FullScreenController;
         private readonly JsonController JsonController;
 
         internal List<Entity> Entities = new List<Entity>();
@@ -83,7 +92,10 @@
         {
             var cancel = !JsonController.SaveIfModified();
             if (!cancel)
+            {
+                Renderer.Stop();
                 AppController.Remove(this);
+            }
             return !cancel;
         }
 

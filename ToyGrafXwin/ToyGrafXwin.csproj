@@ -58,6 +58,7 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\CameraController.cs" />
+    <Compile Include="Controllers\FullScreenController.cs" />
     <Compile Include="Controllers\HostController.cs" />
     <Compile Include="Controllers\JsonController.cs" />
     <Compile Include="Controllers\MruController.cs" />

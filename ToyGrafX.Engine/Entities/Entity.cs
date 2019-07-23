@@ -4,11 +4,11 @@
 
     public class Entity
     {
-        public Entity(Model model, Vector3 position, Vector3 rotation, float scale)
+        public Entity(Prototype prototype, Vector3 position, Vector3 rotation, float scale)
         {
-            Model = model;
+            Prototype = prototype;
             Position = position;
-            Rotation = Rotation;
+            Rotation = rotation;
             Scale = scale;
         }
 
@@ -19,7 +19,7 @@
         public void ScaleBy(float scale) => Scale *= scale;
         public void ScaleTo(float scale) => Scale = scale;
 
-        public Model Model { get; set; }
+        public Prototype Prototype { get; set; }
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; set; }
         public float Scale { get; set; }

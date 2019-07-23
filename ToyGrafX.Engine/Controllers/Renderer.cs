@@ -45,12 +45,12 @@
             var vertices = Grid.GetVertexCoords(xc, yc).ToArray();
             var indices = Grid.GetTriangleIndices(xc, yc).ToArray();
 
-            var model = new Model(vertices, indices);
-            Models.Add(model);
+            var prototype = new Prototype(vertices, indices);
+            Prototypes.Add(prototype);
 
-            Entities.Add(new Entity(model, new Vector3(0, 0, -2), new Vector3(45, 45, 0), 1));
-            Entities.Add(new Entity(model, new Vector3(-3, 0, 0), new Vector3(0, 0, 0), 1));
-            Entities.Add(new Entity(model, new Vector3(+3, 0, 0), new Vector3(0, 0, 0), 1));
+            Entities.Add(new Entity(prototype, new Vector3(0, 0, -2), new Vector3(45, 45, 0), 1));
+            Entities.Add(new Entity(prototype, new Vector3(-3, 0, 0), new Vector3(0, 0, 0), 1));
+            Entities.Add(new Entity(prototype, new Vector3(+3, 0, 0), new Vector3(0, 0, 0), 1));
         }
 
         protected virtual void RenderFrame(double time)
@@ -77,15 +77,15 @@
             Shader.LoadViewMatrix(Camera);
             foreach (var entity in Entities)
             {
-                var model = entity.Model;
-                GL.BindVertexArray(model.VaoID);
+                var prototype = entity.Prototype;
+                GL.BindVertexArray(prototype.VaoID);
                 GL.EnableVertexAttribArray(0);
                 var transformationMatrix = Maths.CreateTransformationMatrix(
                     entity.Position, entity.Rotation, entity.Scale);
                 Shader.LoadTransformationMatrix(transformationMatrix);
 
-                //GL.DrawArrays(PrimitiveType.LineStrip, 0, model.VertexCount);
-                GL.DrawElements(BeginMode.Triangles, model.VertexCount, DrawElementsType.UnsignedInt, 0);
+                //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
+                GL.DrawElements(BeginMode.Triangles, prototype.VertexCount, DrawElementsType.UnsignedInt, 0);
 
                 GL.DisableVertexAttribArray(0);
                 GL.BindVertexArray(0);
@@ -123,7 +123,7 @@
         #region Private Properties
 
         private readonly List<Entity> Entities = new List<Entity>();
-        private readonly List<Model> Models = new List<Model>();
+        private readonly List<Prototype> Prototypes = new List<Prototype>();
 
         private Shader Shader;
         private double Time;

@@ -62,11 +62,11 @@
             this.EditMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewFullScreen = new System.Windows.Forms.ToolStripMenuItem();
-            this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.ViewPropertyGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewEntityTable = new System.Windows.Forms.ToolStripMenuItem();
+            this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
@@ -389,20 +389,6 @@
             this.ViewFullScreen.Size = new System.Drawing.Size(180, 22);
             this.ViewFullScreen.Text = "&Full Screen";
             // 
-            // HelpMenu
-            // 
-            this.HelpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.HelpAbout});
-            this.HelpMenu.Name = "HelpMenu";
-            this.HelpMenu.Size = new System.Drawing.Size(44, 20);
-            this.HelpMenu.Text = "&Help";
-            // 
-            // HelpAbout
-            // 
-            this.HelpAbout.Name = "HelpAbout";
-            this.HelpAbout.Size = new System.Drawing.Size(107, 22);
-            this.HelpAbout.Text = "&About";
-            // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
@@ -419,6 +405,20 @@
             this.ViewEntityTable.Name = "ViewEntityTable";
             this.ViewEntityTable.Size = new System.Drawing.Size(180, 22);
             this.ViewEntityTable.Text = "Entity Table";
+            // 
+            // HelpMenu
+            // 
+            this.HelpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.HelpAbout});
+            this.HelpMenu.Name = "HelpMenu";
+            this.HelpMenu.Size = new System.Drawing.Size(44, 20);
+            this.HelpMenu.Text = "&Help";
+            // 
+            // HelpAbout
+            // 
+            this.HelpAbout.Name = "HelpAbout";
+            this.HelpAbout.Size = new System.Drawing.Size(107, 22);
+            this.HelpAbout.Text = "&About";
             // 
             // SceneForm
             // 
