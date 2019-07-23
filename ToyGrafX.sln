@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGrafX", "ToyGrafX\ToyGrafX.csproj", "{E9BC352D-1B5B-45A5-9356-F8CEA9627DC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGrafX.Console", "ToyGrafX\ToyGrafX.Console.csproj", "{E9BC352D-1B5B-45A5-9356-F8CEA9627DC7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGrafXwin", "ToyGrafXwin\ToyGrafXwin.csproj", "{0F7D0F9E-2439-45BF-A273-7F0D23889C31}"
 EndProject

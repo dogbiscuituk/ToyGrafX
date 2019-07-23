@@ -41,8 +41,8 @@
             this.PopupPropertyGridHide = new System.Windows.Forms.ToolStripMenuItem();
             this.EntityTable = new System.Windows.Forms.DataGridView();
             this.PopupEntityTableMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.PopupTraceTableFloat = new System.Windows.Forms.ToolStripMenuItem();
-            this.PopupTraceTableHide = new System.Windows.Forms.ToolStripMenuItem();
+            this.PopupEntityTableFloat = new System.Windows.Forms.ToolStripMenuItem();
+            this.PopupEntityTableHide = new System.Windows.Forms.ToolStripMenuItem();
             this.Toolbar = new ToyGrafX.Controls.TgToolStrip();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
@@ -211,22 +211,22 @@
             // PopupEntityTableMenu
             // 
             this.PopupEntityTableMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.PopupTraceTableFloat,
-            this.PopupTraceTableHide});
+            this.PopupEntityTableFloat,
+            this.PopupEntityTableHide});
             this.PopupEntityTableMenu.Name = "PopupDataGridMenu";
             this.PopupEntityTableMenu.Size = new System.Drawing.Size(101, 48);
             // 
-            // PopupTraceTableFloat
+            // PopupEntityTableFloat
             // 
-            this.PopupTraceTableFloat.Name = "PopupTraceTableFloat";
-            this.PopupTraceTableFloat.Size = new System.Drawing.Size(100, 22);
-            this.PopupTraceTableFloat.Text = "&Float";
+            this.PopupEntityTableFloat.Name = "PopupEntityTableFloat";
+            this.PopupEntityTableFloat.Size = new System.Drawing.Size(100, 22);
+            this.PopupEntityTableFloat.Text = "&Float";
             // 
-            // PopupTraceTableHide
+            // PopupEntityTableHide
             // 
-            this.PopupTraceTableHide.Name = "PopupTraceTableHide";
-            this.PopupTraceTableHide.Size = new System.Drawing.Size(100, 22);
-            this.PopupTraceTableHide.Text = "&Hide";
+            this.PopupEntityTableHide.Name = "PopupEntityTableHide";
+            this.PopupEntityTableHide.Size = new System.Drawing.Size(100, 22);
+            this.PopupEntityTableHide.Text = "&Hide";
             // 
             // Toolbar
             // 
@@ -488,8 +488,8 @@
         internal System.Windows.Forms.ToolStripMenuItem PopupPropertyGridFloat;
         internal System.Windows.Forms.ToolStripMenuItem PopupPropertyGridHide;
         internal System.Windows.Forms.ContextMenuStrip PopupEntityTableMenu;
-        internal System.Windows.Forms.ToolStripMenuItem PopupTraceTableFloat;
-        internal System.Windows.Forms.ToolStripMenuItem PopupTraceTableHide;
+        internal System.Windows.Forms.ToolStripMenuItem PopupEntityTableFloat;
+        internal System.Windows.Forms.ToolStripMenuItem PopupEntityTableHide;
         internal System.Windows.Forms.PropertyGrid PropertyGrid;
         internal System.Windows.Forms.DataGridView EntityTable;
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;

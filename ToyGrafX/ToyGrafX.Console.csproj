@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E9BC352D-1B5B-45A5-9356-F8CEA9627DC7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ToyGrafX</RootNamespace>
-    <AssemblyName>ToyGrafX</AssemblyName>
+    <RootNamespace>ToyGrafX.Console</RootNamespace>
+    <AssemblyName>ToyGrafX.Console</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

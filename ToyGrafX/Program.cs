@@ -4,6 +4,8 @@
 
     class Program
     {
-        static void Main() => new GameWindowRenderer(1024, 768, "Cleo").GameWindow.Run(60);
+        static void Main() =>
+            new GameWindowRenderer(1024, 768, "ToyGrafX Console").
+            GameWindow.Run(60);
     }
 }

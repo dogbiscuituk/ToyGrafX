@@ -15,12 +15,12 @@
             SceneController = sceneController;
             EntityTable = SceneForm.EntityTable;
             EntityTable.AutoGenerateColumns = false;
-            EntityTable.SelectionChanged += TraceTable_SelectionChanged;
+            EntityTable.SelectionChanged += EntityTable_SelectionChanged;
             SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
             SceneForm.ViewEntityTable.Click += ToggleEntityTable;
-            SceneForm.PopupEntityTableMenu.Opening += PopupTraceTableMenu_Opening;
-            SceneForm.PopupTraceTableFloat.Click += PopupTraceTableDock_Click;
-            SceneForm.PopupTraceTableHide.Click += PopupTraceTableHide_Click;
+            SceneForm.PopupEntityTableMenu.Opening += PopupEntityTableMenu_Opening;
+            SceneForm.PopupEntityTableFloat.Click += PopupEntityTableDock_Click;
+            SceneForm.PopupEntityTableHide.Click += PopupEntityTableHide_Click;
         }
 
         internal bool EntityTableVisible
@@ -43,7 +43,7 @@
             get
             {
                 if (_HostController == null)
-                    _HostController = new HostController("Trace Table", EntityTable);
+                    _HostController = new HostController("Entity Table", EntityTable);
                 return _HostController;
             }
         }
@@ -94,17 +94,17 @@
         private void HostFormClosing(object sender, FormClosingEventArgs e) =>
             EntityTableDocked = true;
 
-        private void PopupTraceTableDock_Click(object sender, System.EventArgs e) =>
+        private void PopupEntityTableDock_Click(object sender, System.EventArgs e) =>
             EntityTableDocked = !EntityTableDocked;
 
-        private void PopupTraceTableHide_Click(object sender, EventArgs e)
+        private void PopupEntityTableHide_Click(object sender, EventArgs e)
         {
             EntityTableDocked = true;
             EntityTableVisible = false;
         }
 
-        private void PopupTraceTableMenu_Opening(object sender, CancelEventArgs e) =>
-            SceneForm.PopupTraceTableFloat.Checked = !EntityTableDocked;
+        private void PopupEntityTableMenu_Opening(object sender, CancelEventArgs e) =>
+            SceneForm.PopupEntityTableFloat.Checked = !EntityTableDocked;
 
         private void ToggleEntityTable(object sender, EventArgs e)
         {
@@ -112,7 +112,7 @@
             EntityTableVisible = !EntityTableVisible;
         }
 
-        private void TraceTable_SelectionChanged(object sender, EventArgs e) =>
+        private void EntityTable_SelectionChanged(object sender, EventArgs e) =>
             SelectionChanged?.Invoke(sender, e);
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
