@@ -9,10 +9,10 @@
     {
         #region Public Interface
 
-        public GLControlRenderer(GLControl control) : base()
+        public GLControlRenderer(GLControl control, int sceneID) : base()
         {
             Control = control;
-            Start();
+            SceneID = sceneID;
         }
 
         public GLControl Control
@@ -38,9 +38,6 @@
             }
         }
 
-        public void Start() => Application.Idle += Application_Idle;
-        public void Stop() => Application.Idle -= Application_Idle;
-
         #endregion
 
         #region Overrides
@@ -51,18 +48,42 @@
         protected override void Exit() { }
         protected override void SwapBuffers() => Control.SwapBuffers();
 
+        protected override void RenderFrame(double time)
+        {
+            Control.MakeCurrent();
+            base.RenderFrame(time);
+        }
+
+        protected override void Resize()
+        {
+            Control.MakeCurrent();
+            base.Resize();
+        }
+
+        protected override void Unload()
+        {
+            Control.MakeCurrent();
+            base.Unload();
+        }
+
+        protected override void UpdateFrame(double time)
+        {
+            Control.MakeCurrent();
+            base.UpdateFrame(time);
+        }
+
         #endregion
 
         #region Private Properties
 
         private GLControl _Control;
         private DateTime LastTime = DateTime.MinValue;
+        private int SceneID;
 
         #endregion
 
         #region Private Event Handlers
 
-        private void Application_Idle(object sender, EventArgs e) => Idle();
         private void Control_Load(object sender, System.EventArgs e) => Load();
         private void Control_Paint(object sender, System.Windows.Forms.PaintEventArgs e) => Paint();
         private void Control_Resize(object sender, System.EventArgs e) => Resize();
@@ -71,14 +92,7 @@
 
         #region Private Methods
 
-        private void Idle()
-        {
-            if (Control != null)
-                while (Control.IsIdle)
-                    Paint();
-        }
-
-        private void Paint()
+        internal void Paint()
         {
             var now = DateTime.Now;
             if (LastTime != DateTime.MinValue)

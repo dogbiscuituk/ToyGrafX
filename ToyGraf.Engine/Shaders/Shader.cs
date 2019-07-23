@@ -46,13 +46,10 @@
         protected void LoadMatrix(int location, Matrix4 value) => GL.UniformMatrix4(location, false, ref value);
 
         #region Private Properties
-
-        private int
-            ProgramID,
-            VertexShaderID,
-            GeometryShaderID,
-            FragmentShaderID;
-
+        private int ProgramID;
+        private int VertexShaderID;
+        private readonly int GeometryShaderID;
+        private int FragmentShaderID;
         private int
             location_projectionMatrix,
             location_transformationMatrix,

@@ -7,20 +7,21 @@
     using ToyGraf.Models;
     using ToyGraf.Views;
 
-    public class SceneController
+    internal class SceneController
     {
-        public SceneController()
+        #region Internal Interface
+
+        internal SceneController(int sceneID)
         {
             SceneForm = new SceneForm();
             Model = new Model();
-            Renderer = new GLControlRenderer(SceneForm.GLControl);
+            Renderer = new GLControlRenderer(SceneForm.GLControl, sceneID);
             EntityTableController = new EntityTableController(this);
             FullScreenController = new FullScreenController(this);
             JsonController = new JsonController(Model, SceneForm, SceneForm.FileReopen);
             PropertyGridController = new PropertyGridController(this);
         }
 
-        private SceneForm _SceneForm;
         internal SceneForm SceneForm
         {
             get => _SceneForm;
@@ -65,10 +66,12 @@
         internal readonly EntityTableController EntityTableController;
         internal readonly PropertyGridController PropertyGridController;
 
-        private readonly FullScreenController FullScreenController;
-        private readonly JsonController JsonController;
-
         internal List<Entity> Entities = new List<Entity>();
+
+        internal void Render() => Renderer.Paint();
+        internal void Show() => SceneForm.Show();
+
+        #endregion
 
         #region Private Event Handlers
 
@@ -86,24 +89,59 @@
 
         #endregion
 
+        #region Private Properties
+
+        private SceneForm _SceneForm;
+
+        private readonly FullScreenController FullScreenController;
+        private readonly JsonController JsonController;
+
+        #endregion
+
         #region Private Methods
 
         private bool FormClosing(CloseReason closeReason)
         {
             var cancel = !JsonController.SaveIfModified();
             if (!cancel)
-            {
-                Renderer.Stop();
                 AppController.Remove(this);
-            }
             return !cancel;
         }
 
-        private void NewEmptyScene() { }
-        private void NewFromTemplate() { }
+        private SceneController GetNewSceneController()
+        {
+            if (AppController.Options.OpenInNewWindow)
+                return AppController.AddNewSceneController();
+            if (!JsonController.SaveIfModified())
+                return null;
+            JsonController.Clear();
+            return this;
+        }
+
+        private void NewEmptyScene() => GetNewSceneController();
+
+        private void NewFromTemplate()
+        {
+            var sceneController = OpenFile(FilterIndex.Template);
+            if (sceneController != null)
+                sceneController.JsonController.FilePath = string.Empty;
+        }
+
         private void OpenFile() { }
-        private bool SaveIfModified() => true;
-        public void Show(IWin32Window owner) => SceneForm.Show(owner);
+
+        private SceneController OpenFile(FilterIndex filterIndex = FilterIndex.File) =>
+            OpenFile(JsonController.SelectFilePath(filterIndex));
+
+        private SceneController OpenFile(string filePath)
+        {
+            if (string.IsNullOrWhiteSpace(filePath))
+                return null;
+            var sceneController = GetNewSceneController();
+            if (sceneController == null)
+                return null;
+            sceneController.JsonController.LoadFromFile(filePath);
+            return sceneController;
+        }
 
         #endregion
     }

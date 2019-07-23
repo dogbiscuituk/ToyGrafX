@@ -39,7 +39,7 @@ namespace ToyGraf.Engine.Shaders
 
         #region Private Properties
 
-        private string
+        private readonly string
             VertexPath,
             GeometryPath,
             FragmentPath;

@@ -18,7 +18,7 @@
 
         #region Private Properties
 
-        private SceneController SceneController;
+        private readonly SceneController SceneController;
         private SceneForm Form => SceneController.SceneForm;
         private PropertyGridController PropertyGridController => SceneController.PropertyGridController;
         private EntityTableController EntityTableController => SceneController.EntityTableController;

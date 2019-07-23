@@ -17,15 +17,16 @@
                 Enabled = true
             };
             Timer.Tick += Timer_Tick;
+            Application.Idle += Application_Idle;
             AddNewSceneController();
             //ApplyOptions();
         }
 
-        private static SceneController AddNewSceneController()
+        internal static SceneController AddNewSceneController()
         {
-            var sceneController = new SceneController();
+            var sceneController = new SceneController(SceneID++);
             SceneControllers.Add(sceneController);
-            sceneController.Show(null);
+            sceneController.Show();
             return sceneController;
         }
 
@@ -62,6 +63,7 @@
         }
 
         private static Properties.Settings Settings => Properties.Settings.Default;
+        private static int SceneID;
 
         internal static Options Options
         {
@@ -92,6 +94,21 @@
         }
 
         internal static List<SceneController> SceneControllers = new List<SceneController>();
+
+        private static void Application_Idle(object sender, EventArgs e)
+        {
+            bool idle;
+            do
+            {
+                idle = false;
+                foreach (var sceneController in SceneControllers)
+                {
+                    sceneController.Render();
+                    idle |= sceneController.Renderer.Control.IsIdle;
+                }
+            }
+            while (idle);
+        }
 
         private static void Timer_Tick(object sender, EventArgs e)
         {

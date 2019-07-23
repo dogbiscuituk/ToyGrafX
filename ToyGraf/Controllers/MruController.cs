@@ -51,7 +51,7 @@
         #region Private Properties
 
         private readonly string SubKeyName;
-        private ToolStripDropDownItem RecentMenu;
+        private readonly ToolStripDropDownItem RecentMenu;
 
         #endregion
 
