@@ -1,7 +1,5 @@
-﻿namespace ToyGraf
+﻿namespace ToyGraf.Console
 {
-    using ToyGraf.Engine;
-
     class Program
     {
         static void Main() =>

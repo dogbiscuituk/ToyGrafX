@@ -1,4 +1,4 @@
-﻿namespace ToyGraf.Engine
+﻿namespace ToyGraf.Console
 {
     using OpenTK;
     using ToyGraf.Engine.Controllers;
