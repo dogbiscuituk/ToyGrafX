@@ -15,9 +15,27 @@
         public float X { get; private set; }
         public float Y { get; private set; }
         public float Z { get; private set; }
-        public float Pitch { get; private set; }
-        public float Yaw { get; private set; }
-        public float Roll { get; private set; }
+
+        private float _Pitch;
+        public float Pitch
+        {
+            get => _Pitch;
+            set => _Pitch = value % 360.0f;
+        }
+
+        private float _Yaw;
+        public float Yaw
+        {
+            get => _Yaw;
+            set => _Yaw = value % 360.0f;
+        }
+
+        private float _Roll;
+        public float Roll
+        {
+            get => _Roll;
+            set => _Roll = value % 360.0f;
+        }
 
         /// <summary>
         ///             Normal      Shift       Ctrl
@@ -46,14 +64,14 @@
             if (keyboard.IsKeyDown(Key.Up)) Do(p => p.Y += s, p => p.Z -= s, p => p.Pitch -= r);
             if (keyboard.IsKeyDown(Key.Down)) Do(p => p.Y -= s, p => p.Z += s, p => p.Pitch += r);
 
-            void Do(Action<Camera> doNormal, Action<Camera> doShift, Action<Camera> doCtrl)
+            void Do(Action<Camera> normal, Action<Camera> shift, Action<Camera> ctrl)
             {
                 switch (shiftKeys)
                 {
-                    case ShiftKeys.None: doNormal(this); return;
-                    case ShiftKeys.Shift: doShift(this); return;
-                    case ShiftKeys.Ctrl: doCtrl(this); return;
-                    case ShiftKeys.CtrlShift: doCtrl(this); goto case ShiftKeys.Shift;
+                    case ShiftKeys.None: normal(this); return;
+                    case ShiftKeys.Shift: shift(this); return;
+                    case ShiftKeys.Ctrl: ctrl(this); return;
+                    case ShiftKeys.CtrlShift: ctrl(this); goto case ShiftKeys.Shift;
                 }
             }
         }

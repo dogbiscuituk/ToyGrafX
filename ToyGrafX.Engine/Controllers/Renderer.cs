@@ -11,15 +11,17 @@
     using ToyGrafX.Engine.Shaders;
     using ToyGrafX.Engine.Utility;
 
-    public abstract class Controller
+    public abstract class Renderer
     {
         #region Public Interface
+
+        public Camera Camera = new Camera();
 
         public void AddEntity(Entity entity) => Entities.Add(entity);
 
         #endregion
 
-        #region Protected Interface
+        #region Virtuals
 
         protected virtual GraphicsMode GraphicsMode => new GraphicsMode(
             color: new ColorFormat(8, 8, 8, 8),
@@ -75,9 +77,6 @@
             Shader.LoadViewMatrix(Camera);
             foreach (var entity in Entities)
             {
-                entity.MoveBy(0, 0, -0.01f);
-                entity.RotateBy(1, 2, 3);
-
                 var model = entity.Model;
                 GL.BindVertexArray(model.VaoID);
                 GL.EnableVertexAttribArray(0);
@@ -112,7 +111,7 @@
 
         #endregion
 
-        #region Protected Virtual Interface
+        #region Abstracts
 
         protected abstract int DisplayWidth { get; }
         protected abstract int DisplayHeight { get; }
@@ -126,9 +125,8 @@
         private readonly List<Entity> Entities = new List<Entity>();
         private readonly List<Model> Models = new List<Model>();
 
-        private double Time;
-        private Camera Camera = new Camera();
         private Shader Shader;
+        private double Time;
 
         #endregion
 
@@ -183,9 +181,9 @@
         #region Private Properties
 
         private float
-            _FarPlaneDistance = 1000,
             _FieldOfViewDegreesY = 70,
-            _NearPlaneDistance = 0.1f;
+            _NearPlaneDistance = 0.1f,
+            _FarPlaneDistance = 1000;
 
         private Matrix4
             NewProjectionMatrix,

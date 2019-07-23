@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E9BC352D-1B5B-45A5-9356-F8CEA9627DC7}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ToyGrafX</RootNamespace>
-    <AssemblyName>ToyGrafX</AssemblyName>
+    <ProjectGuid>{D2D7AB8A-264D-4F85-A1CC-74347263FE22}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ToyGrafX.Controls</RootNamespace>
+    <AssemblyName>ToyGrafX.Controls</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -48,19 +46,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="CameraControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CameraControl.Designer.cs">
+      <DependentUpon>CameraControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TgControls.cs" />
+    <Compile Include="TgMenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TgStatusStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TgToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="OpenTK.dll.config" />
-    <None Include="packages.config" />
+    <EmbeddedResource Include="CameraControl.resx">
+      <DependentUpon>CameraControl.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ToyGrafX.Engine\ToyGrafX.Engine.csproj">
-      <Project>{c5d021e6-196f-45e1-915b-cdf7020ce226}</Project>
+      <Project>{C5D021E6-196F-45E1-915B-CDF7020CE226}</Project>
       <Name>ToyGrafX.Engine</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OpenTK.dll.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
