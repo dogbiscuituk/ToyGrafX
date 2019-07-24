@@ -148,6 +148,248 @@
       <Name>ToyGraf.Engine</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Images\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\BackHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Color_fontHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ColorHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\CopyHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\CutHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\DataContainer_MoveFirstHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\DataContainer_MoveLastHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\DataContainer_MoveNextHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\DataContainer_MovePreviousHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\DoubleLeftArrowHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\DoubleRightArrowHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Edit_RedoHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Edit_UndoHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\EditInformationHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\EditTableHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\eps_closedHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\eps_open_largeHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\eps_openHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\FFwdHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\FindHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\FindNextHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\FlipHorizontalHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\FlipVerticalHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\FolderHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\FontDialogHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\FormRunHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\FullScreenHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\FunctionHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\GoLtrHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\GoRtlHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\GoToNextHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\graphhs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\HomeHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\InsertHyperlinkHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\LegendHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\LineColorHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\NewDocumentHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\NoteHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\OpenFileHS.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\openfolderHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\openHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\OptionsHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\PasteHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\PauseHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\PauseRecorderHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\PieChart3DHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\PieChartHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\PlayHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\PointerHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\PrimaryKeyHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\PrintHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\PrintPreviewHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\RepeatHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ResizeHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\RestartHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\RewindHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\RightArrow2HS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\RightArrowHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\RightToLeftDoucmentHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\RoutingSlipHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\SaveAllHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\SaveAsWebPageHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\SaveFormDesignHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\saveHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\SearchWebHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\SendBackwardHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\SendToBackHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ShowAllCommentsHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ShowGridlines2HS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ShowGridlinesHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\SpeechMicHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\StopHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\SychronizeListHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\TableHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\TaskHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\TextboxHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\TileWindowsHorizontallyHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\WebInsertHyperlinkHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ZoomHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\action_add_16xLG.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
