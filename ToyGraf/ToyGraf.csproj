@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Commands\BaseCommands.cs" />
     <Compile Include="Commands\CommandInterfaces.cs" />
+    <Compile Include="Commands\CommandProcessor.cs" />
     <Compile Include="Commands\TraceCommands.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AppController.cs" />

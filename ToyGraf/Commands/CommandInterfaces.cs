@@ -33,4 +33,14 @@
     {
         Trace Value { get; set; }
     }
+
+    public interface ICommandProcessor
+    {
+        void Run(ICommand command);
+    }
+
+    public interface ISceneController
+    {
+        ICommandProcessor CommandProcessor { get; }
+    }
 }

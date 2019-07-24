@@ -8,13 +8,7 @@
     {
         #region Internal Interface
 
-        internal GLControlRenderer(GLControl control, int sceneID) : base()
-        {
-            Control = control;
-            SceneID = sceneID;
-        }
-
-        internal bool IsIdle => Control.IsIdle;
+        internal GLControlRenderer(GLControl control) : base() => Control = control;
 
         #endregion
 
@@ -79,7 +73,6 @@
 
         private GLControl _Control;
         private DateTime LastTime = DateTime.MinValue;
-        private int SceneID;
 
         #endregion
 

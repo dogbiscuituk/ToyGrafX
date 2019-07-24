@@ -172,43 +172,4 @@
     }
 
     #endregion
-
-    #region Composite Command
-
-    /*public class CompositeCommand : Command<object>
-    {
-        protected CompositeCommand(params ICommand[] commands)
-        {
-            Detail = "multiple properties";
-            Commands.Clear();
-            Commands.AddRange(commands);
-        }
-
-        public override string RedoAction => Action;
-        public override string UndoAction => Action;
-
-        protected override string Target => null;
-
-        public override void Invert()
-        {
-            Commands.ForEach(p => p.Invert());
-            Commands.Reverse();
-        }
-
-        public override bool Run(Scene scene)
-        {
-            var result = false;
-            foreach (var command in Commands)
-                result |= command.Run(scene);
-            return result;
-        }
-
-        public override string ToString() =>
-            Commands.Select(p => p.ToString()).Aggregate((s, t) => $"{s}; {t}");
-
-        protected virtual string Action { get => "multiple changes"; }
-        private readonly List<ICommand> Commands = new List<ICommand>();
-    }*/
-
-    #endregion
 }

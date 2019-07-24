@@ -8,5 +8,10 @@
         {
             InitializeComponent();
         }
+
+        private void StopToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }

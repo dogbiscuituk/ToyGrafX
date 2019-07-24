@@ -3,26 +3,28 @@
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
+    using ToyGraf.Commands;
     using ToyGraf.Engine.Controllers;
     using ToyGraf.Engine.Entities;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
-    internal class SceneController
+    public class SceneController : ISceneController
     {
         #region Internal Interface
 
-        internal SceneController(int sceneID)
+        public SceneController()
         {
             SceneForm = new SceneForm();
-            Scene = new Scene();
-            Renderer = new GLControlRenderer(SceneForm.GLControl, sceneID);
+            Scene = new Scene(this);
+            CommandProcessor = new CommandProcessor(this);
+            Renderer = new GLControlRenderer(SceneForm.GLControl);
             EntityTableController = new EntityTableController(this);
             FullScreenController = new FullScreenController(this);
             JsonController = new JsonController(Scene, SceneForm, SceneForm.FileReopen);
             PropertyGridController = new PropertyGridController(this);
 
-            Trace = new Trace();
+            Trace = new Trace(Scene);
             PropertyGridController.SelectedObjects = new[] { Trace };
         }
 
@@ -98,6 +100,8 @@
         internal Camera Camera => Renderer.Camera;
         internal readonly Scene Scene;
         internal GLControlRenderer Renderer;
+
+        public ICommandProcessor CommandProcessor { get; private set; }
 
         internal readonly EntityTableController EntityTableController;
         internal readonly PropertyGridController PropertyGridController;

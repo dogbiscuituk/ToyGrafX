@@ -18,11 +18,7 @@
         #region Internal Interface
 
         internal JsonController(Scene scene, Control view, ToolStripDropDownItem recentMenu)
-            : base(scene, Properties.Settings.Default.FileFilter, "LibraryMRU", recentMenu)
-        {
-            Scene.PropertyChanged += Model_PropertyChanged;
-            View = view;
-        }
+            : base(scene, Properties.Settings.Default.FileFilter, "LibraryMRU", recentMenu) => View = view;
 
         internal string WindowCaption
         {
@@ -69,8 +65,6 @@
         #region Private Implementation
 
         private readonly Control View;
-
-        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
         private static JsonSerializer GetSerializer() => new JsonSerializer
         {

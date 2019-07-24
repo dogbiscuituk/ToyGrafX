@@ -27,7 +27,7 @@
 
         internal static SceneController AddNewSceneController()
         {
-            var sceneController = new SceneController(SceneID++);
+            var sceneController = new SceneController();
             SceneControllers.Add(sceneController);
             sceneController.Show();
             return sceneController;
