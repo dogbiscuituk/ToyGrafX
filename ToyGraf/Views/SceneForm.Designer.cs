@@ -46,7 +46,7 @@
             this.tbNew = new System.Windows.Forms.ToolStripSplitButton();
             this.tbNewEmptyScene = new System.Windows.Forms.ToolStripMenuItem();
             this.tbNewFromTemplate = new System.Windows.Forms.ToolStripMenuItem();
-            this.tbOpen = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tbOpen = new System.Windows.Forms.ToolStripSplitButton();
             this.tbSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tbUndo = new System.Windows.Forms.ToolStripSplitButton();
@@ -1112,7 +1112,7 @@
         internal System.Windows.Forms.ToolStripMenuItem HelpMenu;
         internal ToyGraf.Controls.TgToolStrip Toolbar;
         internal System.Windows.Forms.ToolStripSplitButton tbNew;
-        internal System.Windows.Forms.ToolStripDropDownButton tbOpen;
+        internal System.Windows.Forms.ToolStripSplitButton tbOpen;
         internal ToyGraf.Controls.TgStatusStrip StatusBar;
         internal System.Windows.Forms.ToolStripMenuItem FileNew;
         internal System.Windows.Forms.ToolStripMenuItem FileOpen;
@@ -1194,14 +1194,14 @@
         internal System.Windows.Forms.ToolStripMenuItem TimeAccelerate;
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem11;
         internal System.Windows.Forms.ToolStripMenuItem CameraHome;
-        private System.Windows.Forms.ToolStripDropDownButton tbDecelerate;
-        private System.Windows.Forms.ToolStripDropDownButton tbReverse;
-        private System.Windows.Forms.ToolStripDropDownButton tbStop;
-        private System.Windows.Forms.ToolStripDropDownButton tbPause;
-        private System.Windows.Forms.ToolStripDropDownButton tbForward;
-        private System.Windows.Forms.ToolStripDropDownButton tbAccelerate;
-        private System.Windows.Forms.ToolStripStatusLabel SpeedLabel;
-        private System.Windows.Forms.ToolStripStatusLabel TimeLabel;
-        private System.Windows.Forms.ToolStripStatusLabel FPSLabel;
+        internal System.Windows.Forms.ToolStripDropDownButton tbDecelerate;
+        internal System.Windows.Forms.ToolStripDropDownButton tbReverse;
+        internal System.Windows.Forms.ToolStripDropDownButton tbStop;
+        internal System.Windows.Forms.ToolStripDropDownButton tbPause;
+        internal System.Windows.Forms.ToolStripDropDownButton tbForward;
+        internal System.Windows.Forms.ToolStripDropDownButton tbAccelerate;
+        internal System.Windows.Forms.ToolStripStatusLabel SpeedLabel;
+        internal System.Windows.Forms.ToolStripStatusLabel TimeLabel;
+        internal System.Windows.Forms.ToolStripStatusLabel FPSLabel;
     }
 }

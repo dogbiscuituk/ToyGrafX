@@ -50,6 +50,12 @@
                     SceneForm.FileClose.Click -= FileClose_Click;
                     SceneForm.FileExit.Click -= FileExit_Click;
 
+                    SceneForm.tbNew.ButtonClick -= FileNewEmptyScene_Click;
+                    SceneForm.tbNewEmptyScene.Click -= FileNewEmptyScene_Click;
+                    SceneForm.tbNewFromTemplate.Click -= FileNewFromTemplate_Click;
+                    SceneForm.tbOpen.ButtonClick -= FileOpen_Click;
+                    SceneForm.tbOpen.DropDownOpening -= TbOpen_DropDownOpening;
+
                     SceneForm.CameraMoveLeft.Click -= CameraMoveLeft_Click;
                     SceneForm.CameraMoveRight.Click -= CameraMoveRight_Click;
                     SceneForm.CameraMoveUp.Click -= CameraMoveUp_Click;
@@ -78,6 +84,12 @@
                     SceneForm.FileSaveAs.Click += FileSaveAs_Click;
                     SceneForm.FileClose.Click += FileClose_Click;
                     SceneForm.FileExit.Click += FileExit_Click;
+
+                    SceneForm.tbNew.ButtonClick += FileNewEmptyScene_Click;
+                    SceneForm.tbNewEmptyScene.Click += FileNewEmptyScene_Click;
+                    SceneForm.tbNewFromTemplate.Click += FileNewFromTemplate_Click;
+                    SceneForm.tbOpen.ButtonClick += FileOpen_Click;
+                    SceneForm.tbOpen.DropDownOpening += TbOpen_DropDownOpening;
 
                     SceneForm.CameraMoveLeft.Click += CameraMoveLeft_Click;
                     SceneForm.CameraMoveRight.Click += CameraMoveRight_Click;
@@ -125,6 +137,8 @@
         private void FileSaveAs_Click(object sender, System.EventArgs e) => JsonController.SaveAs();
         private void FileClose_Click(object sender, System.EventArgs e) => SceneForm.Close();
         private void FileExit_Click(object sender, System.EventArgs e) => AppController.Close();
+
+        private void TbOpen_DropDownOpening(object sender, EventArgs e) => SceneForm.FileReopen.CloneTo(SceneForm.tbOpen);
 
         private void CameraMoveLeft_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Left);
         private void CameraMoveRight_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Right);
