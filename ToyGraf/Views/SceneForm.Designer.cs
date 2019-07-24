@@ -65,8 +65,27 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.ViewPropertyGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewEntityTable = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraMove = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraMoveLeft = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraMoveRight = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraMoveUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraMoveDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraMoveIn = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraMoveOut = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraRotate = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraRotateLeft = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraRotateRight = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraRotateUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraRotateDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraRotateClockwise = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraRotateAnticlockwise = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
@@ -265,6 +284,7 @@
             this.FileMenu,
             this.EditMenu,
             this.ViewMenu,
+            this.CameraMenu,
             this.HelpMenu});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
@@ -386,25 +406,166 @@
             // 
             this.ViewFullScreen.Name = "ViewFullScreen";
             this.ViewFullScreen.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.ViewFullScreen.Size = new System.Drawing.Size(180, 22);
+            this.ViewFullScreen.Size = new System.Drawing.Size(156, 22);
             this.ViewFullScreen.Text = "&Full Screen";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(153, 6);
             // 
             // ViewPropertyGrid
             // 
             this.ViewPropertyGrid.Name = "ViewPropertyGrid";
-            this.ViewPropertyGrid.Size = new System.Drawing.Size(180, 22);
+            this.ViewPropertyGrid.Size = new System.Drawing.Size(156, 22);
             this.ViewPropertyGrid.Text = "Property Grid";
             // 
             // ViewEntityTable
             // 
             this.ViewEntityTable.Name = "ViewEntityTable";
-            this.ViewEntityTable.Size = new System.Drawing.Size(180, 22);
+            this.ViewEntityTable.Size = new System.Drawing.Size(156, 22);
             this.ViewEntityTable.Text = "Entity Table";
+            // 
+            // CameraMenu
+            // 
+            this.CameraMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CameraMove,
+            this.CameraRotate});
+            this.CameraMenu.Name = "CameraMenu";
+            this.CameraMenu.Size = new System.Drawing.Size(60, 20);
+            this.CameraMenu.Text = "&Camera";
+            // 
+            // CameraMove
+            // 
+            this.CameraMove.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CameraMoveLeft,
+            this.CameraMoveRight,
+            this.toolStripMenuItem4,
+            this.CameraMoveUp,
+            this.CameraMoveDown,
+            this.toolStripMenuItem5,
+            this.CameraMoveIn,
+            this.CameraMoveOut});
+            this.CameraMove.Name = "CameraMove";
+            this.CameraMove.Size = new System.Drawing.Size(180, 22);
+            this.CameraMove.Text = "Move";
+            // 
+            // CameraMoveLeft
+            // 
+            this.CameraMoveLeft.Name = "CameraMoveLeft";
+            this.CameraMoveLeft.ShortcutKeyDisplayString = "^Left";
+            this.CameraMoveLeft.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Left)));
+            this.CameraMoveLeft.Size = new System.Drawing.Size(180, 22);
+            this.CameraMoveLeft.Text = "&Left";
+            // 
+            // CameraMoveRight
+            // 
+            this.CameraMoveRight.Name = "CameraMoveRight";
+            this.CameraMoveRight.ShortcutKeyDisplayString = "^Right";
+            this.CameraMoveRight.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Right)));
+            this.CameraMoveRight.Size = new System.Drawing.Size(180, 22);
+            this.CameraMoveRight.Text = "&Right";
+            // 
+            // CameraMoveUp
+            // 
+            this.CameraMoveUp.Name = "CameraMoveUp";
+            this.CameraMoveUp.ShortcutKeyDisplayString = "^Up";
+            this.CameraMoveUp.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
+            this.CameraMoveUp.Size = new System.Drawing.Size(180, 22);
+            this.CameraMoveUp.Text = "&Up";
+            // 
+            // CameraMoveDown
+            // 
+            this.CameraMoveDown.Name = "CameraMoveDown";
+            this.CameraMoveDown.ShortcutKeyDisplayString = "^Down";
+            this.CameraMoveDown.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
+            this.CameraMoveDown.Size = new System.Drawing.Size(180, 22);
+            this.CameraMoveDown.Text = "&Down";
+            // 
+            // CameraMoveIn
+            // 
+            this.CameraMoveIn.Name = "CameraMoveIn";
+            this.CameraMoveIn.ShortcutKeyDisplayString = "^PgUp";
+            this.CameraMoveIn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.PageUp)));
+            this.CameraMoveIn.Size = new System.Drawing.Size(180, 22);
+            this.CameraMoveIn.Text = "&In";
+            // 
+            // CameraMoveOut
+            // 
+            this.CameraMoveOut.Name = "CameraMoveOut";
+            this.CameraMoveOut.ShortcutKeyDisplayString = "^PgDn";
+            this.CameraMoveOut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Next)));
+            this.CameraMoveOut.Size = new System.Drawing.Size(180, 22);
+            this.CameraMoveOut.Text = "&Out";
+            // 
+            // CameraRotate
+            // 
+            this.CameraRotate.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CameraRotateLeft,
+            this.CameraRotateRight,
+            this.toolStripMenuItem6,
+            this.CameraRotateUp,
+            this.CameraRotateDown,
+            this.toolStripMenuItem7,
+            this.CameraRotateAnticlockwise,
+            this.CameraRotateClockwise});
+            this.CameraRotate.Name = "CameraRotate";
+            this.CameraRotate.Size = new System.Drawing.Size(180, 22);
+            this.CameraRotate.Text = "Rotate";
+            // 
+            // CameraRotateLeft
+            // 
+            this.CameraRotateLeft.Name = "CameraRotateLeft";
+            this.CameraRotateLeft.ShortcutKeyDisplayString = "Shift+^Left";
+            this.CameraRotateLeft.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Left)));
+            this.CameraRotateLeft.Size = new System.Drawing.Size(223, 22);
+            this.CameraRotateLeft.Text = "&Left";
+            // 
+            // CameraRotateRight
+            // 
+            this.CameraRotateRight.Name = "CameraRotateRight";
+            this.CameraRotateRight.ShortcutKeyDisplayString = "Shift+^Right";
+            this.CameraRotateRight.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Right)));
+            this.CameraRotateRight.Size = new System.Drawing.Size(223, 22);
+            this.CameraRotateRight.Text = "&Right";
+            // 
+            // CameraRotateUp
+            // 
+            this.CameraRotateUp.Name = "CameraRotateUp";
+            this.CameraRotateUp.ShortcutKeyDisplayString = "Shift+^Up";
+            this.CameraRotateUp.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Up)));
+            this.CameraRotateUp.Size = new System.Drawing.Size(223, 22);
+            this.CameraRotateUp.Text = "&Up";
+            // 
+            // CameraRotateDown
+            // 
+            this.CameraRotateDown.Name = "CameraRotateDown";
+            this.CameraRotateDown.ShortcutKeyDisplayString = "Shift+^Down";
+            this.CameraRotateDown.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Down)));
+            this.CameraRotateDown.Size = new System.Drawing.Size(223, 22);
+            this.CameraRotateDown.Text = "&Down";
+            // 
+            // CameraRotateClockwise
+            // 
+            this.CameraRotateClockwise.Name = "CameraRotateClockwise";
+            this.CameraRotateClockwise.ShortcutKeyDisplayString = "Shift+^PgDn";
+            this.CameraRotateClockwise.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Next)));
+            this.CameraRotateClockwise.Size = new System.Drawing.Size(223, 22);
+            this.CameraRotateClockwise.Text = "&Clockwise";
+            // 
+            // CameraRotateAnticlockwise
+            // 
+            this.CameraRotateAnticlockwise.Name = "CameraRotateAnticlockwise";
+            this.CameraRotateAnticlockwise.ShortcutKeyDisplayString = "Shift+^PgUp";
+            this.CameraRotateAnticlockwise.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.PageUp)));
+            this.CameraRotateAnticlockwise.Size = new System.Drawing.Size(223, 22);
+            this.CameraRotateAnticlockwise.Text = "&Anticlockwise";
             // 
             // HelpMenu
             // 
@@ -419,6 +580,26 @@
             this.HelpAbout.Name = "HelpAbout";
             this.HelpAbout.Size = new System.Drawing.Size(107, 22);
             this.HelpAbout.Text = "&About";
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(177, 6);
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(177, 6);
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(177, 6);
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(177, 6);
             // 
             // SceneForm
             // 
@@ -495,6 +676,25 @@
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         internal System.Windows.Forms.ToolStripMenuItem ViewPropertyGrid;
         internal System.Windows.Forms.ToolStripMenuItem ViewEntityTable;
+        internal System.Windows.Forms.ToolStripMenuItem CameraMenu;
+        internal System.Windows.Forms.ToolStripMenuItem CameraMove;
+        internal System.Windows.Forms.ToolStripMenuItem CameraMoveLeft;
+        internal System.Windows.Forms.ToolStripMenuItem CameraMoveRight;
+        internal System.Windows.Forms.ToolStripMenuItem CameraMoveUp;
+        internal System.Windows.Forms.ToolStripMenuItem CameraMoveDown;
+        internal System.Windows.Forms.ToolStripMenuItem CameraMoveIn;
+        internal System.Windows.Forms.ToolStripMenuItem CameraMoveOut;
+        internal System.Windows.Forms.ToolStripMenuItem CameraRotate;
+        internal System.Windows.Forms.ToolStripMenuItem CameraRotateLeft;
+        internal System.Windows.Forms.ToolStripMenuItem CameraRotateRight;
+        internal System.Windows.Forms.ToolStripMenuItem CameraRotateUp;
+        internal System.Windows.Forms.ToolStripMenuItem CameraRotateDown;
+        internal System.Windows.Forms.ToolStripMenuItem CameraRotateClockwise;
+        internal System.Windows.Forms.ToolStripMenuItem CameraRotateAnticlockwise;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
     }
 }
 

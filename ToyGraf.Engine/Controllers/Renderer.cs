@@ -3,7 +3,6 @@
     using OpenTK;
     using OpenTK.Graphics;
     using OpenTK.Graphics.OpenGL;
-    using OpenTK.Input;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
@@ -56,7 +55,6 @@
         protected virtual void RenderFrame(double time)
         {
             Time += time;
-            Camera.Move();
 
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.Texture2D);
@@ -102,12 +100,7 @@
             Shader.Cleanup();
         }
 
-        protected virtual void UpdateFrame(double time)
-        {
-            var input = Keyboard.GetState();
-            if (input.IsKeyDown(Key.Escape))
-                Exit();
-        }
+        protected virtual void UpdateFrame(double time) { }
 
         #endregion
 

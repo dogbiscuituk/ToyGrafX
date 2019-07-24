@@ -2,41 +2,19 @@
 {
     using OpenTK;
     using System;
-    using System.Windows.Forms;
     using ToyGraf.Engine.Controllers;
 
     public class GLControlRenderer : Renderer
     {
-        #region Public Interface
+        #region Internal Interface
 
-        public GLControlRenderer(GLControl control, int sceneID) : base()
+        internal GLControlRenderer(GLControl control, int sceneID) : base()
         {
             Control = control;
             SceneID = sceneID;
         }
 
-        public GLControl Control
-        {
-            get => _Control;
-            private set
-            {
-                if (Control == value)
-                    return;
-                if (Control != null)
-                {
-                    Control.Load -= Control_Load;
-                    Control.Paint -= Control_Paint;
-                    Control.Resize -= Control_Resize;
-                }
-                _Control = value;
-                if (Control != null)
-                {
-                    Control.Load += Control_Load;
-                    Control.Paint += Control_Paint;
-                    Control.Resize += Control_Resize;
-                }
-            }
-        }
+        internal bool IsIdle => Control.IsIdle;
 
         #endregion
 
@@ -75,6 +53,29 @@
         #endregion
 
         #region Private Properties
+
+        private GLControl Control
+        {
+            get => _Control;
+            set
+            {
+                if (Control == value)
+                    return;
+                if (Control != null)
+                {
+                    Control.Load -= Control_Load;
+                    Control.Paint -= Control_Paint;
+                    Control.Resize -= Control_Resize;
+                }
+                _Control = value;
+                if (Control != null)
+                {
+                    Control.Load += Control_Load;
+                    Control.Paint += Control_Paint;
+                    Control.Resize += Control_Resize;
+                }
+            }
+        }
 
         private GLControl _Control;
         private DateTime LastTime = DateTime.MinValue;

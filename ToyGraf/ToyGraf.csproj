@@ -68,6 +68,7 @@
     <Compile Include="FilterIndex.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Structs\Options.cs" />
+    <Compile Include="Models\Trace.cs" />
     <Compile Include="Views\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>

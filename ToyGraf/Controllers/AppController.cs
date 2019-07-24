@@ -11,15 +11,18 @@
     {
         static AppController()
         {
-            Timer = new Timer
-            {
-                Interval = 5000,
-                Enabled = true
-            };
-            Timer.Tick += Timer_Tick;
-            Application.Idle += Application_Idle;
+            RenderTimer = new Timer { Interval = 15, Enabled = true };
+            SplashTimer = new Timer { Interval = 5000, Enabled = true };
+            RenderTimer.Tick += RenderTimer_Tick;
+            SplashTimer.Tick += SplashTimer_Tick;
             AddNewSceneController();
-            //ApplyOptions();
+            ApplyOptions();
+        }
+
+        private static void RenderTimer_Tick(object sender, EventArgs e)
+        {
+            foreach (var sceneController in SceneControllers)
+                sceneController.Render();
         }
 
         internal static SceneController AddNewSceneController()
@@ -40,7 +43,16 @@
             }
         }
 
-        internal static void Close() => Application.Exit();
+        internal static void Close()
+        {
+            if (RenderTimer != null)
+            {
+                RenderTimer.Enabled = false;
+                RenderTimer.Dispose();
+                RenderTimer = null;
+            }
+            Application.Exit();
+        }
 
         internal static string GetDefaultFolder(FilterIndex filterIndex)
         {
@@ -59,7 +71,7 @@
         {
             SceneControllers.Remove(sceneController);
             if (SceneControllers.Count == 0)
-                Application.Exit();
+                Close();
         }
 
         private static Properties.Settings Settings => Properties.Settings.Default;
@@ -95,32 +107,18 @@
 
         internal static List<SceneController> SceneControllers = new List<SceneController>();
 
-        private static void Application_Idle(object sender, EventArgs e)
+        private static void SplashTimer_Tick(object sender, EventArgs e)
         {
-            bool idle;
-            do
-            {
-                idle = false;
-                foreach (var sceneController in SceneControllers)
-                {
-                    sceneController.Render();
-                    idle |= sceneController.Renderer.Control.IsIdle;
-                }
-            }
-            while (idle);
-        }
-
-        private static void Timer_Tick(object sender, EventArgs e)
-        {
-            Timer.Dispose();
-            Timer = null;
+            SplashTimer.Enabled = false;
+            SplashTimer.Dispose();
+            SplashTimer = null;
             AboutDialog.Hide();
         }
 
         private static readonly string DefaultFilesFolderPath =
             $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\{Application.ProductName}";
         private static AboutDialog _AboutDialog;
-        private static Timer Timer;
+        private static Timer RenderTimer, SplashTimer;
 
         #region Private Methods
 

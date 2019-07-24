@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
     using ToyGraf.Engine.Controllers;
@@ -33,6 +34,7 @@
                 {
                     SceneForm.FormClosed -= SceneForm_FormClosed;
                     SceneForm.FormClosing -= SceneForm_FormClosing;
+
                     SceneForm.FileNewEmptyScene.Click -= FileNewEmptyScene_Click;
                     SceneForm.FileNewFromTemplate.Click -= FileNewFromTemplate_Click;
                     SceneForm.FileOpen.Click -= FileOpen_Click;
@@ -40,6 +42,20 @@
                     SceneForm.FileSaveAs.Click -= FileSaveAs_Click;
                     SceneForm.FileClose.Click -= FileClose_Click;
                     SceneForm.FileExit.Click -= FileExit_Click;
+
+                    SceneForm.CameraMoveLeft.Click -= CameraMoveLeft_Click;
+                    SceneForm.CameraMoveRight.Click -= CameraMoveRight_Click;
+                    SceneForm.CameraMoveUp.Click -= CameraMoveUp_Click;
+                    SceneForm.CameraMoveDown.Click -= CameraMoveDown_Click;
+                    SceneForm.CameraMoveIn.Click -= CameraMoveIn_Click;
+                    SceneForm.CameraMoveOut.Click -= CameraMoveOut_Click;
+                    SceneForm.CameraRotateLeft.Click -= CameraRotateLeft_Click;
+                    SceneForm.CameraRotateRight.Click -= CameraRotateRight_Click;
+                    SceneForm.CameraRotateUp.Click -= CameraRotateUp_Click;
+                    SceneForm.CameraRotateDown.Click -= CameraRotateDown_Click;
+                    SceneForm.CameraRotateAnticlockwise.Click -= CameraRotateAnticlockwise_Click;
+                    SceneForm.CameraRotateClockwise.Click -= CameraRotateClockwise_Click;
+
                     SceneForm.HelpAbout.Click -= HelpAbout_Click;
                 }
                 _SceneForm = value;
@@ -47,6 +63,7 @@
                 {
                     SceneForm.FormClosed += SceneForm_FormClosed;
                     SceneForm.FormClosing += SceneForm_FormClosing;
+
                     SceneForm.FileNewEmptyScene.Click += FileNewEmptyScene_Click;
                     SceneForm.FileNewFromTemplate.Click += FileNewFromTemplate_Click;
                     SceneForm.FileOpen.Click += FileOpen_Click;
@@ -54,6 +71,20 @@
                     SceneForm.FileSaveAs.Click += FileSaveAs_Click;
                     SceneForm.FileClose.Click += FileClose_Click;
                     SceneForm.FileExit.Click += FileExit_Click;
+
+                    SceneForm.CameraMoveLeft.Click += CameraMoveLeft_Click;
+                    SceneForm.CameraMoveRight.Click += CameraMoveRight_Click;
+                    SceneForm.CameraMoveUp.Click += CameraMoveUp_Click;
+                    SceneForm.CameraMoveDown.Click += CameraMoveDown_Click;
+                    SceneForm.CameraMoveIn.Click += CameraMoveIn_Click;
+                    SceneForm.CameraMoveOut.Click += CameraMoveOut_Click;
+                    SceneForm.CameraRotateLeft.Click += CameraRotateLeft_Click;
+                    SceneForm.CameraRotateRight.Click += CameraRotateRight_Click;
+                    SceneForm.CameraRotateUp.Click += CameraRotateUp_Click;
+                    SceneForm.CameraRotateDown.Click += CameraRotateDown_Click;
+                    SceneForm.CameraRotateAnticlockwise.Click += CameraRotateAnticlockwise_Click;
+                    SceneForm.CameraRotateClockwise.Click += CameraRotateClockwise_Click;
+
                     SceneForm.HelpAbout.Click += HelpAbout_Click;
                 }
             }
@@ -85,6 +116,20 @@
         private void FileSaveAs_Click(object sender, System.EventArgs e) => JsonController.SaveAs();
         private void FileClose_Click(object sender, System.EventArgs e) => SceneForm.Close();
         private void FileExit_Click(object sender, System.EventArgs e) => AppController.Close();
+
+        private void CameraMoveLeft_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Left);
+        private void CameraMoveRight_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Right);
+        private void CameraMoveUp_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Up);
+        private void CameraMoveDown_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Down);
+        private void CameraMoveIn_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.In);
+        private void CameraMoveOut_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Out);
+        private void CameraRotateLeft_Click(object sender, EventArgs e) => MoveCamera(CameraMove.YawLeft);
+        private void CameraRotateRight_Click(object sender, EventArgs e) => MoveCamera(CameraMove.YawRight);
+        private void CameraRotateUp_Click(object sender, EventArgs e) => MoveCamera(CameraMove.PitchUp);
+        private void CameraRotateDown_Click(object sender, EventArgs e) => MoveCamera(CameraMove.PitchDown);
+        private void CameraRotateAnticlockwise_Click(object sender, EventArgs e) => MoveCamera(CameraMove.RollLeft);
+        private void CameraRotateClockwise_Click(object sender, EventArgs e) => MoveCamera(CameraMove.RollRight);
+
         private void HelpAbout_Click(object sender, System.EventArgs e) => new AboutController().ShowDialog(SceneForm);
 
         #endregion
@@ -118,6 +163,26 @@
             return this;
         }
 
+        private void MoveCamera(CameraMove cameraMove)
+        {
+            const float r = 2f, s = 0.02f;
+            switch (cameraMove)
+            {
+                case CameraMove.Left: Camera.X -= s; break;
+                case CameraMove.Right: Camera.X += s; break;
+                case CameraMove.Up: Camera.Y += s; break;
+                case CameraMove.Down: Camera.Y -= s; break;
+                case CameraMove.In: Camera.Z -= s; break;
+                case CameraMove.Out: Camera.Z += s; break;
+                case CameraMove.YawLeft: Camera.Yaw -= r; break;
+                case CameraMove.YawRight: Camera.Yaw += r; break;
+                case CameraMove.PitchUp: Camera.Pitch -= r; break;
+                case CameraMove.PitchDown: Camera.Pitch += r; break;
+                case CameraMove.RollLeft: Camera.Roll -= r; break;
+                case CameraMove.RollRight: Camera.Roll += r; break;
+            }
+        }
+
         private void NewEmptyScene() => GetNewSceneController();
 
         private void NewFromTemplate()
@@ -144,5 +209,21 @@
         }
 
         #endregion
+
+        private enum CameraMove
+        {
+            Left,
+            Right,
+            Up,
+            Down,
+            In,
+            Out,
+            YawLeft,
+            YawRight,
+            PitchUp,
+            PitchDown,
+            RollLeft,
+            RollRight
+        }
     }
 }
