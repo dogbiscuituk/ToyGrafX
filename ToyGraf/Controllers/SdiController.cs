@@ -17,8 +17,8 @@
     {
         #region Protected Constructor
 
-        protected SdiController(Model model, string filter, string subKeyName, ToolStripDropDownItem recentMenu)
-            : base(model, subKeyName, recentMenu)
+        protected SdiController(Scene scene, string filter, string subKeyName, ToolStripDropDownItem recentMenu)
+            : base(scene, subKeyName, recentMenu)
         {
             OpenFileDialog = new OpenFileDialog { Filter = filter, Title = "Select the file to open" };
             SaveFileDialog = new SaveFileDialog { Filter = filter, Title = "Save file" };
@@ -32,7 +32,7 @@
         {
             FilePath = string.Empty;
             ClearDocument();
-            Model.Modified = false;
+            Scene.Modified = false;
         }
 
         internal string SelectFilePath(FilterIndex filterIndex = FilterIndex.Default)
@@ -107,7 +107,7 @@
 
         internal bool SaveIfModified()
         {
-            if (Model.Modified)
+            if (Scene.Modified)
                 switch (MessageBox.Show(
                     "The contents of this file have changed. Do you want to save the changes?",
                     "File modified",
@@ -175,7 +175,7 @@
             try
             {
                 action();
-                Model.Modified = false;
+                Scene.Modified = false;
             }
             catch (Exception x)
             {

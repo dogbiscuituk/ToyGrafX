@@ -15,13 +15,18 @@
         internal SceneController(int sceneID)
         {
             SceneForm = new SceneForm();
-            Model = new Model();
+            Scene = new Scene();
             Renderer = new GLControlRenderer(SceneForm.GLControl, sceneID);
             EntityTableController = new EntityTableController(this);
             FullScreenController = new FullScreenController(this);
-            JsonController = new JsonController(Model, SceneForm, SceneForm.FileReopen);
+            JsonController = new JsonController(Scene, SceneForm, SceneForm.FileReopen);
             PropertyGridController = new PropertyGridController(this);
+
+            Trace = new Trace();
+            PropertyGridController.SelectedObjects = new[] { Trace };
         }
+
+        Trace Trace;
 
         internal SceneForm SceneForm
         {
@@ -91,7 +96,7 @@
         }
 
         internal Camera Camera => Renderer.Camera;
-        internal readonly Model Model;
+        internal readonly Scene Scene;
         internal GLControlRenderer Renderer;
 
         internal readonly EntityTableController EntityTableController;

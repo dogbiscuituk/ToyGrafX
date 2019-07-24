@@ -20,11 +20,11 @@
     {
         #region Protected Constructor
 
-        protected MruController(Model model, string subKeyName, ToolStripDropDownItem recentMenu)
+        protected MruController(Scene scene, string subKeyName, ToolStripDropDownItem recentMenu)
         {
             if (string.IsNullOrWhiteSpace(subKeyName))
                 throw new ArgumentNullException("subKeyName");
-            Model = model;
+            Scene = scene;
             SubKeyName = string.Format(
                 @"Software\{0}\{1}\{2}",
                 Application.CompanyName,
@@ -44,7 +44,7 @@
 
         #region Protected Properties
 
-        protected Model Model;
+        protected Scene Scene;
 
         #endregion
 

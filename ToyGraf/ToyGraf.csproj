@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\BaseCommands.cs" />
+    <Compile Include="Commands\CommandInterfaces.cs" />
+    <Compile Include="Commands\TraceCommands.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\CameraController.cs" />
@@ -66,7 +69,7 @@
     <Compile Include="Controllers\SdiController.cs" />
     <Compile Include="Controllers\EntityTableController.cs" />
     <Compile Include="FilterIndex.cs" />
-    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Scene.cs" />
     <Compile Include="Models\Structs\Options.cs" />
     <Compile Include="Models\Trace.cs" />
     <Compile Include="Views\AboutDialog.cs">
@@ -144,5 +147,6 @@
       <Name>ToyGraf.Engine</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -69,23 +69,23 @@
             this.CameraMove = new System.Windows.Forms.ToolStripMenuItem();
             this.CameraMoveLeft = new System.Windows.Forms.ToolStripMenuItem();
             this.CameraMoveRight = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.CameraMoveUp = new System.Windows.Forms.ToolStripMenuItem();
             this.CameraMoveDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.CameraMoveIn = new System.Windows.Forms.ToolStripMenuItem();
             this.CameraMoveOut = new System.Windows.Forms.ToolStripMenuItem();
             this.CameraRotate = new System.Windows.Forms.ToolStripMenuItem();
             this.CameraRotateLeft = new System.Windows.Forms.ToolStripMenuItem();
             this.CameraRotateRight = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.CameraRotateUp = new System.Windows.Forms.ToolStripMenuItem();
             this.CameraRotateDown = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraRotateClockwise = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.CameraRotateAnticlockwise = new System.Windows.Forms.ToolStripMenuItem();
+            this.CameraRotateClockwise = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
@@ -112,7 +112,7 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(661, 357);
+            this.GLControl.Size = new System.Drawing.Size(803, 428);
             this.GLControl.TabIndex = 1;
             this.GLControl.VSync = false;
             // 
@@ -126,7 +126,7 @@
             // ToolStripContainer.ContentPanel
             // 
             this.ToolStripContainer.ContentPanel.Controls.Add(this.SplitContainer1);
-            this.ToolStripContainer.ContentPanel.Size = new System.Drawing.Size(828, 422);
+            this.ToolStripContainer.ContentPanel.Size = new System.Drawing.Size(971, 494);
             this.ToolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             // 
             // ToolStripContainer.LeftToolStripPanel
@@ -134,7 +134,7 @@
             this.ToolStripContainer.LeftToolStripPanel.Controls.Add(this.Toolbar);
             this.ToolStripContainer.Location = new System.Drawing.Point(0, 0);
             this.ToolStripContainer.Name = "ToolStripContainer";
-            this.ToolStripContainer.Size = new System.Drawing.Size(861, 468);
+            this.ToolStripContainer.Size = new System.Drawing.Size(1004, 540);
             this.ToolStripContainer.TabIndex = 2;
             this.ToolStripContainer.Text = "toolStripContainer1";
             // 
@@ -147,7 +147,7 @@
             this.StatusBar.Dock = System.Windows.Forms.DockStyle.None;
             this.StatusBar.Location = new System.Drawing.Point(0, 0);
             this.StatusBar.Name = "StatusBar";
-            this.StatusBar.Size = new System.Drawing.Size(861, 22);
+            this.StatusBar.Size = new System.Drawing.Size(1004, 22);
             this.StatusBar.TabIndex = 2;
             this.StatusBar.Text = "statusStrip1";
             // 
@@ -166,8 +166,9 @@
             // SplitContainer1.Panel2
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.EntityTable);
-            this.SplitContainer1.Size = new System.Drawing.Size(828, 422);
-            this.SplitContainer1.SplitterDistance = 357;
+            this.SplitContainer1.Size = new System.Drawing.Size(971, 494);
+            this.SplitContainer1.SplitterDistance = 428;
+            this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
             // SplitContainer2
@@ -184,8 +185,9 @@
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(828, 357);
-            this.SplitContainer2.SplitterDistance = 661;
+            this.SplitContainer2.Size = new System.Drawing.Size(971, 428);
+            this.SplitContainer2.SplitterDistance = 803;
+            this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
             // 
             // PropertyGrid
@@ -194,7 +196,7 @@
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(163, 357);
+            this.PropertyGrid.Size = new System.Drawing.Size(163, 428);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -224,7 +226,7 @@
             this.EntityTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EntityTable.Location = new System.Drawing.Point(0, 0);
             this.EntityTable.Name = "EntityTable";
-            this.EntityTable.Size = new System.Drawing.Size(828, 61);
+            this.EntityTable.Size = new System.Drawing.Size(971, 61);
             this.EntityTable.TabIndex = 0;
             // 
             // PopupEntityTableMenu
@@ -288,7 +290,7 @@
             this.HelpMenu});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(861, 24);
+            this.MainMenu.Size = new System.Drawing.Size(1004, 24);
             this.MainMenu.TabIndex = 2;
             this.MainMenu.Text = "menuStrip1";
             // 
@@ -447,7 +449,7 @@
             this.CameraMoveIn,
             this.CameraMoveOut});
             this.CameraMove.Name = "CameraMove";
-            this.CameraMove.Size = new System.Drawing.Size(180, 22);
+            this.CameraMove.Size = new System.Drawing.Size(108, 22);
             this.CameraMove.Text = "Move";
             // 
             // CameraMoveLeft
@@ -455,7 +457,7 @@
             this.CameraMoveLeft.Name = "CameraMoveLeft";
             this.CameraMoveLeft.ShortcutKeyDisplayString = "^Left";
             this.CameraMoveLeft.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Left)));
-            this.CameraMoveLeft.Size = new System.Drawing.Size(180, 22);
+            this.CameraMoveLeft.Size = new System.Drawing.Size(151, 22);
             this.CameraMoveLeft.Text = "&Left";
             // 
             // CameraMoveRight
@@ -463,15 +465,20 @@
             this.CameraMoveRight.Name = "CameraMoveRight";
             this.CameraMoveRight.ShortcutKeyDisplayString = "^Right";
             this.CameraMoveRight.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Right)));
-            this.CameraMoveRight.Size = new System.Drawing.Size(180, 22);
+            this.CameraMoveRight.Size = new System.Drawing.Size(151, 22);
             this.CameraMoveRight.Text = "&Right";
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(148, 6);
             // 
             // CameraMoveUp
             // 
             this.CameraMoveUp.Name = "CameraMoveUp";
             this.CameraMoveUp.ShortcutKeyDisplayString = "^Up";
             this.CameraMoveUp.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
-            this.CameraMoveUp.Size = new System.Drawing.Size(180, 22);
+            this.CameraMoveUp.Size = new System.Drawing.Size(151, 22);
             this.CameraMoveUp.Text = "&Up";
             // 
             // CameraMoveDown
@@ -479,15 +486,20 @@
             this.CameraMoveDown.Name = "CameraMoveDown";
             this.CameraMoveDown.ShortcutKeyDisplayString = "^Down";
             this.CameraMoveDown.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
-            this.CameraMoveDown.Size = new System.Drawing.Size(180, 22);
+            this.CameraMoveDown.Size = new System.Drawing.Size(151, 22);
             this.CameraMoveDown.Text = "&Down";
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(148, 6);
             // 
             // CameraMoveIn
             // 
             this.CameraMoveIn.Name = "CameraMoveIn";
             this.CameraMoveIn.ShortcutKeyDisplayString = "^PgUp";
             this.CameraMoveIn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.PageUp)));
-            this.CameraMoveIn.Size = new System.Drawing.Size(180, 22);
+            this.CameraMoveIn.Size = new System.Drawing.Size(151, 22);
             this.CameraMoveIn.Text = "&In";
             // 
             // CameraMoveOut
@@ -495,7 +507,7 @@
             this.CameraMoveOut.Name = "CameraMoveOut";
             this.CameraMoveOut.ShortcutKeyDisplayString = "^PgDn";
             this.CameraMoveOut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Next)));
-            this.CameraMoveOut.Size = new System.Drawing.Size(180, 22);
+            this.CameraMoveOut.Size = new System.Drawing.Size(151, 22);
             this.CameraMoveOut.Text = "&Out";
             // 
             // CameraRotate
@@ -510,7 +522,7 @@
             this.CameraRotateAnticlockwise,
             this.CameraRotateClockwise});
             this.CameraRotate.Name = "CameraRotate";
-            this.CameraRotate.Size = new System.Drawing.Size(180, 22);
+            this.CameraRotate.Size = new System.Drawing.Size(108, 22);
             this.CameraRotate.Text = "Rotate";
             // 
             // CameraRotateLeft
@@ -531,6 +543,11 @@
             this.CameraRotateRight.Size = new System.Drawing.Size(223, 22);
             this.CameraRotateRight.Text = "&Right";
             // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(220, 6);
+            // 
             // CameraRotateUp
             // 
             this.CameraRotateUp.Name = "CameraRotateUp";
@@ -549,14 +566,10 @@
             this.CameraRotateDown.Size = new System.Drawing.Size(223, 22);
             this.CameraRotateDown.Text = "&Down";
             // 
-            // CameraRotateClockwise
+            // toolStripMenuItem7
             // 
-            this.CameraRotateClockwise.Name = "CameraRotateClockwise";
-            this.CameraRotateClockwise.ShortcutKeyDisplayString = "Shift+^PgDn";
-            this.CameraRotateClockwise.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Next)));
-            this.CameraRotateClockwise.Size = new System.Drawing.Size(223, 22);
-            this.CameraRotateClockwise.Text = "&Clockwise";
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(220, 6);
             // 
             // CameraRotateAnticlockwise
             // 
@@ -566,6 +579,15 @@
             | System.Windows.Forms.Keys.PageUp)));
             this.CameraRotateAnticlockwise.Size = new System.Drawing.Size(223, 22);
             this.CameraRotateAnticlockwise.Text = "&Anticlockwise";
+            // 
+            // CameraRotateClockwise
+            // 
+            this.CameraRotateClockwise.Name = "CameraRotateClockwise";
+            this.CameraRotateClockwise.ShortcutKeyDisplayString = "Shift+^PgDn";
+            this.CameraRotateClockwise.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Next)));
+            this.CameraRotateClockwise.Size = new System.Drawing.Size(223, 22);
+            this.CameraRotateClockwise.Text = "&Clockwise";
             // 
             // HelpMenu
             // 
@@ -581,32 +603,13 @@
             this.HelpAbout.Size = new System.Drawing.Size(107, 22);
             this.HelpAbout.Text = "&About";
             // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(177, 6);
-            // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(177, 6);
-            // 
-            // toolStripMenuItem6
-            // 
-            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(177, 6);
-            // 
-            // toolStripMenuItem7
-            // 
-            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(177, 6);
-            // 
             // SceneForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(861, 468);
+            this.ClientSize = new System.Drawing.Size(1004, 540);
             this.Controls.Add(this.ToolStripContainer);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MainMenuStrip = this.MainMenu;
             this.Name = "SceneForm";
             this.Text = "Telemetry";

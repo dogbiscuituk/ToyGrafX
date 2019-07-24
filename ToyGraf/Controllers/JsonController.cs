@@ -17,10 +17,10 @@
     {
         #region Internal Interface
 
-        internal JsonController(Model model, Control view, ToolStripDropDownItem recentMenu)
-            : base(model, Properties.Settings.Default.FileFilter, "LibraryMRU", recentMenu)
+        internal JsonController(Scene scene, Control view, ToolStripDropDownItem recentMenu)
+            : base(scene, Properties.Settings.Default.FileFilter, "LibraryMRU", recentMenu)
         {
-            Model.PropertyChanged += Model_PropertyChanged;
+            Scene.PropertyChanged += Model_PropertyChanged;
             View = view;
         }
 
@@ -29,7 +29,7 @@
             get
             {
                 var text = Path.GetFileNameWithoutExtension(FilePath).ToFilename();
-                var modified = Model.Modified;
+                var modified = Scene.Modified;
                 if (modified)
                     text = string.Concat("* ", text);
                 text = string.Concat(text, " - ", Application.ProductName);
@@ -41,14 +41,14 @@
 
         #region Protected I/O Overrides
 
-        protected override void ClearDocument() => Model.Clear();
+        protected override void ClearDocument() => Scene.Clear();
 
         protected override bool LoadFromStream(Stream stream, string format)
         {
             bool result;
             using (var streamer = new StreamReader(stream))
             using (var reader = new JsonTextReader(streamer))
-                result = UseStream(() => Model = GetSerializer().Deserialize<Model>(reader));
+                result = UseStream(() => Scene = GetSerializer().Deserialize<Scene>(reader));
             return result;
         }
 
@@ -61,7 +61,7 @@
         {
             using (var streamer = new StreamWriter(stream))
             using (var writer = new JsonTextWriter(streamer))
-                return UseStream(() => GetSerializer().Serialize(writer, Model));
+                return UseStream(() => GetSerializer().Serialize(writer, Scene));
         }
 
         #endregion
