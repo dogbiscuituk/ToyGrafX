@@ -103,6 +103,7 @@
                     SceneForm.CameraRotateDown.Click += CameraRotateDown_Click;
                     SceneForm.CameraRotateAnticlockwise.Click += CameraRotateAnticlockwise_Click;
                     SceneForm.CameraRotateClockwise.Click += CameraRotateClockwise_Click;
+                    SceneForm.CameraHome.Click += CameraHome_Click;
 
                     SceneForm.HelpAbout.Click += HelpAbout_Click;
                 }
@@ -152,6 +153,7 @@
         private void CameraRotateDown_Click(object sender, EventArgs e) => MoveCamera(CameraMove.PitchDown);
         private void CameraRotateAnticlockwise_Click(object sender, EventArgs e) => MoveCamera(CameraMove.RollLeft);
         private void CameraRotateClockwise_Click(object sender, EventArgs e) => MoveCamera(CameraMove.RollRight);
+        private void CameraHome_Click(object sender, EventArgs e) => MoveCamera(CameraMove.Home);
 
         private void HelpAbout_Click(object sender, System.EventArgs e) => new AboutController().ShowDialog(SceneForm);
 
@@ -191,6 +193,7 @@
             const float r = 2f, s = 0.02f;
             switch (cameraMove)
             {
+                case CameraMove.Home: Camera.Reset(); break;
                 case CameraMove.Left: Camera.X -= s; break;
                 case CameraMove.Right: Camera.X += s; break;
                 case CameraMove.Up: Camera.Y += s; break;
@@ -235,6 +238,7 @@
 
         private enum CameraMove
         {
+            Home,
             Left,
             Right,
             Up,

@@ -36,5 +36,13 @@
             get => _Roll;
             set => _Roll = value % 360.0f;
         }
+
+        public void Reset()
+        {
+            Position = new Vector3(0, 0, 0);
+            Pitch = 0;
+            Yaw = 0;
+            Roll = 0;
+        }
     }
 }
