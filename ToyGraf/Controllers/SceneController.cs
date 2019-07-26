@@ -7,10 +7,11 @@
     using ToyGraf.Commands;
     using ToyGraf.Engine.Controllers;
     using ToyGraf.Engine.Entities;
+    using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
-    public class SceneController : ISceneController
+    public class SceneController
     {
         #region Internal Interface
 
@@ -22,7 +23,15 @@
             Renderer = new GLControlRenderer(SceneForm.GLControl);
             EntityTableController = new EntityTableController(this);
             FullScreenController = new FullScreenController(this);
+
             JsonController = new JsonController(Scene, SceneForm, SceneForm.FileReopen);
+            JsonController.FileLoaded += JsonController_FileLoaded;
+            JsonController.FilePathChanged += JsonController_FilePathChanged;
+            JsonController.FilePathRequest += JsonController_FilePathRequest;
+            JsonController.FileReopen += JsonController_FileReopen;
+            JsonController.FileSaving += JsonController_FileSaving;
+            JsonController.FileSaved += JsonController_FileSaved;
+
             PropertyGridController = new PropertyGridController(this);
             Scene.PropertyChanged += Scene_PropertyChanged;
 
@@ -35,8 +44,6 @@
 
             PropertyGridController.SelectedObjects = new[] { trace };
         }
-
-
 
         private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
             PropertyGridController.Refresh();
@@ -122,10 +129,11 @@
         }
 
         internal Camera Camera => Renderer.Camera;
+        internal ClockController ClockController => new ClockController(this);
         internal readonly Scene Scene;
         internal GLControlRenderer Renderer;
 
-        public ICommandProcessor CommandProcessor { get; private set; }
+        public CommandProcessor CommandProcessor { get; private set; }
 
         internal readonly EntityTableController EntityTableController;
         internal readonly PropertyGridController PropertyGridController;
@@ -167,6 +175,13 @@
         private void CameraHome_Click(object sender, EventArgs e) => MoveCamera(CameraMove.Home);
 
         private void HelpAbout_Click(object sender, System.EventArgs e) => new AboutController().ShowDialog(SceneForm);
+
+        private void JsonController_FileLoaded(object sender, EventArgs e) => FileLoaded();
+        private void JsonController_FilePathChanged(object sender, EventArgs e) => UpdateCaption();
+        private void JsonController_FilePathRequest(object sender, SdiController.FilePathEventArgs e) => FilePathRequest(e);
+        private void JsonController_FileReopen(object sender, SdiController.FilePathEventArgs e) => OpenFile(e.FilePath);
+        private void JsonController_FileSaved(object sender, EventArgs e) => FileSaved();
+        private void JsonController_FileSaving(object sender, CancelEventArgs e) => e.Cancel = false;
 
         #endregion
 
@@ -243,6 +258,32 @@
                 return null;
             sceneController.JsonController.LoadFromFile(filePath);
             return sceneController;
+        }
+
+        #endregion
+
+        #region File Operations
+
+        private void FileLoaded()
+        {
+            CommandProcessor.Clear();
+            UpdateUI();
+        }
+
+        private void FilePathRequest(SdiController.FilePathEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(e.FilePath))
+                e.FilePath = Scene.Title.ToFilename();
+        }
+
+        private void FileSaved() => Camera.Fix();
+
+        private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
+
+        private void UpdateUI()
+        {
+            ClockController.UpdateTimeControls();
+            PropertyGridController.Refresh();
         }
 
         #endregion

@@ -9,6 +9,8 @@
 
         public Trace(Scene scene) => Scene = scene;
 
+        public bool UsesTime => true;
+
         #endregion
 
         #region Persistent Properties

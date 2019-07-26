@@ -5,6 +5,7 @@
     using System.IO;
     using System.Windows.Forms;
     using ToyGraf.Models.Structs;
+    using ToyGraf.Properties;
     using ToyGraf.Views;
 
     internal static class AppController
@@ -31,16 +32,6 @@
             SceneControllers.Add(sceneController);
             sceneController.Show();
             return sceneController;
-        }
-
-        internal static AboutDialog AboutDialog
-        {
-            get
-            {
-                if (_AboutDialog == null)
-                    _AboutDialog = new AboutController().View;
-                return _AboutDialog;
-            }
         }
 
         internal static void Close()
@@ -74,7 +65,32 @@
                 Close();
         }
 
-        private static Properties.Settings Settings => Properties.Settings.Default;
+        private static void SplashTimer_Tick(object sender, EventArgs e)
+        {
+            SplashTimer.Enabled = false;
+            SplashTimer.Dispose();
+            SplashTimer = null;
+            AboutDialog.Hide();
+        }
+
+        private static readonly string DefaultFilesFolderPath =
+            $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\{Application.ProductName}";
+        private static AboutDialog _AboutDialog;
+        private static Timer RenderTimer, SplashTimer;
+
+        #region Properties
+
+        internal static AboutDialog AboutDialog
+        {
+            get
+            {
+                if (_AboutDialog == null)
+                    _AboutDialog = new AboutController().View;
+                return _AboutDialog;
+            }
+        }
+
+        internal static bool EpilepsyWarningAcknowledged;
 
         internal static Options Options
         {
@@ -106,18 +122,9 @@
 
         internal static List<SceneController> SceneControllers = new List<SceneController>();
 
-        private static void SplashTimer_Tick(object sender, EventArgs e)
-        {
-            SplashTimer.Enabled = false;
-            SplashTimer.Dispose();
-            SplashTimer = null;
-            AboutDialog.Hide();
-        }
+        private static Settings Settings => Settings.Default;
 
-        private static readonly string DefaultFilesFolderPath =
-            $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\{Application.ProductName}";
-        private static AboutDialog _AboutDialog;
-        private static Timer RenderTimer, SplashTimer;
+        #endregion
 
         #region Private Methods
 

@@ -22,6 +22,13 @@
             SceneForm.tbRedo.DropDownOpening += TbRedo_DropDownOpening;
         }
 
+        internal void Clear()
+        {
+            UndoStack.Clear();
+            RedoStack.Clear();
+            UpdateUI();
+        }
+
         public void Run(ICommand command)
         {
             Redo(command);

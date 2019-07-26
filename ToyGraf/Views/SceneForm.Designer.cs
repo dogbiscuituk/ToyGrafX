@@ -32,6 +32,15 @@
             this.GLControl = new OpenTK.GLControl();
             this.ToolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.StatusBar = new ToyGraf.Controls.TgStatusStrip();
+            this.tbDecelerate = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tbReverse = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tbStop = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tbPause = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tbForward = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tbAccelerate = new System.Windows.Forms.ToolStripDropDownButton();
+            this.SpeedLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.TimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.FpsLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
             this.SplitContainer2 = new System.Windows.Forms.SplitContainer();
             this.PropertyGrid = new System.Windows.Forms.PropertyGrid();
@@ -120,15 +129,6 @@
             this.TimeAccelerate = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tbDecelerate = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tbReverse = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tbStop = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tbPause = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tbForward = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tbAccelerate = new System.Windows.Forms.ToolStripDropDownButton();
-            this.SpeedLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.TimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.FPSLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
@@ -156,7 +156,7 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(416, 322);
+            this.GLControl.Size = new System.Drawing.Size(415, 321);
             this.GLControl.TabIndex = 1;
             this.GLControl.VSync = false;
             // 
@@ -198,12 +198,99 @@
             this.tbAccelerate,
             this.SpeedLabel,
             this.TimeLabel,
-            this.FPSLabel});
+            this.FpsLabel});
             this.StatusBar.Location = new System.Drawing.Point(0, 0);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(624, 22);
             this.StatusBar.TabIndex = 2;
             this.StatusBar.Text = "statusStrip1";
+            // 
+            // tbDecelerate
+            // 
+            this.tbDecelerate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbDecelerate.Image = global::ToyGraf.Properties.Resources.RewindHS;
+            this.tbDecelerate.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbDecelerate.Name = "tbDecelerate";
+            this.tbDecelerate.ShowDropDownArrow = false;
+            this.tbDecelerate.Size = new System.Drawing.Size(20, 20);
+            this.tbDecelerate.Text = "toolStripDropDownButton1";
+            this.tbDecelerate.ToolTipText = "Decelerate";
+            // 
+            // tbReverse
+            // 
+            this.tbReverse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbReverse.Image = global::ToyGraf.Properties.Resources.BackHS;
+            this.tbReverse.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbReverse.Name = "tbReverse";
+            this.tbReverse.ShowDropDownArrow = false;
+            this.tbReverse.Size = new System.Drawing.Size(20, 20);
+            this.tbReverse.Text = "toolStripDropDownButton2";
+            this.tbReverse.ToolTipText = "Reverse";
+            // 
+            // tbStop
+            // 
+            this.tbStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbStop.Image = global::ToyGraf.Properties.Resources.StopHS;
+            this.tbStop.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbStop.Name = "tbStop";
+            this.tbStop.ShowDropDownArrow = false;
+            this.tbStop.Size = new System.Drawing.Size(20, 20);
+            this.tbStop.Text = "toolStripDropDownButton3";
+            this.tbStop.ToolTipText = "Stop";
+            // 
+            // tbPause
+            // 
+            this.tbPause.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbPause.Image = global::ToyGraf.Properties.Resources.PauseHS;
+            this.tbPause.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbPause.Name = "tbPause";
+            this.tbPause.ShowDropDownArrow = false;
+            this.tbPause.Size = new System.Drawing.Size(20, 20);
+            this.tbPause.Text = "toolStripDropDownButton4";
+            this.tbPause.ToolTipText = "Pause";
+            // 
+            // tbForward
+            // 
+            this.tbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbForward.Image = global::ToyGraf.Properties.Resources.PlayHS;
+            this.tbForward.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbForward.Name = "tbForward";
+            this.tbForward.ShowDropDownArrow = false;
+            this.tbForward.Size = new System.Drawing.Size(20, 20);
+            this.tbForward.Text = "toolStripDropDownButton5";
+            this.tbForward.ToolTipText = "Forward";
+            // 
+            // tbAccelerate
+            // 
+            this.tbAccelerate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbAccelerate.Image = global::ToyGraf.Properties.Resources.FFwdHS;
+            this.tbAccelerate.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbAccelerate.Name = "tbAccelerate";
+            this.tbAccelerate.ShowDropDownArrow = false;
+            this.tbAccelerate.Size = new System.Drawing.Size(20, 20);
+            this.tbAccelerate.Text = "toolStripDropDownButton6";
+            this.tbAccelerate.ToolTipText = "Accelerate";
+            // 
+            // SpeedLabel
+            // 
+            this.SpeedLabel.AutoSize = false;
+            this.SpeedLabel.Name = "SpeedLabel";
+            this.SpeedLabel.Size = new System.Drawing.Size(64, 17);
+            this.SpeedLabel.Text = "time × 1";
+            // 
+            // TimeLabel
+            // 
+            this.TimeLabel.AutoSize = false;
+            this.TimeLabel.Name = "TimeLabel";
+            this.TimeLabel.Size = new System.Drawing.Size(64, 17);
+            this.TimeLabel.Text = "t=0.0";
+            // 
+            // FpsLabel
+            // 
+            this.FpsLabel.AutoSize = false;
+            this.FpsLabel.Name = "FpsLabel";
+            this.FpsLabel.Size = new System.Drawing.Size(64, 17);
+            this.FpsLabel.Text = "fps=0.0";
             // 
             // SplitContainer1
             // 
@@ -221,7 +308,7 @@
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.EntityTable);
             this.SplitContainer1.Size = new System.Drawing.Size(591, 395);
-            this.SplitContainer1.SplitterDistance = 322;
+            this.SplitContainer1.SplitterDistance = 321;
             this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
@@ -239,8 +326,8 @@
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(591, 322);
-            this.SplitContainer2.SplitterDistance = 416;
+            this.SplitContainer2.Size = new System.Drawing.Size(591, 321);
+            this.SplitContainer2.SplitterDistance = 415;
             this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
             // 
@@ -250,7 +337,7 @@
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(170, 322);
+            this.PropertyGrid.Size = new System.Drawing.Size(171, 321);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -280,7 +367,7 @@
             this.EntityTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EntityTable.Location = new System.Drawing.Point(0, 0);
             this.EntityTable.Name = "EntityTable";
-            this.EntityTable.Size = new System.Drawing.Size(591, 68);
+            this.EntityTable.Size = new System.Drawing.Size(591, 69);
             this.EntityTable.TabIndex = 0;
             // 
             // PopupEntityTableMenu
@@ -974,93 +1061,6 @@
             this.HelpAbout.Size = new System.Drawing.Size(107, 22);
             this.HelpAbout.Text = "&About";
             // 
-            // tbDecelerate
-            // 
-            this.tbDecelerate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbDecelerate.Image = global::ToyGraf.Properties.Resources.RewindHS;
-            this.tbDecelerate.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbDecelerate.Name = "tbDecelerate";
-            this.tbDecelerate.ShowDropDownArrow = false;
-            this.tbDecelerate.Size = new System.Drawing.Size(20, 20);
-            this.tbDecelerate.Text = "toolStripDropDownButton1";
-            this.tbDecelerate.ToolTipText = "Decelerate";
-            // 
-            // tbReverse
-            // 
-            this.tbReverse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbReverse.Image = global::ToyGraf.Properties.Resources.BackHS;
-            this.tbReverse.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbReverse.Name = "tbReverse";
-            this.tbReverse.ShowDropDownArrow = false;
-            this.tbReverse.Size = new System.Drawing.Size(20, 20);
-            this.tbReverse.Text = "toolStripDropDownButton2";
-            this.tbReverse.ToolTipText = "Reverse";
-            // 
-            // tbStop
-            // 
-            this.tbStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbStop.Image = global::ToyGraf.Properties.Resources.StopHS;
-            this.tbStop.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbStop.Name = "tbStop";
-            this.tbStop.ShowDropDownArrow = false;
-            this.tbStop.Size = new System.Drawing.Size(20, 20);
-            this.tbStop.Text = "toolStripDropDownButton3";
-            this.tbStop.ToolTipText = "Stop";
-            // 
-            // tbPause
-            // 
-            this.tbPause.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbPause.Image = global::ToyGraf.Properties.Resources.PauseHS;
-            this.tbPause.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbPause.Name = "tbPause";
-            this.tbPause.ShowDropDownArrow = false;
-            this.tbPause.Size = new System.Drawing.Size(20, 20);
-            this.tbPause.Text = "toolStripDropDownButton4";
-            this.tbPause.ToolTipText = "Pause";
-            // 
-            // tbForward
-            // 
-            this.tbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbForward.Image = global::ToyGraf.Properties.Resources.PlayHS;
-            this.tbForward.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbForward.Name = "tbForward";
-            this.tbForward.ShowDropDownArrow = false;
-            this.tbForward.Size = new System.Drawing.Size(20, 20);
-            this.tbForward.Text = "toolStripDropDownButton5";
-            this.tbForward.ToolTipText = "Forward";
-            // 
-            // tbAccelerate
-            // 
-            this.tbAccelerate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbAccelerate.Image = global::ToyGraf.Properties.Resources.FFwdHS;
-            this.tbAccelerate.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbAccelerate.Name = "tbAccelerate";
-            this.tbAccelerate.ShowDropDownArrow = false;
-            this.tbAccelerate.Size = new System.Drawing.Size(20, 20);
-            this.tbAccelerate.Text = "toolStripDropDownButton6";
-            this.tbAccelerate.ToolTipText = "Accelerate";
-            // 
-            // SpeedLabel
-            // 
-            this.SpeedLabel.AutoSize = false;
-            this.SpeedLabel.Name = "SpeedLabel";
-            this.SpeedLabel.Size = new System.Drawing.Size(64, 17);
-            this.SpeedLabel.Text = "time × 1";
-            // 
-            // TimeLabel
-            // 
-            this.TimeLabel.AutoSize = false;
-            this.TimeLabel.Name = "TimeLabel";
-            this.TimeLabel.Size = new System.Drawing.Size(64, 17);
-            this.TimeLabel.Text = "t=0.0";
-            // 
-            // FPSLabel
-            // 
-            this.FPSLabel.AutoSize = false;
-            this.FPSLabel.Name = "FPSLabel";
-            this.FPSLabel.Size = new System.Drawing.Size(64, 17);
-            this.FPSLabel.Text = "fps=0.0";
-            // 
             // SceneForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1202,6 +1202,6 @@
         internal System.Windows.Forms.ToolStripDropDownButton tbAccelerate;
         internal System.Windows.Forms.ToolStripStatusLabel SpeedLabel;
         internal System.Windows.Forms.ToolStripStatusLabel TimeLabel;
-        internal System.Windows.Forms.ToolStripStatusLabel FPSLabel;
+        internal System.Windows.Forms.ToolStripStatusLabel FpsLabel;
     }
 }

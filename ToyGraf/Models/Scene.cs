@@ -3,13 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using ToyGraf.Commands;
+    using ToyGraf.Controllers;
 
     public class Scene
     {
         #region Public Interface
 
-        public Scene(ISceneController sceneController)
+        public Scene(SceneController sceneController)
         {
             SceneController = sceneController;
             RestoreDefaults();
@@ -19,16 +21,33 @@
 
         public List<Trace> Traces = new List<Trace>();
 
+        public bool UsesTime
+        {
+            get
+            {
+                return Traces.Any(p => p.Visible && p.UsesTime);
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void Clear() { }
 
         #endregion
 
+        #region Persistent Properties
+
+        [Category("Scene")]
+        [Description("The title of this trace collection.")]
+        public string Title { get => _Title; set => Run(new SceneTitleCommand(value)); }
+
+        #endregion
+
         #region Private Properties
 
-        internal ICommandProcessor CommandProcessor => SceneController.CommandProcessor;
-        private ISceneController SceneController;
+        internal CommandProcessor CommandProcessor => SceneController.CommandProcessor;
+        private SceneController SceneController;
+        internal string _Title;
 
         #endregion
 
@@ -74,6 +93,9 @@
         private void RestoreDefaults()
         {
         }
+
+        private void Run(IScenePropertyCommand command) =>
+            CommandProcessor.Run(command);
 
         #endregion
     }
