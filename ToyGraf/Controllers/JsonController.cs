@@ -2,7 +2,6 @@
 {
     using Newtonsoft.Json;
     using System;
-    using System.ComponentModel;
     using System.IO;
     using System.Windows.Forms;
     using ToyGraf.Engine.Utility;
@@ -17,8 +16,9 @@
     {
         #region Internal Interface
 
-        internal JsonController(Scene scene, Control view, ToolStripDropDownItem recentMenu)
-            : base(scene, Properties.Settings.Default.FileFilter, "LibraryMRU", recentMenu) => View = view;
+        internal JsonController(SceneController sceneController)
+            : base(sceneController, Properties.Settings.Default.FileFilter, "LibraryMRU")
+        { }
 
         internal string WindowCaption
         {
@@ -38,7 +38,7 @@
 
         protected override void ClearDocument() => Scene.Clear();
 
-        protected override bool LoadFromStream(Stream stream, string format)
+        protected override bool LoadFromStream(Stream stream)
         {
             bool result;
             using (var streamer = new StreamReader(stream))
@@ -52,7 +52,7 @@
 
         internal event EventHandler<FilePathEventArgs> FileReopen;
 
-        protected override bool SaveToStream(Stream stream, string format)
+        protected override bool SaveToStream(Stream stream)
         {
             using (var streamer = new StreamWriter(stream))
             using (var writer = new JsonTextWriter(streamer))
@@ -63,7 +63,7 @@
 
         #region Private Implementation
 
-        private readonly Control View;
+        private Control View => SceneController.SceneForm;
 
         private static JsonSerializer GetSerializer() => new JsonSerializer
         {

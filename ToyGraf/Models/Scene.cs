@@ -2,8 +2,11 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Drawing.Design;
+    using System.Linq;
     using ToyGraf.Commands;
     using ToyGraf.Controllers;
+    using ToyGraf.Controls;
 
     public class Scene
     {
@@ -25,11 +28,18 @@
 
         [Category("Scene")]
         [Description("The title of this trace collection.")]
+        [DisplayName("Title")]
         public string Title { get => _Title; set => Run(new SceneTitleCommand(value)); }
 
         [Category("Scene")]
         [Description("The list of traces in this collection.")]
-        public List<Trace> Traces = new List<Trace>();
+        [DisplayName("Traces")]
+        [Editor(typeof(TgCollectionEditor), typeof(UITypeEditor))]
+        public Trace[] Traces
+        {
+            get => _Traces.ToArray();
+            set => _Traces = value.ToList();
+        }
 
         #endregion
 
@@ -40,6 +50,7 @@
         internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         private SceneController SceneController;
         internal string _Title = "(untitled)";
+        internal List<Trace> _Traces = new List<Trace>();
 
         #endregion
 
@@ -47,20 +58,20 @@
 
         internal void AddTrace(Trace trace)
         {
-            Traces.Add(trace);
+            _Traces.Add(trace);
             OnPropertyChanged("Traces");
         }
 
         internal void InsertTrace(int index, Trace trace)
         {
-            Traces.Insert(index, trace);
+            _Traces.Insert(index, trace);
             OnPropertyChanged("Traces");
         }
 
         internal Trace NewTrace()
         {
             var trace = new Trace(this);
-            Traces.Add(trace);
+            _Traces.Add(trace);
             return trace;
         }
 
@@ -69,9 +80,9 @@
 
         internal void RemoveTrace(int index)
         {
-            if (index >= 0 && index < Traces.Count)
+            if (index >= 0 && index < _Traces.Count)
             {
-                Traces.RemoveAt(index);
+                _Traces.RemoveAt(index);
                 OnPropertyChanged("Traces");
             }
         }

@@ -24,7 +24,7 @@
             EntityTableController = new EntityTableController(this);
             FullScreenController = new FullScreenController(this);
 
-            JsonController = new JsonController(Scene, SceneForm, SceneForm.FileReopen);
+            JsonController = new JsonController(this);
             JsonController.FileLoaded += JsonController_FileLoaded;
             JsonController.FilePathChanged += JsonController_FilePathChanged;
             JsonController.FilePathRequest += JsonController_FilePathRequest;
@@ -42,7 +42,7 @@
                 "z = cos(20 * z - 10 * t) * exp(-3 * z)"
             };
 
-            PropertyGridController.SelectedObjects = new[] { trace };
+            PropertyGridController.SelectedObject = Scene;
         }
 
         private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
@@ -132,7 +132,7 @@
 
         internal Camera Camera => Renderer.Camera;
         internal ClockController ClockController => new ClockController(this);
-        internal readonly Scene Scene;
+        internal Scene Scene;
         internal GLControlRenderer Renderer;
 
         public CommandProcessor CommandProcessor { get; private set; }

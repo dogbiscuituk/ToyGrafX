@@ -30,6 +30,12 @@
             set => SceneForm.SplitContainer2.Panel2Collapsed = !value;
         }
 
+        internal object SelectedObject
+        {
+            get => PropertyGrid.SelectedObject;
+            set => PropertyGrid.SelectedObject = value;
+        }
+
         internal object[] SelectedObjects
         {
             get => PropertyGrid.SelectedObjects;

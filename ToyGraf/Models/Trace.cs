@@ -54,7 +54,7 @@ Finally, T represents time (elapsed seconds), and is read-only.")]
         internal string[] _Script;
 
         private ICommandProcessor CommandProcessor => Scene?.CommandProcessor;
-        private int Index => Scene?.Traces.IndexOf(this) ?? 0;
+        private int Index => Scene?._Traces.IndexOf(this) ?? 0;
         private readonly Scene Scene;
 
         #endregion

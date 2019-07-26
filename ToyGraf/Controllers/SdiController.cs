@@ -17,8 +17,8 @@
     {
         #region Protected Constructor
 
-        protected SdiController(Scene scene, string filter, string subKeyName, ToolStripDropDownItem recentMenu)
-            : base(scene, subKeyName, recentMenu)
+        protected SdiController(SceneController sceneController, string filter, string subKeyName)
+            : base(sceneController, subKeyName)
         {
             OpenFileDialog = new OpenFileDialog { Filter = filter, Title = "Select the file to open" };
             SaveFileDialog = new SaveFileDialog { Filter = filter, Title = "Save file" };
@@ -164,9 +164,9 @@
 
         protected abstract void ClearDocument();
 
-        protected abstract bool LoadFromStream(Stream stream, string format);
+        protected abstract bool LoadFromStream(Stream stream);
 
-        protected abstract bool SaveToStream(Stream stream, string format);
+        protected abstract bool SaveToStream(Stream stream);
 
         protected bool UseStream(Action action)
         {
@@ -232,7 +232,7 @@
             if (OnFileLoading())
             {
                 using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-                    result = LoadFromStream(stream, Path.GetExtension(filePath));
+                    result = LoadFromStream(stream);
                 if (result)
                 {
                     FilePath = filePath;
@@ -256,7 +256,7 @@
             if (OnFileSaving())
                 using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
                 {
-                    result = SaveToStream(stream, Path.GetExtension(filePath));
+                    result = SaveToStream(stream);
                     if (result)
                     {
                         FilePath = filePath;

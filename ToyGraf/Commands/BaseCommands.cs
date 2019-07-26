@@ -166,7 +166,7 @@
         protected override string Target => "Trace";
 
         protected override void AddItem(Scene scene) => scene.AddTrace(Value);
-        protected override int GetItemsCount(Scene scene) => scene.Traces.Count;
+        protected override int GetItemsCount(Scene scene) => scene._Traces.Count;
         protected override Trace GetNewItem(Scene scene) => scene.NewTrace();
         protected override void InsertItem(Scene scene) => scene.InsertTrace(Index, Value);
         protected override void RemoveItem(Scene scene) => scene.RemoveTrace(Index);
