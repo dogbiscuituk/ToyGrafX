@@ -53,7 +53,15 @@
         private string UndoAction => UndoStack.Peek().UndoAction;
         private string RedoAction => RedoStack.Peek().RedoAction;
 
-        internal bool IsModified => UndoStack.Any();
+        internal bool IsModified
+        {
+            get => UndoStack.Any();
+            set
+            {
+                if (!value)
+                    Clear();
+            }
+        }
 
         #endregion
 

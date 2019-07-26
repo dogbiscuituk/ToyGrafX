@@ -5,6 +5,7 @@
     using System.ComponentModel;
     using System.Windows.Forms;
     using ToyGraf.Commands;
+    using ToyGraf.Controls;
     using ToyGraf.Engine.Controllers;
     using ToyGraf.Engine.Entities;
     using ToyGraf.Engine.Utility;
@@ -43,6 +44,13 @@
             };
 
             PropertyGridController.SelectedObject = Scene;
+            TgCollectionEditor.CollectionEdited += TgCollectionEditor_CollectionEdited;
+        }
+
+        private void TgCollectionEditor_CollectionEdited(object sender, CollectionEditedEventArgs e)
+        {
+            if (e.Context.Instance == Scene)
+                AttachTraces();
         }
 
         private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
@@ -110,6 +118,7 @@
                     SceneForm.tbNewFromTemplate.Click += FileNewFromTemplate_Click;
                     SceneForm.tbOpen.ButtonClick += FileOpen_Click;
                     SceneForm.tbOpen.DropDownOpening += TbOpen_DropDownOpening;
+                    SceneForm.tbSave.Click += TbSave_Click;
 
                     SceneForm.CameraMoveLeft.Click += CameraMoveLeft_Click;
                     SceneForm.CameraMoveRight.Click += CameraMoveRight_Click;
@@ -155,13 +164,14 @@
         private void FileNewEmptyScene_Click(object sender, System.EventArgs e) => NewEmptyScene();
         private void FileNewFromTemplate_Click(object sender, System.EventArgs e) => NewFromTemplate();
         private void FileOpen_Click(object sender, System.EventArgs e) => OpenFile();
-        private void FileSave_Click(object sender, System.EventArgs e) => JsonController.Save();
-        private void FileSaveAs_Click(object sender, System.EventArgs e) => JsonController.SaveAs();
+        private void FileSave_Click(object sender, System.EventArgs e) => SaveFile();
+        private void FileSaveAs_Click(object sender, System.EventArgs e) => SaveFileAs();
         private void FileClose_Click(object sender, System.EventArgs e) => SceneForm.Close();
         private void FileExit_Click(object sender, System.EventArgs e) => AppController.Close();
         private void EditOptions_Click(object sender, EventArgs e) => EditOptions();
 
         private void TbOpen_DropDownOpening(object sender, EventArgs e) => SceneForm.FileReopen.CloneTo(SceneForm.tbOpen);
+        private void TbSave_Click(object sender, EventArgs e) => SaveOrSaveAs();
 
         private void CameraMoveLeft_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Left);
         private void CameraMoveRight_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Right);
@@ -199,13 +209,18 @@
 
         #region Private Methods
 
+        private void AttachTraces() => Scene.AttachTraces();
+
         private void EditOptions() => new OptionsController(this).ShowModal(SceneForm);
 
         private bool FormClosing(CloseReason closeReason)
         {
             var cancel = !JsonController.SaveIfModified();
             if (!cancel)
+            {
+                TgCollectionEditor.CollectionEdited -= TgCollectionEditor_CollectionEdited;
                 AppController.Remove(this);
+            }
             return !cancel;
         }
 
@@ -249,8 +264,6 @@
                 sceneController.JsonController.FilePath = string.Empty;
         }
 
-        private void OpenFile() { }
-
         private SceneController OpenFile(FilterIndex filterIndex = FilterIndex.File) =>
             OpenFile(JsonController.SelectFilePath(filterIndex));
 
@@ -259,16 +272,14 @@
             if (string.IsNullOrWhiteSpace(filePath))
                 return null;
             var sceneController = GetNewSceneController();
-            if (sceneController == null)
-                return null;
-            sceneController.LoadFromFile(filePath);
+            sceneController?.LoadFromFile(filePath);
             return sceneController;
         }
 
-        internal void LoadFromFile(string filePath)
-        {
-            JsonController.LoadFromFile(filePath);
-        }
+        internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
+        private bool SaveFile() => JsonController.Save();
+        private bool SaveFileAs() => JsonController.SaveAs();
+        private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();
 
         #endregion
 
@@ -276,6 +287,7 @@
 
         private void FileLoaded()
         {
+            AttachTraces();
             CommandProcessor.Clear();
             UpdateUI();
         }

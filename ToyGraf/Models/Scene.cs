@@ -35,15 +35,19 @@
         [Description("The list of traces in this collection.")]
         [DisplayName("Traces")]
         [Editor(typeof(TgCollectionEditor), typeof(UITypeEditor))]
-        public Trace[] Traces
+        public List<Trace> Traces
         {
-            get => _Traces.ToArray();
-            set => _Traces = value.ToList();
+            get => _Traces;
+            set => _Traces = value;
         }
 
         #endregion
 
-        internal bool IsModified => CommandProcessor?.IsModified ?? false;
+        internal bool IsModified
+        {
+            get => CommandProcessor?.IsModified ?? false;
+            set => CommandProcessor.IsModified = value;
+        }
 
         #region Private Properties
 
@@ -60,6 +64,12 @@
         {
             _Traces.Add(trace);
             OnPropertyChanged("Traces");
+        }
+
+        internal void AttachTraces()
+        {
+            foreach (var trace in Traces)
+                trace.Scene = this;
         }
 
         internal void InsertTrace(int index, Trace trace)
