@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Windows.Forms;
     using ToyGraf.Commands;
     using ToyGraf.Engine.Controllers;
@@ -23,12 +24,22 @@
             FullScreenController = new FullScreenController(this);
             JsonController = new JsonController(Scene, SceneForm, SceneForm.FileReopen);
             PropertyGridController = new PropertyGridController(this);
+            Scene.PropertyChanged += Scene_PropertyChanged;
 
-            Trace = new Trace(Scene);
-            PropertyGridController.SelectedObjects = new[] { Trace };
+            var trace = Scene.NewTrace();
+            trace.Script = new string[]
+            {
+                "z = sqrt(x*x+y*y)",
+                "z = cos(20 * z - 10 * t) * exp(-3 * z)"
+            };
+
+            PropertyGridController.SelectedObjects = new[] { trace };
         }
 
-        Trace Trace;
+
+
+        private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
+            PropertyGridController.Refresh();
 
         internal SceneForm SceneForm
         {

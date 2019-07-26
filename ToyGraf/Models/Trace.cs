@@ -14,22 +14,22 @@
         #region Persistent Properties
 
         [Category("Domain")]
-        public double Xmax { get => _Xmax; set => Run(new TraceXmaxCommand(this, value)); }
+        public double Xmax { get => _Xmax; set => Run(new TraceXmaxCommand(Index, value)); }
 
         [Category("Domain")]
-        public double Xmin { get => _Xmin; set => Run(new TraceXminCommand(this, value)); }
+        public double Xmin { get => _Xmin; set => Run(new TraceXminCommand(Index, value)); }
 
         [Category("Domain")]
-        public double Ymax { get => _Ymax; set => Run(new TraceYmaxCommand(this, value)); }
+        public double Ymax { get => _Ymax; set => Run(new TraceYmaxCommand(Index, value)); }
 
         [Category("Domain")]
-        public double Ymin { get => _Ymin; set => Run(new TraceYminCommand(this, value)); }
+        public double Ymin { get => _Ymin; set => Run(new TraceYminCommand(Index, value)); }
 
         [Category("Domain")]
-        public double Zmax { get => _Zmax; set => Run(new TraceZmaxCommand(this, value)); }
+        public double Zmax { get => _Zmax; set => Run(new TraceZmaxCommand(Index, value)); }
 
         [Category("Domain")]
-        public double Zmin { get => _Zmin; set => Run(new TraceZminCommand(this, value)); }
+        public double Zmin { get => _Zmin; set => Run(new TraceZminCommand(Index, value)); }
 
         [Category("Trace")]
         [Description(@"Variable names X, Y, Z represent spatial co-ordinates.
@@ -39,11 +39,11 @@ Names are case-insensitive. Colours use these variables, ranging from 0.0 to 1.0
   A (alpha): the opacity of a given colour, default 1 (fully opaque).
 The default value any of the other variables is 0.
 Finally, T represents time (elapsed seconds), and is read-only.")]
-        public string[] Script { get => _Script; set => Run(new TraceScriptCommand(this, value)); }
+        public string[] Script { get => _Script; set => Run(new TraceScriptCommand(Index, value)); }
 
         [Category("Trace")]
         [Description("Take a wild guess.")]
-        public bool Visible { get => _Visible; set => Run(new TraceVisibleCommand(this, value)); }
+        public bool Visible { get => _Visible; set => Run(new TraceVisibleCommand(Index, value)); }
 
         #endregion
 
@@ -54,13 +54,15 @@ Finally, T represents time (elapsed seconds), and is read-only.")]
         internal string[] _Script;
 
         private ICommandProcessor CommandProcessor => Scene.CommandProcessor;
-        private Scene Scene;
+        private int Index => Scene.Traces.IndexOf(this);
+        private readonly Scene Scene;
 
         #endregion
 
         #region Private Methods
 
-        private void Run(ICommand command) => CommandProcessor.Run(command);
+        private void Run(ITracePropertyCommand command) =>
+            CommandProcessor.Run(command);
 
         #endregion
     }

@@ -1,17 +1,15 @@
 ﻿namespace ToyGraf.Commands
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using ToyGraf.Models;
 
     #region Abstract Base Command
 
     public abstract class Command<TValue> : ICommand
     {
-        protected Command(object subject) { Subject = subject; }
+        protected Command(int index = 0) { Index = index; }
 
-        public object Subject { get; private set; }
+        public int Index { get; private set; }
         public abstract string RedoAction { get; }
         public abstract string UndoAction { get; }
         public TValue Value { get; set; }
@@ -29,6 +27,8 @@
         public bool Do(Scene scene)
         {
             var result = Run(scene);
+            if (result)
+                scene.OnPropertyChanged(PropertyName);
             Invert();
             return result;
         }
@@ -36,7 +36,7 @@
         public virtual void Invert() { }
         public abstract bool Run(Scene scene);
 
-        protected string Detail { get; set; }
+        public string PropertyName { get; protected set; }
         protected abstract string Target { get; }
     }
 
@@ -46,11 +46,11 @@
 
     public abstract class PropertyCommand<TItem, TValue> : Command<TValue>, IPropertyCommand
     {
-        protected PropertyCommand(object subject, string detail,
+        protected PropertyCommand(int index, string propertyName,
             TValue value, Func<TItem, TValue> get, Action<TItem, TValue> set)
-            : base(subject)
+            : base(index)
         {
-            Detail = detail;
+            PropertyName = propertyName;
             Value = value;
             Get = get;
             Set = set;
@@ -61,7 +61,7 @@
 
         public override bool Run(Scene scene)
         {
-            TValue value = GetValue(scene);
+            var value = GetValue(scene);
             var result = !Equals(value, Value);
             if (result)
             {
@@ -71,8 +71,8 @@
             return result;
         }
 
-        public override string ToString() => $"{Target} {Detail} = {Value}";
-        private string Action => $"{Detail} change";
+        public override string ToString() => $"{Target} {PropertyName} = {Value}";
+        private string Action => $"{PropertyName} change";
 
         protected Func<TItem, TValue> Get;
         protected Action<TItem, TValue> Set;
@@ -84,24 +84,22 @@
 
     public abstract class ScenePropertyCommand<TValue> : PropertyCommand<Scene, TValue>, IScenePropertyCommand
     {
-        protected ScenePropertyCommand(string detail,
+        protected ScenePropertyCommand(string propertyName,
             TValue value, Func<Scene, TValue> get, Action<Scene, TValue> set)
-            : base(0, detail, value, get, set) { }
+            : base(0, propertyName, value, get, set) { }
 
-        public void RunOn(Scene scene) => Set(scene, Value);
         protected override string Target => "scene";
         protected override Scene GetItem(Scene scene) => scene;
     }
 
     public abstract class TracePropertyCommand<TValue> : PropertyCommand<Trace, TValue>, ITracePropertyCommand
     {
-        protected TracePropertyCommand(Trace trace, string detail,
+        protected TracePropertyCommand(int index, string propertyName,
             TValue value, Func<Trace, TValue> get, Action<Trace, TValue> set)
-            : base(trace, detail, value, get, set) { }
+            : base(index, propertyName, value, get, set) { }
 
-        public void RunOn(Trace trace) => Set(trace, Value);
         protected override string Target => $"Trace";
-        protected override Trace GetItem(Scene scene) => (Trace)Subject;
+        protected override Trace GetItem(Scene scene) => scene.Traces[Index];
     }
 
     #endregion
@@ -122,8 +120,6 @@
     {
         internal CollectionCommand(int index, bool add) : base(index) { Adding = add; }
 
-        public int Index => (int)Subject;
-
         public bool Adding { get; set; }
         public override string RedoAction => GetAction(false);
         public override string UndoAction => GetAction(true);
@@ -142,31 +138,32 @@
                     InsertItem(scene);
                 else if (Index == count)
                     AddItem(scene);
+                else
+                    return false;
             }
             else
                 RemoveItem(scene);
             return true;
         }
 
+        protected abstract void AddItem(Scene scene);
         protected abstract int GetItemsCount(Scene scene);
         protected abstract TItem GetNewItem(Scene scene);
-
-        protected abstract void AddItem(Scene scene);
         protected abstract void InsertItem(Scene scene);
         protected abstract void RemoveItem(Scene scene);
 
-        private string GetAction(bool undo) => $"{Detail} {(Adding ^ undo ? "addition" : "removal")}";
+        private string GetAction(bool undo) => $"{PropertyName} {(Adding ^ undo ? "addition" : "removal")}";
     }
 
     public class TracesCommand : CollectionCommand<Trace>, ITracesCommand
     {
-        internal TracesCommand(int index, bool add) : base(index, add) { Detail = "trace"; }
+        internal TracesCommand(int index, bool add) : base(index, add) { PropertyName = "trace"; }
 
         protected override string Target => "Trace";
-        protected override int GetItemsCount(Scene scene) => scene.Traces.Count;
-        protected override Trace GetNewItem(Scene scene) => scene.NewTrace(Index);
 
         protected override void AddItem(Scene scene) => scene.AddTrace(Value);
+        protected override int GetItemsCount(Scene scene) => scene.Traces.Count;
+        protected override Trace GetNewItem(Scene scene) => scene.NewTrace();
         protected override void InsertItem(Scene scene) => scene.InsertTrace(Index, Value);
         protected override void RemoveItem(Scene scene) => scene.RemoveTrace(Index);
     }

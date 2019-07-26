@@ -75,7 +75,6 @@
         }
 
         private static Properties.Settings Settings => Properties.Settings.Default;
-        private static int SceneID;
 
         internal static Options Options
         {

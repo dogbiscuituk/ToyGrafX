@@ -4,6 +4,8 @@
 
     public interface ICommand
     {
+        int Index { get; }
+        string PropertyName { get; }
         string RedoAction { get; }
         string UndoAction { get; }
 
@@ -16,12 +18,10 @@
 
     public interface IScenePropertyCommand : IPropertyCommand
     {
-        void RunOn(Scene scene);
     }
 
     public interface ITracePropertyCommand : IPropertyCommand
     {
-        void RunOn(Trace trace);
     }
 
     public interface ICollectionCommand : ICommand

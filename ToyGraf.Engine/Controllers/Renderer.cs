@@ -22,7 +22,7 @@
 
         #region Virtuals
 
-        protected virtual GraphicsMode GraphicsMode => new GraphicsMode(
+        protected GraphicsMode GraphicsMode => new GraphicsMode(
             color: new ColorFormat(8, 8, 8, 8),
             depth: 24,
             stencil: 8,
@@ -40,7 +40,7 @@
                 LoadProjectionMatrix();
             Shader.Stop();
 
-            int xc = 100, yc = 100;
+            int xc = 1000, yc = 1000;
             var vertices = Grid.GetVertexCoords(xc, yc).ToArray();
             var indices = Grid.GetTriangleIndices(xc, yc).ToArray();
 
