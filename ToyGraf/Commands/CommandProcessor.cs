@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Linq;
     using System.Windows.Forms;
     using ToyGraf.Controllers;
     using ToyGraf.Models;
@@ -51,6 +52,8 @@
         private bool GroupUndo => AppController.Options.GroupUndo;
         private string UndoAction => UndoStack.Peek().UndoAction;
         private string RedoAction => RedoStack.Peek().RedoAction;
+
+        internal bool IsModified => UndoStack.Any();
 
         #endregion
 

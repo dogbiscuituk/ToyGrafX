@@ -9,11 +9,19 @@
 
         public Trace(Scene scene) => Scene = scene;
 
-        public bool UsesTime => true;
-
         #endregion
 
         #region Persistent Properties
+
+        [Category("Trace")]
+        [Description(@"Variable names X, Y, Z represent spatial co-ordinates.
+Names are case-insensitive. Colours use these variables, ranging from 0.0 to 1.0:
+  R, G, B (red, green, blue);
+  H, S, L (hue, saturation, luminance);
+  A (alpha): the opacity of a given colour, default 1 (fully opaque).
+The default value any of the other variables is 0.
+Finally, T represents time (elapsed seconds), and is read-only.")]
+        public string[] Script { get => _Script; set => Run(new TraceScriptCommand(Index, value)); }
 
         [Category("Domain")]
         public double Xmax { get => _Xmax; set => Run(new TraceXmaxCommand(Index, value)); }
@@ -32,16 +40,6 @@
 
         [Category("Domain")]
         public double Zmin { get => _Zmin; set => Run(new TraceZminCommand(Index, value)); }
-
-        [Category("Trace")]
-        [Description(@"Variable names X, Y, Z represent spatial co-ordinates.
-Names are case-insensitive. Colours use these variables, ranging from 0.0 to 1.0:
-  R, G, B (red, green, blue);
-  H, S, L (hue, saturation, luminance);
-  A (alpha): the opacity of a given colour, default 1 (fully opaque).
-The default value any of the other variables is 0.
-Finally, T represents time (elapsed seconds), and is read-only.")]
-        public string[] Script { get => _Script; set => Run(new TraceScriptCommand(Index, value)); }
 
         [Category("Trace")]
         [Description("Take a wild guess.")]

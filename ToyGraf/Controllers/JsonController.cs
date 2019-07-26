@@ -25,8 +25,7 @@
             get
             {
                 var text = Path.GetFileNameWithoutExtension(FilePath).ToFilename();
-                var modified = Scene.Modified;
-                if (modified)
+                if (Scene.IsModified)
                     text = string.Concat("* ", text);
                 text = string.Concat(text, " - ", Application.ProductName);
                 return text;
@@ -68,7 +67,7 @@
 
         private static JsonSerializer GetSerializer() => new JsonSerializer
         {
-            DefaultValueHandling = DefaultValueHandling.Ignore,
+            DefaultValueHandling = DefaultValueHandling.Include,
             Formatting = Formatting.Indented
         };
 

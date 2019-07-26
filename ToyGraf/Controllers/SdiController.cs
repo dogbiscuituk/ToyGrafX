@@ -32,7 +32,6 @@
         {
             FilePath = string.Empty;
             ClearDocument();
-            Scene.Modified = false;
         }
 
         internal string SelectFilePath(FilterIndex filterIndex = FilterIndex.Default)
@@ -107,7 +106,7 @@
 
         internal bool SaveIfModified()
         {
-            if (Scene.Modified)
+            if (Scene.IsModified)
                 switch (MessageBox.Show(
                     "The contents of this file have changed. Do you want to save the changes?",
                     "File modified",
@@ -175,7 +174,6 @@
             try
             {
                 action();
-                Scene.Modified = false;
             }
             catch (Exception x)
             {

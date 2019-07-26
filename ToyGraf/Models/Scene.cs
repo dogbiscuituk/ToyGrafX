@@ -1,9 +1,7 @@
 ﻿namespace ToyGraf.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
     using ToyGraf.Commands;
     using ToyGraf.Controllers;
 
@@ -15,18 +13,6 @@
         {
             SceneController = sceneController;
             RestoreDefaults();
-        }
-
-        public bool Modified { get; set; }
-
-        public List<Trace> Traces = new List<Trace>();
-
-        public bool UsesTime
-        {
-            get
-            {
-                return Traces.Any(p => p.Visible && p.UsesTime);
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -41,13 +27,19 @@
         [Description("The title of this trace collection.")]
         public string Title { get => _Title; set => Run(new SceneTitleCommand(value)); }
 
+        [Category("Scene")]
+        [Description("The list of traces in this collection.")]
+        public List<Trace> Traces = new List<Trace>();
+
         #endregion
+
+        internal bool IsModified => CommandProcessor.IsModified;
 
         #region Private Properties
 
         internal CommandProcessor CommandProcessor => SceneController.CommandProcessor;
         private SceneController SceneController;
-        internal string _Title;
+        internal string _Title = "(untitled)";
 
         #endregion
 

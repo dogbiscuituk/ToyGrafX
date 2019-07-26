@@ -66,7 +66,7 @@
 
         internal void UpdateTimeControls()
         {
-            if (ClockRunning && !UsesTime)
+            if (ClockRunning)
                 ClockStop();
             SceneForm.TimeAccelerate.Enabled = SceneForm.tbAccelerate.Enabled = CanAccelerate;
             SceneForm.TimeDecelerate.Enabled = SceneForm.tbDecelerate.Enabled = CanDecelerate;
@@ -74,7 +74,7 @@
             SceneForm.TimePause.Enabled = SceneForm.tbPause.Enabled = CanPause;
             SceneForm.TimeReverse.Enabled = SceneForm.tbReverse.Enabled = CanReverse;
             SceneForm.TimeStop.Enabled = SceneForm.tbStop.Enabled = CanStop;
-            SceneForm.SpeedLabel.Enabled = SceneForm.TimeLabel.Enabled = SceneForm.FpsLabel.Enabled = UsesTime;
+            SceneForm.SpeedLabel.Enabled = SceneForm.TimeLabel.Enabled = SceneForm.FpsLabel.Enabled = true;
             UpdateTimeFactor();
         }
 
@@ -86,14 +86,12 @@
         private SceneForm SceneForm => SceneController.SceneForm;
         private Stopwatch Stopwatch;
 
-        private bool CanAccelerate => UsesTime && VirtualTimeFactor < +32;
-        private bool CanDecelerate => UsesTime && VirtualTimeFactor > -32;
-        private bool CanPause => UsesTime && Clock.Running;
-        private bool CanReverse => UsesTime && (!Clock.Running || VirtualTimeFactor > 0);
-        private bool CanStart => UsesTime && (!Clock.Running || VirtualTimeFactor < 0);
-        private bool CanStop => UsesTime && Clock.Running;
-
-        private bool UsesTime => SceneController.Scene.UsesTime;
+        private bool CanAccelerate => VirtualTimeFactor < +32;
+        private bool CanDecelerate => VirtualTimeFactor > -32;
+        private bool CanPause => Clock.Running;
+        private bool CanReverse => (!Clock.Running || VirtualTimeFactor > 0);
+        private bool CanStart => (!Clock.Running || VirtualTimeFactor < 0);
+        private bool CanStop => Clock.Running;
 
         private bool EpilepsyWarningAcknowledged
         {
