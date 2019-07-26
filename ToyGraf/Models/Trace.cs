@@ -53,16 +53,21 @@ Finally, T represents time (elapsed seconds), and is read-only.")]
         internal double _Xmax, _Xmin, _Ymax, _Ymin, _Zmax, _Zmin;
         internal string[] _Script;
 
-        private ICommandProcessor CommandProcessor => Scene.CommandProcessor;
-        private int Index => Scene.Traces.IndexOf(this);
+        private ICommandProcessor CommandProcessor => Scene?.CommandProcessor;
+        private int Index => Scene?.Traces.IndexOf(this) ?? 0;
         private readonly Scene Scene;
 
         #endregion
 
         #region Private Methods
 
-        private void Run(ITracePropertyCommand command) =>
-            CommandProcessor.Run(command);
+        private void Run(ITracePropertyCommand command)
+        {
+            if (CommandProcessor != null)
+                CommandProcessor.Run(command);
+            else
+                command.RunOn(this);
+        }
 
         #endregion
     }

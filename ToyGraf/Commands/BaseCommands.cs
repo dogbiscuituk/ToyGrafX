@@ -88,6 +88,8 @@
             TValue value, Func<Scene, TValue> get, Action<Scene, TValue> set)
             : base(0, propertyName, value, get, set) { }
 
+        public void RunOn(Scene scene) => Set(scene, Value);
+
         protected override string Target => "scene";
         protected override Scene GetItem(Scene scene) => scene;
     }
@@ -97,6 +99,8 @@
         protected TracePropertyCommand(int index, string propertyName,
             TValue value, Func<Trace, TValue> get, Action<Trace, TValue> set)
             : base(index, propertyName, value, get, set) { }
+
+        public void RunOn(Trace trace) => Set(trace, Value);
 
         protected override string Target => $"Trace";
         protected override Trace GetItem(Scene scene) => scene.Traces[Index];

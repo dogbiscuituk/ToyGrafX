@@ -67,6 +67,7 @@
                     SceneForm.FileSaveAs.Click -= FileSaveAs_Click;
                     SceneForm.FileClose.Click -= FileClose_Click;
                     SceneForm.FileExit.Click -= FileExit_Click;
+                    SceneForm.EditOptions.Click -= EditOptions_Click;
 
                     SceneForm.tbNew.ButtonClick -= FileNewEmptyScene_Click;
                     SceneForm.tbNewEmptyScene.Click -= FileNewEmptyScene_Click;
@@ -102,6 +103,7 @@
                     SceneForm.FileSaveAs.Click += FileSaveAs_Click;
                     SceneForm.FileClose.Click += FileClose_Click;
                     SceneForm.FileExit.Click += FileExit_Click;
+                    SceneForm.EditOptions.Click += EditOptions_Click;
 
                     SceneForm.tbNew.ButtonClick += FileNewEmptyScene_Click;
                     SceneForm.tbNewEmptyScene.Click += FileNewEmptyScene_Click;
@@ -157,6 +159,7 @@
         private void FileSaveAs_Click(object sender, System.EventArgs e) => JsonController.SaveAs();
         private void FileClose_Click(object sender, System.EventArgs e) => SceneForm.Close();
         private void FileExit_Click(object sender, System.EventArgs e) => AppController.Close();
+        private void EditOptions_Click(object sender, EventArgs e) => EditOptions();
 
         private void TbOpen_DropDownOpening(object sender, EventArgs e) => SceneForm.FileReopen.CloneTo(SceneForm.tbOpen);
 
@@ -195,6 +198,8 @@
         #endregion
 
         #region Private Methods
+
+        private void EditOptions() => new OptionsController(this).ShowModal(SceneForm);
 
         private bool FormClosing(CloseReason closeReason)
         {
@@ -256,8 +261,13 @@
             var sceneController = GetNewSceneController();
             if (sceneController == null)
                 return null;
-            sceneController.JsonController.LoadFromFile(filePath);
+            sceneController.LoadFromFile(filePath);
             return sceneController;
+        }
+
+        internal void LoadFromFile(string filePath)
+        {
+            JsonController.LoadFromFile(filePath);
         }
 
         #endregion

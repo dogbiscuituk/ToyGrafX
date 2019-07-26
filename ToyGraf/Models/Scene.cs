@@ -33,11 +33,11 @@
 
         #endregion
 
-        internal bool IsModified => CommandProcessor.IsModified;
+        internal bool IsModified => CommandProcessor?.IsModified ?? false;
 
         #region Private Properties
 
-        internal CommandProcessor CommandProcessor => SceneController.CommandProcessor;
+        internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         private SceneController SceneController;
         internal string _Title = "(untitled)";
 
@@ -86,8 +86,13 @@
         {
         }
 
-        private void Run(IScenePropertyCommand command) =>
-            CommandProcessor.Run(command);
+        private void Run(IScenePropertyCommand command)
+        {
+            if (CommandProcessor != null)
+                CommandProcessor.Run(command);
+            else
+                command.RunOn(this);
+        }
 
         #endregion
     }
