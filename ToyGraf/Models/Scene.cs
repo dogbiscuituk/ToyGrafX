@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing.Design;
-    using System.Linq;
     using ToyGraf.Commands;
     using ToyGraf.Controllers;
     using ToyGraf.Controls;
@@ -27,19 +26,20 @@
         #region Persistent Properties
 
         [Category("Scene")]
-        [Description("The title of this trace collection.")]
+        [Description("A cap on this scene's rendering frequency.")]
+        [DisplayName("Frames per second (FPS)")]
+        public double FramesPerSecond { get => _FramesPerSecond; set => Run(new SceneFramesPerSecondCommand(value)); }
+
+        [Category("Scene")]
+        [Description("A title for this scene.")]
         [DisplayName("Title")]
         public string Title { get => _Title; set => Run(new SceneTitleCommand(value)); }
 
         [Category("Scene")]
-        [Description("The list of traces in this collection.")]
+        [Description("A list of the traces in this scene.")]
         [DisplayName("Traces")]
         [Editor(typeof(TgCollectionEditor), typeof(UITypeEditor))]
-        public List<Trace> Traces
-        {
-            get => _Traces;
-            set => _Traces = value;
-        }
+        public List<Trace> Traces { get => _Traces; set => _Traces = value; }
 
         #endregion
 
@@ -51,7 +51,10 @@
 
         #region Private Properties
 
+        const double DefaultFramesPerSecond = 60;
+
         internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
+        internal double _FramesPerSecond = DefaultFramesPerSecond;
         private SceneController SceneController;
         internal string _Title = "(untitled)";
         internal List<Trace> _Traces = new List<Trace>();

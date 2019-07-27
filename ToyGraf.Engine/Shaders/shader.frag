@@ -1,4 +1,6 @@
-﻿#version 330 core
+﻿// Fragment Shader
+
+#version 330 core
 
 in vec3 colour;
 out vec4 FragColor;

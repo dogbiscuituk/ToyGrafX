@@ -37,15 +37,73 @@
             Scene.PropertyChanged += Scene_PropertyChanged;
 
             var trace = Scene.NewTrace();
-            trace.Script = new string[]
-            {
-                "z = sqrt(x*x+y*y)",
-                "z = cos(20 * z - 10 * t) * exp(-3 * z)"
-            };
+            trace.ShaderVertex = @"// Vertex Shader
+
+#version 330 core
+
+layout (location = 0) in vec3 position;
+layout (location = 1) in float time;
+out vec3 colour;
+
+uniform mat4 transformationMatrix;
+uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
+
+void main()
+{
+    float
+        x = position.x,
+        y = position.y,
+        z = position.z,
+        r = 0,
+        g = 0,
+        b = 0;
+
+    z = sqrt(x * x + y * y);
+    z = cos(20 * z - 10 * time) * exp(-3 * z);
+    r = (x + 1) / 2;
+    g = (y + 1) / 2;
+    b = clamp(abs(5 * z), 0, 1);
+
+    gl_Position = projectionMatrix * viewMatrix * transformationMatrix * vec4(x, y, z, 1.0);
+    colour = vec3(r, g, b);
+}".Split('\n');
+
+            trace.ShaderFragment = @"// Fragment Shader
+
+#version 330 core
+
+in vec3 colour;
+out vec4 FragColor;
+
+void main()
+{
+    FragColor = vec4(colour, 0.1f);
+}".Split('\n');
 
             PropertyGridController.SelectedObject = Scene;
             TgCollectionEditor.CollectionEdited += TgCollectionEditor_CollectionEdited;
+            Timer = new Timer();
+            Timer.Tick += Timer_Tick;
+            StartTimer();
         }
+
+        private void StartTimer()
+        {
+            InitTimer();
+            Timer.Start();
+        }
+
+        private void StopTimer() => Timer.Stop();
+
+        private void InitTimer() => Timer.Interval = GetFrameMilliseconds();
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            Render();
+        }
+
+        private int GetFrameMilliseconds() => (int)Math.Round(1000 / Math.Min(Math.Max(Scene.FramesPerSecond, 1), int.MaxValue));
 
         private void TgCollectionEditor_CollectionEdited(object sender, CollectionEditedEventArgs e)
         {
@@ -53,8 +111,27 @@
                 AttachTraces();
         }
 
+        private void Cleanup()
+        {
+            StopTimer();
+            Timer.Tick -= Timer_Tick;
+            TgCollectionEditor.CollectionEdited -= TgCollectionEditor_CollectionEdited;
+            AppController.Remove(this);
+        }
+
         private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
+            PropertyChanged(e.PropertyName);
+
+        private void PropertyChanged(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case "FramesPerSecond":
+                    InitTimer();
+                    break;
+            }
             PropertyGridController.Refresh();
+        }
 
         internal SceneForm SceneForm
         {
@@ -140,9 +217,8 @@
         }
 
         internal Camera Camera => Renderer.Camera;
-        internal ClockController ClockController => new ClockController(this);
-        internal Scene Scene;
         internal GLControlRenderer Renderer;
+        internal Scene Scene;
 
         public CommandProcessor CommandProcessor { get; private set; }
 
@@ -204,6 +280,7 @@
 
         private readonly FullScreenController FullScreenController;
         private readonly JsonController JsonController;
+        private Timer Timer;
 
         #endregion
 
@@ -217,10 +294,7 @@
         {
             var cancel = !JsonController.SaveIfModified();
             if (!cancel)
-            {
-                TgCollectionEditor.CollectionEdited -= TgCollectionEditor_CollectionEdited;
-                AppController.Remove(this);
-            }
+                Cleanup();
             return !cancel;
         }
 
@@ -304,7 +378,6 @@
 
         private void UpdateUI()
         {
-            ClockController.UpdateTimeControls();
             PropertyGridController.Refresh();
         }
 

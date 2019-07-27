@@ -63,7 +63,6 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\CameraController.cs" />
-    <Compile Include="Controllers\ClockController.cs" />
     <Compile Include="Controllers\FullScreenController.cs" />
     <Compile Include="Controllers\HostController.cs" />
     <Compile Include="Controllers\JsonController.cs" />
@@ -74,7 +73,6 @@
     <Compile Include="Controllers\SdiController.cs" />
     <Compile Include="Controllers\EntityTableController.cs" />
     <Compile Include="FilterIndex.cs" />
-    <Compile Include="Models\Clock.cs" />
     <Compile Include="Models\Scene.cs" />
     <Compile Include="Models\Structs\Options.cs" />
     <Compile Include="Models\Trace.cs" />

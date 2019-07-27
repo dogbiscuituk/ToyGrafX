@@ -12,18 +12,10 @@
     {
         static AppController()
         {
-            RenderTimer = new Timer { Interval = 15, Enabled = true };
-            SplashTimer = new Timer { Interval = 5000, Enabled = true };
-            RenderTimer.Tick += RenderTimer_Tick;
-            SplashTimer.Tick += SplashTimer_Tick;
+            Timer = new Timer { Interval = 5000, Enabled = true };
+            Timer.Tick += Timer_Tick;
             AddNewSceneController();
             ApplyOptions();
-        }
-
-        private static void RenderTimer_Tick(object sender, EventArgs e)
-        {
-            foreach (var sceneController in SceneControllers)
-                sceneController.Render();
         }
 
         internal static SceneController AddNewSceneController()
@@ -34,16 +26,7 @@
             return sceneController;
         }
 
-        internal static void Close()
-        {
-            if (RenderTimer != null)
-            {
-                RenderTimer.Enabled = false;
-                RenderTimer.Dispose();
-                RenderTimer = null;
-            }
-            Application.Exit();
-        }
+        internal static void Close() => Application.Exit();
 
         internal static string GetDefaultFolder(FilterIndex filterIndex)
         {
@@ -65,18 +48,18 @@
                 Close();
         }
 
-        private static void SplashTimer_Tick(object sender, EventArgs e)
+        private static void Timer_Tick(object sender, EventArgs e)
         {
-            SplashTimer.Enabled = false;
-            SplashTimer.Dispose();
-            SplashTimer = null;
+            Timer.Enabled = false;
+            Timer.Dispose();
+            Timer = null;
             AboutDialog.Hide();
         }
 
         private static readonly string DefaultFilesFolderPath =
             $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\{Application.ProductName}";
         private static AboutDialog _AboutDialog;
-        private static Timer RenderTimer, SplashTimer;
+        private static Timer Timer;
 
         #region Properties
 
@@ -89,8 +72,6 @@
                 return _AboutDialog;
             }
         }
-
-        internal static bool EpilepsyWarningAcknowledged;
 
         internal static Options Options
         {
