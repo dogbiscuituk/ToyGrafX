@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Drawing;
+    using System.Linq;
     using System.Windows.Forms;
     using ToyGraf.Commands;
     using ToyGraf.Controls;
@@ -83,12 +85,36 @@ void main()
 
             PropertyGridController.SelectedObject = Scene;
             TgCollectionEditor.CollectionEdited += TgCollectionEditor_CollectionEdited;
+
+            TgCollectionEditor.CollectionFormShown += TgCollectionEditor_CollectionFormShown;
+
             Timer = new Timer();
             Timer.Tick += Timer_Tick;
             StartTimer();
         }
 
-        private void StartTimer()
+        private void TgCollectionEditor_CollectionFormShown(object sender, EventArgs e)
+        {
+            if (sender is Form form)
+            {
+                form.Size = new Size(512, 512);
+                form.Text = "Properties";
+                if (form.Owner is SceneForm sceneForm)
+                {
+                    form.Font = sceneForm.Font;
+                    //CommandProcessor = AppController.SceneControllers
+                    //    .FirstOrDefault(p => p.SceneForm == sceneForm)
+                    //    .CommandProcessor;
+                }
+                var propertyGrid = form.Controls.Find("propertyBrowser", true)?[0] as PropertyGrid;
+                PropertyGridController.HidePropertyPagesButton(propertyGrid);
+                propertyGrid.HelpVisible = true;
+                //if (Scene != null)
+                //    TraceCounter = Graph.Traces.Count;
+            }
+    }
+
+    private void StartTimer()
         {
             InitTimer();
             Timer.Start();
