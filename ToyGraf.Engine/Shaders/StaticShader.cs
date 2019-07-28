@@ -1,10 +1,10 @@
-﻿using OpenTK.Graphics.OpenGL;
-using System.ComponentModel;
-using System.IO;
-using System.Text;
-
-namespace ToyGraf.Engine.Shaders
+﻿namespace ToyGraf.Engine.Shaders
 {
+    using OpenTK.Graphics.OpenGL;
+    using System.ComponentModel;
+    using System.IO;
+    using System.Text;
+
     public class StaticShader : Shader
     {
         #region Public Interface

@@ -2,14 +2,18 @@
 {
     using System.ComponentModel;
     using ToyGraf.Commands;
+    using ToyGraf.Shaders;
 
     public class Trace
     {
         #region Public Interface
 
-        public Trace() { }
+        public Trace()
+        {
+            Shader = new TraceShader(this);
+        }
 
-        public Trace(Scene scene) => Scene = scene;
+        public Trace(Scene scene) : this() => Scene = scene;
 
         #endregion
 
@@ -110,6 +114,14 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
             set => Run(new ShaderComputeCommand(Index, value));
         }
 
+        [Category("Shaders")]
+        [Description("The status of the most recent shader compilation action. An empty value indicates successful compilation.")]
+        [DisplayName("Shader Status")]
+        public string[] ShaderStatus
+        {
+            get => _ShaderStatus;
+        }
+
         [Category("Domain && Range")]
         public double Xmax { get => _Xmax; set => Run(new TraceXmaxCommand(Index, value)); }
 
@@ -144,11 +156,13 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
             _ShaderTessEvaluation,
             _ShaderGeometry,
             _ShaderFragment,
-            _ShaderCompute;
+            _ShaderCompute,
+            _ShaderStatus;
 
         private ICommandProcessor CommandProcessor => Scene?.CommandProcessor;
         private int Index => Scene?._Traces.IndexOf(this) ?? 0;
         internal Scene Scene;
+        private TraceShader Shader;
 
         #endregion
 
