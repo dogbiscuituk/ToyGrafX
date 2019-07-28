@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Controllers
 {
+    using OpenTK.Graphics.OpenGL;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -38,59 +39,21 @@
             Scene.PropertyChanged += Scene_PropertyChanged;
 
             var trace = Scene.NewTrace();
-            trace.ShaderVertex = @"// Vertex Shader
+            trace.ShaderVertex = Trace.DefaultShaderVertex.ToStringArray();
+            trace.ShaderFragment = Trace.DefaultShaderFragment.ToStringArray();
 
-#version 330 core
-
-layout (location = 0) in vec3 position;
-layout (location = 1) in float time;
-out vec3 colour;
-
-uniform mat4 transformationMatrix;
-uniform mat4 projectionMatrix;
-uniform mat4 viewMatrix;
-
-void main()
-{
-    float
-        x = position.x,
-        y = position.y,
-        z = position.z,
-        r = 0,
-        g = 0,
-        b = 0;
-
-    z = sqrt(x * x + y * y);
-    z = cos(20 * z - 10 * time) * exp(-3 * z);
-    r = (x + 1) / 2;
-    g = (y + 1) / 2;
-    b = clamp(abs(5 * z), 0, 1);
-
-    gl_Position = projectionMatrix * viewMatrix * transformationMatrix * vec4(x, y, z, 1.0);
-    colour = vec3(r, g, b);
-}".Split('\n');
-
-            trace.ShaderFragment = @"// Fragment Shader
-
-#version 330 core
-
-in vec3 colour;
-out vec4 FragColor;
-
-void main()
-{
-    FragColor = vec4(colour, 0.1f);
-}".Split('\n');
 
             PropertyGridController.SelectedObject = Scene;
             TgCollectionEditor.CollectionEdited += TgCollectionEditor_CollectionEdited;
-
+            TgCollectionEditor.CollectionFormHelpButtonClicked += TgCollectionEditor_CollectionFormHelpButtonClicked;
             TgCollectionEditor.CollectionFormShown += TgCollectionEditor_CollectionFormShown;
 
             Timer = new Timer();
             Timer.Tick += Timer_Tick;
             TimerStart();
         }
+
+        private void TgCollectionEditor_CollectionFormHelpButtonClicked(object sender, CancelEventArgs e) => ShowOpenGLShadingLanguageBook();
 
         private void TgCollectionEditor_CollectionFormShown(object sender, EventArgs e)
         {
@@ -144,8 +107,45 @@ void main()
                 case "FramesPerSecond":
                     TimerInit();
                     break;
+                    /*
+                case "ShaderCompute":
+                    UpdateShader(ShaderType.ComputeShader);
+                    break;
+                case "ShaderFragment":
+                    UpdateShader(ShaderType.FragmentShader);
+                    break;
+                case "ShaderGeometry":
+                    UpdateShader(ShaderType.GeometryShader);
+                    break;
+                case "ShaderTessControl":
+                    UpdateShader(ShaderType.TessControlShader);
+                    break;
+                case "ShaderTessEvaluation":
+                    UpdateShader(ShaderType.TessEvaluationShader);
+                    break;
+                case "ShaderVertex":
+                    UpdateShader(ShaderType.VertexShader);
+                    break;
+                    */
             }
             PropertyGridController.Refresh();
+        }
+
+        private void UpdateShader(ShaderType shaderType)
+        {
+            TimerStop();
+
+            TimerStart();
+        }
+
+        private string[] GetShaderScript(ShaderType shaderType)
+        {
+            switch (shaderType)
+            {
+                case ShaderType.ComputeShader:
+                    return null;
+            }
+            return null;
         }
 
         internal SceneForm SceneForm
@@ -190,6 +190,7 @@ void main()
                     SceneForm.CameraRotateClockwise.Click -= CameraRotateClockwise_Click;
                     SceneForm.CameraHome.Click -= CameraHome_Click;
 
+                    SceneForm.HelpOpenGLShadingLanguage.Click -= HelpTheOpenGLShadingLanguage_Click;
                     SceneForm.HelpAbout.Click -= HelpAbout_Click;
                 }
                 _SceneForm = value;
@@ -228,6 +229,7 @@ void main()
                     SceneForm.CameraRotateClockwise.Click += CameraRotateClockwise_Click;
                     SceneForm.CameraHome.Click += CameraHome_Click;
 
+                    SceneForm.HelpOpenGLShadingLanguage.Click += HelpTheOpenGLShadingLanguage_Click;
                     SceneForm.HelpAbout.Click += HelpAbout_Click;
                 }
             }
@@ -280,6 +282,7 @@ void main()
         private void CameraRotateClockwise_Click(object sender, EventArgs e) => MoveCamera(CameraMove.RollRight);
         private void CameraHome_Click(object sender, EventArgs e) => MoveCamera(CameraMove.Home);
 
+        private void HelpTheOpenGLShadingLanguage_Click(object sender, EventArgs e) => ShowOpenGLShadingLanguageBook();
         private void HelpAbout_Click(object sender, System.EventArgs e) => new AboutController().ShowDialog(SceneForm);
 
         private void JsonController_FileLoaded(object sender, EventArgs e) => FileLoaded();
@@ -299,6 +302,8 @@ void main()
         private readonly JsonController JsonController;
         private Timer Timer;
 
+        private const string OpenGLShadingLanguageUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
+
         #endregion
 
         #region Private Methods
@@ -306,6 +311,21 @@ void main()
         private void AttachTraces() => Scene.AttachTraces();
 
         private void EditOptions() => new OptionsController(this).ShowModal(SceneForm);
+
+        private void FileLoaded()
+        {
+            AttachTraces();
+            CommandProcessor.Clear();
+            UpdateUI();
+        }
+
+        private void FilePathRequest(SdiController.FilePathEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(e.FilePath))
+                e.FilePath = Scene.Title.ToFilename();
+        }
+
+        private void FileSaved() => Camera.Fix();
 
         private bool FormClosing(CloseReason closeReason)
         {
@@ -324,6 +344,8 @@ void main()
             JsonController.Clear();
             return this;
         }
+
+        internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
 
         private void MoveCamera(CameraMove cameraMove)
         {
@@ -367,29 +389,10 @@ void main()
             return sceneController;
         }
 
-        internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
         private bool SaveFile() => JsonController.Save();
         private bool SaveFileAs() => JsonController.SaveAs();
         private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();
-
-        #endregion
-
-        #region File Operations
-
-        private void FileLoaded()
-        {
-            AttachTraces();
-            CommandProcessor.Clear();
-            UpdateUI();
-        }
-
-        private void FilePathRequest(SdiController.FilePathEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(e.FilePath))
-                e.FilePath = Scene.Title.ToFilename();
-        }
-
-        private void FileSaved() => Camera.Fix();
+        private void ShowOpenGLShadingLanguageBook() => OpenGLShadingLanguageUrl.Launch();
 
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
 

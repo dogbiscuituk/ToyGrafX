@@ -128,6 +128,8 @@
             this.TimeForward = new System.Windows.Forms.ToolStripMenuItem();
             this.TimeAccelerate = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.HelpOpenGLShadingLanguage = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripSeparator();
             this.HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
@@ -156,7 +158,7 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(415, 321);
+            this.GLControl.Size = new System.Drawing.Size(413, 319);
             this.GLControl.TabIndex = 1;
             this.GLControl.VSync = false;
             // 
@@ -308,7 +310,7 @@
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.EntityTable);
             this.SplitContainer1.Size = new System.Drawing.Size(591, 395);
-            this.SplitContainer1.SplitterDistance = 321;
+            this.SplitContainer1.SplitterDistance = 319;
             this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
@@ -326,8 +328,8 @@
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(591, 321);
-            this.SplitContainer2.SplitterDistance = 415;
+            this.SplitContainer2.Size = new System.Drawing.Size(591, 319);
+            this.SplitContainer2.SplitterDistance = 413;
             this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
             // 
@@ -337,7 +339,7 @@
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(171, 321);
+            this.PropertyGrid.Size = new System.Drawing.Size(173, 319);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -367,7 +369,7 @@
             this.EntityTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EntityTable.Location = new System.Drawing.Point(0, 0);
             this.EntityTable.Name = "EntityTable";
-            this.EntityTable.Size = new System.Drawing.Size(591, 69);
+            this.EntityTable.Size = new System.Drawing.Size(591, 71);
             this.EntityTable.TabIndex = 0;
             // 
             // PopupEntityTableMenu
@@ -1050,15 +1052,28 @@
             // HelpMenu
             // 
             this.HelpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.HelpOpenGLShadingLanguage,
+            this.toolStripMenuItem12,
             this.HelpAbout});
             this.HelpMenu.Name = "HelpMenu";
             this.HelpMenu.Size = new System.Drawing.Size(44, 20);
             this.HelpMenu.Text = "&Help";
             // 
+            // HelpOpenGLShadingLanguage
+            // 
+            this.HelpOpenGLShadingLanguage.Name = "HelpOpenGLShadingLanguage";
+            this.HelpOpenGLShadingLanguage.Size = new System.Drawing.Size(229, 22);
+            this.HelpOpenGLShadingLanguage.Text = "OpenGL® Shading Language";
+            // 
+            // toolStripMenuItem12
+            // 
+            this.toolStripMenuItem12.Name = "toolStripMenuItem12";
+            this.toolStripMenuItem12.Size = new System.Drawing.Size(249, 6);
+            // 
             // HelpAbout
             // 
             this.HelpAbout.Name = "HelpAbout";
-            this.HelpAbout.Size = new System.Drawing.Size(107, 22);
+            this.HelpAbout.Size = new System.Drawing.Size(252, 22);
             this.HelpAbout.Text = "&About";
             // 
             // SceneForm
@@ -1203,5 +1218,7 @@
         internal System.Windows.Forms.ToolStripStatusLabel SpeedLabel;
         internal System.Windows.Forms.ToolStripStatusLabel TimeLabel;
         internal System.Windows.Forms.ToolStripStatusLabel FpsLabel;
+        internal System.Windows.Forms.ToolStripMenuItem HelpOpenGLShadingLanguage;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem12;
     }
 }

@@ -3,6 +3,7 @@
     using System.Diagnostics;
     using System.Reflection;
     using System.Windows.Forms;
+    using ToyGraf.Engine.Utility;
     using ToyGraf.Views;
 
     internal class AboutController
@@ -66,7 +67,7 @@
 
         private void Launch(LinkLabel linkLabel)
         {
-            Process.Start(linkLabel.Text);
+            linkLabel.Text.Launch();
             linkLabel.LinkVisited = true;
         }
 

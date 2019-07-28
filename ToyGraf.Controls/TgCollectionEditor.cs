@@ -23,6 +23,7 @@
             collectionForm.Enter += CollectionFormEnter;
             collectionForm.FormClosed += CollectionFormClosed;
             collectionForm.FormClosing += CollectionForm_FormClosing;
+            collectionForm.HelpButtonClicked += CollectionFormHelpButtonClicked;
             collectionForm.Layout += CollectionFormLayout;
             collectionForm.Enter += CollectionFormLeave;
             collectionForm.Load += CollectionFormLoad;
@@ -69,6 +70,7 @@
         public static event FormClosedEventHandler CollectionFormClosed;
         public static event FormClosingEventHandler CollectionFormClosing;
         public static event EventHandler<PropertyGridInitEventArgs> CollectionFormGridInit;
+        public static event CancelEventHandler CollectionFormHelpButtonClicked;
         public static event LayoutEventHandler CollectionFormLayout;
         public static event PropertyValueChangedEventHandler CollectionItemPropertyValueChanged;
     }

@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Engine.Utility
 {
+    using System;
     using System.IO;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -49,5 +50,8 @@
             return Regex.IsMatch(s, @"(^CON$|^PRN$|^AUX$|^CLOCK\$$|^NUL$|^COM[0-9]$|^LPT[0-9]$)",
                 RegexOptions.IgnoreCase) ? s + "_" : s;
         }
+
+        public static string[] ToStringArray(this string s) =>
+            s.Split(new[] { "\r\n" }, StringSplitOptions.None);
     }
 }

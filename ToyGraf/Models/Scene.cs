@@ -44,32 +44,32 @@
         [Category("Camera")]
         [Description("The X component of the Camera's Location.")]
         [DisplayName("Camera (X)")]
-        public float CameraLocationX { get => _CameraLocationX; set => Run(new CameraLocationXCommand(value)); }
+        public float CameraLocationX { get => _CameraLocationX; set => Run(new CameraXCommand(value)); }
 
         [Category("Camera")]
         [Description("The Y component of the Camera's Location.")]
         [DisplayName("Camera (Y)")]
-        public float CameraLocationY { get => _CameraLocationY; set => Run(new CameraLocationYCommand(value)); }
+        public float CameraLocationY { get => _CameraLocationY; set => Run(new CameraYCommand(value)); }
 
         [Category("Camera")]
         [Description("The Z component of the Camera's Location.")]
         [DisplayName("Camera (Z)")]
-        public float CameraLocationZ { get => _CameraLocationZ; set => Run(new CameraLocationZCommand(value)); }
+        public float CameraLocationZ { get => _CameraLocationZ; set => Run(new CameraZCommand(value)); }
 
         [Category("Camera")]
-        [Description("The Pitch component of the Camera's Rotation.")]
-        [DisplayName("Camera Pitch")]
-        public float CameraRotationPitch { get => _CameraRotationPitch; set => Run(new CameraRotationPitchCommand(value)); }
+        [Description("The Pitch component of the Camera's Rotation (in degrees).")]
+        [DisplayName("Camera Pitch°")]
+        public float CameraRotationPitch { get => _CameraRotationPitch; set => Run(new CameraPitchCommand(value)); }
 
         [Category("Camera")]
-        [Description("The Roll component of the Camera's Rotation.")]
-        [DisplayName("Camera Roll")]
-        public float CameraRotationRoll { get => _CameraRotationRoll; set => Run(new CameraRotationRollCommand(value)); }
+        [Description("The Roll component of the Camera's Rotation (in degrees).")]
+        [DisplayName("Camera Roll°")]
+        public float CameraRotationRoll { get => _CameraRotationRoll; set => Run(new CameraRollCommand(value)); }
 
         [Category("Camera")]
-        [Description("The Yaw component of the Camera's Rotation.")]
-        [DisplayName("Camera Yaw")]
-        public float CameraRotationYaw { get => _CameraRotationYaw; set => Run(new CameraRotationYawCommand(value)); }
+        [Description("The Yaw component of the Camera's Rotation (in degrees).")]
+        [DisplayName("Camera Yaw°")]
+        public float CameraRotationYaw { get => _CameraRotationYaw; set => Run(new CameraYawCommand(value)); }
 
         #endregion
 
