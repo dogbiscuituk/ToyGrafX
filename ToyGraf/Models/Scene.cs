@@ -41,6 +41,36 @@
         [Editor(typeof(TgCollectionEditor), typeof(UITypeEditor))]
         public List<Trace> Traces { get => _Traces; set => _Traces = value; }
 
+        [Category("Camera")]
+        [Description("The X component of the Camera's Location.")]
+        [DisplayName("Camera (X)")]
+        public float CameraLocationX { get => _CameraLocationX; set => Run(new CameraLocationXCommand(value)); }
+
+        [Category("Camera")]
+        [Description("The Y component of the Camera's Location.")]
+        [DisplayName("Camera (Y)")]
+        public float CameraLocationY { get => _CameraLocationY; set => Run(new CameraLocationYCommand(value)); }
+
+        [Category("Camera")]
+        [Description("The Z component of the Camera's Location.")]
+        [DisplayName("Camera (Z)")]
+        public float CameraLocationZ { get => _CameraLocationZ; set => Run(new CameraLocationZCommand(value)); }
+
+        [Category("Camera")]
+        [Description("The Pitch component of the Camera's Rotation.")]
+        [DisplayName("Camera Pitch")]
+        public float CameraRotationPitch { get => _CameraRotationPitch; set => Run(new CameraRotationPitchCommand(value)); }
+
+        [Category("Camera")]
+        [Description("The Roll component of the Camera's Rotation.")]
+        [DisplayName("Camera Roll")]
+        public float CameraRotationRoll { get => _CameraRotationRoll; set => Run(new CameraRotationRollCommand(value)); }
+
+        [Category("Camera")]
+        [Description("The Yaw component of the Camera's Rotation.")]
+        [DisplayName("Camera Yaw")]
+        public float CameraRotationYaw { get => _CameraRotationYaw; set => Run(new CameraRotationYawCommand(value)); }
+
         #endregion
 
         internal bool IsModified
@@ -51,13 +81,20 @@
 
         #region Private Properties
 
+        internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
+        private SceneController SceneController;
         const double DefaultFramesPerSecond = 60;
 
-        internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         internal double _FramesPerSecond = DefaultFramesPerSecond;
-        private SceneController SceneController;
         internal string _Title = "(untitled)";
         internal List<Trace> _Traces = new List<Trace>();
+        internal float
+            _CameraLocationX,
+            _CameraLocationY,
+            _CameraLocationZ,
+            _CameraRotationPitch,
+            _CameraRotationRoll,
+            _CameraRotationYaw;
 
         #endregion
 

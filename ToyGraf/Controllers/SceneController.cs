@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
-    using System.Linq;
     using System.Windows.Forms;
     using ToyGraf.Commands;
     using ToyGraf.Controls;
@@ -90,7 +89,7 @@ void main()
 
             Timer = new Timer();
             Timer.Tick += Timer_Tick;
-            StartTimer();
+            TimerStart();
         }
 
         private void TgCollectionEditor_CollectionFormShown(object sender, EventArgs e)
@@ -108,26 +107,16 @@ void main()
                 }
                 var propertyGrid = form.Controls.Find("propertyBrowser", true)?[0] as PropertyGrid;
                 PropertyGridController.HidePropertyPagesButton(propertyGrid);
-                propertyGrid.HelpVisible = true;
+                propertyGrid.HelpVisible = true; // Make the DocComment label visible.
                 //if (Scene != null)
                 //    TraceCounter = Graph.Traces.Count;
             }
-    }
-
-    private void StartTimer()
-        {
-            InitTimer();
-            Timer.Start();
         }
 
-        private void StopTimer() => Timer.Stop();
-
-        private void InitTimer() => Timer.Interval = GetFrameMilliseconds();
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            Render();
-        }
+        private void TimerInit() => Timer.Interval = GetFrameMilliseconds();
+        private void TimerStart() { TimerInit(); Timer.Start(); }
+        private void TimerStop() => Timer.Stop();
+        private void Timer_Tick(object sender, EventArgs e) { Render(); }
 
         private int GetFrameMilliseconds() => (int)Math.Round(1000 / Math.Min(Math.Max(Scene.FramesPerSecond, 1), int.MaxValue));
 
@@ -139,7 +128,7 @@ void main()
 
         private void Cleanup()
         {
-            StopTimer();
+            TimerStop();
             Timer.Tick -= Timer_Tick;
             TgCollectionEditor.CollectionEdited -= TgCollectionEditor_CollectionEdited;
             AppController.Remove(this);
@@ -153,7 +142,7 @@ void main()
             switch (propertyName)
             {
                 case "FramesPerSecond":
-                    InitTimer();
+                    TimerInit();
                     break;
             }
             PropertyGridController.Refresh();
@@ -185,6 +174,7 @@ void main()
                     SceneForm.tbNewFromTemplate.Click -= FileNewFromTemplate_Click;
                     SceneForm.tbOpen.ButtonClick -= FileOpen_Click;
                     SceneForm.tbOpen.DropDownOpening -= TbOpen_DropDownOpening;
+                    SceneForm.tbSave.Click -= TbSave_Click;
 
                     SceneForm.CameraMoveLeft.Click -= CameraMoveLeft_Click;
                     SceneForm.CameraMoveRight.Click -= CameraMoveRight_Click;
@@ -198,6 +188,7 @@ void main()
                     SceneForm.CameraRotateDown.Click -= CameraRotateDown_Click;
                     SceneForm.CameraRotateAnticlockwise.Click -= CameraRotateAnticlockwise_Click;
                     SceneForm.CameraRotateClockwise.Click -= CameraRotateClockwise_Click;
+                    SceneForm.CameraHome.Click -= CameraHome_Click;
 
                     SceneForm.HelpAbout.Click -= HelpAbout_Click;
                 }
