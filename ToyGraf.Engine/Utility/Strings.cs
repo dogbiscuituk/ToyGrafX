@@ -51,7 +51,7 @@
                 RegexOptions.IgnoreCase) ? s + "_" : s;
         }
 
-        public static string[] ToStringArray(this string s) =>
-            s.Split(new[] { "\r\n" }, StringSplitOptions.None);
+        public static string[] ToStringArray(this string s, StringSplitOptions options = StringSplitOptions.None) =>
+            s.Split(new[] { "\r\n", "\r", "\n" }, options);
     }
 }

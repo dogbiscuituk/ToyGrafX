@@ -19,7 +19,7 @@
 
         protected abstract void BindAttributes();
 
-        protected void CreateProgram()
+        public virtual void CreateProgram()
         {
             VertexShaderID = CreateShader(ShaderType.VertexShader);
             FragmentShaderID = CreateShader(ShaderType.FragmentShader);
@@ -57,9 +57,9 @@
 
         #endregion
 
-        private int CreateShader(ShaderType shaderType)
+        protected virtual int CreateShader(ShaderType shaderType)
         {
-            var shaderSource = GetShaderSource(shaderType);
+            var shaderSource = GetScript(shaderType);
             if (string.IsNullOrWhiteSpace(shaderSource))
                 return 0;
             var shaderID = GL.CreateShader(shaderType);
@@ -82,7 +82,7 @@
         public void LoadTransformationMatrix(Matrix4 matrix) => LoadMatrix(location_transformationMatrix, matrix);
         public void LoadViewMatrix(Camera camera) => LoadMatrix(location_viewMatrix, Maths.CreateViewMatrix(camera));
 
-        protected abstract string GetShaderSource(ShaderType shaderType);
+        protected abstract string GetScript(ShaderType shaderType);
 
         public void Cleanup()
         {

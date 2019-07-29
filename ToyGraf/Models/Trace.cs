@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Models
 {
+    using OpenTK.Graphics.OpenGL;
     using System.ComponentModel;
     using ToyGraf.Commands;
     using ToyGraf.Shaders;
@@ -14,6 +15,52 @@
         }
 
         public Trace(Scene scene) : this() => Scene = scene;
+
+        public string[] GetScript(ShaderType shaderType)
+        {
+            switch (shaderType)
+            {
+                case ShaderType.VertexShader:
+                    return _ShaderVertex;
+                case ShaderType.TessControlShader:
+                    return _ShaderTessControl;
+                case ShaderType.TessEvaluationShader:
+                    return _ShaderTessEvaluation;
+                case ShaderType.GeometryShader:
+                    return _ShaderGeometry;
+                case ShaderType.FragmentShader:
+                    return _ShaderFragment;
+                case ShaderType.ComputeShader:
+                    return _ShaderCompute;
+            }
+            return new string[0];
+        }
+
+        public void SetScript(ShaderType shaderType, string[] script)
+        {
+            switch (shaderType)
+            {
+                case ShaderType.VertexShader:
+                    _ShaderVertex = script;
+                    break;
+                case ShaderType.TessControlShader:
+                    _ShaderTessControl = script;
+                    break;
+                case ShaderType.TessEvaluationShader:
+                    _ShaderTessEvaluation = script;
+                    break;
+                case ShaderType.GeometryShader:
+                    _ShaderGeometry = script;
+                    break;
+                case ShaderType.FragmentShader:
+                    _ShaderFragment = script;
+                    break;
+                case ShaderType.ComputeShader:
+                    _ShaderCompute = script;
+                    break;
+            }
+            Shader.CreateProgram();
+        }
 
         #endregion
 

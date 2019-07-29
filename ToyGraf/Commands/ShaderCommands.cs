@@ -1,44 +1,70 @@
 ﻿namespace ToyGraf.Commands
 {
-    public class ShaderComputeCommand : TracePropertyCommand<string[]>
+    using OpenTK.Graphics.OpenGL;
+
+    public class ShaderCommand : TracePropertyCommand<string[]>
     {
-        public ShaderComputeCommand(int index, string[] value) : base(index, "ShaderCompute",
-            value, t => t._ShaderCompute, (t, v) => t._ShaderCompute = v)
+        public ShaderCommand(int index, ShaderType shaderType, string[] value)
+            : base(index, GetShaderName(shaderType), value,
+                  t => t.GetScript(shaderType),
+                  (t, v) => t.SetScript(shaderType, value))
         { }
+
+        private static string GetShaderName(ShaderType shaderType)
+        {
+            switch (shaderType)
+            {
+                case ShaderType.ComputeShader:
+                    return "Compute Shader";
+                case ShaderType.FragmentShader:
+                    return "Fragment Shader";
+                case ShaderType.GeometryShader:
+                    return "Geometry Shader";
+                case ShaderType.TessControlShader:
+                    return "Tessellation Control Shader";
+                case ShaderType.TessEvaluationShader:
+                    return "Tessellation Evaluation Shader";
+                case ShaderType.VertexShader:
+                    return "Vertex Shader";
+            }
+            return string.Empty;
+        }
     }
 
-    public class ShaderFragmentCommand : TracePropertyCommand<string[]>
+    public class ShaderComputeCommand : ShaderCommand
     {
-        public ShaderFragmentCommand(int index, string[] value) : base(index, "ShaderFragment",
-            value, t => t._ShaderFragment, (t, v) => t._ShaderFragment = v)
-        { }
+        public ShaderComputeCommand(int index, string[] value)
+            : base(index, ShaderType.ComputeShader, value) { }
     }
 
-    public class ShaderGeometryCommand : TracePropertyCommand<string[]>
+    public class ShaderFragmentCommand : ShaderCommand
     {
-        public ShaderGeometryCommand(int index, string[] value) : base(index, "ShaderGeometry",
-            value, t => t._ShaderGeometry, (t, v) => t._ShaderGeometry = v)
-        { }
+        public ShaderFragmentCommand(int index, string[] value)
+            : base(index, ShaderType.FragmentShader, value) { }
     }
 
-    public class ShaderTessControlCommand : TracePropertyCommand<string[]>
+    public class ShaderGeometryCommand : ShaderCommand
     {
-        public ShaderTessControlCommand(int index, string[] value) : base(index, "ShaderTessControl",
-            value, t => t._ShaderTessControl, (t, v) => t._ShaderTessControl = v)
-        { }
+        public ShaderGeometryCommand(int index, string[] value)
+            : base(index, ShaderType.GeometryShader, value) { }
     }
 
-    public class ShaderTessEvaluationCommand : TracePropertyCommand<string[]>
+    public class ShaderTessControlCommand : ShaderCommand
     {
-        public ShaderTessEvaluationCommand(int index, string[] value) : base(index, "ShaderTessEvaluation",
-            value, t => t._ShaderTessEvaluation, (t, v) => t._ShaderTessEvaluation = v)
-        { }
+        public ShaderTessControlCommand(int index, string[] value)
+            : base(index, ShaderType.TessControlShader, value) { }
     }
 
-    public class ShaderVertexCommand : TracePropertyCommand<string[]>
+    public class ShaderTessEvaluationCommand : ShaderCommand
     {
-        public ShaderVertexCommand(int index, string[] value) : base(index, "ShaderVertex",
-            value, t => t._ShaderVertex, (t, v) => t._ShaderVertex = v)
+        public ShaderTessEvaluationCommand(int index, string[] value)
+            : base(index, ShaderType.TessEvaluationShader, value) { }
+    }
+
+    public class ShaderVertexCommand : ShaderCommand
+    {
+        public ShaderVertexCommand(int index, string[] value)
+            : base(index, ShaderType.VertexShader, value)
         { }
     }
 }

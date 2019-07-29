@@ -29,7 +29,7 @@
             BindAttribute(1, "time");
         }
 
-        protected override string GetShaderSource(ShaderType shaderType)
+        protected override string GetScript(ShaderType shaderType)
         {
             using (var reader = new StreamReader(GetSourcePath(shaderType), Encoding.UTF8))
                 return reader.ReadToEnd();
