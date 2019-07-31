@@ -16,8 +16,6 @@
 
         public Camera Camera = new Camera();
 
-        public void AddEntity(Entity entity) => Entities.Add(entity);
-
         #endregion
 
         #region Virtuals
@@ -27,6 +25,8 @@
             depth: 24,
             stencil: 8,
             samples: 0);
+
+        protected abstract IEnumerable<IEntity> GetEntities();
 
         protected virtual void Load()
         {
@@ -40,16 +40,8 @@
                 LoadProjectionMatrix();
             Shader.Stop();
 
-            int xc = 1000, yc = 1000;
-            var vertices = Grid.GetVertexCoords(xc, yc).ToArray();
-            var indices = Grid.GetTriangleIndices(xc, yc).ToArray();
-
-            var prototype = new Prototype(vertices, indices);
-            Prototypes.Add(prototype);
-
-            Entities.Add(new Entity(prototype, new Vector3(0, 0, -2), new Vector3(45, 45, 0), 1));
-            Entities.Add(new Entity(prototype, new Vector3(-3, 0, 0), new Vector3(0, 0, 0), 1));
-            Entities.Add(new Entity(prototype, new Vector3(+3, 0, 0), new Vector3(0, 0, 0), 1));
+            Entities.Clear();
+            Entities.AddRange(GetEntities());
         }
 
         protected virtual void RenderFrame(double time)
@@ -79,7 +71,7 @@
                 GL.BindVertexArray(prototype.VaoID);
                 GL.EnableVertexAttribArray(0);
                 var transformationMatrix = Maths.CreateTransformationMatrix(
-                    entity.Position, entity.Rotation, entity.Scale);
+                    entity.Location, entity.Rotation, entity.Scale);
                 Shader.LoadTransformationMatrix(transformationMatrix);
 
                 //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
@@ -115,7 +107,7 @@
 
         #region Private Properties
 
-        private readonly List<Entity> Entities = new List<Entity>();
+        private readonly List<IEntity> Entities = new List<IEntity>();
         private readonly List<Prototype> Prototypes = new List<Prototype>();
 
         private Shader Shader;

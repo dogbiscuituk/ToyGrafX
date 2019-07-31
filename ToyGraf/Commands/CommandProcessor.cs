@@ -30,6 +30,10 @@
             UpdateUI();
         }
 
+        internal void AppendTrace() => Run(new TraceInsertCommand(Traces.Count));
+        internal void DeleteTrace(int index) => Run(new TraceDeleteCommand(index));
+        internal void InsertTrace(int index) => Run(new TraceInsertCommand(index));
+
         public void Run(ICommand command)
         {
             Redo(command);
@@ -39,19 +43,20 @@
 
         #region Private Properties
 
-        private SceneController SceneController;
-        private Scene Scene => SceneController.Scene;
-        private SceneForm SceneForm => SceneController.SceneForm;
+        private bool CanUndo => UndoStack.Count > 0;
+        private bool CanRedo => RedoStack.Count > 0;
 
         private readonly Stack<ICommand> UndoStack = new Stack<ICommand>();
         private readonly Stack<ICommand> RedoStack = new Stack<ICommand>();
 
-        private bool CanUndo { get => UndoStack.Count > 0; }
-        private bool CanRedo { get => RedoStack.Count > 0; }
-
         private bool GroupUndo => AppController.Options.GroupUndo;
         private string UndoAction => UndoStack.Peek().UndoAction;
         private string RedoAction => RedoStack.Peek().RedoAction;
+
+        private readonly SceneController SceneController;
+        internal Scene Scene => SceneController.Scene;
+        private SceneForm SceneForm => SceneController.SceneForm;
+        internal List<Trace> Traces => Scene.Traces;
 
         internal bool IsModified
         {
@@ -94,7 +99,7 @@
                     case ITracesCommand tc1:
                         if (cmd2 is ITracePropertyCommand tpc2 && tpc2.Index == tc1.Index)
                         {
-                            if (tc1.Value == null) tc1.Value = Scene.Traces[tc1.Index];
+                            if (tc1.Value == null) tc1.Value = Traces[tc1.Index];
                             return true;
                         }
                         break;

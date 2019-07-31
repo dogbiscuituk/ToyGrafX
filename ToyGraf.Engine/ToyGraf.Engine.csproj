@@ -48,6 +48,7 @@
     <Compile Include="Controllers\Camera.cs" />
     <Compile Include="Controllers\Renderer.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\IEntity.cs" />
     <Compile Include="ShiftKeys.cs" />
     <Compile Include="Utility\Functions.cs" />
     <Compile Include="Utility\Grid.cs" />

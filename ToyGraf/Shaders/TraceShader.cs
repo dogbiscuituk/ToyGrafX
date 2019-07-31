@@ -4,48 +4,38 @@
     using System;
     using System.Linq;
     using System.Text;
+    using ToyGraf.Controllers;
     using ToyGraf.Engine.Shaders;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
 
     public class TraceShader : Shader
     {
-        public TraceShader(Trace trace) : base()
+        #region Public Interface
+
+        public TraceShader(Trace trace) : base() => Trace = trace;
+
+        public override string CreateProgram()
         {
-            Trace = trace;
+            MakeCurrent(true);
+            var log = base.CreateProgram();
+            MakeCurrent(false);
+            Trace._ShaderStatus = log.ToStringArray(StringSplitOptions.RemoveEmptyEntries);
+            return log;
         }
 
-        private StringBuilder ShaderLog = new StringBuilder();
+        #endregion
 
-        public override void CreateProgram()
-        {
-            ShaderLog.Clear();
-            VertexShaderID = CreateShader(ShaderType.VertexShader);
-            TessControlShaderID = CreateShader(ShaderType.TessControlShader);
-            TessEvaluationShaderID = CreateShader(ShaderType.TessEvaluationShader);
-            GeometryShaderID = CreateShader(ShaderType.GeometryShader);
-            FragmentShaderID = CreateShader(ShaderType.FragmentShader);
-            ComputeShaderID = CreateShader(ShaderType.ComputeShader);
+        #region Non-Public Properties
 
-            Trace._ShaderStatus = ShaderLog.ToString().ToStringArray(StringSplitOptions.RemoveEmptyEntries);
-        }
+        private GLControlRenderer Renderer => SceneController.Renderer;
+        private Scene Scene => Trace.Scene;
+        private SceneController SceneController => Scene.SceneController;
+        private readonly Trace Trace;
 
-        protected override int CreateShader(ShaderType shaderType)
-        {
-            var shaderSource = GetScript(shaderType);
-            if (string.IsNullOrWhiteSpace(shaderSource))
-                return 0;
-            var shaderID = GL.CreateShader(shaderType);
-            GL.ShaderSource(shaderID, shaderSource);
-            GL.CompileShader(shaderID);
-            var shaderLog = GL.GetShaderInfoLog(shaderID);
-            if (!string.IsNullOrWhiteSpace(shaderLog))
-            {
-                ShaderLog.AppendLine($"Creating {shaderType}:");
-                ShaderLog.AppendLine(shaderLog);
-            }
-            return shaderID;
-        }
+        #endregion
+
+        #region Non-Public Methods
 
         protected override void BindAttributes()
         {
@@ -55,20 +45,21 @@
 
         protected override string GetScript(ShaderType shaderType)
         {
-            var source = Trace.GetScript(shaderType);
-            return source == null || source.Length < 1
+            var script = Trace.GetScript(shaderType);
+            return script == null || script.Length < 1
                 ? string.Empty
-                : source.Aggregate((s, t) => $@"{s}\n{t}");
+                : script.Aggregate((s, t) => $@"{s}\n{t}");
         }
 
-        private readonly Trace Trace;
+        private void MakeCurrent(bool current) => Renderer.MakeCurrent(current);
 
-        private int
-            VertexShaderID,
-            TessControlShaderID,
-            TessEvaluationShaderID,
-            GeometryShaderID,
-            FragmentShaderID,
-            ComputeShaderID;
+        #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            MakeCurrent(true);
+            base.Dispose(disposing);
+            MakeCurrent(false);
+        }
     }
 }

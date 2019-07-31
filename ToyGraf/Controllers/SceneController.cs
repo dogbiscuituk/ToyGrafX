@@ -12,6 +12,7 @@
     using ToyGraf.Engine.Entities;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
+    using ToyGraf.Properties;
     using ToyGraf.Views;
 
     public class SceneController
@@ -23,8 +24,8 @@
             SceneForm = new SceneForm();
             Scene = new Scene(this);
             CommandProcessor = new CommandProcessor(this);
-            Renderer = new GLControlRenderer(SceneForm.GLControl);
-            EntityTableController = new EntityTableController(this);
+            Renderer = new GLControlRenderer(this);
+            EntityTableController = new TraceTableController(this);
             FullScreenController = new FullScreenController(this);
 
             JsonController = new JsonController(this);
@@ -38,10 +39,9 @@
             PropertyGridController = new PropertyGridController(this);
             Scene.PropertyChanged += Scene_PropertyChanged;
 
-            var trace = Scene.NewTrace();
-            trace.ShaderVertex = Trace.DefaultShaderVertex.ToStringArray();
-            trace.ShaderFragment = Trace.DefaultShaderFragment.ToStringArray();
-
+            //var trace = Scene.NewTrace();
+            //trace.ShaderVertex = Trace.DefaultShaderVertex.ToStringArray();
+            //trace.ShaderFragment = Trace.DefaultShaderFragment.ToStringArray();
 
             PropertyGridController.SelectedObject = Scene;
             TgCollectionEditor.CollectionEdited += TgCollectionEditor_CollectionEdited;
@@ -51,6 +51,12 @@
             Timer = new Timer();
             Timer.Tick += Timer_Tick;
             TimerStart();
+        }
+
+        internal static void InitTextureDialog(OpenFileDialog dialog)
+        {
+            dialog.Filter = Settings.Default.ImageFilter;
+            dialog.Title = "Select Texture";
         }
 
         private void TgCollectionEditor_CollectionFormHelpButtonClicked(object sender, CancelEventArgs e) => ShowOpenGLShadingLanguageBook();
@@ -98,44 +104,20 @@
         }
 
         private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
-            PropertyChanged(e.PropertyName);
+            OnPropertyChanged(e.PropertyName);
 
-        private void PropertyChanged(string propertyName)
+        internal event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
         {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             switch (propertyName)
             {
                 case "FramesPerSecond":
                     TimerInit();
                     break;
-                    /*
-                case "ShaderCompute":
-                    UpdateShader(ShaderType.ComputeShader);
-                    break;
-                case "ShaderFragment":
-                    UpdateShader(ShaderType.FragmentShader);
-                    break;
-                case "ShaderGeometry":
-                    UpdateShader(ShaderType.GeometryShader);
-                    break;
-                case "ShaderTessControl":
-                    UpdateShader(ShaderType.TessControlShader);
-                    break;
-                case "ShaderTessEvaluation":
-                    UpdateShader(ShaderType.TessEvaluationShader);
-                    break;
-                case "ShaderVertex":
-                    UpdateShader(ShaderType.VertexShader);
-                    break;
-                    */
             }
             PropertyGridController.Refresh();
-        }
-
-        private void UpdateShader(ShaderType shaderType)
-        {
-            TimerStop();
-
-            TimerStart();
         }
 
         private string[] GetShaderScript(ShaderType shaderType)
@@ -241,12 +223,12 @@
 
         public CommandProcessor CommandProcessor { get; private set; }
 
-        internal readonly EntityTableController EntityTableController;
+        internal readonly TraceTableController EntityTableController;
         internal readonly PropertyGridController PropertyGridController;
 
         internal List<Entity> Entities = new List<Entity>();
 
-        internal void Render() => Renderer.Paint();
+        internal void Render() => Renderer.Render();
         internal void Show() => SceneForm.Show();
 
         #endregion

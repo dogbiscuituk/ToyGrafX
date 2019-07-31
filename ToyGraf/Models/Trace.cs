@@ -1,20 +1,27 @@
 ﻿namespace ToyGraf.Models
 {
+    using Newtonsoft.Json;
+    using OpenTK;
     using OpenTK.Graphics.OpenGL;
     using System.ComponentModel;
     using ToyGraf.Commands;
+    using ToyGraf.Engine.Entities;
     using ToyGraf.Shaders;
 
-    public class Trace
+    public class Trace : ITrace, IEntity
     {
         #region Public Interface
 
-        public Trace()
-        {
-            Shader = new TraceShader(this);
-        }
+        public Trace() { }
 
-        public Trace(Scene scene) : this() => Scene = scene;
+        public Trace(Scene scene) : this() => Init(scene);
+
+        public Trace Clone()
+        {
+            var trace = new Trace();
+            trace.CopyFrom(this);
+            return trace;
+        }
 
         public string[] GetScript(ShaderType shaderType)
         {
@@ -35,6 +42,13 @@
             }
             return new string[0];
         }
+
+        public void MoveBy(float dx, float dy, float dz) => Location += new Vector3(dx, dy, dz);
+        public void MoveTo(float x, float y, float z) => Location += new Vector3(x, y, z);
+        public void RotateBy(float dx, float dy, float dz) => Rotation += new Vector3(dx, dy, dz);
+        public void RotateTo(float x, float y, float z) => Rotation += new Vector3(x, y, z);
+        public void ScaleBy(float scale) => Scale *= scale;
+        public void ScaleTo(float scale) => Scale = scale;
 
         public void SetScript(ShaderType shaderType, string[] script)
         {
@@ -59,12 +73,102 @@
                     _ShaderCompute = script;
                     break;
             }
-            Shader.CreateProgram();
+            if (Shader != null)
+                Shader.CreateProgram();
         }
 
         #endregion
 
         #region Persistent Properties
+
+        public Prototype Prototype
+        {
+            get => null;
+            set { }
+        }
+
+        [Category("Entity")]
+        [Description("The location of the trace in world co-ordinates.")]
+        [DisplayName("Location")]
+        [JsonIgnore]
+        public Vector3 Location
+        {
+            get => _Location;
+            set => Run(new EntityLocationCommand(Index, value));
+        }
+
+        [Category("Entity")]
+        [Description("The X component of the trace location in world co-ordinates.")]
+        [DisplayName("Location X")]
+        public float LocationX
+        {
+            get => _Location.X;
+            set => Run(new EntityLocationXCommand(Index, value));
+        }
+
+        [Category("Entity")]
+        [Description("The Y component of the trace location in world co-ordinates.")]
+        [DisplayName("Location Y")]
+        public float LocationY
+        {
+            get => _Location.Y;
+            set => Run(new EntityLocationYCommand(Index, value));
+        }
+
+        [Category("Entity")]
+        [Description("The Z component of the trace location in world co-ordinates.")]
+        [DisplayName("Location Z")]
+        public float LocationZ
+        {
+            get => _Location.Z;
+            set => Run(new EntityLocationZCommand(Index, value));
+        }
+
+        [Category("Entity")]
+        [Description("The rotation of the trace in world co-ordinates.")]
+        [DisplayName("Rotation")]
+        [JsonIgnore]
+        public Vector3 Rotation
+        {
+            get => _Rotation;
+            set => Run(new EntityRotationCommand(Index, value));
+        }
+
+        [Category("Entity")]
+        [Description("The X component of the trace rotation in world co-ordinates.")]
+        [DisplayName("Rotation X")]
+        public float RotationX
+        {
+            get => _Rotation.X;
+            set => Run(new EntityRotationXCommand(Index, value));
+        }
+
+        [Category("Entity")]
+        [Description("The Y component of the trace rotation in world co-ordinates.")]
+        [DisplayName("Rotation Y")]
+        public float RotationY
+        {
+            get => _Rotation.Y;
+            set => Run(new EntityRotationYCommand(Index, value));
+        }
+
+        [Category("Entity")]
+        [Description("The Z component of the trace rotation in world co-ordinates.")]
+        [DisplayName("Rotation Z")]
+        public float RotationZ
+        {
+            get => _Rotation.Z;
+            set => Run(new EntityRotationZCommand(Index, value));
+        }
+
+        [Category("Entity")]
+        [Description("The relative size of the trace.")]
+        [DisplayName("Scale")]
+        public float Scale
+        {
+            get => _Scale;
+            set => Run(new EntityScaleCommand(Index, value));
+        }
 
         [Category("Shaders")]
         [Description(@"The vertex processor is a programmable unit that operates on incoming vertices and their associated data.
@@ -167,6 +271,7 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
         public string[] ShaderStatus
         {
             get => _ShaderStatus;
+            set => _ShaderStatus = value;
         }
 
         [Category("Domain && Range")]
@@ -193,11 +298,11 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
 
         #endregion
 
-        #region Private Properties
+        #region Persistent Fields
 
         internal bool _Visible;
         internal double _Xmax, _Xmin, _Ymax, _Ymin, _Zmax, _Zmin;
-        internal string[]
+        public string[]
             _ShaderVertex,
             _ShaderTessControl,
             _ShaderTessEvaluation,
@@ -206,10 +311,39 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
             _ShaderCompute,
             _ShaderStatus;
 
+        internal float
+            _Scale = 1;
+        internal Vector3
+            _Location = new Vector3(0, 0, 0),
+            _Rotation = new Vector3(0, 0, 0);
+
+        #endregion
+
+        #region Non-Public Properties
+
         private ICommandProcessor CommandProcessor => Scene?.CommandProcessor;
-        private int Index => Scene?._Traces.IndexOf(this) ?? 0;
+        internal int Index => Scene?._Traces.IndexOf(this) ?? 0;
+
         internal Scene Scene;
         private TraceShader Shader;
+
+        #endregion
+
+        #region Non-Public Methods
+
+        internal void Init(Scene scene)
+        {
+            Scene = scene;
+            Shader = new TraceShader(this);
+        }
+
+        private void Run(ITracePropertyCommand command)
+        {
+            if (CommandProcessor != null)
+                CommandProcessor.Run(command);
+            else
+                command.RunOn(this);
+        }
 
         #endregion
 
@@ -258,18 +392,6 @@ void main()
 {
     FragColor = vec4(colour, 0.1f);
 }";
-
-        #endregion
-
-        #region Private Methods
-
-        private void Run(ITracePropertyCommand command)
-        {
-            if (CommandProcessor != null)
-                CommandProcessor.Run(command);
-            else
-                command.RunOn(this);
-        }
 
         #endregion
     }

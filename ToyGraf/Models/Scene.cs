@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing.Design;
+    using System.Linq;
     using ToyGraf.Commands;
     using ToyGraf.Controllers;
     using ToyGraf.Controls;
@@ -39,7 +40,11 @@
         [Description("A list of the traces in this scene.")]
         [DisplayName("Traces")]
         [Editor(typeof(TgCollectionEditor), typeof(UITypeEditor))]
-        public List<Trace> Traces { get => _Traces; set => _Traces = value; }
+        public List<Trace> Traces
+        {
+            get => _Traces.Select(t => t.Clone()).ToList();
+            set => _Traces = value;
+        }
 
         [Category("Camera")]
         [Description("The X component of the Camera's Location.")]
@@ -82,7 +87,7 @@
         #region Private Properties
 
         internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
-        private SceneController SceneController;
+        internal SceneController SceneController;
         const double DefaultFramesPerSecond = 60;
 
         internal double _FramesPerSecond = DefaultFramesPerSecond;
@@ -109,7 +114,7 @@
         internal void AttachTraces()
         {
             foreach (var trace in Traces)
-                trace.Scene = this;
+                trace.Init(this);
         }
 
         internal void InsertTrace(int index, Trace trace)

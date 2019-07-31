@@ -2,12 +2,22 @@
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
+    using System;
+    using System.Text;
     using ToyGraf.Engine.Controllers;
     using ToyGraf.Engine.Utility;
 
-    public abstract class Shader
+    public abstract class Shader : IDisposable
     {
         #region Public Interface
+
+        public Shader() { }
+
+        public virtual void Cleanup() => DeleteProgram();
+
+        public void LoadProjectionMatrix(Matrix4 matrix) => LoadMatrix(location_projectionMatrix, matrix);
+        public void LoadTransformationMatrix(Matrix4 matrix) => LoadMatrix(location_transformationMatrix, matrix);
+        public void LoadViewMatrix(Camera camera) => LoadMatrix(location_viewMatrix, Maths.CreateViewMatrix(camera));
 
         public void Start() => GL.UseProgram(ProgramID);
         public void Stop() => GL.UseProgram(0);
@@ -19,24 +29,22 @@
 
         protected abstract void BindAttributes();
 
-        public virtual void CreateProgram()
+        public virtual string CreateProgram()
         {
-            VertexShaderID = CreateShader(ShaderType.VertexShader);
-            FragmentShaderID = CreateShader(ShaderType.FragmentShader);
+            ShaderLog = new StringBuilder();
             ProgramID = GL.CreateProgram();
-            GL.AttachShader(ProgramID, VertexShaderID);
-            GL.AttachShader(ProgramID, FragmentShaderID);
+            CreateShaders();
             BindAttributes();
             GL.LinkProgram(ProgramID);
             GL.ValidateProgram(ProgramID);
             GetAllUniformLocations();
+            var log = ShaderLog.ToString();
+            ShaderLog = null;
 #if DEBUG
-            WriteProgramLog(ProgramID);
+            System.Diagnostics.Debug.WriteLine(log);
 #endif
-            GL.DetachShader(ProgramID, VertexShaderID);
-            GL.DetachShader(ProgramID, FragmentShaderID);
-            GL.DeleteShader(VertexShaderID);
-            GL.DeleteShader(FragmentShaderID);
+            DeleteShaders();
+            return log;
         }
 
         protected int GetUniformLocation(string uniformName) => GL.GetUniformLocation(ProgramID, uniformName);
@@ -46,10 +54,16 @@
         protected void LoadMatrix(int location, Matrix4 value) => GL.UniformMatrix4(location, false, ref value);
 
         #region Private Properties
-        private int ProgramID;
-        private int VertexShaderID;
-        private readonly int GeometryShaderID;
-        private int FragmentShaderID;
+
+        private int
+            ProgramID,
+            VertexShaderID,
+            TessControlShaderID,
+            TessEvaluationShaderID,
+            GeometryShaderID,
+            FragmentShaderID,
+            ComputeShaderID;
+
         private int
             location_projectionMatrix,
             location_transformationMatrix,
@@ -57,7 +71,7 @@
 
         #endregion
 
-        protected virtual int CreateShader(ShaderType shaderType)
+        private int CreateShader(ShaderType shaderType)
         {
             var shaderSource = GetScript(shaderType);
             if (string.IsNullOrWhiteSpace(shaderSource))
@@ -65,10 +79,48 @@
             var shaderID = GL.CreateShader(shaderType);
             GL.ShaderSource(shaderID, shaderSource);
             GL.CompileShader(shaderID);
-#if DEBUG
-            WriteShaderLog(shaderID);
-#endif
+            var log = GL.GetShaderInfoLog(shaderID);
+            ShaderLog.AppendLine($"Creating {shaderType}: {(string.IsNullOrWhiteSpace(log) ? "OK." : $"\n{log}")}");
+            GL.AttachShader(ProgramID, shaderID);
             return shaderID;
+        }
+
+        private void CreateShaders()
+        {
+            VertexShaderID = CreateShader(ShaderType.VertexShader);
+            TessControlShaderID = CreateShader(ShaderType.TessControlShader);
+            TessEvaluationShaderID = CreateShader(ShaderType.TessEvaluationShader);
+            GeometryShaderID = CreateShader(ShaderType.GeometryShader);
+            FragmentShaderID = CreateShader(ShaderType.FragmentShader);
+            ComputeShaderID = CreateShader(ShaderType.ComputeShader);
+        }
+
+        private void DeleteProgram()
+        {
+            if (ProgramID == 0)
+                return;
+            DeleteShaders();
+            GL.DeleteProgram(ProgramID);
+            ProgramID = 0;
+        }
+
+        private void DeleteShader(ref int shaderID)
+        {
+            if (shaderID == 0)
+                return;
+            GL.DetachShader(ProgramID, shaderID);
+            GL.DeleteShader(shaderID);
+            shaderID = 0;
+        }
+
+        private void DeleteShaders()
+        {
+            DeleteShader(ref VertexShaderID);
+            DeleteShader(ref TessControlShaderID);
+            DeleteShader(ref TessEvaluationShaderID);
+            DeleteShader(ref GeometryShaderID);
+            DeleteShader(ref FragmentShaderID);
+            DeleteShader(ref ComputeShaderID);
         }
 
         protected virtual void GetAllUniformLocations()
@@ -78,35 +130,40 @@
             location_viewMatrix = GetUniformLocation("viewMatrix");
         }
 
-        public void LoadProjectionMatrix(Matrix4 matrix) => LoadMatrix(location_projectionMatrix, matrix);
-        public void LoadTransformationMatrix(Matrix4 matrix) => LoadMatrix(location_transformationMatrix, matrix);
-        public void LoadViewMatrix(Camera camera) => LoadMatrix(location_viewMatrix, Maths.CreateViewMatrix(camera));
-
         protected abstract string GetScript(ShaderType shaderType);
 
-        public void Cleanup()
+        private StringBuilder ShaderLog;
+
+        #region IDisposable Support
+
+        private bool Disposed = false;
+
+        protected virtual void Dispose(bool disposing)
         {
-            GL.DetachShader(ProgramID, VertexShaderID);
-            GL.DeleteShader(VertexShaderID);
-            if (GeometryShaderID != 0)
+            if (!Disposed)
             {
-                GL.DetachShader(ProgramID, GeometryShaderID);
-                GL.DeleteShader(GeometryShaderID);
+                if (disposing)
+                {
+                    // Dispose managed state (managed objects).
+                }
+                // Free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // Set large fields to null.
+                DeleteProgram();
+                Disposed = true;
             }
-            GL.DetachShader(ProgramID, FragmentShaderID);
-            GL.DeleteShader(FragmentShaderID);
-            GL.DeleteProgram(ProgramID);
         }
 
-#if DEBUG
-        private static void WriteLog(string s)
+        ~Shader()
         {
-            if (!string.IsNullOrWhiteSpace(s))
-                System.Diagnostics.Debug.WriteLine(s);
+            Dispose(false);
         }
 
-        private static void WriteProgramLog(int programID) => WriteLog(GL.GetProgramInfoLog(programID));
-        private static void WriteShaderLog(int shaderID) => WriteLog(GL.GetShaderInfoLog(shaderID));
-#endif
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
     }
 }

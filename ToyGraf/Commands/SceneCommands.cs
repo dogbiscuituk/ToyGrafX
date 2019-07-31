@@ -13,4 +13,15 @@
             value, s => s._Title, (s, v) => s._Title = v)
         { }
     }
+
+    public class TraceInsertCommand : TracesCommand
+    {
+        public TraceInsertCommand(int index) : base(index, true) { }
+    }
+
+    public class TraceDeleteCommand : TracesCommand
+    {
+        public TraceDeleteCommand(int index) : base(index, false) { }
+    }
+
 }

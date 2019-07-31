@@ -3,8 +3,12 @@
     using OpenTK;
     using OpenTK.Input;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using ToyGraf.Engine;
     using ToyGraf.Engine.Controllers;
+    using ToyGraf.Engine.Entities;
+    using ToyGraf.Engine.Utility;
 
     public class GameWindowRenderer : Renderer
     {
@@ -122,6 +126,18 @@
                     case ShiftKeys.CtrlShift: ctrl(Camera); goto case ShiftKeys.Shift;
                 }
             }
+        }
+
+        protected override IEnumerable<IEntity> GetEntities()
+        {
+            int xc = 1000, yc = 1000;
+            var vertices = Grid.GetVertexCoords(xc, yc).ToArray();
+            var indices = Grid.GetTriangleIndices(xc, yc).ToArray();
+
+            var prototype = new Prototype(vertices, indices);
+            //Prototypes.Add(prototype);
+
+            yield return new Entity(prototype, new Vector3(0, 0, -2), new Vector3(45, 45, 0), 1);
         }
 
         #endregion
