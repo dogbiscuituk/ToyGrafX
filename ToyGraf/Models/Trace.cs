@@ -28,17 +28,17 @@
             switch (shaderType)
             {
                 case ShaderType.VertexShader:
-                    return _ShaderVertex;
+                    return _VertexShader;
                 case ShaderType.TessControlShader:
-                    return _ShaderTessControl;
+                    return _TessControlShader;
                 case ShaderType.TessEvaluationShader:
-                    return _ShaderTessEvaluation;
+                    return _TessEvaluationShader;
                 case ShaderType.GeometryShader:
-                    return _ShaderGeometry;
+                    return _GeometryShader;
                 case ShaderType.FragmentShader:
-                    return _ShaderFragment;
+                    return _FragmentShader;
                 case ShaderType.ComputeShader:
-                    return _ShaderCompute;
+                    return _ComputeShader;
             }
             return new string[0];
         }
@@ -55,22 +55,22 @@
             switch (shaderType)
             {
                 case ShaderType.VertexShader:
-                    _ShaderVertex = script;
+                    _VertexShader = script;
                     break;
                 case ShaderType.TessControlShader:
-                    _ShaderTessControl = script;
+                    _TessControlShader = script;
                     break;
                 case ShaderType.TessEvaluationShader:
-                    _ShaderTessEvaluation = script;
+                    _TessEvaluationShader = script;
                     break;
                 case ShaderType.GeometryShader:
-                    _ShaderGeometry = script;
+                    _GeometryShader = script;
                     break;
                 case ShaderType.FragmentShader:
-                    _ShaderFragment = script;
+                    _FragmentShader = script;
                     break;
                 case ShaderType.ComputeShader:
-                    _ShaderCompute = script;
+                    _ComputeShader = script;
                     break;
             }
             if (Shader != null)
@@ -186,10 +186,10 @@ It does not replace graphics operations that require knowledge of several vertic
 Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [DisplayName("1. Vertex Shader")]
         [JsonIgnore]
-        public string[] ShaderVertex
+        public string[] VertexShader
         {
-            get => _ShaderVertex;
-            set => Run(new ShaderVertexCommand(Index, value));
+            get => _VertexShader;
+            set => Run(new VertexShaderCommand(Index, value));
         }
 
         [Category("Shaders")]
@@ -206,10 +206,10 @@ Tessellation control shaders will get undefined results if one invocation reads 
 Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [DisplayName("2. Tessellation Control Shader")]
         [JsonIgnore]
-        public string[] ShaderTessControl
+        public string[] TessControlShader
         {
-            get => _ShaderTessControl;
-            set => Run(new ShaderTessControlCommand(Index, value));
+            get => _TessControlShader;
+            set => Run(new TessControlShaderCommand(Index, value));
         }
 
         [Category("Shaders")]
@@ -222,10 +222,10 @@ The executable writes the position and other attributes of the vertex.
 Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [DisplayName("3. Tessellation Evaluation Shader")]
         [JsonIgnore]
-        public string[] ShaderTessEvaluation
+        public string[] TessEvaluationShader
         {
-            get => _ShaderTessEvaluation;
-            set => Run(new ShaderTessEvaluationCommand(Index, value));
+            get => _TessEvaluationShader;
+            set => Run(new TessEvaluationShaderCommand(Index, value));
         }
 
         [Category("Shaders")]
@@ -237,10 +237,10 @@ This single invocation can emit a variable number of vertices that are assembled
 Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [DisplayName("4. Geometry Shader")]
         [JsonIgnore]
-        public string[] ShaderGeometry
+        public string[] GeometryShader
         {
-            get => _ShaderGeometry;
-            set => Run(new ShaderGeometryCommand(Index, value));
+            get => _GeometryShader;
+            set => Run(new GeometryShaderCommand(Index, value));
         }
 
         [Category("Shaders")]
@@ -253,10 +253,10 @@ The values computed by the fragment shader are ultimately used to update framebu
 Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [DisplayName("5. Fragment Shader")]
         [JsonIgnore]
-        public string[] ShaderFragment
+        public string[] FragmentShader
         {
-            get => _ShaderFragment;
-            set => Run(new ShaderFragmentCommand(Index, value));
+            get => _FragmentShader;
+            set => Run(new FragmentShaderCommand(Index, value));
         }
 
         [Category("Shaders")]
@@ -272,10 +272,10 @@ An invocation within a work group may share data with other members of the same 
 Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [DisplayName("6. Compute Shader")]
         [JsonIgnore]
-        public string[] ShaderCompute
+        public string[] ComputeShader
         {
-            get => _ShaderCompute;
-            set => Run(new ShaderComputeCommand(Index, value));
+            get => _ComputeShader;
+            set => Run(new ComputeShaderCommand(Index, value));
         }
 
         [Category("Shaders")]
@@ -321,9 +321,11 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
 
         #region Persistent Fields
 
-        public bool _Visible;
+        [JsonProperty]
+        internal bool _Visible;
 
-        public double
+        [JsonProperty]
+        internal double
             _Xmax,
             _Xmin,
             _Ymax,
@@ -331,16 +333,18 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
             _Zmax,
             _Zmin;
 
-        public string[]
-            _ShaderVertex,
-            _ShaderTessControl,
-            _ShaderTessEvaluation,
-            _ShaderGeometry,
-            _ShaderFragment,
-            _ShaderCompute,
+        [JsonProperty]
+        internal string[]
+            _VertexShader,
+            _TessControlShader,
+            _TessEvaluationShader,
+            _GeometryShader,
+            _FragmentShader,
+            _ComputeShader,
             _ShaderStatus;
 
-        public float
+        [JsonProperty]
+        internal float
             _LocationX = 0,
             _LocationY = 0,
             _LocationZ = 0,
@@ -399,7 +403,7 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
         #region Default Shaders
 
         internal const string
-            DefaultShaderVertex = @"// Vertex Shader
+            DefaultVertexShader = @"// Vertex Shader
 
 #version 330 core
 
@@ -430,7 +434,7 @@ void main()
     gl_Position = projectionMatrix * viewMatrix * transformationMatrix * vec4(x, y, z, 1.0);
     colour = vec3(r, g, b);
 }",
-            DefaultShaderFragment = @"// Fragment Shader
+            DefaultFragmentShader = @"// Fragment Shader
 
 #version 330 core
 

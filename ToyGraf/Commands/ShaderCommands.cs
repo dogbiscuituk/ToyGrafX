@@ -31,39 +31,39 @@
         }
     }
 
-    public class ShaderComputeCommand : ShaderCommand
+    public class ComputeShaderCommand : ShaderCommand
     {
-        public ShaderComputeCommand(int index, string[] value)
+        public ComputeShaderCommand(int index, string[] value)
             : base(index, ShaderType.ComputeShader, value) { }
     }
 
-    public class ShaderFragmentCommand : ShaderCommand
+    public class FragmentShaderCommand : ShaderCommand
     {
-        public ShaderFragmentCommand(int index, string[] value)
+        public FragmentShaderCommand(int index, string[] value)
             : base(index, ShaderType.FragmentShader, value) { }
     }
 
-    public class ShaderGeometryCommand : ShaderCommand
+    public class GeometryShaderCommand : ShaderCommand
     {
-        public ShaderGeometryCommand(int index, string[] value)
+        public GeometryShaderCommand(int index, string[] value)
             : base(index, ShaderType.GeometryShader, value) { }
     }
 
-    public class ShaderTessControlCommand : ShaderCommand
+    public class TessControlShaderCommand : ShaderCommand
     {
-        public ShaderTessControlCommand(int index, string[] value)
+        public TessControlShaderCommand(int index, string[] value)
             : base(index, ShaderType.TessControlShader, value) { }
     }
 
-    public class ShaderTessEvaluationCommand : ShaderCommand
+    public class TessEvaluationShaderCommand : ShaderCommand
     {
-        public ShaderTessEvaluationCommand(int index, string[] value)
+        public TessEvaluationShaderCommand(int index, string[] value)
             : base(index, ShaderType.TessEvaluationShader, value) { }
     }
 
-    public class ShaderVertexCommand : ShaderCommand
+    public class VertexShaderCommand : ShaderCommand
     {
-        public ShaderVertexCommand(int index, string[] value)
+        public VertexShaderCommand(int index, string[] value)
             : base(index, ShaderType.VertexShader, value)
         { }
     }

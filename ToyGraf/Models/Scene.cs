@@ -98,9 +98,10 @@
         internal SceneController SceneController;
         const double DefaultFramesPerSecond = 60;
 
-        #region Public Persistent Fields
+        #region Persistent Fields
 
-        public float
+        [JsonProperty]
+        internal float
             _CameraX,
             _CameraY,
             _CameraZ,
@@ -108,11 +109,14 @@
             _CameraRoll,
             _CameraYaw;
 
-        public double _FramesPerSecond = DefaultFramesPerSecond;
+        [JsonProperty]
+        internal double _FramesPerSecond = DefaultFramesPerSecond;
 
-        public string _Title = "(untitled)";
+        [JsonProperty]
+        internal string _Title = "(untitled)";
 
-        public List<Trace> _Traces = new List<Trace>();
+        [JsonProperty]
+        internal List<Trace> _Traces = new List<Trace>();
 
         #endregion
 

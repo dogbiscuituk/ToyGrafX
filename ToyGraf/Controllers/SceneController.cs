@@ -40,8 +40,8 @@
             Scene.PropertyChanged += Scene_PropertyChanged;
 
             //var trace = Scene.NewTrace();
-            //trace.ShaderVertex = Trace.DefaultShaderVertex.ToStringArray();
-            //trace.ShaderFragment = Trace.DefaultShaderFragment.ToStringArray();
+            //trace.VertexShader = Trace.DefaultVertexShader.ToStringArray();
+            //trace.FragmentShader = Trace.DefaultFragmentShader.ToStringArray();
 
             PropertyGridController.SelectedObject = Scene;
             TgCollectionEditor.CollectionEdited += TgCollectionEditor_CollectionEdited;

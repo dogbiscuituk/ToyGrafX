@@ -6,13 +6,13 @@
 
         public static void CopyFrom(this ITrace target, ITrace source)
         {
-            target.ShaderCompute = source.ShaderCompute;
-            target.ShaderFragment = source.ShaderFragment;
-            target.ShaderGeometry = source.ShaderGeometry;
+            target.ComputeShader = source.ComputeShader;
+            target.FragmentShader = source.FragmentShader;
+            target.GeometryShader = source.GeometryShader;
             target.ShaderStatus = source.ShaderStatus;
-            target.ShaderTessControl = source.ShaderTessControl;
-            target.ShaderTessEvaluation = source.ShaderTessEvaluation;
-            target.ShaderVertex = source.ShaderVertex;
+            target.TessControlShader = source.TessControlShader;
+            target.TessEvaluationShader = source.TessEvaluationShader;
+            target.VertexShader = source.VertexShader;
             target.Visible = source.Visible;
             target.Xmax = source.Xmax;
             target.Xmin = source.Xmin;

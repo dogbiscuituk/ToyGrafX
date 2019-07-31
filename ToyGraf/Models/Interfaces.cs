@@ -2,13 +2,13 @@
 {
     public interface ITrace
     {
-        string[] ShaderCompute { get; set; }
-        string[] ShaderFragment { get; set; }
-        string[] ShaderGeometry { get; set; }
+        string[] ComputeShader { get; set; }
+        string[] FragmentShader { get; set; }
+        string[] GeometryShader { get; set; }
         string[] ShaderStatus { get; set; }
-        string[] ShaderTessControl { get; set; }
-        string[] ShaderTessEvaluation { get; set; }
-        string[] ShaderVertex { get; set; }
+        string[] TessControlShader { get; set; }
+        string[] TessEvaluationShader { get; set; }
+        string[] VertexShader { get; set; }
         bool Visible { get; set; }
         double Xmax { get; set; }
         double Xmin { get; set; }
