@@ -79,13 +79,13 @@
 
         #endregion
 
-        #region Persistent Properties
-
         public Prototype Prototype
         {
             get => null;
             set { }
         }
+
+        #region Editable Properties
 
         [Category("Entity")]
         [Description("The location of the trace in world co-ordinates.")]
@@ -93,34 +93,37 @@
         [JsonIgnore]
         public Vector3 Location
         {
-            get => _Location;
+            get => GetLocation();
             set => Run(new EntityLocationCommand(Index, value));
         }
 
         [Category("Entity")]
         [Description("The X component of the trace location in world co-ordinates.")]
         [DisplayName("Location X")]
+        [JsonIgnore]
         public float LocationX
         {
-            get => _Location.X;
+            get => _LocationX;
             set => Run(new EntityLocationXCommand(Index, value));
         }
 
         [Category("Entity")]
         [Description("The Y component of the trace location in world co-ordinates.")]
         [DisplayName("Location Y")]
+        [JsonIgnore]
         public float LocationY
         {
-            get => _Location.Y;
+            get => _LocationY;
             set => Run(new EntityLocationYCommand(Index, value));
         }
 
         [Category("Entity")]
         [Description("The Z component of the trace location in world co-ordinates.")]
         [DisplayName("Location Z")]
+        [JsonIgnore]
         public float LocationZ
         {
-            get => _Location.Z;
+            get => _LocationZ;
             set => Run(new EntityLocationZCommand(Index, value));
         }
 
@@ -130,40 +133,44 @@
         [JsonIgnore]
         public Vector3 Rotation
         {
-            get => _Rotation;
+            get => GetRotation();
             set => Run(new EntityRotationCommand(Index, value));
         }
 
         [Category("Entity")]
         [Description("The X component of the trace rotation in world co-ordinates.")]
         [DisplayName("Rotation X")]
+        [JsonIgnore]
         public float RotationX
         {
-            get => _Rotation.X;
+            get => _RotationX;
             set => Run(new EntityRotationXCommand(Index, value));
         }
 
         [Category("Entity")]
         [Description("The Y component of the trace rotation in world co-ordinates.")]
         [DisplayName("Rotation Y")]
+        [JsonIgnore]
         public float RotationY
         {
-            get => _Rotation.Y;
+            get => _RotationY;
             set => Run(new EntityRotationYCommand(Index, value));
         }
 
         [Category("Entity")]
         [Description("The Z component of the trace rotation in world co-ordinates.")]
         [DisplayName("Rotation Z")]
+        [JsonIgnore]
         public float RotationZ
         {
-            get => _Rotation.Z;
+            get => _RotationZ;
             set => Run(new EntityRotationZCommand(Index, value));
         }
 
         [Category("Entity")]
         [Description("The relative size of the trace.")]
         [DisplayName("Scale")]
+        [JsonIgnore]
         public float Scale
         {
             get => _Scale;
@@ -178,6 +185,7 @@ The vertex processor operates on one vertex at a time.
 It does not replace graphics operations that require knowledge of several vertices at a time.
 Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [DisplayName("1. Vertex Shader")]
+        [JsonIgnore]
         public string[] ShaderVertex
         {
             get => _ShaderVertex;
@@ -197,6 +205,7 @@ However, the built-in function barrier() can be used to control execution order 
 Tessellation control shaders will get undefined results if one invocation reads a per-vertex or per-patch attribute written by another invocation at any point during the same phase, or if two invocations attempt to write different values to the same per-patch output in a single phase.
 Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [DisplayName("2. Tessellation Control Shader")]
+        [JsonIgnore]
         public string[] ShaderTessControl
         {
             get => _ShaderTessControl;
@@ -212,6 +221,7 @@ The executable can read the attributes of any vertex in the input patch, plus th
 The executable writes the position and other attributes of the vertex.
 Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [DisplayName("3. Tessellation Evaluation Shader")]
+        [JsonIgnore]
         public string[] ShaderTessEvaluation
         {
             get => _ShaderTessEvaluation;
@@ -226,6 +236,7 @@ A single invocation of the geometry shader executable on the geometry processor 
 This single invocation can emit a variable number of vertices that are assembled into primitives of a declared output primitive type and passed to subsequent pipeline stages.
 Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [DisplayName("4. Geometry Shader")]
+        [JsonIgnore]
         public string[] ShaderGeometry
         {
             get => _ShaderGeometry;
@@ -241,6 +252,7 @@ Access to neighboring fragments is not allowed.
 The values computed by the fragment shader are ultimately used to update framebuffer memory or texture memory, depending on the current OpenGL state and the OpenGL command that caused the fragments to be generated.
 Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [DisplayName("5. Fragment Shader")]
+        [JsonIgnore]
         public string[] ShaderFragment
         {
             get => _ShaderFragment;
@@ -259,6 +271,7 @@ A work group is a collection of shader invocations that execute the same code, p
 An invocation within a work group may share data with other members of the same work group through shared variables and issue memory and control barriers to synchronize with other members of the same work group.
 Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [DisplayName("6. Compute Shader")]
+        [JsonIgnore]
         public string[] ShaderCompute
         {
             get => _ShaderCompute;
@@ -268,6 +281,7 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
         [Category("Shaders")]
         [Description("The status of the most recent shader compilation action. An empty value indicates successful compilation.")]
         [DisplayName("Shader Status")]
+        [JsonIgnore]
         public string[] ShaderStatus
         {
             get => _ShaderStatus;
@@ -275,33 +289,48 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
         }
 
         [Category("Domain && Range")]
+        [JsonIgnore]
         public double Xmax { get => _Xmax; set => Run(new TraceXmaxCommand(Index, value)); }
 
         [Category("Domain && Range")]
+        [JsonIgnore]
         public double Xmin { get => _Xmin; set => Run(new TraceXminCommand(Index, value)); }
 
         [Category("Domain && Range")]
+        [JsonIgnore]
         public double Ymax { get => _Ymax; set => Run(new TraceYmaxCommand(Index, value)); }
 
         [Category("Domain && Range")]
+        [JsonIgnore]
         public double Ymin { get => _Ymin; set => Run(new TraceYminCommand(Index, value)); }
 
         [Category("Domain && Range")]
+        [JsonIgnore]
         public double Zmax { get => _Zmax; set => Run(new TraceZmaxCommand(Index, value)); }
 
         [Category("Domain && Range")]
+        [JsonIgnore]
         public double Zmin { get => _Zmin; set => Run(new TraceZminCommand(Index, value)); }
 
         [Category("Trace")]
         [Description("Take a wild guess.")]
+        [JsonIgnore]
         public bool Visible { get => _Visible; set => Run(new TraceVisibleCommand(Index, value)); }
 
         #endregion
 
         #region Persistent Fields
 
-        internal bool _Visible;
-        internal double _Xmax, _Xmin, _Ymax, _Ymin, _Zmax, _Zmin;
+        public bool _Visible;
+
+        public double
+            _Xmax,
+            _Xmin,
+            _Ymax,
+            _Ymin,
+            _Zmax,
+            _Zmin;
+
         public string[]
             _ShaderVertex,
             _ShaderTessControl,
@@ -311,11 +340,14 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
             _ShaderCompute,
             _ShaderStatus;
 
-        internal float
+        public float
+            _LocationX = 0,
+            _LocationY = 0,
+            _LocationZ = 0,
+            _RotationX = 0,
+            _RotationY = 0,
+            _RotationZ = 0,
             _Scale = 1;
-        internal Vector3
-            _Location = new Vector3(0, 0, 0),
-            _Rotation = new Vector3(0, 0, 0);
 
         #endregion
 
@@ -331,6 +363,9 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
 
         #region Non-Public Methods
 
+        internal Vector3 GetLocation() => new Vector3(_LocationX, _LocationY, _LocationZ);
+        internal Vector3 GetRotation() => new Vector3(_RotationX, _RotationY, _RotationZ);
+
         internal void Init(Scene scene)
         {
             Scene = scene;
@@ -343,6 +378,20 @@ Please refer to [Help|OpenGL® Shading Language] for more information.")]
                 CommandProcessor.Run(command);
             else
                 command.RunOn(this);
+        }
+
+        internal void SetLocation(Vector3 location)
+        {
+            _LocationX = location.X;
+            _LocationY = location.Y;
+            _LocationZ = location.Z;
+        }
+
+        internal void SetRotation(Vector3 rotation)
+        {
+            _RotationX = rotation.X;
+            _RotationY = rotation.Y;
+            _RotationZ = rotation.Z;
         }
 
         #endregion

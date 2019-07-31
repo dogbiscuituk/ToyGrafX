@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Models
 {
+    using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing.Design;
@@ -24,22 +25,25 @@
 
         #endregion
 
-        #region Persistent Properties
+        #region Public Editable Properties
 
         [Category("Scene")]
         [Description("A cap on this scene's rendering frequency.")]
         [DisplayName("Frames per second (FPS)")]
+        [JsonIgnore]
         public double FramesPerSecond { get => _FramesPerSecond; set => Run(new SceneFramesPerSecondCommand(value)); }
 
         [Category("Scene")]
         [Description("A title for this scene.")]
         [DisplayName("Title")]
+        [JsonIgnore]
         public string Title { get => _Title; set => Run(new SceneTitleCommand(value)); }
 
         [Category("Scene")]
         [Description("A list of the traces in this scene.")]
         [DisplayName("Traces")]
         [Editor(typeof(TgCollectionEditor), typeof(UITypeEditor))]
+        [JsonIgnore]
         public List<Trace> Traces
         {
             get => _Traces.Select(t => t.Clone()).ToList();
@@ -49,32 +53,38 @@
         [Category("Camera")]
         [Description("The X component of the Camera's Location.")]
         [DisplayName("Camera (X)")]
-        public float CameraLocationX { get => _CameraLocationX; set => Run(new CameraXCommand(value)); }
+        [JsonIgnore]
+        public float CameraX { get => _CameraX; set => Run(new CameraXCommand(value)); }
 
         [Category("Camera")]
         [Description("The Y component of the Camera's Location.")]
         [DisplayName("Camera (Y)")]
-        public float CameraLocationY { get => _CameraLocationY; set => Run(new CameraYCommand(value)); }
+        [JsonIgnore]
+        public float CameraY { get => _CameraY; set => Run(new CameraYCommand(value)); }
 
         [Category("Camera")]
         [Description("The Z component of the Camera's Location.")]
         [DisplayName("Camera (Z)")]
-        public float CameraLocationZ { get => _CameraLocationZ; set => Run(new CameraZCommand(value)); }
+        [JsonIgnore]
+        public float CameraZ { get => _CameraZ; set => Run(new CameraZCommand(value)); }
 
         [Category("Camera")]
         [Description("The Pitch component of the Camera's Rotation (in degrees).")]
         [DisplayName("Camera Pitch°")]
-        public float CameraRotationPitch { get => _CameraRotationPitch; set => Run(new CameraPitchCommand(value)); }
+        [JsonIgnore]
+        public float CameraPitch { get => _CameraPitch; set => Run(new CameraPitchCommand(value)); }
 
         [Category("Camera")]
         [Description("The Roll component of the Camera's Rotation (in degrees).")]
         [DisplayName("Camera Roll°")]
-        public float CameraRotationRoll { get => _CameraRotationRoll; set => Run(new CameraRollCommand(value)); }
+        [JsonIgnore]
+        public float CameraRoll { get => _CameraRoll; set => Run(new CameraRollCommand(value)); }
 
         [Category("Camera")]
         [Description("The Yaw component of the Camera's Rotation (in degrees).")]
         [DisplayName("Camera Yaw°")]
-        public float CameraRotationYaw { get => _CameraRotationYaw; set => Run(new CameraYawCommand(value)); }
+        [JsonIgnore]
+        public float CameraYaw { get => _CameraYaw; set => Run(new CameraYawCommand(value)); }
 
         #endregion
 
@@ -84,26 +94,29 @@
             set => CommandProcessor.IsModified = value;
         }
 
-        #region Private Properties
-
         internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         internal SceneController SceneController;
         const double DefaultFramesPerSecond = 60;
 
-        internal double _FramesPerSecond = DefaultFramesPerSecond;
-        internal string _Title = "(untitled)";
-        internal List<Trace> _Traces = new List<Trace>();
-        internal float
-            _CameraLocationX,
-            _CameraLocationY,
-            _CameraLocationZ,
-            _CameraRotationPitch,
-            _CameraRotationRoll,
-            _CameraRotationYaw;
+        #region Public Persistent Fields
+
+        public float
+            _CameraX,
+            _CameraY,
+            _CameraZ,
+            _CameraPitch,
+            _CameraRoll,
+            _CameraYaw;
+
+        public double _FramesPerSecond = DefaultFramesPerSecond;
+
+        public string _Title = "(untitled)";
+
+        public List<Trace> _Traces = new List<Trace>();
 
         #endregion
 
-        #region Private Methods
+        #region Non-Public Methods
 
         internal void AddTrace(Trace trace)
         {
