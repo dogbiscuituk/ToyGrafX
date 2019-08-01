@@ -30,22 +30,12 @@
 
         protected virtual void Load()
         {
-            GL.ClearColor(Color.White);
-            Shader = new StaticShader();
-
-            lock (this)
-                UpdateProjectionMatrix();
-            Shader.Start();
-            lock (this)
-                LoadProjectionMatrix();
-            Shader.Stop();
-
-            Entities.Clear();
-            Entities.AddRange(GetEntities());
         }
 
         protected virtual void RenderFrame(double time)
         {
+            return;
+
             Time += time;
 
             GL.Enable(EnableCap.DepthTest);
@@ -70,8 +60,9 @@
                 var prototype = entity.Prototype;
                 GL.BindVertexArray(prototype.VaoID);
                 GL.EnableVertexAttribArray(0);
+
                 var transformationMatrix = Maths.CreateTransformationMatrix(
-                    entity.Location, entity.Rotation, entity.Scale);
+                    entity.Location, entity.RotationDegrees, entity.Scale);
                 Shader.LoadTransformationMatrix(transformationMatrix);
 
                 //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
@@ -107,7 +98,7 @@
 
         #region Private Properties
 
-        private readonly List<IEntity> Entities = new List<IEntity>();
+        protected readonly List<IEntity> Entities = new List<IEntity>();
         private readonly List<Prototype> Prototypes = new List<Prototype>();
 
         private Shader Shader;
@@ -178,7 +169,7 @@
 
         #region Private Methods
 
-        private void LoadProjectionMatrix() => Shader.LoadProjectionMatrix(NewProjectionMatrix);
+        protected void LoadProjectionMatrix() => Shader.LoadProjectionMatrix(NewProjectionMatrix);
 
         /// <summary>
         /// Create a Projection Matrix given values: aspect ratio = A, field of view = FOVy radians,
@@ -192,7 +183,7 @@
         /// 
         /// where y_scale = cot(FOVy/2), and x_scale = y_scale/A.
         /// </summary>
-        private void UpdateProjectionMatrix()
+        protected void UpdateProjectionMatrix()
         {
             var fieldOfViewRadiansY = MathHelper.DegreesToRadians(FieldOfViewDegreesY);
             var aspectRatio = 1920f / 1080f;

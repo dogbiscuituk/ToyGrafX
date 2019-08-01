@@ -71,27 +71,32 @@
 
         #endregion
 
-        private int CreateShader(ShaderType shaderType)
+        private int CreateShader(ShaderType shaderType, bool mandatory = false)
         {
+            ShaderLog.Append($"Creating {shaderType}: ");
             var shaderSource = GetScript(shaderType);
             if (string.IsNullOrWhiteSpace(shaderSource))
+            {
+                ShaderLog.AppendLine($"{shaderType} is null.");
                 return 0;
+            }
             var shaderID = GL.CreateShader(shaderType);
             GL.ShaderSource(shaderID, shaderSource);
             GL.CompileShader(shaderID);
             var log = GL.GetShaderInfoLog(shaderID);
-            ShaderLog.AppendLine($"Creating {shaderType}: {(string.IsNullOrWhiteSpace(log) ? "OK." : $"\n{log}")}");
+            ShaderLog.AppendLine($"{(string.IsNullOrWhiteSpace(log) ? "OK." : $"\n{log}")}");
             GL.AttachShader(ProgramID, shaderID);
+
             return shaderID;
         }
 
         private void CreateShaders()
         {
-            VertexShaderID = CreateShader(ShaderType.VertexShader);
+            VertexShaderID = CreateShader(ShaderType.VertexShader, true);
             TessControlShaderID = CreateShader(ShaderType.TessControlShader);
             TessEvaluationShaderID = CreateShader(ShaderType.TessEvaluationShader);
             GeometryShaderID = CreateShader(ShaderType.GeometryShader);
-            FragmentShaderID = CreateShader(ShaderType.FragmentShader);
+            FragmentShaderID = CreateShader(ShaderType.FragmentShader, true);
             ComputeShaderID = CreateShader(ShaderType.ComputeShader);
         }
 

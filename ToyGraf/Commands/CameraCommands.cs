@@ -10,14 +10,14 @@
     public class CameraPitchCommand : ScenePropertyCommand<float>
     {
         public CameraPitchCommand(float value) : base("CameraRotationPitch",
-            value, s => s._CameraPitch, (s, v) => s._CameraPitch = value)
+            value, s => s._CameraPitchDegrees, (s, v) => s._CameraPitchDegrees = value)
         { }
     }
 
     public class CameraRollCommand : ScenePropertyCommand<float>
     {
         public CameraRollCommand(float value) : base("CameraRotationRoll",
-            value, s => s._CameraRoll, (s, v) => s._CameraRoll = value)
+            value, s => s._CameraRollDegrees, (s, v) => s._CameraRollDegrees = value)
         { }
     }
 
@@ -31,7 +31,7 @@
     public class CameraYawCommand : ScenePropertyCommand<float>
     {
         public CameraYawCommand(float value) : base("CameraRotationYaw",
-            value, s => s._CameraYaw, (s, v) => s._CameraYaw = value)
+            value, s => s._CameraYawDegrees, (s, v) => s._CameraYawDegrees = value)
         { }
     }
 

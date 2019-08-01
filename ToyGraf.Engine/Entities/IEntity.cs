@@ -6,7 +6,7 @@
     {
         Prototype Prototype { get; set; }
         Vector3 Location { get; set; }
-        Vector3 Rotation { get; set; }
+        Vector3 RotationDegrees { get; set; }
         float Scale { get; set; }
 
         void MoveBy(float dx, float dy, float dz);

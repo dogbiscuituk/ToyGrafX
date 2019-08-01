@@ -1,13 +1,16 @@
 ﻿namespace ToyGraf.Console
 {
     using OpenTK;
+    using OpenTK.Graphics.OpenGL;
     using OpenTK.Input;
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Linq;
     using ToyGraf.Engine;
     using ToyGraf.Engine.Controllers;
     using ToyGraf.Engine.Entities;
+    using ToyGraf.Engine.Shaders;
     using ToyGraf.Engine.Utility;
 
     public class GameWindowRenderer : Renderer
@@ -53,6 +56,23 @@
         protected override int DisplayWidth => GameWindow.Width;
 
         protected override void Exit() => GameWindow.Exit();
+
+        protected override void Load()
+        {
+            GL.ClearColor(Color.White);
+            Shader = new StaticShader();
+
+            lock (this)
+                UpdateProjectionMatrix();
+            Shader.Start();
+            lock (this)
+                LoadProjectionMatrix();
+            Shader.Stop();
+
+            Entities.Clear();
+            Entities.AddRange(GetEntities());
+        }
+
         protected override void SwapBuffers() => GameWindow.Context.SwapBuffers();
 
         protected override void RenderFrame(double time)
@@ -141,5 +161,7 @@
         }
 
         #endregion
+
+        private Shader Shader;
     }
 }

@@ -87,7 +87,7 @@
         private void TimerStop() => Timer.Stop();
         private void Timer_Tick(object sender, EventArgs e) { Render(); }
 
-        private int GetFrameMilliseconds() => (int)Math.Round(1000 / Math.Min(Math.Max(Scene.FramesPerSecond, 1), int.MaxValue));
+        private int GetFrameMilliseconds() => (int)Math.Round(1000 / Math.Min(Math.Max(Scene.FPS, 1), int.MaxValue));
 
         private void TgCollectionEditor_CollectionEdited(object sender, CollectionEditedEventArgs e)
         {

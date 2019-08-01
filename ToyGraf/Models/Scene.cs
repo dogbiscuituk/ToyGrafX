@@ -28,10 +28,10 @@
         #region Public Editable Properties
 
         [Category("Scene")]
-        [Description("A cap on this scene's rendering frequency.")]
-        [DisplayName("Frames per second (FPS)")]
+        [Description("Frames per second: a cap on this scene's rendering frequency.")]
+        [DisplayName("FPS")]
         [JsonIgnore]
-        public double FramesPerSecond { get => _FramesPerSecond; set => Run(new SceneFramesPerSecondCommand(value)); }
+        public double FPS { get => _FPS; set => Run(new SceneFpsCommand(value)); }
 
         [Category("Scene")]
         [Description("A title for this scene.")]
@@ -51,40 +51,58 @@
         }
 
         [Category("Camera")]
-        [Description("The X component of the Camera's Location.")]
+        [Description("The X component of the camera location.")]
         [DisplayName("Camera (X)")]
         [JsonIgnore]
         public float CameraX { get => _CameraX; set => Run(new CameraXCommand(value)); }
 
         [Category("Camera")]
-        [Description("The Y component of the Camera's Location.")]
+        [Description("The Y component of the camera location.")]
         [DisplayName("Camera (Y)")]
         [JsonIgnore]
         public float CameraY { get => _CameraY; set => Run(new CameraYCommand(value)); }
 
         [Category("Camera")]
-        [Description("The Z component of the Camera's Location.")]
+        [Description("The Z component of the camera location.")]
         [DisplayName("Camera (Z)")]
         [JsonIgnore]
         public float CameraZ { get => _CameraZ; set => Run(new CameraZCommand(value)); }
 
         [Category("Camera")]
-        [Description("The Pitch component of the Camera's Rotation (in degrees).")]
+        [Description("The pitch component of the camera rotation (in degrees).")]
         [DisplayName("Camera Pitch°")]
         [JsonIgnore]
-        public float CameraPitch { get => _CameraPitch; set => Run(new CameraPitchCommand(value)); }
+        public float CameraPitch { get => _CameraPitchDegrees; set => Run(new CameraPitchCommand(value)); }
 
         [Category("Camera")]
-        [Description("The Roll component of the Camera's Rotation (in degrees).")]
+        [Description("The roll component of the camera rotation (in degrees).")]
         [DisplayName("Camera Roll°")]
         [JsonIgnore]
-        public float CameraRoll { get => _CameraRoll; set => Run(new CameraRollCommand(value)); }
+        public float CameraRoll { get => _CameraRollDegrees; set => Run(new CameraRollCommand(value)); }
 
         [Category("Camera")]
-        [Description("The Yaw component of the Camera's Rotation (in degrees).")]
+        [Description("The yaw component of the camera rotation (in degrees).")]
         [DisplayName("Camera Yaw°")]
         [JsonIgnore]
-        public float CameraYaw { get => _CameraYaw; set => Run(new CameraYawCommand(value)); }
+        public float CameraYaw { get => _CameraYawDegrees; set => Run(new CameraYawCommand(value)); }
+
+        [Category("Perspective")]
+        [Description("The frustrum field of view (Y component, in degrees).")]
+        [DisplayName("Field of View Y°")]
+        [JsonIgnore]
+        public float FrustrumFieldOfViewDegreesY { get => _FrustrumFieldOfViewDegreesY; set => Run(new FrustrumFieldOfViewDegreesYCommand(value)); }
+
+        [Category("Perspective")]
+        [Description("The distance from the camera position to the near plane of the frustrum.")]
+        [DisplayName("Near Plane")]
+        [JsonIgnore]
+        public float FrustrumNearPlane { get => _FrustrumNearPlane; set => Run(new FrustrumNearPlaneCommand(value)); }
+
+        [Category("Perspective")]
+        [Description("The distance from the camera position to the far plane of the frustrum.")]
+        [DisplayName("Far Plane")]
+        [JsonIgnore]
+        public float FrustrumFarPlane { get => _FrustrumFarPlane; set => Run(new FrustrumFarPlaneCommand(value)); }
 
         #endregion
 
@@ -96,7 +114,7 @@
 
         internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         internal SceneController SceneController;
-        const double DefaultFramesPerSecond = 60;
+        const double DefaultFPS = 60;
 
         #region Persistent Fields
 
@@ -105,12 +123,18 @@
             _CameraX,
             _CameraY,
             _CameraZ,
-            _CameraPitch,
-            _CameraRoll,
-            _CameraYaw;
+            _CameraPitchDegrees,
+            _CameraRollDegrees,
+            _CameraYawDegrees;
 
         [JsonProperty]
-        internal double _FramesPerSecond = DefaultFramesPerSecond;
+        internal double _FPS = DefaultFPS;
+
+        [JsonProperty]
+        internal float
+            _FrustrumFarPlane,
+            _FrustrumFieldOfViewDegreesY,
+            _FrustrumNearPlane;
 
         [JsonProperty]
         internal string _Title = "(untitled)";

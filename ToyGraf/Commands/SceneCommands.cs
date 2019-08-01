@@ -1,9 +1,9 @@
 ﻿namespace ToyGraf.Commands
 {
-    public class SceneFramesPerSecondCommand : ScenePropertyCommand<double>
+    public class SceneFpsCommand : ScenePropertyCommand<double>
     {
-        public SceneFramesPerSecondCommand(double value) : base("FramesPerSecond",
-            value, s => s._FramesPerSecond, (s, v) => s._FramesPerSecond = v)
+        public SceneFpsCommand(double value) : base("FPS",
+            value, s => s._FPS, (s, v) => s._FPS = v)
         { }
     }
 

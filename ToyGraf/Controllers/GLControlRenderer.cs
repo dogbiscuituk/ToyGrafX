@@ -1,8 +1,10 @@
 ﻿namespace ToyGraf.Controllers
 {
     using OpenTK;
+    using OpenTK.Graphics.OpenGL;
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Linq;
     using ToyGraf.Engine.Controllers;
     using ToyGraf.Engine.Entities;
@@ -23,10 +25,30 @@
         protected override int DisplayWidth => Control.ClientSize.Width;
         protected override int DisplayHeight => Control.ClientSize.Height;
 
-        protected override void Load() { MakeCurrent(true); base.Load(); MakeCurrent(false); }
+        protected override void Load()
+        {
+            MakeCurrent(true);
+
+            GL.ClearColor(Color.White);
+            /*
+            Shader = new StaticShader();
+
+            lock (this)
+                UpdateProjectionMatrix();
+            Shader.Start();
+            lock (this)
+                LoadProjectionMatrix();
+            Shader.Stop();
+
+            Entities.Clear();
+            Entities.AddRange(GetEntities());
+            */
+            MakeCurrent(false);
+        }
+
         protected override void Exit() { }
         protected override void SwapBuffers() => Control.SwapBuffers();
-        protected override void RenderFrame(double time) { }// { MakeCurrent(true); base.RenderFrame(time); MakeCurrent(false); }
+        protected override void RenderFrame(double time) { MakeCurrent(true); base.RenderFrame(time); MakeCurrent(false); }
         protected override void Resize() { MakeCurrent(true); base.Resize(); MakeCurrent(false); }
         protected override void Unload() { MakeCurrent(true); base.Unload(); MakeCurrent(false); }
         protected override void UpdateFrame(double time) { MakeCurrent(true); base.UpdateFrame(time); MakeCurrent(false); }
