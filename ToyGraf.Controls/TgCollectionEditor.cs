@@ -17,18 +17,9 @@
         /// <returns></returns>
         protected override CollectionForm CreateCollectionForm()
         {
-            var collectionForm = base.CreateCollectionForm();
-            collectionForm.Activated += CollectionFormActivated;
-            collectionForm.Deactivate += CollectionFormDeactivate;
-            collectionForm.Enter += CollectionFormEnter;
-            collectionForm.FormClosed += CollectionFormClosed;
-            collectionForm.FormClosing += CollectionForm_FormClosing;
-            collectionForm.HelpButtonClicked += CollectionFormHelpButtonClicked;
-            collectionForm.Layout += CollectionFormLayout;
-            collectionForm.Enter += CollectionFormLeave;
-            collectionForm.Load += CollectionFormLoad;
-            collectionForm.Shown += CollectionFormShown;
-            if (collectionForm.Controls[0] is TableLayoutPanel panel)
+            var form = base.CreateCollectionForm();
+            AttachEventHandlers(form, true);
+            if (form.Controls[0] is TableLayoutPanel panel)
             {
                 if (panel.Controls[4] is ListBox listBox)
                 {
@@ -40,13 +31,16 @@
                     propertyGrid.PropertyValueChanged += CollectionItemPropertyValueChanged;
                 }
             }
-            return collectionForm;
+            return form;
         }
 
         private void CollectionForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult = ((Form)sender).DialogResult;
+            var collectionForm = (Form)sender;
+            DialogResult = collectionForm.DialogResult;
             CollectionFormClosing?.Invoke(sender, e);
+            if (!e.Cancel)
+                AttachEventHandlers(collectionForm, false);
         }
 
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
@@ -73,6 +67,40 @@
         public static event CancelEventHandler CollectionFormHelpButtonClicked;
         public static event LayoutEventHandler CollectionFormLayout;
         public static event PropertyValueChangedEventHandler CollectionItemPropertyValueChanged;
+
+        #region Private Methods
+
+        private void AttachEventHandlers(Form form, bool attach)
+        {
+            if (attach)
+            {
+                form.Activated += CollectionFormActivated;
+                form.Deactivate += CollectionFormDeactivate;
+                form.Enter += CollectionFormEnter;
+                form.FormClosed += CollectionFormClosed;
+                form.FormClosing += CollectionForm_FormClosing;
+                form.HelpButtonClicked += CollectionFormHelpButtonClicked;
+                form.Layout += CollectionFormLayout;
+                form.Enter += CollectionFormLeave;
+                form.Load += CollectionFormLoad;
+                form.Shown += CollectionFormShown;
+            }
+            else
+            {
+                form.Activated -= CollectionFormActivated;
+                form.Deactivate -= CollectionFormDeactivate;
+                form.Enter -= CollectionFormEnter;
+                form.FormClosed -= CollectionFormClosed;
+                form.FormClosing -= CollectionForm_FormClosing;
+                form.HelpButtonClicked -= CollectionFormHelpButtonClicked;
+                form.Layout -= CollectionFormLayout;
+                form.Enter -= CollectionFormLeave;
+                form.Load -= CollectionFormLoad;
+                form.Shown -= CollectionFormShown;
+            }
+        }
+
+        #endregion
     }
 
     public class CollectionEditedEventArgs : EventArgs

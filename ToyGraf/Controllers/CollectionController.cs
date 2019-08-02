@@ -12,19 +12,20 @@
 
     public static class CollectionController
     {
-        public static void Init()
+        public static void Init() => AttachEventHandlers(true);
+
+        private static void TgCollectionEditor_CollectionFormLoad(object sender, EventArgs e)
         {
-            TgCollectionEditor.CollectionEdited += TgCollectionEditor_CollectionEdited;
-            TgCollectionEditor.CollectionFormShown += TgCollectionEditor_CollectionFormShown;
-            TgFileNameEditor.InitDialog += TgFileNameEditor_InitDialog;
+            if (sender is Form form)
+            {
+                form.Size = new Size(720, 540);
+                form.Text = "Properties";
+                if (form.Owner is SceneForm sceneForm)
+                    form.Font = sceneForm.Font;
+            }
         }
 
-        public static void Cleanup()
-        {
-            TgCollectionEditor.CollectionEdited -= TgCollectionEditor_CollectionEdited;
-            TgCollectionEditor.CollectionFormShown -= TgCollectionEditor_CollectionFormShown;
-            TgFileNameEditor.InitDialog -= TgFileNameEditor_InitDialog;
-        }
+        public static void Cleanup() => AttachEventHandlers(false);
 
         private static void TgCollectionEditor_CollectionEdited(object sender, CollectionEditedEventArgs e)
         {
@@ -38,15 +39,10 @@
         {
             if (sender is Form form)
             {
-                form.Size = new Size(720, 540);
-                form.Text = "Properties";
                 if (form.Owner is SceneForm sceneForm)
-                {
-                    form.Font = sceneForm.Font;
                     CommandProcessor = AppController.SceneControllers
                         .FirstOrDefault(p => p.SceneForm == sceneForm)
                         .CommandProcessor;
-                }
                 var propertyGrid = form.Controls.Find("propertyBrowser", true)?[0] as PropertyGrid;
                 PropertyGridController.HidePropertyPagesButton(propertyGrid);
                 propertyGrid.HelpVisible = true;
@@ -65,5 +61,27 @@
             get => Scene.Traces;
             set => Scene.Traces = value;
         }
+
+        #region Private Methods
+
+        private static void AttachEventHandlers(bool attach)
+        {
+            if (attach)
+            {
+                TgCollectionEditor.CollectionEdited += TgCollectionEditor_CollectionEdited;
+                TgCollectionEditor.CollectionFormLoad += TgCollectionEditor_CollectionFormLoad;
+                TgCollectionEditor.CollectionFormShown += TgCollectionEditor_CollectionFormShown;
+                TgFileNameEditor.InitDialog += TgFileNameEditor_InitDialog;
+            }
+            else
+            {
+                TgCollectionEditor.CollectionEdited -= TgCollectionEditor_CollectionEdited;
+                TgCollectionEditor.CollectionFormLoad -= TgCollectionEditor_CollectionFormLoad;
+                TgCollectionEditor.CollectionFormShown -= TgCollectionEditor_CollectionFormShown;
+                TgFileNameEditor.InitDialog -= TgFileNameEditor_InitDialog;
+            }
+        }
+
+        #endregion
     }
 }
