@@ -72,25 +72,25 @@
         [Description("The pitch component of the camera rotation (in degrees).")]
         [DisplayName("Camera Pitch°")]
         [JsonIgnore]
-        public float CameraPitch { get => _CameraPitchDegrees; set => Run(new CameraPitchCommand(value)); }
+        public float CameraPitch { get => _CameraPitch; set => Run(new CameraPitchCommand(value)); }
 
         [Category("Camera")]
         [Description("The roll component of the camera rotation (in degrees).")]
         [DisplayName("Camera Roll°")]
         [JsonIgnore]
-        public float CameraRoll { get => _CameraRollDegrees; set => Run(new CameraRollCommand(value)); }
+        public float CameraRoll { get => _CameraRoll; set => Run(new CameraRollCommand(value)); }
 
         [Category("Camera")]
         [Description("The yaw component of the camera rotation (in degrees).")]
         [DisplayName("Camera Yaw°")]
         [JsonIgnore]
-        public float CameraYaw { get => _CameraYawDegrees; set => Run(new CameraYawCommand(value)); }
+        public float CameraYaw { get => _CameraYaw; set => Run(new CameraYawCommand(value)); }
 
         [Category("Perspective")]
         [Description("The frustrum field of view (Y component, in degrees).")]
         [DisplayName("Field of View Y°")]
         [JsonIgnore]
-        public float FrustrumFieldOfViewDegreesY { get => _FrustrumFieldOfViewDegreesY; set => Run(new FrustrumFieldOfViewDegreesYCommand(value)); }
+        public float FrustrumFieldOfView { get => _FrustrumFieldOfView; set => Run(new FrustrumFieldOfViewCommand(value)); }
 
         [Category("Perspective")]
         [Description("The distance from the camera position to the near plane of the frustrum.")]
@@ -123,9 +123,9 @@
             _CameraX,
             _CameraY,
             _CameraZ,
-            _CameraPitchDegrees,
-            _CameraRollDegrees,
-            _CameraYawDegrees;
+            _CameraPitch,
+            _CameraRoll,
+            _CameraYaw;
 
         [JsonProperty]
         internal double _FPS = DefaultFPS;
@@ -133,7 +133,7 @@
         [JsonProperty]
         internal float
             _FrustrumFarPlane,
-            _FrustrumFieldOfViewDegreesY,
+            _FrustrumFieldOfView,
             _FrustrumNearPlane;
 
         [JsonProperty]

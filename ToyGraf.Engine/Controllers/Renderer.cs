@@ -62,7 +62,7 @@
                 GL.EnableVertexAttribArray(0);
 
                 var transformationMatrix = Maths.CreateTransformationMatrix(
-                    entity.Location, entity.RotationDegrees, entity.Scale);
+                    entity.Location, entity.Rotation, entity.Scale);
                 Shader.LoadTransformationMatrix(transformationMatrix);
 
                 //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
@@ -110,42 +110,42 @@
 
         #region Public Properties
 
-        public float FarPlaneDistance
+        public float FarPlane
         {
-            get => _FarPlaneDistance;
+            get => _FarPlane;
             set
             {
-                if (FarPlaneDistance != value)
+                if (FarPlane != value)
                 {
-                    _FarPlaneDistance = value;
+                    _FarPlane = value;
                     lock (this)
                         UpdateProjectionMatrix();
                 }
             }
         }
 
-        public float FieldOfViewDegreesY
+        public float FieldOfView
         {
-            get => _FieldOfViewDegreesY;
+            get => _FieldOfView;
             set
             {
-                if (FieldOfViewDegreesY != value)
+                if (FieldOfView != value)
                 {
-                    _FieldOfViewDegreesY = value;
+                    _FieldOfView = value;
                     lock (this)
                         UpdateProjectionMatrix();
                 }
             }
         }
 
-        public float NearPlaneDistance
+        public float NearPlane
         {
-            get => _NearPlaneDistance;
+            get => _NearPlane;
             set
             {
-                if (NearPlaneDistance != value)
+                if (NearPlane != value)
                 {
-                    _NearPlaneDistance = value;
+                    _NearPlane = value;
                     lock (this)
                         UpdateProjectionMatrix();
                 }
@@ -157,9 +157,9 @@
         #region Private Properties
 
         private float
-            _FieldOfViewDegreesY = 70,
-            _NearPlaneDistance = 0.1f,
-            _FarPlaneDistance = 1000;
+            _FieldOfView = 70,
+            _NearPlane = 0.1f,
+            _FarPlane = 1000;
 
         private Matrix4
             NewProjectionMatrix,
@@ -185,13 +185,13 @@
         /// </summary>
         protected void UpdateProjectionMatrix()
         {
-            var fieldOfViewRadiansY = MathHelper.DegreesToRadians(FieldOfViewDegreesY);
+            var fieldOfView = MathHelper.DegreesToRadians(FieldOfView);
             var aspectRatio = 1920f / 1080f;
             NewProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(
-                fieldOfViewRadiansY,
+                fieldOfView,
                 aspectRatio,
-                NearPlaneDistance,
-                FarPlaneDistance);
+                NearPlane,
+                FarPlane);
         }
 
         #endregion

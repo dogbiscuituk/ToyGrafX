@@ -51,7 +51,7 @@
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="ShiftKeys.cs" />
     <Compile Include="Utility\Functions.cs" />
-    <Compile Include="Utility\Grid.cs" />
+    <Compile Include="Utility\Grids.cs" />
     <Compile Include="Utility\Maths.cs" />
     <Compile Include="Entities\Prototype.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

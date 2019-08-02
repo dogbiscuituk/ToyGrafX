@@ -47,8 +47,8 @@
 
         public void MoveBy(float dx, float dy, float dz) => Location += new Vector3(dx, dy, dz);
         public void MoveTo(float x, float y, float z) => Location += new Vector3(x, y, z);
-        public void RotateBy(float dx, float dy, float dz) => RotationDegrees += new Vector3(dx, dy, dz);
-        public void RotateTo(float x, float y, float z) => RotationDegrees += new Vector3(x, y, z);
+        public void RotateBy(float dx, float dy, float dz) => Rotation += new Vector3(dx, dy, dz);
+        public void RotateTo(float x, float y, float z) => Rotation += new Vector3(x, y, z);
         public void ScaleBy(float scale) => Scale *= scale;
         public void ScaleTo(float scale) => Scale = scale;
 
@@ -82,6 +82,36 @@
         #endregion
 
         #region Editable Properties
+
+        #region Domain & Range
+
+        [Category("Domain && Range")]
+        [JsonIgnore]
+        public double Xmax { get => _Xmax; set => Run(new TraceXmaxCommand(Index, value)); }
+
+        [Category("Domain && Range")]
+        [JsonIgnore]
+        public double Xmin { get => _Xmin; set => Run(new TraceXminCommand(Index, value)); }
+
+        [Category("Domain && Range")]
+        [JsonIgnore]
+        public double Ymax { get => _Ymax; set => Run(new TraceYmaxCommand(Index, value)); }
+
+        [Category("Domain && Range")]
+        [JsonIgnore]
+        public double Ymin { get => _Ymin; set => Run(new TraceYminCommand(Index, value)); }
+
+        [Category("Domain && Range")]
+        [JsonIgnore]
+        public double Zmax { get => _Zmax; set => Run(new TraceZmaxCommand(Index, value)); }
+
+        [Category("Domain && Range")]
+        [JsonIgnore]
+        public double Zmin { get => _Zmin; set => Run(new TraceZminCommand(Index, value)); }
+
+        #endregion
+
+        #region Placement
 
         [Browsable(false)]
         [Category("Placement")]
@@ -129,40 +159,40 @@
         [Description("The rotation of the trace in world co-ordinates (in degrees).")]
         [DisplayName("Rotation°")]
         [JsonIgnore]
-        public Vector3 RotationDegrees
+        public Vector3 Rotation
         {
-            get => GetRotationDegrees();
-            set => Run(new EntityRotationDegreesCommand(Index, value));
+            get => GetRotation();
+            set => Run(new EntityRotationCommand(Index, value));
         }
 
         [Category("Placement")]
         [Description("The X component of the trace rotation in world co-ordinates (in degrees).")]
         [DisplayName("Rotation X°")]
         [JsonIgnore]
-        public float RotationDegreesX
+        public float RotationX
         {
-            get => _RotationDegreesX;
-            set => Run(new EntityRotationDegreesXCommand(Index, value));
+            get => _RotationX;
+            set => Run(new EntityRotationXCommand(Index, value));
         }
 
         [Category("Placement")]
         [Description("The Y component of the trace rotation in world co-ordinates (in degrees).")]
         [DisplayName("Rotation Y°")]
         [JsonIgnore]
-        public float RotationDegreesY
+        public float RotationY
         {
-            get => _RotationDegreesY;
-            set => Run(new EntityRotationDegreesYCommand(Index, value));
+            get => _RotationY;
+            set => Run(new EntityRotationYCommand(Index, value));
         }
 
         [Category("Placement")]
         [Description("The Z component of the trace rotation in world co-ordinates (in degrees).")]
         [DisplayName("Rotation Z°")]
         [JsonIgnore]
-        public float RotationDegreesZ
+        public float RotationZ
         {
-            get => _RotationDegreesZ;
-            set => Run(new EntityRotationDegreesZCommand(Index, value));
+            get => _RotationZ;
+            set => Run(new EntityRotationZCommand(Index, value));
         }
 
         [Category("Placement")]
@@ -174,6 +204,10 @@
             get => _Scale;
             set => Run(new EntityScaleCommand(Index, value));
         }
+
+        #endregion
+
+        #region Shaders
 
         [Category("Shaders")]
         [Description(@"The vertex processor is a programmable unit that operates on incoming vertices and their associated data. Compilation units written in the OpenGL Shading Language to run on this processor are called vertex shaders.
@@ -280,29 +314,31 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             set => _ShaderStatus = value;
         }
 
-        [Category("Domain && Range")]
-        [JsonIgnore]
-        public double Xmax { get => _Xmax; set => Run(new TraceXmaxCommand(Index, value)); }
+        #endregion
 
-        [Category("Domain && Range")]
-        [JsonIgnore]
-        public double Xmin { get => _Xmin; set => Run(new TraceXminCommand(Index, value)); }
+        #region Terrain
 
-        [Category("Domain && Range")]
+        [Category("Terrain")]
+        [Description("The number of discrete strips into which the trace is divided in the X direction.")]
+        [DisplayName("Strip Count X")]
         [JsonIgnore]
-        public double Ymax { get => _Ymax; set => Run(new TraceYmaxCommand(Index, value)); }
+        public int StripCountX { get => _StripCountX; set => Run(new TerrainStripCountXCommand(Index, value)); }
 
-        [Category("Domain && Range")]
+        [Category("Terrain")]
+        [Description("The number of discrete strips into which the trace is divided in the Y direction.")]
+        [DisplayName("Strip Count Y")]
         [JsonIgnore]
-        public double Ymin { get => _Ymin; set => Run(new TraceYminCommand(Index, value)); }
+        public int StripCountY { get => _StripCountY; set => Run(new TerrainStripCountYCommand(Index, value)); }
 
-        [Category("Domain && Range")]
+        [Category("Terrain")]
+        [Description("The number of discrete strips into which the trace is divided in the Z direction.")]
+        [DisplayName("Strip Count Z")]
         [JsonIgnore]
-        public double Zmax { get => _Zmax; set => Run(new TraceZmaxCommand(Index, value)); }
+        public int StripCountZ { get => _StripCountZ; set => Run(new TerrainStripCountZCommand(Index, value)); }
 
-        [Category("Domain && Range")]
-        [JsonIgnore]
-        public double Zmin { get => _Zmin; set => Run(new TraceZminCommand(Index, value)); }
+        #endregion
+
+        #region Trace
 
         [Category("Trace")]
         [Description("Take a wild guess.")]
@@ -311,18 +347,11 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #endregion
 
+        #endregion
+
         #region Persistent Fields
 
-        [JsonProperty]
-        internal float
-            _LocationX = 0,
-            _LocationY = 0,
-            _LocationZ = 0,
-            _RotationDegreesX = 0,
-            _RotationDegreesY = 0,
-            _RotationDegreesZ = 0,
-            _Scale = 1;
-
+        // Domain & Range
         [JsonProperty]
         internal double
             _Xmin,
@@ -332,6 +361,18 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _Zmin,
             _Zmax;
 
+        // Placement
+        [JsonProperty]
+        internal float
+            _LocationX = 0,
+            _LocationY = 0,
+            _LocationZ = 0,
+            _RotationX = 0,
+            _RotationY = 0,
+            _RotationZ = 0,
+            _Scale = 1;
+
+        // Shaders
         [JsonProperty]
         internal string[]
             _VertexShader,
@@ -342,6 +383,14 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _ComputeShader,
             _ShaderStatus;
 
+        // Terrain
+        [JsonProperty]
+        internal int
+            _StripCountX,
+            _StripCountY,
+            _StripCountZ;
+
+        // Trace
         [JsonProperty]
         internal bool _Visible;
 
@@ -360,7 +409,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         #region Non-Public Methods
 
         internal Vector3 GetLocation() => new Vector3(_LocationX, _LocationY, _LocationZ);
-        internal Vector3 GetRotationDegrees() => new Vector3(_RotationDegreesX, _RotationDegreesY, _RotationDegreesZ);
+        internal Vector3 GetRotation() => new Vector3(_RotationX, _RotationY, _RotationZ);
 
         internal void Init(Scene scene)
         {
@@ -383,11 +432,11 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _LocationZ = location.Z;
         }
 
-        internal void SetRotationDegrees(Vector3 rotationDegrees)
+        internal void SetRotation(Vector3 rotation)
         {
-            _RotationDegreesX = rotationDegrees.X;
-            _RotationDegreesY = rotationDegrees.Y;
-            _RotationDegreesZ = rotationDegrees.Z;
+            _RotationX = rotation.X;
+            _RotationY = rotation.Y;
+            _RotationZ = rotation.Z;
         }
 
         #endregion
@@ -440,6 +489,7 @@ void main()
 
         #endregion
 
+        [JsonIgnore]
         public Prototype Prototype
         {
             get => GetPrototype();
@@ -448,9 +498,9 @@ void main()
 
         private Prototype GetPrototype()
         {
-            int xc = 1000, yc = 1000;
-            var vertices = Grid.GetVertexCoords(xc, yc).ToArray();
-            var indices = Grid.GetTriangleIndices(xc, yc).ToArray();
+            int xc = StripCountX, yc = StripCountY;
+            var vertices = Grids.GetVertexCoords(xc, yc).ToArray();
+            var indices = Grids.GetTriangleIndices(xc, yc).ToArray();
 
             return new Prototype(vertices, indices);
         }

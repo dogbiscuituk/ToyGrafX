@@ -30,31 +30,31 @@
         { }
     }
 
-    public class EntityRotationDegreesCommand : TracePropertyCommand<Vector3>
+    public class EntityRotationCommand : TracePropertyCommand<Vector3>
     {
-        public EntityRotationDegreesCommand(int index, Vector3 value) : base(index, "Rotation",
-            value, e => e.GetRotationDegrees(), (e, v) => e.SetRotationDegrees(v))
+        public EntityRotationCommand(int index, Vector3 value) : base(index, "Rotation",
+            value, e => e.GetRotation(), (e, v) => e.SetRotation(v))
         { }
     }
 
-    public class EntityRotationDegreesXCommand : TracePropertyCommand<float>
+    public class EntityRotationXCommand : TracePropertyCommand<float>
     {
-        public EntityRotationDegreesXCommand(int index, float value) : base(index, "Rotation X",
-            value, e => e._RotationDegreesX, (e, v) => e._RotationDegreesX = value)
+        public EntityRotationXCommand(int index, float value) : base(index, "Rotation X",
+            value, e => e._RotationX, (e, v) => e._RotationX = value)
         { }
     }
 
-    public class EntityRotationDegreesYCommand : TracePropertyCommand<float>
+    public class EntityRotationYCommand : TracePropertyCommand<float>
     {
-        public EntityRotationDegreesYCommand(int index, float value) : base(index, "Rotation Y",
-            value, e => e._RotationDegreesY, (e, v) => e._RotationDegreesY = value)
+        public EntityRotationYCommand(int index, float value) : base(index, "Rotation Y",
+            value, e => e._RotationY, (e, v) => e._RotationY = value)
         { }
     }
 
-    public class EntityRotationDegreesZCommand : TracePropertyCommand<float>
+    public class EntityRotationZCommand : TracePropertyCommand<float>
     {
-        public EntityRotationDegreesZCommand(int index, float value) : base(index, "Rotation Z",
-            value, e => e._RotationDegreesZ, (e, v) => e._RotationDegreesZ = value)
+        public EntityRotationZCommand(int index, float value) : base(index, "Rotation Z",
+            value, e => e._RotationZ, (e, v) => e._RotationZ = value)
         { }
     }
 

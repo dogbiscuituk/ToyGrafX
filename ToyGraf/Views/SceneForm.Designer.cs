@@ -48,6 +48,12 @@
             this.PopupPropertyGridFloat = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupPropertyGridHide = new System.Windows.Forms.ToolStripMenuItem();
             this.TraceTable = new System.Windows.Forms.DataGridView();
+            this.colXmin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colXmax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colYmin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colYmax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colZmin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colZmax = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PopupTraceTableMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.PopupTraceTableFloat = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupTraceTableHide = new System.Windows.Forms.ToolStripMenuItem();
@@ -131,12 +137,6 @@
             this.HelpOpenGLShadingLanguage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripSeparator();
             this.HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.colXmin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colXmax = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colYmin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colYmax = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colZmin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colZmax = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
@@ -164,7 +164,7 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(409, 315);
+            this.GLControl.Size = new System.Drawing.Size(330, 314);
             this.GLControl.TabIndex = 1;
             this.GLControl.VSync = false;
             // 
@@ -316,7 +316,7 @@
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.TraceTable);
             this.SplitContainer1.Size = new System.Drawing.Size(591, 395);
-            this.SplitContainer1.SplitterDistance = 315;
+            this.SplitContainer1.SplitterDistance = 314;
             this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
@@ -334,8 +334,8 @@
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(591, 315);
-            this.SplitContainer2.SplitterDistance = 409;
+            this.SplitContainer2.Size = new System.Drawing.Size(591, 314);
+            this.SplitContainer2.SplitterDistance = 330;
             this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
             // 
@@ -345,7 +345,7 @@
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(177, 315);
+            this.PropertyGrid.Size = new System.Drawing.Size(256, 314);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -391,8 +391,38 @@
             this.TraceTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.TraceTable.RowHeadersVisible = false;
             this.TraceTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TraceTable.Size = new System.Drawing.Size(591, 75);
+            this.TraceTable.Size = new System.Drawing.Size(591, 76);
             this.TraceTable.TabIndex = 0;
+            // 
+            // colXmin
+            // 
+            this.colXmin.HeaderText = "Xmin";
+            this.colXmin.Name = "colXmin";
+            // 
+            // colXmax
+            // 
+            this.colXmax.HeaderText = "Xmax";
+            this.colXmax.Name = "colXmax";
+            // 
+            // colYmin
+            // 
+            this.colYmin.HeaderText = "Ymin";
+            this.colYmin.Name = "colYmin";
+            // 
+            // colYmax
+            // 
+            this.colYmax.HeaderText = "Ymax";
+            this.colYmax.Name = "colYmax";
+            // 
+            // colZmin
+            // 
+            this.colZmin.HeaderText = "Zmin";
+            this.colZmin.Name = "colZmin";
+            // 
+            // colZmax
+            // 
+            this.colZmax.HeaderText = "Zmax";
+            this.colZmax.Name = "colZmax";
             // 
             // PopupTraceTableMenu
             // 
@@ -1097,36 +1127,6 @@
             this.HelpAbout.Name = "HelpAbout";
             this.HelpAbout.Size = new System.Drawing.Size(229, 22);
             this.HelpAbout.Text = "&About";
-            // 
-            // colXmin
-            // 
-            this.colXmin.HeaderText = "Xmin";
-            this.colXmin.Name = "colXmin";
-            // 
-            // colXmax
-            // 
-            this.colXmax.HeaderText = "Xmax";
-            this.colXmax.Name = "colXmax";
-            // 
-            // colYmin
-            // 
-            this.colYmin.HeaderText = "Ymin";
-            this.colYmin.Name = "colYmin";
-            // 
-            // colYmax
-            // 
-            this.colYmax.HeaderText = "Ymax";
-            this.colYmax.Name = "colYmax";
-            // 
-            // colZmin
-            // 
-            this.colZmin.HeaderText = "Zmin";
-            this.colZmin.Name = "colZmin";
-            // 
-            // colZmax
-            // 
-            this.colZmax.HeaderText = "Zmax";
-            this.colZmax.Name = "colZmax";
             // 
             // SceneForm
             // 

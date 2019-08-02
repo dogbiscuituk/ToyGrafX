@@ -7,10 +7,10 @@
         { }
     }
 
-    public class FrustrumFieldOfViewDegreesYCommand : ScenePropertyCommand<float>
+    public class FrustrumFieldOfViewCommand : ScenePropertyCommand<float>
     {
-        public FrustrumFieldOfViewDegreesYCommand(float value) : base("Field of View Y°",
-            value, s => s._FrustrumFieldOfViewDegreesY, (s, v) => s._FrustrumFieldOfViewDegreesY = v)
+        public FrustrumFieldOfViewCommand(float value) : base("Field of View Y°",
+            value, s => s._FrustrumFieldOfView, (s, v) => s._FrustrumFieldOfView = v)
         { }
     }
 

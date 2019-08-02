@@ -30,6 +30,7 @@
         {
             if (e.DialogResult == DialogResult.OK && e.Value is List<Trace> editedTraces)
                 Traces = editedTraces;
+            // Scene.AttachTraces();
             CommandProcessor = null;
         }
 
@@ -37,7 +38,7 @@
         {
             if (sender is Form form)
             {
-                form.Size = new Size(512, 512);
+                form.Size = new Size(720, 540);
                 form.Text = "Properties";
                 if (form.Owner is SceneForm sceneForm)
                 {
@@ -51,6 +52,8 @@
                 propertyGrid.HelpVisible = true;
             }
         }
+
+        //private void TgCollectionEditor_CollectionFormHelpButtonClicked(object sender, CancelEventArgs e) => ShowOpenGLShadingLanguageBook();
 
         private static void TgFileNameEditor_InitDialog(object sender, InitDialogEventArgs e) =>
             SceneController.InitTextureDialog(e.OpenFileDialog);

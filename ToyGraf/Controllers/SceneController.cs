@@ -44,9 +44,6 @@
             //trace.FragmentShader = Trace.DefaultFragmentShader.ToStringArray();
 
             PropertyGridController.SelectedObject = Scene;
-            TgCollectionEditor.CollectionEdited += TgCollectionEditor_CollectionEdited;
-            TgCollectionEditor.CollectionFormHelpButtonClicked += TgCollectionEditor_CollectionFormHelpButtonClicked;
-            TgCollectionEditor.CollectionFormShown += TgCollectionEditor_CollectionFormShown;
 
             Timer = new Timer();
             Timer.Tick += Timer_Tick;
@@ -59,29 +56,6 @@
             dialog.Title = "Select Texture";
         }
 
-        private void TgCollectionEditor_CollectionFormHelpButtonClicked(object sender, CancelEventArgs e) => ShowOpenGLShadingLanguageBook();
-
-        private void TgCollectionEditor_CollectionFormShown(object sender, EventArgs e)
-        {
-            if (sender is Form form)
-            {
-                form.Size = new Size(512, 512);
-                form.Text = "Properties";
-                if (form.Owner is SceneForm sceneForm)
-                {
-                    form.Font = sceneForm.Font;
-                    //CommandProcessor = AppController.SceneControllers
-                    //    .FirstOrDefault(p => p.SceneForm == sceneForm)
-                    //    .CommandProcessor;
-                }
-                var propertyGrid = form.Controls.Find("propertyBrowser", true)?[0] as PropertyGrid;
-                PropertyGridController.HidePropertyPagesButton(propertyGrid);
-                propertyGrid.HelpVisible = true; // Make the DocComment label visible.
-                //if (Scene != null)
-                //    TraceCounter = Graph.Traces.Count;
-            }
-        }
-
         private void TimerInit() => Timer.Interval = GetFrameMilliseconds();
         private void TimerStart() { TimerInit(); Timer.Start(); }
         private void TimerStop() => Timer.Stop();
@@ -89,17 +63,10 @@
 
         private int GetFrameMilliseconds() => (int)Math.Round(1000 / Math.Min(Math.Max(Scene.FPS, 1), int.MaxValue));
 
-        private void TgCollectionEditor_CollectionEdited(object sender, CollectionEditedEventArgs e)
-        {
-            if (e.Context.Instance == Scene)
-                AttachTraces();
-        }
-
         private void Cleanup()
         {
             TimerStop();
             Timer.Tick -= Timer_Tick;
-            TgCollectionEditor.CollectionEdited -= TgCollectionEditor_CollectionEdited;
             AppController.Remove(this);
         }
 
@@ -290,13 +257,11 @@
 
         #region Private Methods
 
-        private void AttachTraces() => Scene.AttachTraces();
-
         private void EditOptions() => new OptionsController(this).ShowModal(SceneForm);
 
         private void FileLoaded()
         {
-            AttachTraces();
+            Scene.AttachTraces();
             CommandProcessor.Clear();
             UpdateUI();
         }
