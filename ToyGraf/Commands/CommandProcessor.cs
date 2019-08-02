@@ -9,9 +9,11 @@
     using ToyGraf.Models;
     using ToyGraf.Views;
 
-    public class CommandProcessor : ICommandProcessor
+    internal class CommandProcessor : ICommandProcessor
     {
-        public CommandProcessor(SceneController sceneController)
+        #region Public/Internal Interface
+
+        internal CommandProcessor(SceneController sceneController)
         {
             SceneController = sceneController;
             // Edit
@@ -22,6 +24,19 @@
             SceneForm.tbRedo.ButtonClick += EditRedo_Click;
             SceneForm.tbRedo.DropDownOpening += TbRedo_DropDownOpening;
         }
+
+        internal bool IsModified
+        {
+            get => UndoStack.Any();
+            set
+            {
+                if (!value)
+                    Clear();
+            }
+        }
+
+        internal Scene Scene => SceneController.Scene;
+        internal List<Trace> Traces => Scene.Traces;
 
         internal void Clear()
         {
@@ -41,6 +56,8 @@
             UpdateUI();
         }
 
+        #endregion
+
         #region Private Properties
 
         private bool CanUndo => UndoStack.Count > 0;
@@ -54,19 +71,7 @@
         private string RedoAction => RedoStack.Peek().RedoAction;
 
         private readonly SceneController SceneController;
-        internal Scene Scene => SceneController.Scene;
         private SceneForm SceneForm => SceneController.SceneForm;
-        internal List<Trace> Traces => Scene.Traces;
-
-        internal bool IsModified
-        {
-            get => UndoStack.Any();
-            set
-            {
-                if (!value)
-                    Clear();
-            }
-        }
 
         #endregion
 

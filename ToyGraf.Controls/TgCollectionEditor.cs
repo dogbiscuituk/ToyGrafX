@@ -7,41 +7,9 @@
 
     public class TgCollectionEditor : CollectionEditor
     {
+        #region Public Interface
+
         public TgCollectionEditor(Type type) : base(type) { }
-
-        public ITypeDescriptorContext GetContext() => Context;
-
-        /// <summary>
-        /// Provide static hooks into events on the CollectionForm.
-        /// </summary>
-        /// <returns></returns>
-        protected override CollectionForm CreateCollectionForm()
-        {
-            var form = base.CreateCollectionForm();
-            AttachEventHandlers(form, true);
-            if (form.Controls[0] is TableLayoutPanel panel)
-            {
-                if (panel.Controls[4] is ListBox listBox)
-                {
-                    listBox.DrawMode = DrawMode.Normal;
-                }
-                if (panel.Controls[5] is PropertyGrid propertyGrid)
-                {
-                    CollectionFormGridInit?.Invoke(this, new PropertyGridInitEventArgs(propertyGrid));
-                    propertyGrid.PropertyValueChanged += CollectionItemPropertyValueChanged;
-                }
-            }
-            return form;
-        }
-
-        private void CollectionForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            var collectionForm = (Form)sender;
-            DialogResult = collectionForm.DialogResult;
-            CollectionFormClosing?.Invoke(sender, e);
-            if (!e.Cancel)
-                AttachEventHandlers(collectionForm, false);
-        }
 
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
@@ -50,7 +18,7 @@
             return result;
         }
 
-        private DialogResult DialogResult;
+        public ITypeDescriptorContext GetContext() => Context;
 
         public static event EventHandler
             CollectionFormActivated,
@@ -68,63 +36,76 @@
         public static event LayoutEventHandler CollectionFormLayout;
         public static event PropertyValueChangedEventHandler CollectionItemPropertyValueChanged;
 
-        #region Private Methods
+        #endregion
 
-        private void AttachEventHandlers(Form form, bool attach)
+        #region Private Properties
+
+        private DialogResult DialogResult;
+
+        #endregion
+
+        #region Private Event Handlers
+
+        private void CollectionForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (attach)
-            {
-                form.Activated += CollectionFormActivated;
-                form.Deactivate += CollectionFormDeactivate;
-                form.Enter += CollectionFormEnter;
-                form.FormClosed += CollectionFormClosed;
-                form.FormClosing += CollectionForm_FormClosing;
-                form.HelpButtonClicked += CollectionFormHelpButtonClicked;
-                form.Layout += CollectionFormLayout;
-                form.Enter += CollectionFormLeave;
-                form.Load += CollectionFormLoad;
-                form.Shown += CollectionFormShown;
-            }
-            else
-            {
-                form.Activated -= CollectionFormActivated;
-                form.Deactivate -= CollectionFormDeactivate;
-                form.Enter -= CollectionFormEnter;
-                form.FormClosed -= CollectionFormClosed;
-                form.FormClosing -= CollectionForm_FormClosing;
-                form.HelpButtonClicked -= CollectionFormHelpButtonClicked;
-                form.Layout -= CollectionFormLayout;
-                form.Enter -= CollectionFormLeave;
-                form.Load -= CollectionFormLoad;
-                form.Shown -= CollectionFormShown;
-            }
+            var form = (Form)sender;
+            DialogResult = form.DialogResult;
+            CollectionFormClosing?.Invoke(sender, e);
+            if (!e.Cancel)
+                DetachEventHandlers(form);
         }
 
         #endregion
-    }
 
-    public class CollectionEditedEventArgs : EventArgs
-    {
-        public CollectionEditedEventArgs(ITypeDescriptorContext context,
-            IServiceProvider provider, object value, DialogResult dialogResult)
+        #region Non-Public Methods
+
+        private void AttachEventHandlers(Form form)
         {
-            Context = context;
-            Provider = provider;
-            Value = value;
-            DialogResult = dialogResult;
+            form.Activated += CollectionFormActivated;
+            form.Deactivate += CollectionFormDeactivate;
+            form.Enter += CollectionFormEnter;
+            form.FormClosed += CollectionFormClosed;
+            form.FormClosing += CollectionForm_FormClosing;
+            form.HelpButtonClicked += CollectionFormHelpButtonClicked;
+            form.Layout += CollectionFormLayout;
+            form.Enter += CollectionFormLeave;
+            form.Load += CollectionFormLoad;
+            form.Shown += CollectionFormShown;
         }
 
-        public ITypeDescriptorContext Context { get; set; }
-        public DialogResult DialogResult;
-        public IServiceProvider Provider { get; set; }
-        public object Value { get; set; }
-    }
+        protected override CollectionForm CreateCollectionForm()
+        {
+            var form = base.CreateCollectionForm();
+            AttachEventHandlers(form);
+            if (form.Controls[0] is TableLayoutPanel panel)
+            {
+                if (panel.Controls[4] is ListBox listBox)
+                {
+                    listBox.DrawMode = DrawMode.Normal;
+                }
+                if (panel.Controls[5] is PropertyGrid propertyGrid)
+                {
+                    CollectionFormGridInit?.Invoke(this, new PropertyGridInitEventArgs(propertyGrid));
+                    propertyGrid.PropertyValueChanged += CollectionItemPropertyValueChanged;
+                }
+            }
+            return form;
+        }
 
-    public class PropertyGridInitEventArgs : EventArgs
-    {
-        public PropertyGridInitEventArgs(PropertyGrid propertyGrid) : base()
-            => PropertyGrid = propertyGrid;
+        private void DetachEventHandlers(Form form)
+        {
+            form.Activated -= CollectionFormActivated;
+            form.Deactivate -= CollectionFormDeactivate;
+            form.Enter -= CollectionFormEnter;
+            form.FormClosed -= CollectionFormClosed;
+            form.FormClosing -= CollectionForm_FormClosing;
+            form.HelpButtonClicked -= CollectionFormHelpButtonClicked;
+            form.Layout -= CollectionFormLayout;
+            form.Enter -= CollectionFormLeave;
+            form.Load -= CollectionFormLoad;
+            form.Shown -= CollectionFormShown;
+        }
 
-        public PropertyGrid PropertyGrid { get; set; }
+        #endregion
     }
 }

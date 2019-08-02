@@ -2,9 +2,9 @@
 {
     using OpenTK.Graphics.OpenGL;
 
-    public class ShaderCommand : TracePropertyCommand<string[]>
+    internal class ShaderCommand : TracePropertyCommand<string[]>
     {
-        public ShaderCommand(int index, ShaderType shaderType, string[] value)
+        internal ShaderCommand(int index, ShaderType shaderType, string[] value)
             : base(index, GetShaderName(shaderType), value,
                   t => t.GetScript(shaderType),
                   (t, v) => t.SetScript(shaderType, value))
@@ -31,39 +31,39 @@
         }
     }
 
-    public class ComputeShaderCommand : ShaderCommand
+    internal class ComputeShaderCommand : ShaderCommand
     {
-        public ComputeShaderCommand(int index, string[] value)
+        internal ComputeShaderCommand(int index, string[] value)
             : base(index, ShaderType.ComputeShader, value) { }
     }
 
-    public class FragmentShaderCommand : ShaderCommand
+    internal class FragmentShaderCommand : ShaderCommand
     {
-        public FragmentShaderCommand(int index, string[] value)
+        internal FragmentShaderCommand(int index, string[] value)
             : base(index, ShaderType.FragmentShader, value) { }
     }
 
-    public class GeometryShaderCommand : ShaderCommand
+    internal class GeometryShaderCommand : ShaderCommand
     {
-        public GeometryShaderCommand(int index, string[] value)
+        internal GeometryShaderCommand(int index, string[] value)
             : base(index, ShaderType.GeometryShader, value) { }
     }
 
-    public class TessControlShaderCommand : ShaderCommand
+    internal class TessControlShaderCommand : ShaderCommand
     {
-        public TessControlShaderCommand(int index, string[] value)
+        internal TessControlShaderCommand(int index, string[] value)
             : base(index, ShaderType.TessControlShader, value) { }
     }
 
-    public class TessEvaluationShaderCommand : ShaderCommand
+    internal class TessEvaluationShaderCommand : ShaderCommand
     {
-        public TessEvaluationShaderCommand(int index, string[] value)
+        internal TessEvaluationShaderCommand(int index, string[] value)
             : base(index, ShaderType.TessEvaluationShader, value) { }
     }
 
-    public class VertexShaderCommand : ShaderCommand
+    internal class VertexShaderCommand : ShaderCommand
     {
-        public VertexShaderCommand(int index, string[] value)
+        internal VertexShaderCommand(int index, string[] value)
             : base(index, ShaderType.VertexShader, value)
         { }
     }

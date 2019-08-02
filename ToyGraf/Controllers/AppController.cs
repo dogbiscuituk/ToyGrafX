@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Windows.Forms;
+    using ToyGraf.Models.Enums;
     using ToyGraf.Models.Structs;
     using ToyGraf.Properties;
     using ToyGraf.Views;
@@ -27,11 +28,7 @@
             return sceneController;
         }
 
-        internal static void Close()
-        {
-            CollectionController.Cleanup();
-            Application.Exit();
-        }
+        internal static void Close() => Application.Exit();
 
         internal static string GetDefaultFolder(FilterIndex filterIndex)
         {

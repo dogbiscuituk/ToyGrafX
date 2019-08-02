@@ -78,7 +78,7 @@
     <Compile Include="Controllers\PropertyGridController.cs" />
     <Compile Include="Controllers\SdiController.cs" />
     <Compile Include="Controllers\TraceTableController.cs" />
-    <Compile Include="FilterIndex.cs" />
+    <Compile Include="Models\Enums\FilterIndex.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\Interfaces.cs" />
     <Compile Include="Models\Scene.cs" />
@@ -90,12 +90,6 @@
     </Compile>
     <Compile Include="Views\AboutDialog.Designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CameraForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\CameraForm.Designer.cs">
-      <DependentUpon>CameraForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\SceneController.cs" />
     <Compile Include="Views\HostForm.cs">
@@ -121,9 +115,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Views\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\CameraForm.resx">
-      <DependentUpon>CameraForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\HostForm.resx">
       <DependentUpon>HostForm.cs</DependentUpon>

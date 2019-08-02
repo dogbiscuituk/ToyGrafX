@@ -5,6 +5,7 @@
     using System.IO;
     using System.Windows.Forms;
     using ToyGraf.Models;
+    using ToyGraf.Models.Enums;
 
     /// <summary>
     /// "Single Document Interface" Controller.

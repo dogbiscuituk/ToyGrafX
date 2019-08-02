@@ -2,7 +2,7 @@
 {
     using ToyGraf.Models;
 
-    public interface ICommand
+    internal interface ICommand
     {
         int Index { get; }
         string PropertyName { get; }
@@ -14,34 +14,34 @@
         bool Run(Scene scene);
     }
 
-    public interface IPropertyCommand : ICommand { }
+    internal interface IPropertyCommand : ICommand { }
 
-    public interface IScenePropertyCommand : IPropertyCommand
+    internal interface IScenePropertyCommand : IPropertyCommand
     {
         void RunOn(Scene scene);
     }
 
-    public interface ITracePropertyCommand : IPropertyCommand
+    internal interface ITracePropertyCommand : IPropertyCommand
     {
         void RunOn(Trace trace);
     }
 
-    public interface ICollectionCommand : ICommand
+    internal interface ICollectionCommand : ICommand
     {
         bool Adding { get; set; }
     }
 
-    public interface ITracesCommand : ICollectionCommand
+    internal interface ITracesCommand : ICollectionCommand
     {
         Trace Value { get; set; }
     }
 
-    public interface ICommandProcessor
+    internal interface ICommandProcessor
     {
         void Run(ICommand command);
     }
 
-    public interface ISceneController
+    internal interface ISceneController
     {
         ICommandProcessor CommandProcessor { get; }
     }

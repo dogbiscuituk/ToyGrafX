@@ -4,22 +4,21 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Drawing;
     using System.Windows.Forms;
     using ToyGraf.Commands;
-    using ToyGraf.Controls;
     using ToyGraf.Engine.Controllers;
     using ToyGraf.Engine.Entities;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
+    using ToyGraf.Models.Enums;
     using ToyGraf.Properties;
     using ToyGraf.Views;
 
-    public class SceneController
+    internal class SceneController
     {
         #region Internal Interface
 
-        public SceneController()
+        internal SceneController()
         {
             SceneForm = new SceneForm();
             Scene = new Scene(this);
@@ -255,7 +254,7 @@
 
         #endregion
 
-        #region Private Methods
+        #region Non-Public Methods
 
         private void EditOptions() => new OptionsController(this).ShowModal(SceneForm);
 
@@ -339,7 +338,7 @@
         private bool SaveFile() => JsonController.Save();
         private bool SaveFileAs() => JsonController.SaveAs();
         private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();
-        private void ShowOpenGLShadingLanguageBook() => OpenGLShadingLanguageUrl.Launch();
+        internal void ShowOpenGLShadingLanguageBook() => OpenGLShadingLanguageUrl.Launch();
 
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
 

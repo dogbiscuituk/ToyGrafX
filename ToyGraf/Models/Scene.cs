@@ -13,15 +13,15 @@
     {
         #region Public Interface
 
-        public Scene(SceneController sceneController)
+        internal Scene(SceneController sceneController)
         {
             SceneController = sceneController;
             RestoreDefaults();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        internal event PropertyChangedEventHandler PropertyChanged;
 
-        public void Clear() { }
+        internal void Clear() { }
 
         #endregion
 

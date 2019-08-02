@@ -5,14 +5,14 @@
 
     #region Abstract Base Command
 
-    public abstract class Command<TValue> : ICommand
+    internal abstract class Command<TValue> : ICommand
     {
         protected Command(int index = 0) { Index = index; }
 
         public int Index { get; private set; }
         public abstract string RedoAction { get; }
         public abstract string UndoAction { get; }
-        public TValue Value { get; set; }
+        internal TValue Value { get; set; }
 
         /// <summary>
         /// Invoke the Run method of the command, then immediately invert
@@ -36,7 +36,7 @@
         public virtual void Invert() { }
         public abstract bool Run(Scene scene);
 
-        public string PropertyName { get; protected set; }
+        public string PropertyName { get; set; }
         protected abstract string Target { get; }
     }
 
@@ -44,7 +44,7 @@
 
     #region Abstract Property Commands
 
-    public abstract class PropertyCommand<TItem, TValue> : Command<TValue>, IPropertyCommand
+    internal abstract class PropertyCommand<TItem, TValue> : Command<TValue>, IPropertyCommand
     {
         protected PropertyCommand(int index, string propertyName,
             TValue value, Func<TItem, TValue> get, Action<TItem, TValue> set)
@@ -82,7 +82,7 @@
         protected void SetValue(Scene scene, TValue value) => Set(GetItem(scene), value);
     }
 
-    public abstract class ScenePropertyCommand<TValue> : PropertyCommand<Scene, TValue>, IScenePropertyCommand
+    internal abstract class ScenePropertyCommand<TValue> : PropertyCommand<Scene, TValue>, IScenePropertyCommand
     {
         protected ScenePropertyCommand(string propertyName,
             TValue value, Func<Scene, TValue> get, Action<Scene, TValue> set)
@@ -94,7 +94,7 @@
         protected override Scene GetItem(Scene scene) => scene;
     }
 
-    public abstract class TracePropertyCommand<TValue> : PropertyCommand<Trace, TValue>, ITracePropertyCommand
+    internal abstract class TracePropertyCommand<TValue> : PropertyCommand<Trace, TValue>, ITracePropertyCommand
     {
         protected TracePropertyCommand(int index, string propertyName,
             TValue value, Func<Trace, TValue> get, Action<Trace, TValue> set)
@@ -120,7 +120,7 @@
     /// the other, prior to the command processor moving them between the Undo and
     /// Redo stacks.
     /// </summary>
-    public abstract class CollectionCommand<TItem> : Command<TItem>, ICollectionCommand
+    internal abstract class CollectionCommand<TItem> : Command<TItem>, ICollectionCommand
     {
         internal CollectionCommand(int index, bool add) : base(index) { Adding = add; }
 
@@ -159,7 +159,7 @@
         private string GetAction(bool undo) => $"{PropertyName} {(Adding ^ undo ? "addition" : "removal")}";
     }
 
-    public class TracesCommand : CollectionCommand<Trace>, ITracesCommand
+    internal class TracesCommand : CollectionCommand<Trace>
     {
         internal TracesCommand(int index, bool add) : base(index, add) { PropertyName = "trace"; }
 

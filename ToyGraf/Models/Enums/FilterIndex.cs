@@ -1,4 +1,4 @@
-﻿namespace ToyGraf
+﻿namespace ToyGraf.Models.Enums
 {
     public enum FilterIndex
     {
