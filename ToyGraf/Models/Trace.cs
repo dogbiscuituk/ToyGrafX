@@ -10,11 +10,12 @@
     using ToyGraf.Engine.Utility;
     using ToyGraf.Shaders;
 
+    [DefaultProperty("VertexShader")]
     public class Trace : ITrace, IEntity
     {
         #region Public Interface
 
-        public Trace() { }
+        public Trace() => RestoreDefaults();
 
         public Trace(Scene scene) : this() => Init(scene);
 
@@ -86,26 +87,32 @@
         #region Domain & Range
 
         [Category("Domain && Range")]
+        [DefaultValue(+1.0)]
         [JsonIgnore]
         public double Xmax { get => _Xmax; set => Run(new TraceXmaxCommand(Index, value)); }
 
         [Category("Domain && Range")]
+        [DefaultValue(-1.0)]
         [JsonIgnore]
         public double Xmin { get => _Xmin; set => Run(new TraceXminCommand(Index, value)); }
 
         [Category("Domain && Range")]
+        [DefaultValue(+1.0)]
         [JsonIgnore]
         public double Ymax { get => _Ymax; set => Run(new TraceYmaxCommand(Index, value)); }
 
         [Category("Domain && Range")]
+        [DefaultValue(-1.0)]
         [JsonIgnore]
         public double Ymin { get => _Ymin; set => Run(new TraceYminCommand(Index, value)); }
 
         [Category("Domain && Range")]
+        [DefaultValue(+1.0)]
         [JsonIgnore]
         public double Zmax { get => _Zmax; set => Run(new TraceZmaxCommand(Index, value)); }
 
         [Category("Domain && Range")]
+        [DefaultValue(-1.0)]
         [JsonIgnore]
         public double Zmin { get => _Zmin; set => Run(new TraceZminCommand(Index, value)); }
 
@@ -125,6 +132,7 @@
         }
 
         [Category("Placement")]
+        [DefaultValue(0f)]
         [Description("The X component of the trace location in world co-ordinates.")]
         [DisplayName("Location X")]
         [JsonIgnore]
@@ -135,6 +143,7 @@
         }
 
         [Category("Placement")]
+        [DefaultValue(0f)]
         [Description("The Y component of the trace location in world co-ordinates.")]
         [DisplayName("Location Y")]
         [JsonIgnore]
@@ -145,6 +154,7 @@
         }
 
         [Category("Placement")]
+        [DefaultValue(0f)]
         [Description("The Z component of the trace location in world co-ordinates.")]
         [DisplayName("Location Z")]
         [JsonIgnore]
@@ -166,6 +176,7 @@
         }
 
         [Category("Placement")]
+        [DefaultValue(0f)]
         [Description("The X component of the trace rotation in world co-ordinates (in degrees).")]
         [DisplayName("Rotation X°")]
         [JsonIgnore]
@@ -176,6 +187,7 @@
         }
 
         [Category("Placement")]
+        [DefaultValue(0f)]
         [Description("The Y component of the trace rotation in world co-ordinates (in degrees).")]
         [DisplayName("Rotation Y°")]
         [JsonIgnore]
@@ -186,6 +198,7 @@
         }
 
         [Category("Placement")]
+        [DefaultValue(0f)]
         [Description("The Z component of the trace rotation in world co-ordinates (in degrees).")]
         [DisplayName("Rotation Z°")]
         [JsonIgnore]
@@ -196,6 +209,7 @@
         }
 
         [Category("Placement")]
+        [DefaultValue(1f)]
         [Description("The relative size of the trace.")]
         [DisplayName("Scale")]
         [JsonIgnore]
@@ -210,12 +224,13 @@
         #region Shaders
 
         [Category("Shaders")]
+        [DefaultValue(null)]
         [Description(@"The vertex processor is a programmable unit that operates on incoming vertices and their associated data. Compilation units written in the OpenGL Shading Language to run on this processor are called vertex shaders.
 When a set of vertex shaders are successfully compiled and linked, they result in a vertex shader executable that runs on the vertex processor.
 The vertex processor operates on one vertex at a time. It does not replace graphics operations that require knowledge of several vertices at a time.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("1. Vertex Shader")]
+        [DisplayName("1. Vertex Shader (mandatory)")]
         [JsonIgnore]
         public string[] VertexShader
         {
@@ -224,6 +239,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         }
 
         [Category("Shaders")]
+        [DefaultValue(null)]
         [Description(@"The tessellation control processor is a programmable unit that operates on a patch of incoming vertices and their associated data, emitting a new output patch. Compilation units written in the OpenGL Shading Language to run on this processor are called tessellation control shaders.
 When a set of tessellation control shaders are successfully compiled and linked, they result in a tessellation control shader executable that runs on the tessellation control processor.
 The tessellation control shader is invoked for each vertex of the output patch. Each invocation can read the attributes of any vertex in the input or output patches, but can only write per-vertex attributes for the corresponding output patch vertex.
@@ -241,6 +257,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         }
 
         [Category("Shaders")]
+        [DefaultValue(null)]
         [Description(@"The tessellation evaluation processor is a programmable unit that evaluates the position and other attributes of a vertex generated by the tessellation primitive generator, using a patch of incoming vertices and their associated data.
 Compilation units written in the OpenGL Shading Language to run on this processor are called tessellation evaluation shaders.
 When a set of tessellation evaluation shaders are successfully compiled and linked, they result in a tessellation evaluation shader executable that runs on the tessellation evaluation processor.
@@ -257,6 +274,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         }
 
         [Category("Shaders")]
+        [DefaultValue(null)]
         [Description(@"The geometry processor is a programmable unit that operates on data for incoming vertices for a primitive assembled after vertex processing and outputs a sequence of vertices forming output primitives.
 Compilation units written in the OpenGL Shading Language to run on this processor are called geometry shaders.
 When a set of geometry shaders are successfully compiled and linked, they result in a geometry shader executable that runs on the geometry processor.
@@ -273,13 +291,14 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         }
 
         [Category("Shaders")]
+        [DefaultValue(null)]
         [Description(@"The fragment processor is a programmable unit that operates on fragment values and their associated data. Compilation units written in the OpenGL Shading Language to run on this processor are called fragment shaders.
 When a set of fragment shaders are successfully compiled and linked, they result in a fragment shader executable that runs on the fragment processor.
 A fragment shader cannot change a fragment's (x, y) position. Access to neighboring fragments is not allowed.
 The values computed by the fragment shader are ultimately used to update framebuffer memory or texture memory, depending on the current OpenGL state and the OpenGL command that caused the fragments to be generated.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("5. Fragment Shader")]
+        [DisplayName("5. Fragment Shader (mandatory)")]
         [JsonIgnore]
         public string[] FragmentShader
         {
@@ -288,6 +307,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         }
 
         [Category("Shaders")]
+        [DefaultValue(null)]
         [Description(@"The compute processor is a programmable unit that operates independently from the other shader processors. Compilation units written in the OpenGL Shading Language to run on this processor are called compute shaders.
 When a set of compute shaders are successfully compiled and linked, they result in a compute shader executable that runs on the compute processor.
 A compute shader has access to many of the same resources as fragment and other shader processors, including textures, buffers, image variables, and atomic counters. It does not have any predefined inputs nor any fixed-function outputs.
@@ -305,6 +325,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         }
 
         [Category("Shaders")]
+        [DefaultValue(null)]
         [Description("The status of the most recent shader compilation action. An empty value indicates successful compilation.")]
         [DisplayName("Shader Status")]
         [JsonIgnore]
@@ -319,18 +340,21 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         #region Terrain
 
         [Category("Terrain")]
+        [DefaultValue(0)]
         [Description("The number of discrete strips into which the trace is divided in the X direction.")]
         [DisplayName("Strip Count X")]
         [JsonIgnore]
         public int StripCountX { get => _StripCountX; set => Run(new TerrainStripCountXCommand(Index, value)); }
 
         [Category("Terrain")]
+        [DefaultValue(0)]
         [Description("The number of discrete strips into which the trace is divided in the Y direction.")]
         [DisplayName("Strip Count Y")]
         [JsonIgnore]
         public int StripCountY { get => _StripCountY; set => Run(new TerrainStripCountYCommand(Index, value)); }
 
         [Category("Terrain")]
+        [DefaultValue(0)]
         [Description("The number of discrete strips into which the trace is divided in the Z direction.")]
         [DisplayName("Strip Count Z")]
         [JsonIgnore]
@@ -341,6 +365,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         #region Trace
 
         [Category("Trace")]
+        [DefaultValue(true)]
         [Description("Take a wild guess.")]
         [JsonIgnore]
         public bool Visible { get => _Visible; set => Run(new TraceVisibleCommand(Index, value)); }
@@ -364,13 +389,13 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         // Placement
         [JsonProperty]
         internal float
-            _LocationX = 0,
-            _LocationY = 0,
-            _LocationZ = 0,
-            _RotationX = 0,
-            _RotationY = 0,
-            _RotationZ = 0,
-            _Scale = 1;
+            _LocationX,
+            _LocationY,
+            _LocationZ,
+            _RotationX,
+            _RotationY,
+            _RotationZ,
+            _Scale;
 
         // Shaders
         [JsonProperty]
@@ -415,6 +440,48 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         {
             Scene = scene;
             Shader = new TraceShader(this);
+        }
+
+        private void RestoreDefaults()
+        {
+            // Trace Domain & Range
+
+            _Xmin = Defaults.Xmin;
+            _Xmax = Defaults.Xmax;
+            _Ymin = Defaults.Ymin;
+            _Ymax = Defaults.Ymax;
+            _Zmin = Defaults.Zmin;
+            _Zmax = Defaults.Zmax;
+
+            // Trace Placement
+
+            _LocationX = Defaults.LocationX;
+            _LocationY = Defaults.LocationY;
+            _LocationZ = Defaults.LocationZ;
+            _RotationX = Defaults.RotationX;
+            _RotationY = Defaults.RotationY;
+            _RotationZ = Defaults.RotationZ;
+            _Scale = Defaults.Scale;
+
+            // Trace Shaders
+
+            VertexShader = Defaults.VertexShader;
+            TessControlShader = Defaults.TessControlShader;
+            TessEvaluationShader = Defaults.TessEvaluationShader;
+            GeometryShader = Defaults.GeometryShader;
+            FragmentShader = Defaults.FragmentShader;
+            ComputeShader = Defaults.ComputeShader;
+            ShaderStatus = Defaults.ShaderStatus;
+
+            // Trace Terrain
+
+            StripCountX = Defaults.StripCountX;
+            StripCountY = Defaults.StripCountY;
+            StripCountZ = Defaults.StripCountZ;
+
+            // Trace Miscellaneous
+
+            Visible = Defaults.Visible;
         }
 
         private void Run(ITracePropertyCommand command)

@@ -78,6 +78,7 @@
     <Compile Include="Controllers\PropertyGridController.cs" />
     <Compile Include="Controllers\SdiController.cs" />
     <Compile Include="Controllers\TraceTableController.cs" />
+    <Compile Include="Models\Defaults.cs" />
     <Compile Include="Models\Enums\FilterIndex.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\Interfaces.cs" />

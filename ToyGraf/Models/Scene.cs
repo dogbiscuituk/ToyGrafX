@@ -9,6 +9,7 @@
     using ToyGraf.Controllers;
     using ToyGraf.Controls;
 
+    [DefaultProperty("Traces")]
     public class Scene
     {
         #region Public Interface
@@ -28,12 +29,14 @@
         #region Public Editable Properties
 
         [Category("Scene")]
+        [DefaultValue(60.0)]
         [Description("Frames per second: a cap on this scene's rendering frequency.")]
         [DisplayName("FPS")]
         [JsonIgnore]
         public double FPS { get => _FPS; set => Run(new SceneFpsCommand(value)); }
 
         [Category("Scene")]
+        [DefaultValue("")]
         [Description("A title for this scene.")]
         [DisplayName("Title")]
         [JsonIgnore]
@@ -51,54 +54,63 @@
         }
 
         [Category("Camera")]
+        [DefaultValue(0f)]
         [Description("The X component of the camera location.")]
         [DisplayName("Camera (X)")]
         [JsonIgnore]
         public float CameraX { get => _CameraX; set => Run(new CameraXCommand(value)); }
 
         [Category("Camera")]
+        [DefaultValue(0f)]
         [Description("The Y component of the camera location.")]
         [DisplayName("Camera (Y)")]
         [JsonIgnore]
         public float CameraY { get => _CameraY; set => Run(new CameraYCommand(value)); }
 
         [Category("Camera")]
+        [DefaultValue(0f)]
         [Description("The Z component of the camera location.")]
         [DisplayName("Camera (Z)")]
         [JsonIgnore]
         public float CameraZ { get => _CameraZ; set => Run(new CameraZCommand(value)); }
 
         [Category("Camera")]
+        [DefaultValue(0f)]
         [Description("The pitch component of the camera rotation (in degrees).")]
         [DisplayName("Camera Pitch°")]
         [JsonIgnore]
         public float CameraPitch { get => _CameraPitch; set => Run(new CameraPitchCommand(value)); }
 
         [Category("Camera")]
+        [DefaultValue(0f)]
         [Description("The roll component of the camera rotation (in degrees).")]
         [DisplayName("Camera Roll°")]
         [JsonIgnore]
         public float CameraRoll { get => _CameraRoll; set => Run(new CameraRollCommand(value)); }
 
         [Category("Camera")]
+        [DefaultValue(0f)]
         [Description("The yaw component of the camera rotation (in degrees).")]
         [DisplayName("Camera Yaw°")]
         [JsonIgnore]
         public float CameraYaw { get => _CameraYaw; set => Run(new CameraYawCommand(value)); }
 
         [Category("Perspective")]
+        [DefaultValue(75f)]
         [Description("The frustrum field of view (Y component, in degrees).")]
         [DisplayName("Field of View Y°")]
         [JsonIgnore]
         public float FrustrumFieldOfView { get => _FrustrumFieldOfView; set => Run(new FrustrumFieldOfViewCommand(value)); }
 
         [Category("Perspective")]
+        [DefaultValue(0f)]
         [Description("The distance from the camera position to the near plane of the frustrum.")]
         [DisplayName("Near Plane")]
         [JsonIgnore]
         public float FrustrumNearPlane { get => _FrustrumNearPlane; set => Run(new FrustrumNearPlaneCommand(value)); }
 
         [Category("Perspective")]
+        [DefaultValue(1000f)]
         [Description("The distance from the camera position to the far plane of the frustrum.")]
         [DisplayName("Far Plane")]
         [JsonIgnore]
@@ -191,6 +203,25 @@
 
         private void RestoreDefaults()
         {
+            // Scene Camera & Perspective
+
+            CameraX = Defaults.CameraX;
+            CameraY = Defaults.CameraY;
+            CameraZ = Defaults.CameraZ;
+            CameraPitch = Defaults.CameraPitch;
+            CameraRoll = Defaults.CameraRoll;
+            CameraYaw = Defaults.CameraYaw;
+            FrustrumFieldOfView = Defaults.FrustrumFieldOfView;
+            FrustrumNearPlane = Defaults.FrustrumNearPlane;
+            FrustrumFarPlane = Defaults.FrustrumFarPlane;
+
+            // Scene FPS
+
+            _FPS = Defaults.FPS;
+
+            // Scene Title
+
+            _Title = Defaults.SceneTitle;
         }
 
         private void Run(IScenePropertyCommand command)
