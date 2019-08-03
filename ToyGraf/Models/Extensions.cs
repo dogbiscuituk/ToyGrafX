@@ -1,4 +1,6 @@
-﻿namespace ToyGraf.Models
+﻿using ToyGraf.Models.Enums;
+
+namespace ToyGraf.Models
 {
     public static class Extensions
     {
@@ -36,5 +38,8 @@
             // Trace
             target._Visible = source._Visible;
         }
+
+        public static YN BoolToYN(this bool value) => value ? YN.Yes : YN.No;
+        public static bool BoolFromYN(this YN yn) => yn == YN.Yes;
     }
 }

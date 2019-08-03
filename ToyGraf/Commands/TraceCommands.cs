@@ -1,10 +1,10 @@
 ﻿namespace ToyGraf.Commands
 {
-    using ToyGraf.Models;
+    using ToyGraf.Models.Enums;
 
-    internal class TraceVisibleCommand : TracePropertyCommand<bool>
+    internal class TraceVisibleCommand : TracePropertyCommand<YN>
     {
-        internal TraceVisibleCommand(int index, bool value) : base(index, "Visible",
+        internal TraceVisibleCommand(int index, YN value) : base(index, "Visible",
             value, t => t._Visible, (t, v) => t._Visible = v)
         { }
     }

@@ -15,15 +15,12 @@
     {
         #region Public Interface
 
-        public static void Cleanup()
+        public static void Start() => AttachEventHandlers();
+
+        public static void Stop()
         {
             DetachEventHandlers();
             SceneController = null;
-        }
-
-        public static void Init()
-        {
-            AttachEventHandlers();
         }
 
         #endregion
@@ -48,7 +45,6 @@
             if (e.DialogResult == DialogResult.OK && e.Value is List<Trace> editedTraces)
                 Traces = editedTraces;
             // Scene.AttachTraces();
-            Cleanup();
         }
 
         private static void TgCollectionEditor_CollectionFormLoad(object sender, EventArgs e)
@@ -64,20 +60,13 @@
                         .FirstOrDefault(p => p.SceneForm == sceneForm);
                 }
             }
-        }
-
-        private static void TgCollectionEditor_CollectionFormShown(object sender, EventArgs e)
-        {
-            if (sender is Form form)
-            {
-                var propertyGrid = form.Controls.Find("propertyBrowser", true)?[0] as PropertyGrid;
-                PropertyGridController.HidePropertyPagesButton(propertyGrid);
-                propertyGrid.HelpVisible = true;
-            }
+            var propertyGrid = FindPropertyGrid(sender);
+            PropertyGridController.HidePropertyPagesButton(propertyGrid);
+            propertyGrid.HelpVisible = true;
         }
 
         private static void TgCollectionEditor_CollectionFormHelpButtonClicked(object sender, CancelEventArgs e) =>
-            SceneController.ShowOpenGLShadingLanguageBook();
+            SceneController.ShowOpenGLSLBook(FindPropertyGrid(sender));
 
         private static void TgFileNameEditor_InitDialog(object sender, InitDialogEventArgs e) =>
             SceneController.InitTextureDialog(e.OpenFileDialog);
@@ -91,7 +80,6 @@
             TgCollectionEditor.CollectionEdited += TgCollectionEditor_CollectionEdited;
             TgCollectionEditor.CollectionFormHelpButtonClicked += TgCollectionEditor_CollectionFormHelpButtonClicked;
             TgCollectionEditor.CollectionFormLoad += TgCollectionEditor_CollectionFormLoad;
-            TgCollectionEditor.CollectionFormShown += TgCollectionEditor_CollectionFormShown;
             TgFileNameEditor.InitDialog += TgFileNameEditor_InitDialog;
         }
 
@@ -100,9 +88,11 @@
             TgCollectionEditor.CollectionEdited -= TgCollectionEditor_CollectionEdited;
             TgCollectionEditor.CollectionFormHelpButtonClicked -= TgCollectionEditor_CollectionFormHelpButtonClicked;
             TgCollectionEditor.CollectionFormLoad -= TgCollectionEditor_CollectionFormLoad;
-            TgCollectionEditor.CollectionFormShown -= TgCollectionEditor_CollectionFormShown;
             TgFileNameEditor.InitDialog -= TgFileNameEditor_InitDialog;
         }
+
+        private static PropertyGrid FindPropertyGrid(object sender) =>
+            ((Form)sender).Controls.Find("propertyBrowser", true)?[0] as PropertyGrid;
 
         #endregion
     }

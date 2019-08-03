@@ -1,4 +1,6 @@
-﻿namespace ToyGraf.Models
+﻿using ToyGraf.Models.Enums;
+
+namespace ToyGraf.Models
 {
     internal class Defaults
     {
@@ -66,7 +68,7 @@
 
         // Trace Miscellaneous
 
-        internal const bool
-            Visible = true;
+        internal const YN
+            Visible = YN.Yes;
     }
 }

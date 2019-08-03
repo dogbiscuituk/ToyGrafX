@@ -8,6 +8,7 @@
     using ToyGraf.Commands;
     using ToyGraf.Engine.Entities;
     using ToyGraf.Engine.Utility;
+    using ToyGraf.Models.Enums;
     using ToyGraf.Shaders;
 
     [DefaultProperty("VertexShader")]
@@ -365,10 +366,11 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         #region Trace
 
         [Category("Trace")]
-        [DefaultValue(true)]
+        [DefaultValue(typeof(YN), "Yes")]
         [Description("Take a wild guess.")]
+        [DisplayName("Visible?")]
         [JsonIgnore]
-        public bool Visible { get => _Visible; set => Run(new TraceVisibleCommand(Index, value)); }
+        public YN Visible { get => _Visible; set => Run(new TraceVisibleCommand(Index, value)); }
 
         #endregion
 
@@ -417,7 +419,8 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         // Trace
         [JsonProperty]
-        internal bool _Visible;
+        internal YN
+            _Visible;
 
         #endregion
 

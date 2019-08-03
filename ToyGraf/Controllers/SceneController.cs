@@ -86,16 +86,6 @@
             PropertyGridController.Refresh();
         }
 
-        private string[] GetShaderScript(ShaderType shaderType)
-        {
-            switch (shaderType)
-            {
-                case ShaderType.ComputeShader:
-                    return null;
-            }
-            return null;
-        }
-
         internal SceneForm SceneForm
         {
             get => _SceneForm;
@@ -230,7 +220,9 @@
         private void CameraRotateClockwise_Click(object sender, EventArgs e) => MoveCamera(CameraMove.RollRight);
         private void CameraHome_Click(object sender, EventArgs e) => MoveCamera(CameraMove.Home);
 
-        private void HelpTheOpenGLShadingLanguage_Click(object sender, EventArgs e) => ShowOpenGLShadingLanguageBook();
+        private void HelpTheOpenGLShadingLanguage_Click(object sender, EventArgs e) =>
+            ShowOpenGLSLBook(SceneForm.PropertyGrid);
+
         private void HelpAbout_Click(object sender, System.EventArgs e) => new AboutController().ShowDialog(SceneForm);
 
         private void JsonController_FileLoaded(object sender, EventArgs e) => FileLoaded();
@@ -279,6 +271,27 @@
             if (!cancel)
                 Cleanup();
             return !cancel;
+        }
+
+        private static string GetBookmark(PropertyGrid propertyGrid)
+        {
+            switch (propertyGrid.SelectedGridItem?.PropertyDescriptor.Name)
+            {
+                case "VertexShader":
+                    return "#vertex-processor";
+                case "TessControlShader":
+                    return "#tessellation-control-processor";
+                case "TessEvaluationShader":
+                    return "#tessellation-evaluation-processor";
+                case "GeometryShader":
+                    return "#geometry-processor";
+                case "FragmentShader":
+                    return "#fragment-processor";
+                case "ComputeShader":
+                    return "#compute-processor";
+                default:
+                    return string.Empty;
+            }
         }
 
         private SceneController GetNewSceneController()
@@ -338,7 +351,9 @@
         private bool SaveFile() => JsonController.Save();
         private bool SaveFileAs() => JsonController.SaveAs();
         private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();
-        internal void ShowOpenGLShadingLanguageBook() => OpenGLShadingLanguageUrl.Launch();
+
+        internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
+            $"{OpenGLShadingLanguageUrl}{GetBookmark(propertyGrid)}".Launch();
 
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
 

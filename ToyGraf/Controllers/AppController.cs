@@ -13,7 +13,7 @@
     {
         static AppController()
         {
-            CollectionController.Init();
+            CollectionController.Start();
             Timer = new Timer { Interval = 5000, Enabled = true };
             Timer.Tick += Timer_Tick;
             ApplyOptions();
@@ -28,7 +28,11 @@
             return sceneController;
         }
 
-        internal static void Close() => Application.Exit();
+        internal static void Close()
+        {
+            CollectionController.Stop();
+            Application.Exit();
+        }
 
         internal static string GetDefaultFolder(FilterIndex filterIndex)
         {

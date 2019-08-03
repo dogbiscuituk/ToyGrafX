@@ -1,5 +1,7 @@
 ﻿namespace ToyGraf.Models
 {
+    using ToyGraf.Models.Enums;
+
     public interface ITrace
     {
         string[] ComputeShader { get; set; }
@@ -9,7 +11,7 @@
         string[] TessControlShader { get; set; }
         string[] TessEvaluationShader { get; set; }
         string[] VertexShader { get; set; }
-        bool Visible { get; set; }
+        YN Visible { get; set; }
         double Xmax { get; set; }
         double Xmin { get; set; }
         double Ymax { get; set; }
