@@ -2,7 +2,7 @@
 {
     public static class Grids
     {
-        #region GetVertexCoords() / GetVertices() in 1, 2 or 3 dimensions.
+        #region GetVertexCoords#D
 
         /// <summary>
         /// Get the coordinates of all points equally spaced along the X axis, where -1 <= X <= +1.
@@ -95,7 +95,7 @@
 
         #endregion
 
-        #region Get[PrimitiveType]Indices in 2 or 3 dimensions.
+        #region Get[PrimitiveType]Indices
 
         /// <summary>
         /// Get the order of vertices required to draw triangles covering the grid.
