@@ -150,7 +150,7 @@
         protected override IEnumerable<IEntity> GetEntities()
         {
             uint cx = 1000, cy = 1000;
-            var vertices = Grids.GetVertexCoords(cx, cy).ToArray();
+            var vertices = Grids.GetCoordinates(cx, cy).ToArray();
             var indices = Grids.GetTriangleIndicesXY(cx, cy).ToArray();
 
             var prototype = new Prototype(vertices, indices);

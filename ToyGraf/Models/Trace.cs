@@ -576,7 +576,7 @@ void main()
         private Prototype GetPrototype()
         {
             uint xc = StripCountX, yc = StripCountY;
-            var vertices = Grids.GetVertexCoords(xc, yc, 0);
+            var vertices = Grids.GetCoordinates(xc, yc, 0);
             var indices = Grids.GetTriangleIndicesXY(xc, yc);
 
             return new Prototype(vertices, indices);

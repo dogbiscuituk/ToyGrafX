@@ -17,7 +17,7 @@
         /// <returns>
         /// 3(cx+1)(cy+1)(cz+1) floats, being the xyz coordinates of the points in the lattice.
         /// </returns>
-        public static float[] GetVertexCoords(uint cx, uint cy = 0, uint cz = 0)
+        public static float[] GetCoordinates(uint cx = 0, uint cy = 0, uint cz = 0)
         {
             var result = new float[3 * (cx + 1) * (cy + 1) * (cz + 1)];
             var p = 0;

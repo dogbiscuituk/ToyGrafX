@@ -18,11 +18,6 @@
             Timer.Tick += Timer_Tick;
             ApplyOptions();
             AddNewSceneController();
-
-            //var foo = Engine.Utility.Grids.GetVertexCoords(10);
-            //var bar = Engine.Utility.Grids.GetVertexCoords(10, 0);
-            //var baz = Engine.Utility.Grids.GetVertexCoords(10, 0, 0);
-
         }
 
         internal static SceneController AddNewSceneController()
