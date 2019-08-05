@@ -5,10 +5,8 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-    using System.Linq;
     using ToyGraf.Engine.Controllers;
     using ToyGraf.Engine.Entities;
-    using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
@@ -30,6 +28,7 @@
             MakeCurrent(true);
 
             GL.ClearColor(Color.White);
+
             /*
             Shader = new StaticShader();
 
@@ -48,7 +47,7 @@
 
         protected override void Exit() { }
         protected override void SwapBuffers() => Control.SwapBuffers();
-        protected override void RenderFrame(double time) { MakeCurrent(true); base.RenderFrame(time); MakeCurrent(false); }
+        protected override void RenderFrame(double time) { MakeCurrent(true); /* base.RenderFrame(time); */ MakeCurrent(false); }
         protected override void Resize() { MakeCurrent(true); base.Resize(); MakeCurrent(false); }
         protected override void Unload() { MakeCurrent(true); base.Unload(); MakeCurrent(false); }
         protected override void UpdateFrame(double time) { MakeCurrent(true); base.UpdateFrame(time); MakeCurrent(false); }

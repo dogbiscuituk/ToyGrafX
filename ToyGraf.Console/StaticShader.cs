@@ -3,13 +3,13 @@
     using OpenTK.Graphics.OpenGL;
     using System.IO;
     using System.Text;
-    using ToyGraf.Engine.Shaders;
+    using ToyGraf.Engine;
 
     public class StaticShader : Shader
     {
         #region Public Interface
 
-        public StaticShader() : this(@"Shaders\shader.vert", @"Shaders\shader.frag") { }
+        public StaticShader() : this(@"shader.vert", @"shader.frag") { }
 
         public StaticShader(string vertexPath, string fragmentPath)
         {

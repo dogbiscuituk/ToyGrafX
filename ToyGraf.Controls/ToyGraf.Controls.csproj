@@ -48,9 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CollectionEditedEventArgs.cs" />
+    <Compile Include="Events\CollectionEditedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyGridInitEventArgs.cs" />
+    <Compile Include="Events\PropertyGridInitEventArgs.cs" />
     <Compile Include="TgCollectionEditor.cs" />
     <Compile Include="TgControls.cs" />
     <Compile Include="TgFileNameEditor.cs" />

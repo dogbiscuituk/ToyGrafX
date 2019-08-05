@@ -1,4 +1,4 @@
-﻿namespace ToyGraf.Controls
+﻿namespace ToyGraf.Controls.Events
 {
     using System;
     using System.Windows.Forms;

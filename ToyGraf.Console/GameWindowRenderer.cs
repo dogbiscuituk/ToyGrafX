@@ -10,7 +10,6 @@
     using ToyGraf.Engine;
     using ToyGraf.Engine.Controllers;
     using ToyGraf.Engine.Entities;
-    using ToyGraf.Engine.Shaders;
     using ToyGraf.Engine.Utility;
 
     public class GameWindowRenderer : Renderer
@@ -150,9 +149,9 @@
 
         protected override IEnumerable<IEntity> GetEntities()
         {
-            uint xc = 2, yc = 2;
-            var vertices = Grids.GetVertexCoords(xc, yc).ToArray();
-            var indices = Grids.GetTriangleIndices(xc, yc).ToArray();
+            uint cx = 1000, cy = 1000;
+            var vertices = Grids.GetVertexCoords(cx, cy).ToArray();
+            var indices = Grids.GetTriangleIndicesXY(cx, cy).ToArray();
 
             var prototype = new Prototype(vertices, indices);
             //Prototypes.Add(prototype);

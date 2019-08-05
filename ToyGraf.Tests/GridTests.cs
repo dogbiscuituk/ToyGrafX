@@ -9,7 +9,7 @@
         [TestMethod]
         public void TestGetTriangleIndices()
         {
-            var actual = Grids.GetTriangleIndices(8, 8);
+            var actual = Grids.GetTriangleIndicesXY(8, 8);
             var expected = new uint[]
             {
                 00, 09, 01, 01, 09, 10, 01, 10, 02, 02, 10, 11, 02, 11, 03, 03, 11, 12, 03, 12, 04, 04, 12, 13,
@@ -35,7 +35,7 @@
         [TestMethod]
         public void TestGetTriangleStripIndices()
         {
-            var actual = Grids.GetTriangleStripIndices(8, 8);
+            var actual = Grids.GetTriangleStripIndicesXY(8, 8);
             var expected = new uint[]
             {
                 00,

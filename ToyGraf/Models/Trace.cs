@@ -6,7 +6,6 @@
     using System.ComponentModel;
     using System.ComponentModel.Design;
     using System.Drawing.Design;
-    using System.Linq;
     using ToyGraf.Commands;
     using ToyGraf.Engine.Entities;
     using ToyGraf.Engine.Utility;
@@ -90,32 +89,32 @@
         #region Domain & Range
 
         [Category("Domain && Range")]
-        [DefaultValue(+1.0)]
+        [DefaultValue(+11.0)]
         [JsonIgnore]
         public double Xmax { get => _Xmax; set => Run(new TraceXmaxCommand(Index, value)); }
 
         [Category("Domain && Range")]
-        [DefaultValue(-1.0)]
+        [DefaultValue(-11.0)]
         [JsonIgnore]
         public double Xmin { get => _Xmin; set => Run(new TraceXminCommand(Index, value)); }
 
         [Category("Domain && Range")]
-        [DefaultValue(+1.0)]
+        [DefaultValue(+11.0)]
         [JsonIgnore]
         public double Ymax { get => _Ymax; set => Run(new TraceYmaxCommand(Index, value)); }
 
         [Category("Domain && Range")]
-        [DefaultValue(-1.0)]
+        [DefaultValue(-11.0)]
         [JsonIgnore]
         public double Ymin { get => _Ymin; set => Run(new TraceYminCommand(Index, value)); }
 
         [Category("Domain && Range")]
-        [DefaultValue(+1.0)]
+        [DefaultValue(+11.0)]
         [JsonIgnore]
         public double Zmax { get => _Zmax; set => Run(new TraceZmaxCommand(Index, value)); }
 
         [Category("Domain && Range")]
-        [DefaultValue(-1.0)]
+        [DefaultValue(-11.0)]
         [JsonIgnore]
         public double Zmin { get => _Zmin; set => Run(new TraceZminCommand(Index, value)); }
 
@@ -236,7 +235,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         [DisplayName("1. Vertex Shader (mandatory)")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string VertexShader
+        public string Shader1_Vertex
         {
             get => _VertexShader;
             set => Run(new VertexShaderCommand(Index, value));
@@ -255,7 +254,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         [DisplayName("2. Tessellation Control Shader")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string TessControlShader
+        public string Shader2_TessControl
         {
             get => _TessControlShader;
             set => Run(new TessControlShaderCommand(Index, value));
@@ -273,7 +272,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         [DisplayName("3. Tessellation Evaluation Shader")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string TessEvaluationShader
+        public string Shader3_TessEvaluation
         {
             get => _TessEvaluationShader;
             set => Run(new TessEvaluationShaderCommand(Index, value));
@@ -291,7 +290,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         [DisplayName("4. Geometry Shader")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string GeometryShader
+        public string Shader4_Geometry
         {
             get => _GeometryShader;
             set => Run(new GeometryShaderCommand(Index, value));
@@ -308,7 +307,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         [DisplayName("5. Fragment Shader (mandatory)")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string FragmentShader
+        public string Shader5_Fragment
         {
             get => _FragmentShader;
             set => Run(new FragmentShaderCommand(Index, value));
@@ -327,7 +326,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         [DisplayName("6. Compute Shader")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string ComputeShader
+        public string Shader6_Compute
         {
             get => _ComputeShader;
             set => Run(new ComputeShaderCommand(Index, value));
@@ -349,21 +348,21 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         #region Terrain
 
         [Category("Terrain")]
-        [DefaultValue(0)]
+        [DefaultValue(typeof(uint), "0")]
         [Description("The number of discrete strips into which the trace is divided in the X direction.")]
         [DisplayName("Strip Count X")]
         [JsonIgnore]
         public uint StripCountX { get => _StripCountX; set => Run(new TerrainStripCountXCommand(Index, value)); }
 
         [Category("Terrain")]
-        [DefaultValue(0)]
+        [DefaultValue(typeof(uint), "0")]
         [Description("The number of discrete strips into which the trace is divided in the Y direction.")]
         [DisplayName("Strip Count Y")]
         [JsonIgnore]
         public uint StripCountY { get => _StripCountY; set => Run(new TerrainStripCountYCommand(Index, value)); }
 
         [Category("Terrain")]
-        [DefaultValue(0)]
+        [DefaultValue(typeof(uint), "0")]
         [Description("The number of discrete strips into which the trace is divided in the Z direction.")]
         [DisplayName("Strip Count Z")]
         [JsonIgnore]
@@ -410,12 +409,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         // Shaders
         [JsonProperty]
         internal string
-            _VertexShader;
-
-        // Shaders
-        [JsonProperty]
-        internal string
-            //_VertexShader,
+            _VertexShader,
             _TessControlShader,
             _TessEvaluationShader,
             _GeometryShader,
@@ -582,8 +576,8 @@ void main()
         private Prototype GetPrototype()
         {
             uint xc = StripCountX, yc = StripCountY;
-            var vertices = Grids.GetVertexCoords(xc, yc);
-            var indices = Grids.GetTriangleIndices(xc, yc);
+            var vertices = Grids.GetVertexCoords(xc, yc, 0);
+            var indices = Grids.GetTriangleIndicesXY(xc, yc);
 
             return new Prototype(vertices, indices);
         }

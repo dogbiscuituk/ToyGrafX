@@ -5,8 +5,8 @@
     using OpenTK.Graphics.OpenGL;
     using System.Collections.Generic;
     using System.Drawing;
+    using ToyGraf.Engine;
     using ToyGraf.Engine.Entities;
-    using ToyGraf.Engine.Shaders;
     using ToyGraf.Engine.Utility;
 
     public abstract class Renderer

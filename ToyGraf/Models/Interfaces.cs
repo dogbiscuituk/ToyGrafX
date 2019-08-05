@@ -4,13 +4,13 @@
 
     public interface ITrace
     {
-        string ComputeShader { get; set; }
-        string FragmentShader { get; set; }
-        string GeometryShader { get; set; }
+        string Shader1_Vertex { get; set; }
+        string Shader2_TessControl { get; set; }
+        string Shader3_TessEvaluation { get; set; }
+        string Shader4_Geometry { get; set; }
+        string Shader5_Fragment { get; set; }
+        string Shader6_Compute { get; set; }
         string ShaderStatus { get; }
-        string TessControlShader { get; set; }
-        string TessEvaluationShader { get; set; }
-        string VertexShader { get; set; }
         YN Visible { get; set; }
         double Xmax { get; set; }
         double Xmin { get; set; }

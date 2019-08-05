@@ -1,4 +1,4 @@
-﻿namespace ToyGraf.Engine.Shaders
+﻿namespace ToyGraf.Engine
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;

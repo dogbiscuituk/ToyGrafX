@@ -35,12 +35,12 @@ namespace ToyGraf.Models
         // Trace Domain & Range
 
         internal const double
-            Xmin = -1,
-            Xmax = +1,
-            Ymin = -1,
-            Ymax = +1,
-            Zmin = -1,
-            Zmax = +1;
+            Xmin = -11,
+            Xmax = +11,
+            Ymin = -11,
+            Ymax = +11,
+            Zmin = -11,
+            Zmax = +11;
 
         // Trace Placement
 
@@ -66,7 +66,7 @@ namespace ToyGraf.Models
 
         // Trace Terrain
 
-        internal const int
+        internal const uint
             StripCountX = 0,
             StripCountY = 0,
             StripCountZ = 0;

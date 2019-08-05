@@ -1,13 +1,10 @@
 ﻿namespace ToyGraf.Controllers
 {
-    using OpenTK.Graphics.OpenGL;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Windows.Forms;
     using ToyGraf.Commands;
     using ToyGraf.Engine.Controllers;
-    using ToyGraf.Engine.Entities;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
     using ToyGraf.Models.Enums;

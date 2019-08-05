@@ -2,7 +2,7 @@
 {
     using OpenTK.Graphics.OpenGL;
     using ToyGraf.Controllers;
-    using ToyGraf.Engine.Shaders;
+    using ToyGraf.Engine;
     using ToyGraf.Models;
 
     public class TraceShader : Shader
