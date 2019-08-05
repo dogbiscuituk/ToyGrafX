@@ -126,7 +126,6 @@
 
         internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         internal SceneController SceneController;
-        const double DefaultFPS = 60;
 
         #region Persistent Fields
 
@@ -140,7 +139,7 @@
             _CameraYaw;
 
         [JsonProperty]
-        internal double _FPS = DefaultFPS;
+        internal double _FPS;
 
         [JsonProperty]
         internal float
@@ -149,7 +148,7 @@
             _FrustrumNearPlane;
 
         [JsonProperty]
-        internal string _Title = "(untitled)";
+        internal string _Title;
 
         [JsonProperty]
         internal List<Trace> _Traces = new List<Trace>();
@@ -205,15 +204,15 @@
         {
             // Scene Camera & Perspective
 
-            CameraX = Defaults.CameraX;
-            CameraY = Defaults.CameraY;
-            CameraZ = Defaults.CameraZ;
-            CameraPitch = Defaults.CameraPitch;
-            CameraRoll = Defaults.CameraRoll;
-            CameraYaw = Defaults.CameraYaw;
-            FrustrumFieldOfView = Defaults.FrustrumFieldOfView;
-            FrustrumNearPlane = Defaults.FrustrumNearPlane;
-            FrustrumFarPlane = Defaults.FrustrumFarPlane;
+            _CameraX = Defaults.CameraX;
+            _CameraY = Defaults.CameraY;
+            _CameraZ = Defaults.CameraZ;
+            _CameraPitch = Defaults.CameraPitch;
+            _CameraRoll = Defaults.CameraRoll;
+            _CameraYaw = Defaults.CameraYaw;
+            _FrustrumFieldOfView = Defaults.FrustrumFieldOfView;
+            _FrustrumNearPlane = Defaults.FrustrumNearPlane;
+            _FrustrumFarPlane = Defaults.FrustrumFarPlane;
 
             // Scene FPS
 
@@ -222,6 +221,10 @@
             // Scene Title
 
             _Title = Defaults.SceneTitle;
+
+            // Scene Traces
+
+            _Traces = Defaults.Traces;
         }
 
         private void Run(IScenePropertyCommand command)

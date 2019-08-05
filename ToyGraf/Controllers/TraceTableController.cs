@@ -84,13 +84,6 @@
         private void EditSelectAll_Click(object sender, EventArgs e) =>
             TraceTable.SelectAll();
 
-        private void GraphController_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            var entities = SceneController.Entities;
-            TraceTable.DataSource = entities.Any() ? entities : null;
-            ResizeRows();
-        }
-
         private void HostFormClosing(object sender, FormClosingEventArgs e) =>
             TraceTableDocked = true;
 

@@ -4,6 +4,8 @@
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
     using System.ComponentModel;
+    using System.ComponentModel.Design;
+    using System.Drawing.Design;
     using System.Linq;
     using ToyGraf.Commands;
     using ToyGraf.Engine.Entities;
@@ -27,7 +29,7 @@
             return trace;
         }
 
-        public string[] GetScript(ShaderType shaderType)
+        public string GetScript(ShaderType shaderType)
         {
             switch (shaderType)
             {
@@ -44,7 +46,7 @@
                 case ShaderType.ComputeShader:
                     return _ComputeShader;
             }
-            return new string[0];
+            return string.Empty;
         }
 
         public void MoveBy(float dx, float dy, float dz) => Location += new Vector3(dx, dy, dz);
@@ -54,7 +56,7 @@
         public void ScaleBy(float scale) => Scale *= scale;
         public void ScaleTo(float scale) => Scale = scale;
 
-        public void SetScript(ShaderType shaderType, string[] script)
+        public void SetScript(ShaderType shaderType, string script)
         {
             switch (shaderType)
             {
@@ -225,15 +227,16 @@
         #region Shaders
 
         [Category("Shaders")]
-        [DefaultValue(null)]
+        [DefaultValue("")]
         [Description(@"The vertex processor is a programmable unit that operates on incoming vertices and their associated data. Compilation units written in the OpenGL Shading Language to run on this processor are called vertex shaders.
 When a set of vertex shaders are successfully compiled and linked, they result in a vertex shader executable that runs on the vertex processor.
 The vertex processor operates on one vertex at a time. It does not replace graphics operations that require knowledge of several vertices at a time.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
         [DisplayName("1. Vertex Shader (mandatory)")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string[] VertexShader
+        public string VertexShader
         {
             get => _VertexShader;
             set => Run(new VertexShaderCommand(Index, value));
@@ -250,8 +253,9 @@ Tessellation control shaders will get undefined results if one invocation reads 
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
         [DisplayName("2. Tessellation Control Shader")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string[] TessControlShader
+        public string TessControlShader
         {
             get => _TessControlShader;
             set => Run(new TessControlShaderCommand(Index, value));
@@ -267,8 +271,9 @@ The executable can read the attributes of any vertex in the input patch, plus th
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
         [DisplayName("3. Tessellation Evaluation Shader")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string[] TessEvaluationShader
+        public string TessEvaluationShader
         {
             get => _TessEvaluationShader;
             set => Run(new TessEvaluationShaderCommand(Index, value));
@@ -284,8 +289,9 @@ This single invocation can emit a variable number of vertices that are assembled
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
         [DisplayName("4. Geometry Shader")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string[] GeometryShader
+        public string GeometryShader
         {
             get => _GeometryShader;
             set => Run(new GeometryShaderCommand(Index, value));
@@ -300,8 +306,9 @@ The values computed by the fragment shader are ultimately used to update framebu
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
         [DisplayName("5. Fragment Shader (mandatory)")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string[] FragmentShader
+        public string FragmentShader
         {
             get => _FragmentShader;
             set => Run(new FragmentShaderCommand(Index, value));
@@ -318,8 +325,9 @@ An invocation within a work group may share data with other members of the same 
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
         [DisplayName("6. Compute Shader")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string[] ComputeShader
+        public string ComputeShader
         {
             get => _ComputeShader;
             set => Run(new ComputeShaderCommand(Index, value));
@@ -329,11 +337,11 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         [DefaultValue(null)]
         [Description("The status of the most recent shader compilation action. An empty value indicates successful compilation.")]
         [DisplayName("Shader Status")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string[] ShaderStatus
+        public string ShaderStatus
         {
             get => _ShaderStatus;
-            set => _ShaderStatus = value;
         }
 
         #endregion
@@ -345,21 +353,21 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         [Description("The number of discrete strips into which the trace is divided in the X direction.")]
         [DisplayName("Strip Count X")]
         [JsonIgnore]
-        public int StripCountX { get => _StripCountX; set => Run(new TerrainStripCountXCommand(Index, value)); }
+        public uint StripCountX { get => _StripCountX; set => Run(new TerrainStripCountXCommand(Index, value)); }
 
         [Category("Terrain")]
         [DefaultValue(0)]
         [Description("The number of discrete strips into which the trace is divided in the Y direction.")]
         [DisplayName("Strip Count Y")]
         [JsonIgnore]
-        public int StripCountY { get => _StripCountY; set => Run(new TerrainStripCountYCommand(Index, value)); }
+        public uint StripCountY { get => _StripCountY; set => Run(new TerrainStripCountYCommand(Index, value)); }
 
         [Category("Terrain")]
         [DefaultValue(0)]
         [Description("The number of discrete strips into which the trace is divided in the Z direction.")]
         [DisplayName("Strip Count Z")]
         [JsonIgnore]
-        public int StripCountZ { get => _StripCountZ; set => Run(new TerrainStripCountZCommand(Index, value)); }
+        public uint StripCountZ { get => _StripCountZ; set => Run(new TerrainStripCountZCommand(Index, value)); }
 
         #endregion
 
@@ -401,8 +409,13 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         // Shaders
         [JsonProperty]
-        internal string[]
-            _VertexShader,
+        internal string
+            _VertexShader;
+
+        // Shaders
+        [JsonProperty]
+        internal string
+            //_VertexShader,
             _TessControlShader,
             _TessEvaluationShader,
             _GeometryShader,
@@ -412,7 +425,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         // Terrain
         [JsonProperty]
-        internal int
+        internal uint
             _StripCountX,
             _StripCountY,
             _StripCountZ;
@@ -468,23 +481,23 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
             // Trace Shaders
 
-            VertexShader = Defaults.VertexShader;
-            TessControlShader = Defaults.TessControlShader;
-            TessEvaluationShader = Defaults.TessEvaluationShader;
-            GeometryShader = Defaults.GeometryShader;
-            FragmentShader = Defaults.FragmentShader;
-            ComputeShader = Defaults.ComputeShader;
-            ShaderStatus = Defaults.ShaderStatus;
+            _VertexShader = Defaults.VertexShader;
+            _TessControlShader = Defaults.TessControlShader;
+            _TessEvaluationShader = Defaults.TessEvaluationShader;
+            _GeometryShader = Defaults.GeometryShader;
+            _FragmentShader = Defaults.FragmentShader;
+            _ComputeShader = Defaults.ComputeShader;
+            _ShaderStatus = Defaults.ShaderStatus;
 
             // Trace Terrain
 
-            StripCountX = Defaults.StripCountX;
-            StripCountY = Defaults.StripCountY;
-            StripCountZ = Defaults.StripCountZ;
+            _StripCountX = Defaults.StripCountX;
+            _StripCountY = Defaults.StripCountY;
+            _StripCountZ = Defaults.StripCountZ;
 
             // Trace Miscellaneous
 
-            Visible = Defaults.Visible;
+            _Visible = Defaults.Visible;
         }
 
         private void Run(ITracePropertyCommand command)
@@ -568,9 +581,9 @@ void main()
 
         private Prototype GetPrototype()
         {
-            int xc = StripCountX, yc = StripCountY;
-            var vertices = Grids.GetVertexCoords(xc, yc).ToArray();
-            var indices = Grids.GetTriangleIndices(xc, yc).ToArray();
+            uint xc = StripCountX, yc = StripCountY;
+            var vertices = Grids.GetVertexCoords(xc, yc);
+            var indices = Grids.GetTriangleIndices(xc, yc);
 
             return new Prototype(vertices, indices);
         }

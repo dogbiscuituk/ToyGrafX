@@ -50,9 +50,5 @@
             return Regex.IsMatch(s, @"(^CON$|^PRN$|^AUX$|^CLOCK\$$|^NUL$|^COM[0-9]$|^LPT[0-9]$)",
                 RegexOptions.IgnoreCase) ? s + "_" : s;
         }
-
-        public static string[] ToStringArray(this string s, StringSplitOptions options = StringSplitOptions.None) => s == null
-            ? new string[0]
-            : s.Split(new[] { "\r\n", "\r", "\n" }, options);
     }
 }

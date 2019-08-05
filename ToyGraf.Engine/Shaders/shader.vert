@@ -20,8 +20,9 @@ void main()
 		g = 0,
 		b = 0;
 
-	z = sqrt(x * x + y * y);
-	z = cos(20 * z - 10 * time) * exp(-3 * z);
+	//z = sqrt(x * x + y * y);
+	//z = cos(20 * z - 10 * time) * exp(-3 * z);
+	z = 0;
 	r = (x + 1) / 2;
 	g = (y + 1) / 2;
 	b = clamp(abs(5 * z), 0, 1);

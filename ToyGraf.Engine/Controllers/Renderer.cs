@@ -5,7 +5,6 @@
     using OpenTK.Graphics.OpenGL;
     using System.Collections.Generic;
     using System.Drawing;
-    using System.Linq;
     using ToyGraf.Engine.Entities;
     using ToyGraf.Engine.Shaders;
     using ToyGraf.Engine.Utility;
@@ -34,8 +33,6 @@
 
         protected virtual void RenderFrame(double time)
         {
-            return;
-
             Time += time;
 
             GL.Enable(EnableCap.DepthTest);
@@ -99,9 +96,7 @@
         #region Private Properties
 
         protected readonly List<IEntity> Entities = new List<IEntity>();
-        private readonly List<Prototype> Prototypes = new List<Prototype>();
-
-        private Shader Shader;
+        protected Shader Shader;
         private double Time;
 
         #endregion

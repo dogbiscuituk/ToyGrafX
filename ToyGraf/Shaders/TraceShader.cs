@@ -1,12 +1,8 @@
 ﻿namespace ToyGraf.Shaders
 {
     using OpenTK.Graphics.OpenGL;
-    using System;
-    using System.Linq;
-    using System.Text;
     using ToyGraf.Controllers;
     using ToyGraf.Engine.Shaders;
-    using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
 
     public class TraceShader : Shader
@@ -20,7 +16,7 @@
             MakeCurrent(true);
             var log = base.CreateProgram();
             MakeCurrent(false);
-            Trace._ShaderStatus = log.ToStringArray(StringSplitOptions.RemoveEmptyEntries);
+            Trace._ShaderStatus = log;
             return log;
         }
 
@@ -43,23 +39,10 @@
             BindAttribute(1, "time");
         }
 
-        protected override string GetScript(ShaderType shaderType)
-        {
-            var script = Trace.GetScript(shaderType);
-            return script == null || script.Length < 1
-                ? string.Empty
-                : script.Aggregate((s, t) => $@"{s}\n{t}");
-        }
+        protected override string GetScript(ShaderType shaderType) => Trace.GetScript(shaderType);
 
         private void MakeCurrent(bool current) => Renderer.MakeCurrent(current);
 
         #endregion
-
-        protected override void Dispose(bool disposing)
-        {
-            MakeCurrent(true);
-            base.Dispose(disposing);
-            MakeCurrent(false);
-        }
     }
 }

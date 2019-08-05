@@ -182,8 +182,6 @@
         internal readonly TraceTableController EntityTableController;
         internal readonly PropertyGridController PropertyGridController;
 
-        internal List<Entity> Entities = new List<Entity>();
-
         internal void Render() => Renderer.Render();
         internal void Show() => SceneForm.Show();
 

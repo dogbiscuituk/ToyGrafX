@@ -150,7 +150,7 @@
 
         protected override IEnumerable<IEntity> GetEntities()
         {
-            int xc = 1000, yc = 1000;
+            uint xc = 2, yc = 2;
             var vertices = Grids.GetVertexCoords(xc, yc).ToArray();
             var indices = Grids.GetTriangleIndices(xc, yc).ToArray();
 
@@ -161,7 +161,5 @@
         }
 
         #endregion
-
-        private Shader Shader;
     }
 }

@@ -1,9 +1,9 @@
-﻿namespace ToyGraf.Engine.Shaders
+﻿namespace ToyGraf.Console
 {
     using OpenTK.Graphics.OpenGL;
-    using System.ComponentModel;
     using System.IO;
     using System.Text;
+    using ToyGraf.Engine.Shaders;
 
     public class StaticShader : Shader
     {

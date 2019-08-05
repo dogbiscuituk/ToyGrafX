@@ -2,12 +2,11 @@
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
-    using System;
     using System.Text;
     using ToyGraf.Engine.Controllers;
     using ToyGraf.Engine.Utility;
 
-    public abstract class Shader : IDisposable
+    public abstract class Shader
     {
         #region Public Interface
 
@@ -138,37 +137,5 @@
         protected abstract string GetScript(ShaderType shaderType);
 
         private StringBuilder ShaderLog;
-
-        #region IDisposable Support
-
-        private bool Disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!Disposed)
-            {
-                if (disposing)
-                {
-                    // Dispose managed state (managed objects).
-                }
-                // Free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // Set large fields to null.
-                DeleteProgram();
-                Disposed = true;
-            }
-        }
-
-        ~Shader()
-        {
-            Dispose(false);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
     }
 }

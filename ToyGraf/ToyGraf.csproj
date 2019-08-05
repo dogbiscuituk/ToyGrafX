@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>ToyGraf</RootNamespace>
     <AssemblyName>ToyGraf</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -44,6 +45,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,7 +69,6 @@
     <Compile Include="Commands\TraceCommands.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AppController.cs" />
-    <Compile Include="Controllers\CameraController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\FullScreenController.cs" />
     <Compile Include="Controllers\HostController.cs" />

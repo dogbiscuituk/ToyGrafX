@@ -1,8 +1,9 @@
-﻿using ToyGraf.Models.Enums;
+﻿using System.Collections.Generic;
+using ToyGraf.Models.Enums;
 
 namespace ToyGraf.Models
 {
-    internal class Defaults
+    internal static class Defaults
     {
         // Scene Camera & Perspective
 
@@ -27,6 +28,10 @@ namespace ToyGraf.Models
         internal const string
             SceneTitle = "";
 
+        // Scene Traces
+
+        internal static List<Trace> Traces => new List<Trace>();
+
         // Trace Domain & Range
 
         internal const double
@@ -50,14 +55,14 @@ namespace ToyGraf.Models
 
         // Trace Shaders
 
-        internal const string[]
-            VertexShader = null,
-            TessControlShader = null,
-            TessEvaluationShader = null,
-            GeometryShader = null,
-            FragmentShader = null,
-            ComputeShader = null,
-            ShaderStatus = null;
+        internal const string
+            VertexShader = "",
+            TessControlShader = "",
+            TessEvaluationShader = "",
+            GeometryShader = "",
+            FragmentShader = "",
+            ComputeShader = "",
+            ShaderStatus = "";
 
         // Trace Terrain
 

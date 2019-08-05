@@ -1,6 +1,7 @@
-﻿namespace ToyGraf.Engine.Entities
+﻿namespace ToyGraf.Console
 {
     using OpenTK;
+    using ToyGraf.Engine.Entities;
 
     public class Entity : IEntity
     {
