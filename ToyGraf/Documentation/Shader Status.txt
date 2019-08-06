@@ -1,0 +1,42 @@
+﻿OpenGL version number	glGetIntegerv(GL_MAJOR_VERSION, *);
+			glGetIntegerv(GL_MINOR_VERSION, *);
+
+(if unavailable < 3.0)	glGetString(GL_VERSION);
+
+Vendor string		glGetString(GL_VENDOR);
+
+Renderer name		glGetString(GL_RENDERER);
+
+Extension list		glGetIntegerv(GL_NUM_EXTENSIONS, *) // to get the number of extensions
+			glGetStringi(GL_EXTENSIONS, k); // where k​ < GL_NUM_EXTENSIONS value
+
+Which context the profile supports:
+
+			glGetIntegerv(GL_CONTEXT_PROFILE_MASK, *);
+
+This can contain the bits GL_CONTEXT_CORE_PROFILE_BIT or GL_CONTEXT_COMPATIBILITY_PROFILE_BIT, but not both at the same time.
+
+Other features of contexts can be detected via context flags:
+
+glGetIntegerv(GL_CONTEXT_FLAGS, *);
+The available context flags are:
+
+GL_CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT
+The context is a forward compatible context.
+GL_CONTEXT_FLAG_DEBUG_BIT
+The context is a debug context.
+GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT
+The context supports robust memory access functionality.
+GL_CONTEXT_FLAG_NO_ERROR_BIT
+The context does not report OpenGL errors.
+
+Shading language version	The primary version of GLSL supported by the implementation can be queried:
+
+glGetString(GL_SHADING_LANGUAGE_VERSION​);
+
+Supported GLSL versions
+
+number of supported GLSL versions is queried with glGetIntegerv(GL_NUM_SHADING_LANGUAGE_VERSIONS, *)
+
+glGetStringi(GL_SHADING_LANGUAGE_VERSION​, k);
+Where k​ is on the range 0 to GL_NUM_SHADING_LANGUAGE_VERSIONS - 1.

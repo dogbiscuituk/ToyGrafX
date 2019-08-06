@@ -58,7 +58,7 @@
                 GL.BindVertexArray(prototype.VaoID);
                 GL.EnableVertexAttribArray(0);
 
-                var transformationMatrix = Maths.CreateTransformationMatrix(
+                var transformationMatrix = Maths.CreateTransformation(
                     entity.Location, entity.Rotation, entity.Scale);
                 Shader.LoadTransformationMatrix(transformationMatrix);
 
@@ -180,7 +180,7 @@
         /// </summary>
         protected void UpdateProjectionMatrix()
         {
-            NewProjectionMatrix = Maths.CreateProjectionMatrix(
+            NewProjectionMatrix = Maths.CreatePerspectiveProjection(
                 FieldOfView,
                 1920f / 1080f,
                 NearPlane,

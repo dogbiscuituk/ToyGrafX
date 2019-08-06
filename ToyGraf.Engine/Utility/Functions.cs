@@ -56,7 +56,6 @@
         public static float pow(float x, float y) => (float)Math.Pow(x, y);
         public static float radians(float degrees) => (float)(Math.PI * degrees / 180);
         public static float round(float x) => (float)Math.Round(x);
-        //public static float roundEven(float x) => (float)Math.RoundEven(x);
         public static float sign(float x) => Math.Sign(x);
         public static float sin(float angle) => (float)Math.Sin(angle);
         public static float sinh(float x) => (float)Math.Sinh(x);

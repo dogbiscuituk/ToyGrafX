@@ -16,7 +16,7 @@
 
         public void LoadProjectionMatrix(Matrix4 matrix) => LoadMatrix(location_projectionMatrix, matrix);
         public void LoadTransformationMatrix(Matrix4 matrix) => LoadMatrix(location_transformationMatrix, matrix);
-        public void LoadViewMatrix(Camera camera) => LoadMatrix(location_viewMatrix, Maths.CreateViewMatrix(camera));
+        public void LoadViewMatrix(Camera camera) => LoadMatrix(location_viewMatrix, Maths.CreateCameraView(camera));
 
         public void Start() => GL.UseProgram(ProgramID);
         public void Stop() => GL.UseProgram(0);
