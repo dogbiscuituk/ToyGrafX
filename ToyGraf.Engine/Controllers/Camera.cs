@@ -54,8 +54,8 @@
 
         private float _Pitch, _Yaw, _Roll;
 
-        private Vector3 HomePosition = new Vector3(0, 0, 0);
-        private Vector3 HomeRotation = new Vector3(0, 0, 0);
+        private Vector3 HomePosition = Vector3.Zero;
+        private Vector3 HomeRotation = Vector3.Zero;
 
         #endregion
     }

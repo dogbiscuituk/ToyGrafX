@@ -5,6 +5,14 @@
 
     public static class Maths
     {
+        public static Matrix4 CreateProjectionMatrix(
+            float fieldOfView, float aspectRatio, float nearPlane, float farPlane) =>
+            Matrix4.CreatePerspectiveFieldOfView(
+                MathHelper.DegreesToRadians(fieldOfView),
+                aspectRatio,
+                nearPlane,
+                farPlane);
+
         public static Matrix4 CreateTransformationMatrix(
             Vector3 translation, Vector3 rotation, float scale) =>
             Matrix4.CreateScale(scale) *

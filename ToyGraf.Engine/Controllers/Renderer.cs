@@ -180,11 +180,9 @@
         /// </summary>
         protected void UpdateProjectionMatrix()
         {
-            var fieldOfView = MathHelper.DegreesToRadians(FieldOfView);
-            var aspectRatio = 1920f / 1080f;
-            NewProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(
-                fieldOfView,
-                aspectRatio,
+            NewProjectionMatrix = Maths.CreateProjectionMatrix(
+                FieldOfView,
+                1920f / 1080f,
                 NearPlane,
                 FarPlane);
         }
