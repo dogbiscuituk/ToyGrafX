@@ -103,7 +103,7 @@
         public void RunOn(Trace trace) => Set(trace, Value);
 
         protected override string Target => $"Trace";
-        protected override Trace GetItem(Scene scene) => scene.Traces[Index];
+        protected override Trace GetItem(Scene scene) => scene._Traces[Index];
     }
 
     #endregion

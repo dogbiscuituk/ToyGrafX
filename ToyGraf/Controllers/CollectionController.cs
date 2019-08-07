@@ -31,11 +31,8 @@
         private static CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         private static Scene Scene => CommandProcessor?.Scene;
         private static SceneController SceneController;
-        private static List<Trace> Traces
-        {
-            get => Scene?.Traces;
-            set => Scene.Traces = value;
-        }
+        private static List<Trace> Traces => Scene?.Traces;
+        private static List<Trace> _Traces => Scene?._Traces;
 
         #endregion
 
@@ -43,9 +40,8 @@
 
         private static void TgCollectionEditor_CollectionEdited(object sender, CollectionEditedEventArgs e)
         {
-            if (e.DialogResult == DialogResult.OK && e.Value is List<Trace> editedTraces)
-                Traces = editedTraces;
-            // Scene.AttachTraces();
+            if (e.DialogResult == DialogResult.OK && e.Value is List<Trace> sources)
+                ProcessTraces(sources);
         }
 
         private static void TgCollectionEditor_CollectionFormLoad(object sender, EventArgs e)
@@ -84,16 +80,36 @@
             TgFileNameEditor.InitDialog += TgFileNameEditor_InitDialog;
         }
 
+        private static void BeginUpdate() => SceneController.BeginUpdate();
+
         private static void DetachEventHandlers()
         {
             TgCollectionEditor.CollectionEdited -= TgCollectionEditor_CollectionEdited;
             TgCollectionEditor.CollectionFormHelpButtonClicked -= TgCollectionEditor_CollectionFormHelpButtonClicked;
             TgCollectionEditor.CollectionFormLoad -= TgCollectionEditor_CollectionFormLoad;
             TgFileNameEditor.InitDialog -= TgFileNameEditor_InitDialog;
+
         }
+        private static void EndUpdate() => SceneController.EndUpdate();
 
         private static PropertyGrid FindPropertyGrid(object sender) =>
             ((Form)sender).Controls.Find("propertyBrowser", true)?[0] as PropertyGrid;
+
+        private static void ProcessTraces(List<Trace> traces)
+        {
+            BeginUpdate();
+            // First step: remove any deleted Traces.
+            for (int index = _Traces.Count - 1; index >= 0; index--)
+                if (traces.FirstOrDefault(p => p.Index == index) == null)
+                    CommandProcessor.DeleteTrace(index);
+            // Second step: insert/append any new Traces.
+            foreach (var source in traces.Where(p => p.Index < 0))
+                CommandProcessor.AppendTrace();
+            // Third & final step: update all Trace properties.
+            for (int index = 0; index < traces.Count; index++)
+                traces[index].CopyTo(_Traces[index]);
+            EndUpdate();
+        }
 
         #endregion
     }

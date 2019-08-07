@@ -46,6 +46,14 @@
             TimerStart();
         }
 
+        internal void BeginUpdate() => UpdateCount++;
+
+        internal void EndUpdate()
+        {
+            if (--UpdateCount == 0)
+                OnPropertyChanged(string.Empty);
+        }
+
         internal static void InitTextureDialog(OpenFileDialog dialog)
         {
             dialog.Filter = Settings.Default.ImageFilter;
@@ -73,6 +81,8 @@
 
         private void OnPropertyChanged(string propertyName)
         {
+            if (Updating)
+                return;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             switch (propertyName)
             {
@@ -236,8 +246,11 @@
         private readonly FullScreenController FullScreenController;
         private readonly JsonController JsonController;
         private Timer Timer;
+        private int UpdateCount;
 
-        private const string OpenGLShadingLanguageUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
+        private bool Updating => UpdateCount > 0;
+
+        private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
 
         #endregion
 
@@ -272,17 +285,17 @@
         {
             switch (propertyGrid.SelectedGridItem?.PropertyDescriptor.Name)
             {
-                case "VertexShader":
+                case "Shader1_Vertex":
                     return "#vertex-processor";
-                case "TessControlShader":
+                case "Shader2_TessControl":
                     return "#tessellation-control-processor";
-                case "TessEvaluationShader":
+                case "Shader3_TessEvaluation":
                     return "#tessellation-evaluation-processor";
-                case "GeometryShader":
+                case "Shader4_Geometry":
                     return "#geometry-processor";
-                case "FragmentShader":
+                case "Shader5_Fragment":
                     return "#fragment-processor";
-                case "ComputeShader":
+                case "Shader6_Compute":
                     return "#compute-processor";
                 default:
                     return string.Empty;
@@ -348,7 +361,7 @@
         private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();
 
         internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
-            $"{OpenGLShadingLanguageUrl}{GetBookmark(propertyGrid)}".Launch();
+            $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
 
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
 

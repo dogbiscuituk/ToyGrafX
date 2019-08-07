@@ -14,9 +14,9 @@ namespace ToyGraf.Models
             CameraPitch = 0,
             CameraRoll = 0,
             CameraYaw = 0,
-            FrustrumFieldOfView = 75,
-            FrustrumNearPlane = 0,
-            FrustrumFarPlane = 1000;
+            FieldOfView = 75,
+            NearPlane = 0,
+            FarPlane = 1000;
 
         // Scene FPS
 

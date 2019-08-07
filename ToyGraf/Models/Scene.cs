@@ -29,14 +29,14 @@
         #region Public Editable Properties
 
         [Category("Scene")]
-        [DefaultValue(60.0)]
+        [DefaultValue(Defaults.FPS)]
         [Description("Frames per second: a cap on this scene's rendering frequency.")]
         [DisplayName("FPS")]
         [JsonIgnore]
         public double FPS { get => _FPS; set => Run(new SceneFpsCommand(value)); }
 
         [Category("Scene")]
-        [DefaultValue("")]
+        [DefaultValue(Defaults.SceneTitle)]
         [Description("A title for this scene.")]
         [DisplayName("Title")]
         [JsonIgnore]
@@ -54,67 +54,67 @@
         }
 
         [Category("Camera")]
-        [DefaultValue(0f)]
+        [DefaultValue(Defaults.CameraX)]
         [Description("The X component of the camera location.")]
         [DisplayName("Camera (X)")]
         [JsonIgnore]
         public float CameraX { get => _CameraX; set => Run(new CameraXCommand(value)); }
 
         [Category("Camera")]
-        [DefaultValue(0f)]
+        [DefaultValue(Defaults.CameraY)]
         [Description("The Y component of the camera location.")]
         [DisplayName("Camera (Y)")]
         [JsonIgnore]
         public float CameraY { get => _CameraY; set => Run(new CameraYCommand(value)); }
 
         [Category("Camera")]
-        [DefaultValue(0f)]
+        [DefaultValue(Defaults.CameraZ)]
         [Description("The Z component of the camera location.")]
         [DisplayName("Camera (Z)")]
         [JsonIgnore]
         public float CameraZ { get => _CameraZ; set => Run(new CameraZCommand(value)); }
 
         [Category("Camera")]
-        [DefaultValue(0f)]
+        [DefaultValue(Defaults.CameraPitch)]
         [Description("The pitch component of the camera rotation (in degrees).")]
         [DisplayName("Camera Pitch°")]
         [JsonIgnore]
         public float CameraPitch { get => _CameraPitch; set => Run(new CameraPitchCommand(value)); }
 
         [Category("Camera")]
-        [DefaultValue(0f)]
+        [DefaultValue(Defaults.CameraRoll)]
         [Description("The roll component of the camera rotation (in degrees).")]
         [DisplayName("Camera Roll°")]
         [JsonIgnore]
         public float CameraRoll { get => _CameraRoll; set => Run(new CameraRollCommand(value)); }
 
         [Category("Camera")]
-        [DefaultValue(0f)]
+        [DefaultValue(Defaults.CameraYaw)]
         [Description("The yaw component of the camera rotation (in degrees).")]
         [DisplayName("Camera Yaw°")]
         [JsonIgnore]
         public float CameraYaw { get => _CameraYaw; set => Run(new CameraYawCommand(value)); }
 
         [Category("Perspective")]
-        [DefaultValue(75f)]
+        [DefaultValue(Defaults.FieldOfView)]
         [Description("The frustrum field of view (Y component, in degrees).")]
         [DisplayName("Field of View Y°")]
         [JsonIgnore]
-        public float FrustrumFieldOfView { get => _FrustrumFieldOfView; set => Run(new FrustrumFieldOfViewCommand(value)); }
+        public float FieldOfView { get => _FieldOfView; set => Run(new FieldOfViewCommand(value)); }
 
         [Category("Perspective")]
-        [DefaultValue(0f)]
+        [DefaultValue(Defaults.NearPlane)]
         [Description("The distance from the camera position to the near plane of the frustrum.")]
         [DisplayName("Near Plane")]
         [JsonIgnore]
-        public float FrustrumNearPlane { get => _FrustrumNearPlane; set => Run(new FrustrumNearPlaneCommand(value)); }
+        public float NearPlane { get => _NearPlane; set => Run(new NearPlaneCommand(value)); }
 
         [Category("Perspective")]
-        [DefaultValue(1000f)]
+        [DefaultValue(Defaults.FarPlane)]
         [Description("The distance from the camera position to the far plane of the frustrum.")]
         [DisplayName("Far Plane")]
         [JsonIgnore]
-        public float FrustrumFarPlane { get => _FrustrumFarPlane; set => Run(new FrustrumFarPlaneCommand(value)); }
+        public float FarPlane { get => _FarPlane; set => Run(new FarPlaneCommand(value)); }
 
         #endregion
 
@@ -143,9 +143,9 @@
 
         [JsonProperty]
         internal float
-            _FrustrumFarPlane,
-            _FrustrumFieldOfView,
-            _FrustrumNearPlane;
+            _FarPlane,
+            _FieldOfView,
+            _NearPlane;
 
         [JsonProperty]
         internal string _Title;
@@ -178,7 +178,7 @@
         internal Trace NewTrace()
         {
             var trace = new Trace(this);
-            _Traces.Add(trace);
+            //_Traces.Add(trace);
             return trace;
         }
 
@@ -210,9 +210,9 @@
             _CameraPitch = Defaults.CameraPitch;
             _CameraRoll = Defaults.CameraRoll;
             _CameraYaw = Defaults.CameraYaw;
-            _FrustrumFieldOfView = Defaults.FrustrumFieldOfView;
-            _FrustrumNearPlane = Defaults.FrustrumNearPlane;
-            _FrustrumFarPlane = Defaults.FrustrumFarPlane;
+            _FieldOfView = Defaults.FieldOfView;
+            _NearPlane = Defaults.NearPlane;
+            _FarPlane = Defaults.FarPlane;
 
             // Scene FPS
 

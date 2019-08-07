@@ -1,23 +1,23 @@
 ﻿namespace ToyGraf.Commands
 {
-    internal class FrustrumFarPlaneCommand : ScenePropertyCommand<float>
+    internal class FarPlaneCommand : ScenePropertyCommand<float>
     {
-        internal FrustrumFarPlaneCommand(float value) : base("Far Plane",
-            value, s => s._FrustrumFarPlane, (s, v) => s._FrustrumFarPlane = v)
+        internal FarPlaneCommand(float value) : base("Far Plane",
+            value, s => s._FarPlane, (s, v) => s._FarPlane = v)
         { }
     }
 
-    internal class FrustrumFieldOfViewCommand : ScenePropertyCommand<float>
+    internal class FieldOfViewCommand : ScenePropertyCommand<float>
     {
-        internal FrustrumFieldOfViewCommand(float value) : base("Field of View Y°",
-            value, s => s._FrustrumFieldOfView, (s, v) => s._FrustrumFieldOfView = v)
+        internal FieldOfViewCommand(float value) : base("Field of View Y°",
+            value, s => s._FieldOfView, (s, v) => s._FieldOfView = v)
         { }
     }
 
-    internal class FrustrumNearPlaneCommand : ScenePropertyCommand<float>
+    internal class NearPlaneCommand : ScenePropertyCommand<float>
     {
-        internal FrustrumNearPlaneCommand(float value) : base("Near Plane",
-            value, s => s._FrustrumNearPlane, (s, v) => s._FrustrumNearPlane = v)
+        internal NearPlaneCommand(float value) : base("Near Plane",
+            value, s => s._NearPlane, (s, v) => s._NearPlane = v)
         { }
     }
 }

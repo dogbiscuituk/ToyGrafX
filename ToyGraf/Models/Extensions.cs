@@ -8,38 +8,37 @@ namespace ToyGraf.Models
 
         public static void CopyFrom(this Trace target, Trace source)
         {
+            // System
+            target.Index = source.Index;
             // Domain & Range
-            target._Xmax = source._Xmax;
-            target._Xmin = source._Xmin;
-            target._Ymax = source._Ymax;
-            target._Ymin = source._Ymin;
-            target._Zmax = source._Zmax;
-            target._Zmin = source._Zmin;
+            target.Xmax = source.Xmax;
+            target.Xmin = source.Xmin;
+            target.Ymax = source.Ymax;
+            target.Ymin = source.Ymin;
+            target.Zmax = source.Zmax;
+            target.Zmin = source.Zmin;
             // Placement
-            target._LocationX = source._LocationX;
-            target._LocationY = source._LocationY;
-            target._LocationZ = source._LocationZ;
-            target._RotationX = source._RotationX;
-            target._RotationY = source._RotationY;
-            target._RotationZ = source._RotationZ;
-            target._Scale = source._Scale;
+            target.LocationX = source.LocationX;
+            target.LocationY = source.LocationY;
+            target.LocationZ = source.LocationZ;
+            target.RotationX = source.RotationX;
+            target.RotationY = source.RotationY;
+            target.RotationZ = source.RotationZ;
+            target.Scale = source.Scale;
             // Shaders
-            target._VertexShader = source._VertexShader;
-            target._TessControlShader = source._TessControlShader;
-            target._TessEvaluationShader = source._TessEvaluationShader;
-            target._GeometryShader = source._GeometryShader;
-            target._FragmentShader = source._FragmentShader;
-            target._ComputeShader = source._ComputeShader;
-            target._ShaderStatus = source._ShaderStatus;
+            target.Shader1_Vertex = source.Shader1_Vertex;
+            target.Shader2_TessControl = source.Shader2_TessControl;
+            target.Shader3_TessEvaluation = source.Shader3_TessEvaluation;
+            target.Shader4_Geometry = source.Shader4_Geometry;
+            target.Shader5_Fragment = source.Shader5_Fragment;
+            target.Shader6_Compute = source.Shader6_Compute;
+            target._ShaderStatus = source.ShaderStatus;
             // Terrain
-            target._StripCountX = source._StripCountX;
-            target._StripCountY = source._StripCountY;
-            target._StripCountZ = source._StripCountZ;
+            target.StripCountX = source.StripCountX;
+            target.StripCountY = source.StripCountY;
+            target.StripCountZ = source.StripCountZ;
             // Trace
-            target._Visible = source._Visible;
+            target.Visible = source.Visible;
         }
-
-        public static YN BoolToYN(this bool value) => value ? YN.Yes : YN.No;
-        public static bool BoolFromYN(this YN yn) => yn == YN.Yes;
     }
 }
