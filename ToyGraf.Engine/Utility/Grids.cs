@@ -17,7 +17,7 @@
         /// <returns>
         /// 3(cx+1)(cy+1)(cz+1) floats, being the xyz coordinates of the points in the lattice.
         /// </returns>
-        public static float[] GetCoordinates(uint cx = 0, uint cy = 0, uint cz = 0)
+        public static float[] GetGrid(uint cx = 0, uint cy = 0, uint cz = 0)
         {
             var result = new float[3 * (cx + 1) * (cy + 1) * (cz + 1)];
             var p = 0;
@@ -88,13 +88,17 @@
         /// million triangles, less than a thousand of which are degenerate. Hence, any performance
         /// improvement from further grid optimization will be limited to less than 0.05%.
         /// 
-        ///     02--05--08--11--14--17
-        ///       \    /  \    /  \
-        ///        \  /    \  /    \
-        ///     01--04--07--10--13--16
-        ///       \    /  \    /  \
-        ///        \  /    \  /    \
-        ///     00--03--06--09--12--15
+        ///    y
+        ///     |
+        ///    2|   02--05--08--11--14--17
+        ///     |     \    /  \    /  \
+        ///     |      \  /    \  /    \
+        ///    1|   01--04--07--10--13--16
+        ///     |     \    /  \    /  \
+        ///     |      \  /    \  /    \
+        ///    0|   00--03--06--09--12--15
+        ///    
+        ///         0---1---2---3---4---5--- x
         /// 
         /// </summary>
         /// <param name="cx">The number of steps along the x axis.</param>

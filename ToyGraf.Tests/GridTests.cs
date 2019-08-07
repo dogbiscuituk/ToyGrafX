@@ -10,10 +10,10 @@
         /// The "empty" grid actually contains one point: the origin.
         /// </summary>
         [TestMethod]
-        public void GetCoordinates000()
+        public void GetGrid()
         {
             var expected = new float[] { 0, 0, 0 };
-            var actual = Grids.GetCoordinates();
+            var actual = Grids.GetGrid();
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -21,7 +21,7 @@
         /// Get the 3D coordinates of the points dividing the x axis into 8 equal line segments.
         /// </summary>
         [TestMethod]
-        public void GetCoordinates800()
+        public void GetGridX()
         {
             var expected = new[]
             {
@@ -35,7 +35,7 @@
                 +0.75f, 0, 0,
                 +1.00f, 0, 0
             };
-            var actual = Grids.GetCoordinates(cx: 8);
+            var actual = Grids.GetGrid(cx: 8);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -43,7 +43,7 @@
         /// Get the 3D coordinates of the points dividing the y axis into 8 equal line segments.
         /// </summary>
         [TestMethod]
-        public void GetCoordinates080()
+        public void GetGridY()
         {
             var expected = new[]
             {
@@ -57,7 +57,7 @@
                 0, +0.75f, 0,
                 0, +1.00f, 0
             };
-            var actual = Grids.GetCoordinates(cy: 8);
+            var actual = Grids.GetGrid(cy: 8);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -65,7 +65,7 @@
         /// Get the 3D coordinates of the points dividing the z axis into 8 equal line segments.
         /// </summary>
         [TestMethod]
-        public void GetCoordinates008()
+        public void GetGridZ()
         {
             var expected = new[]
             {
@@ -79,7 +79,7 @@
                 0, 0, +0.75f,
                 0, 0, +1.00f
             };
-            var actual = Grids.GetCoordinates(cz: 8);
+            var actual = Grids.GetGrid(cz: 8);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -87,7 +87,7 @@
         /// Get the 3D coordinates of the points dividing the xy plane into an 8x8 grid.
         /// </summary>
         [TestMethod]
-        public void GetCoordinates880()
+        public void GetGridXY()
         {
             var expected = new[]
             {
@@ -110,7 +110,7 @@
                 +1.00f, -1.00f, 0, +1.00f, -0.75f, 0, +1.00f, -0.50f, 0, +1.00f, -0.25f, 0, +1.00f, 0, 0,
                 +1.00f, +0.25f, 0, +1.00f, +0.50f, 0, +1.00f, +0.75f, 0, +1.00f, +1.00f, 0
             };
-            var actual = Grids.GetCoordinates(cx: 8, cy: 8);
+            var actual = Grids.GetGrid(cx: 8, cy: 8);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -118,7 +118,7 @@
         /// Get the 3D coordinates of the points dividing the xz plane into an 8x8 grid.
         /// </summary>
         [TestMethod]
-        public void GetCoordinates808()
+        public void GetGridXZ()
         {
             var expected = new[]
             {
@@ -141,7 +141,7 @@
                 +1.00f, 0, -1.00f, +1.00f, 0, -0.75f, +1.00f, 0, -0.50f, +1.00f, 0, -0.25f, +1.00f, 0, 0,
                 +1.00f, 0, +0.25f, +1.00f, 0, +0.50f, +1.00f, 0, +0.75f, +1.00f, 0, +1.00f
             };
-            var actual = Grids.GetCoordinates(cx: 8, cz: 8);
+            var actual = Grids.GetGrid(cx: 8, cz: 8);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -149,7 +149,7 @@
         /// Get the 3D coordinates of the points dividing the yz plane into an 8x8 grid.
         /// </summary>
         [TestMethod]
-        public void GetCoordinates088()
+        public void GetGridYZ()
         {
             var expected = new[]
             {
@@ -172,7 +172,7 @@
                 0, +1.00f, -1.00f, 0, +1.00f, -0.75f, 0, +1.00f, -0.50f, 0, +1.00f, -0.25f, 0, +1.00f, 0,
                 0, +1.00f, +0.25f, 0, +1.00f, +0.50f, 0, +1.00f, +0.75f, 0, +1.00f, +1.00f
             };
-            var actual = Grids.GetCoordinates(cy: 8, cz: 8);
+            var actual = Grids.GetGrid(cy: 8, cz: 8);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -180,7 +180,7 @@
         /// Get the 3D coordinates of the points dividing the xyz space into a 4x4x4 lattice.
         /// </summary>
         [TestMethod]
-        public void GetCoordinates444()
+        public void GetGridXYZ()
         {
             var expected = new[]
             {
@@ -210,7 +210,7 @@
                 1, +0.5f, -1, 1, +0.5f, -.5f, 1, +0.5f, 0, 1, +0.5f, .5f, 1, +0.5f, 1,
                 1, +1.0f, -1, 1, +1.0f, -.5f, 1, +1.0f, 0, 1, +1.0f, .5f, 1, +1.0f, 1
             };
-            var actual = Grids.GetCoordinates(4, 4, 4);
+            var actual = Grids.GetGrid(4, 4, 4);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -218,7 +218,7 @@
         /// Get the 3D coordinates of the points dividing the xyz space into a 1x4x2 lattice.
         /// </summary>
         [TestMethod]
-        public void GetCoordinates142()
+        public void GetGridXYZ2()
         {
             var expected = new[]
             {
@@ -228,7 +228,7 @@
                 +1, -0.5f, -1, +1, -0.5f, 0, +1, -0.5f, 1, +1, +0.0f, -1, +1, +0.0f, 0, +1, +0.0f, 1,
                 +1, +0.5f, -1, +1, +0.5f, 0, +1, +0.5f, 1, +1, +1.0f, -1, +1, +1.0f, 0, +1, +1.0f, 1
             };
-            var actual = Grids.GetCoordinates(1, 4, 2);
+            var actual = Grids.GetGrid(1, 4, 2);
             CollectionAssert.AreEqual(expected, actual);
         }
 

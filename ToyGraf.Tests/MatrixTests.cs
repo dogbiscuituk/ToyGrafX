@@ -135,7 +135,7 @@
         /// Get the transformation matrix for a scale factor of 9.
         /// </summary>
         [TestMethod]
-        public void CreateScale()
+        public void CreateScaling()
         {
             var expected = new Matrix4(9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1);
             var actual = Maths.CreateTransformation(translation: Vector3.Zero, rotation: Vector3.Zero, scale: 9f);
@@ -168,7 +168,7 @@
         /// Get the view matrix for the default camera position & orientation.
         /// </summary>
         [TestMethod]
-        public void CreateCameraViewDefault()
+        public void CreateCameraView()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
             var actual = Maths.CreateCameraView(new Camera());
