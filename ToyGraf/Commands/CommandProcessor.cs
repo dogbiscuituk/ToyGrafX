@@ -36,7 +36,7 @@
         }
 
         internal Scene Scene => SceneController.Scene;
-        internal List<Trace> Traces => Scene.Traces;
+        internal List<Trace> Traces => Scene._Traces;
 
         internal void Clear()
         {
@@ -186,10 +186,6 @@
             SceneForm.EditRedo.Text = $"&{redo}";
             SceneForm.tbUndo.ToolTipText = $"{undo} (^Z)";
             SceneForm.tbRedo.ToolTipText = $"{redo} (^Y)";
-            SceneForm.EditCut.Enabled = SceneForm.tbCut.Enabled = false;
-            SceneForm.EditCopy.Enabled = SceneForm.tbCopy.Enabled = false;
-            SceneForm.EditPaste.Enabled = SceneForm.tbPaste.Enabled = false;
-            SceneForm.EditDelete.Enabled = SceneForm.tbDelete.Enabled = false;
         }
 
         #endregion

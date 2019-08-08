@@ -2,6 +2,7 @@
 {
     using Newtonsoft.Json;
     using OpenTK;
+    //using OpenTK;
     using OpenTK.Graphics.OpenGL;
     using System.ComponentModel;
     using System.ComponentModel.Design;
@@ -12,8 +13,8 @@
     using ToyGraf.Models.Enums;
     using ToyGraf.Shaders;
 
-    [DefaultProperty("VertexShader")]
-    public class Trace : ITrace, IEntity
+    [DefaultProperty("Shader1_Vertex")]
+    public class Trace : ITrace//, IEntity
     {
         #region Public Interface
 
@@ -55,12 +56,19 @@
             return string.Empty;
         }
 
-        public void MoveBy(float dx, float dy, float dz) => Location += new Vector3(dx, dy, dz);
-        public void MoveTo(float x, float y, float z) => Location += new Vector3(x, y, z);
-        public void RotateBy(float dx, float dy, float dz) => Rotation += new Vector3(dx, dy, dz);
-        public void RotateTo(float x, float y, float z) => Rotation += new Vector3(x, y, z);
-        public void ScaleBy(float scale) => Scale *= scale;
-        public void ScaleTo(float scale) => Scale = scale;
+        public override string ToString() =>
+            !string.IsNullOrWhiteSpace(Title)
+            ? _Title
+            : Index >= 0
+            ? $"Trace #{Index}"
+            : "New trace";
+
+        //public void MoveBy(float dx, float dy, float dz) => Location += new Vector3(dx, dy, dz);
+        //public void MoveTo(float x, float y, float z) => Location += new Vector3(x, y, z);
+        //public void RotateBy(float dx, float dy, float dz) => Rotation += new Vector3(dx, dy, dz);
+        //public void RotateTo(float x, float y, float z) => Rotation += new Vector3(x, y, z);
+        //public void ScaleBy(float scale) => Scale *= scale;
+        //public void ScaleTo(float scale) => Scale = scale;
 
         public void SetScript(ShaderType shaderType, string script)
         {
@@ -91,36 +99,36 @@
 
         #endregion
 
-        #region Editable Properties
+        #region Browsable Properties
 
         #region Domain & Range
 
-        [Category("Domain && Range")]
+        [Category(Defaults.DomainRange)]
         [DefaultValue(Defaults.Xmax)]
         [JsonIgnore]
         public double Xmax { get => _Xmax; set => Run(new TraceXmaxCommand(Index, value)); }
 
-        [Category("Domain && Range")]
+        [Category(Defaults.DomainRange)]
         [DefaultValue(Defaults.Xmin)]
         [JsonIgnore]
         public double Xmin { get => _Xmin; set => Run(new TraceXminCommand(Index, value)); }
 
-        [Category("Domain && Range")]
+        [Category(Defaults.DomainRange)]
         [DefaultValue(Defaults.Ymax)]
         [JsonIgnore]
         public double Ymax { get => _Ymax; set => Run(new TraceYmaxCommand(Index, value)); }
 
-        [Category("Domain && Range")]
+        [Category(Defaults.DomainRange)]
         [DefaultValue(Defaults.Ymin)]
         [JsonIgnore]
         public double Ymin { get => _Ymin; set => Run(new TraceYminCommand(Index, value)); }
 
-        [Category("Domain && Range")]
+        [Category(Defaults.DomainRange)]
         [DefaultValue(Defaults.Zmax)]
         [JsonIgnore]
         public double Zmax { get => _Zmax; set => Run(new TraceZmaxCommand(Index, value)); }
 
-        [Category("Domain && Range")]
+        [Category(Defaults.DomainRange)]
         [DefaultValue(Defaults.Zmin)]
         [JsonIgnore]
         public double Zmin { get => _Zmin; set => Run(new TraceZminCommand(Index, value)); }
@@ -129,18 +137,7 @@
 
         #region Placement
 
-        [Browsable(false)]
-        [Category("Placement")]
-        [Description("The location of the trace in world co-ordinates.")]
-        [DisplayName("Location")]
-        [JsonIgnore]
-        public Vector3 Location
-        {
-            get => GetLocation();
-            set => Run(new EntityLocationCommand(Index, value));
-        }
-
-        [Category("Placement")]
+        [Category(Defaults.Placement)]
         [DefaultValue(Defaults.LocationX)]
         [Description("The X component of the trace location in world co-ordinates.")]
         [DisplayName("Location X")]
@@ -151,7 +148,7 @@
             set => Run(new EntityLocationXCommand(Index, value));
         }
 
-        [Category("Placement")]
+        [Category(Defaults.Placement)]
         [DefaultValue(Defaults.LocationY)]
         [Description("The Y component of the trace location in world co-ordinates.")]
         [DisplayName("Location Y")]
@@ -162,7 +159,7 @@
             set => Run(new EntityLocationYCommand(Index, value));
         }
 
-        [Category("Placement")]
+        [Category(Defaults.Placement)]
         [DefaultValue(Defaults.LocationZ)]
         [Description("The Z component of the trace location in world co-ordinates.")]
         [DisplayName("Location Z")]
@@ -173,18 +170,7 @@
             set => Run(new EntityLocationZCommand(Index, value));
         }
 
-        [Browsable(false)]
-        [Category("Placement")]
-        [Description("The rotation of the trace in world co-ordinates (in degrees).")]
-        [DisplayName("Rotation°")]
-        [JsonIgnore]
-        public Vector3 Rotation
-        {
-            get => GetRotation();
-            set => Run(new EntityRotationCommand(Index, value));
-        }
-
-        [Category("Placement")]
+        [Category(Defaults.Placement)]
         [DefaultValue(Defaults.RotationX)]
         [Description("The X component of the trace rotation in world co-ordinates (in degrees).")]
         [DisplayName("Rotation X°")]
@@ -195,7 +181,7 @@
             set => Run(new EntityRotationXCommand(Index, value));
         }
 
-        [Category("Placement")]
+        [Category(Defaults.Placement)]
         [DefaultValue(Defaults.RotationY)]
         [Description("The Y component of the trace rotation in world co-ordinates (in degrees).")]
         [DisplayName("Rotation Y°")]
@@ -206,7 +192,7 @@
             set => Run(new EntityRotationYCommand(Index, value));
         }
 
-        [Category("Placement")]
+        [Category(Defaults.Placement)]
         [DefaultValue(Defaults.RotationZ)]
         [Description("The Z component of the trace rotation in world co-ordinates (in degrees).")]
         [DisplayName("Rotation Z°")]
@@ -217,7 +203,7 @@
             set => Run(new EntityRotationZCommand(Index, value));
         }
 
-        [Category("Placement")]
+        [Category(Defaults.Placement)]
         [DefaultValue(Defaults.Scale)]
         [Description("The relative size of the trace.")]
         [DisplayName("Scale")]
@@ -228,11 +214,63 @@
             set => Run(new EntityScaleCommand(Index, value));
         }
 
+        [Category(Defaults.Placement)]
+        [DefaultValue(Defaults.Visible)]
+        [Description("Take a wild guess.")]
+        [DisplayName("Visible?")]
+        [JsonIgnore]
+        public YN Visible { get => _Visible; set => Run(new TraceVisibleCommand(Index, value)); }
+
+        #endregion
+
+        #region Read Only / System
+
+        [Category(Defaults.SystemRO)]
+        [DefaultValue(Defaults.GPUStatus)]
+        [Description("The status of the most recent GPU compilation action. An empty value indicates successful compilation.")]
+        [DisplayName("GPU Status")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        [JsonIgnore]
+        public string GPUStatus
+        {
+            get => _GPUStatus;
+        }
+
+        [Category(Defaults.SystemRO)]
+        [Description("The location of the trace in world co-ordinates.")]
+        [DisplayName("Location")]
+        [JsonIgnore]
+        public Vector3 Location
+        {
+            get => GetLocation();
+            set => Run(new EntityLocationCommand(Index, value));
+        }
+
+        [Category(Defaults.SystemRO)]
+        [Description("The rotation of the trace in world co-ordinates (in degrees).")]
+        [DisplayName("Rotation°")]
+        [JsonIgnore]
+        public Vector3 Rotation
+        {
+            get => GetRotation();
+            set => Run(new EntityRotationCommand(Index, value));
+        }
+
+        [Category(Defaults.SystemRO)]
+        [Description("The transformation matrix of the trace.")]
+        [DisplayName("Transformation")]
+        [JsonIgnore]
+        public Matrix4 Transformation
+        {
+            get => GetTransformation();
+            set => Run(new EntityTransformationCommand(Index, value));
+        }
+
         #endregion
 
         #region Shaders
 
-        [Category("Shaders")]
+        [Category(Defaults.Shaders)]
         [DefaultValue(Defaults.VertexShader)]
         [Description(@"The vertex processor is a programmable unit that operates on incoming vertices and their associated data. Compilation units written in the OpenGL Shading Language to run on this processor are called vertex shaders.
 When a set of vertex shaders are successfully compiled and linked, they result in a vertex shader executable that runs on the vertex processor.
@@ -248,7 +286,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             set => Run(new VertexShaderCommand(Index, value));
         }
 
-        [Category("Shaders")]
+        [Category(Defaults.Shaders)]
         [DefaultValue(Defaults.TessControlShader)]
         [Description(@"The tessellation control processor is a programmable unit that operates on a patch of incoming vertices and their associated data, emitting a new output patch. Compilation units written in the OpenGL Shading Language to run on this processor are called tessellation control shaders.
 When a set of tessellation control shaders are successfully compiled and linked, they result in a tessellation control shader executable that runs on the tessellation control processor.
@@ -267,7 +305,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             set => Run(new TessControlShaderCommand(Index, value));
         }
 
-        [Category("Shaders")]
+        [Category(Defaults.Shaders)]
         [DefaultValue(Defaults.TessEvaluationShader)]
         [Description(@"The tessellation evaluation processor is a programmable unit that evaluates the position and other attributes of a vertex generated by the tessellation primitive generator, using a patch of incoming vertices and their associated data.
 Compilation units written in the OpenGL Shading Language to run on this processor are called tessellation evaluation shaders.
@@ -285,7 +323,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             set => Run(new TessEvaluationShaderCommand(Index, value));
         }
 
-        [Category("Shaders")]
+        [Category(Defaults.Shaders)]
         [DefaultValue(Defaults.GeometryShader)]
         [Description(@"The geometry processor is a programmable unit that operates on data for incoming vertices for a primitive assembled after vertex processing and outputs a sequence of vertices forming output primitives.
 Compilation units written in the OpenGL Shading Language to run on this processor are called geometry shaders.
@@ -303,7 +341,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             set => Run(new GeometryShaderCommand(Index, value));
         }
 
-        [Category("Shaders")]
+        [Category(Defaults.Shaders)]
         [DefaultValue(Defaults.FragmentShader)]
         [Description(@"The fragment processor is a programmable unit that operates on fragment values and their associated data. Compilation units written in the OpenGL Shading Language to run on this processor are called fragment shaders.
 When a set of fragment shaders are successfully compiled and linked, they result in a fragment shader executable that runs on the fragment processor.
@@ -320,7 +358,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             set => Run(new FragmentShaderCommand(Index, value));
         }
 
-        [Category("Shaders")]
+        [Category(Defaults.Shaders)]
         [DefaultValue(Defaults.ComputeShader)]
         [Description(@"The compute processor is a programmable unit that operates independently from the other shader processors. Compilation units written in the OpenGL Shading Language to run on this processor are called compute shaders.
 When a set of compute shaders are successfully compiled and linked, they result in a compute shader executable that runs on the compute processor.
@@ -339,36 +377,25 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             set => Run(new ComputeShaderCommand(Index, value));
         }
 
-        [Category("Shaders")]
-        [DefaultValue(Defaults.ShaderStatus)]
-        [Description("The status of the most recent shader compilation action. An empty value indicates successful compilation.")]
-        [DisplayName("Shader Status")]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
-        [JsonIgnore]
-        public string ShaderStatus
-        {
-            get => _ShaderStatus;
-        }
-
         #endregion
 
         #region Terrain
 
-        [Category("Terrain")]
+        [Category(Defaults.Terrain)]
         [DefaultValue(typeof(uint), "0")]
         [Description("The number of discrete strips into which the trace is divided in the X direction.")]
         [DisplayName("Strip Count X")]
         [JsonIgnore]
         public uint StripCountX { get => _StripCountX; set => Run(new TerrainStripCountXCommand(Index, value)); }
 
-        [Category("Terrain")]
+        [Category(Defaults.Terrain)]
         [DefaultValue(typeof(uint), "0")]
         [Description("The number of discrete strips into which the trace is divided in the Y direction.")]
         [DisplayName("Strip Count Y")]
         [JsonIgnore]
         public uint StripCountY { get => _StripCountY; set => Run(new TerrainStripCountYCommand(Index, value)); }
 
-        [Category("Terrain")]
+        [Category(Defaults.Terrain)]
         [DefaultValue(typeof(uint), "0")]
         [Description("The number of discrete strips into which the trace is divided in the Z direction.")]
         [DisplayName("Strip Count Z")]
@@ -379,12 +406,12 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #region Trace
 
-        [Category("Trace")]
-        [DefaultValue(Defaults.Visible)]
-        [Description("Take a wild guess.")]
-        [DisplayName("Visible?")]
+        [Category(Defaults.Trace)]
+        [DefaultValue(Defaults.TraceTitle)]
+        [Description("A title for this trace.")]
+        [DisplayName("Title")]
         [JsonIgnore]
-        public YN Visible { get => _Visible; set => Run(new TraceVisibleCommand(Index, value)); }
+        public string Title { get => _Title; set => Run(new TraceTitleCommand(Index, value)); }
 
         #endregion
 
@@ -393,10 +420,12 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         #region Fields
 
         // System
+
         private int
             _Index;
 
         // Domain & Range
+
         [JsonProperty]
         internal double
             _Xmin,
@@ -407,6 +436,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _Zmax;
 
         // Placement
+
         [JsonProperty]
         internal float
             _LocationX,
@@ -418,6 +448,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _Scale;
 
         // Shaders
+
         [JsonProperty]
         internal string
             _VertexShader,
@@ -426,9 +457,10 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _GeometryShader,
             _FragmentShader,
             _ComputeShader,
-            _ShaderStatus;
+            _GPUStatus;
 
         // Terrain
+
         [JsonProperty]
         internal uint
             _StripCountX,
@@ -436,9 +468,15 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _StripCountZ;
 
         // Trace
+
         [JsonProperty]
         internal YN
             _Visible;
+
+        [JsonProperty]
+        internal string
+            _Title;
+
 
         #endregion
 
@@ -461,6 +499,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         internal Vector3 GetLocation() => new Vector3(_LocationX, _LocationY, _LocationZ);
         internal Vector3 GetRotation() => new Vector3(_RotationX, _RotationY, _RotationZ);
+        internal Matrix4 GetTransformation() => Maths.CreateTransformation(Location, Rotation, Scale);
 
         internal void Init(Scene scene)
         {
@@ -501,7 +540,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _GeometryShader = Defaults.GeometryShader;
             _FragmentShader = Defaults.FragmentShader;
             _ComputeShader = Defaults.ComputeShader;
-            _ShaderStatus = Defaults.ShaderStatus;
+            _GPUStatus = Defaults.GPUStatus;
 
             // Trace Terrain
 
@@ -534,6 +573,22 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _RotationX = rotation.X;
             _RotationY = rotation.Y;
             _RotationZ = rotation.Z;
+        }
+
+        internal void SetRotation(Quaternion rotation)
+        {
+            _RotationX = rotation.X;
+            _RotationY = rotation.Y;
+            _RotationZ = rotation.Z;
+        }
+
+        internal void SetScale(Vector3 scale) { }
+
+        internal void SetTransformation(Matrix4 transformation)
+        {
+            SetLocation(transformation.ExtractTranslation());
+            SetRotation(transformation.ExtractRotation());
+            SetScale(transformation.ExtractScale());
         }
 
         #endregion
@@ -586,6 +641,7 @@ void main()
 
         #endregion
 
+        [Browsable(false)]
         [JsonIgnore]
         public Prototype Prototype
         {

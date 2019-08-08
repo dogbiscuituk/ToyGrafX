@@ -117,7 +117,6 @@
                     case DialogResult.Yes:
                         return Save();
                     case DialogResult.No:
-                        Scene.IsModified = false;
                         return true;
                     case DialogResult.Cancel:
                         return false;

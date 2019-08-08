@@ -10,7 +10,7 @@
         string Shader4_Geometry { get; set; }
         string Shader5_Fragment { get; set; }
         string Shader6_Compute { get; set; }
-        string ShaderStatus { get; }
+        string GPUStatus { get; }
         YN Visible { get; set; }
         double Xmax { get; set; }
         double Xmin { get; set; }

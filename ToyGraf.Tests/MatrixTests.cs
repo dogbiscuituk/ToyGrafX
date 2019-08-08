@@ -2,7 +2,7 @@
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using OpenTK;
-    using ToyGraf.Engine.Controllers;
+    using ToyGraf.Engine;
     using ToyGraf.Engine.Utility;
 
     /// <summary>

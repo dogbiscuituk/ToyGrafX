@@ -5,6 +5,18 @@ namespace ToyGraf.Models
 {
     internal static class Defaults
     {
+        // Categories
+
+        internal const string
+            Camera = "Camera",
+            DomainRange = "Domain / Range",
+            Placement = "Placement",
+            Projection = "Projection",
+            Shaders = "Shaders",
+            SystemRO = "Read Only / System",
+            Terrain = "Terrain",
+            Trace = "Trace";
+
         // Scene Camera & Perspective
 
         internal const float
@@ -15,7 +27,7 @@ namespace ToyGraf.Models
             CameraRoll = 0,
             CameraYaw = 0,
             FieldOfView = 75,
-            NearPlane = 0,
+            NearPlane = 0.1f,
             FarPlane = 1000;
 
         // Scene FPS
@@ -53,6 +65,9 @@ namespace ToyGraf.Models
             RotationZ = 0,
             Scale = 1;
 
+        internal const YN
+            Visible = YN.Yes;
+
         // Trace Shaders
 
         internal const string
@@ -62,7 +77,7 @@ namespace ToyGraf.Models
             GeometryShader = "",
             FragmentShader = "",
             ComputeShader = "",
-            ShaderStatus = "";
+            GPUStatus = "";
 
         // Trace Terrain
 
@@ -71,9 +86,9 @@ namespace ToyGraf.Models
             StripCountY = 0,
             StripCountZ = 0;
 
-        // Trace Miscellaneous
+        // Trace Title
 
-        internal const YN
-            Visible = YN.Yes;
+        internal const string
+            TraceTitle = "";
     }
 }

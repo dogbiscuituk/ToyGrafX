@@ -4,7 +4,7 @@
     using System.ComponentModel;
     using System.Windows.Forms;
     using ToyGraf.Commands;
-    using ToyGraf.Engine.Controllers;
+    using ToyGraf.Engine;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
     using ToyGraf.Models.Enums;
@@ -34,10 +34,6 @@
 
             PropertyGridController = new PropertyGridController(this);
             Scene.PropertyChanged += Scene_PropertyChanged;
-
-            //var trace = Scene.NewTrace();
-            //trace.VertexShader = Trace.DefaultVertexShader.ToStringArray();
-            //trace.FragmentShader = Trace.DefaultFragmentShader.ToStringArray();
 
             PropertyGridController.SelectedObject = Scene;
 
@@ -256,13 +252,19 @@
 
         #region Non-Public Methods
 
-        private void EditOptions() => new OptionsController(this).ShowModal(SceneForm);
+        private void EditOptions()
+        {
+            using (var optionsController = new OptionsController(this))
+                optionsController.ShowModal(SceneForm);
+        }
 
         private void FileLoaded()
         {
+            Scene.SceneController = this;
+            BeginUpdate();
             Scene.AttachTraces();
             CommandProcessor.Clear();
-            UpdateUI();
+            EndUpdate();
         }
 
         private void FilePathRequest(SdiController.FilePathEventArgs e)
@@ -271,7 +273,10 @@
                 e.FilePath = Scene.Title.ToFilename();
         }
 
-        private void FileSaved() => Camera.Fix();
+        private void FileSaved()
+        {
+            Camera.Fix();
+        }
 
         private bool FormClosing(CloseReason closeReason)
         {
@@ -364,11 +369,6 @@
             $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
 
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
-
-        private void UpdateUI()
-        {
-            PropertyGridController.Refresh();
-        }
 
         #endregion
 

@@ -406,5 +406,9 @@
   <ItemGroup>
     <None Include="Images\action_add_16xLG.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Doc\Shader Status.txt" />
+    <None Include="Doc\Shader.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

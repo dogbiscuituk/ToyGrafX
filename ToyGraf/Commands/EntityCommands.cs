@@ -64,4 +64,11 @@
             value, e => e._Scale, (e, v) => e._Scale = v)
         { }
     }
+
+    internal class EntityTransformationCommand : TracePropertyCommand<Matrix4>
+    {
+        internal EntityTransformationCommand(int index, Matrix4 value) : base(index, "Transformation Matrix",
+            value, e => e.GetTransformation(), (e, v) => e.SetTransformation(v))
+        { }
+    }
 }

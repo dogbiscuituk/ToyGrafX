@@ -16,7 +16,7 @@
             MakeCurrent(true);
             var log = base.CreateProgram();
             MakeCurrent(false);
-            Trace._ShaderStatus = log;
+            Trace._GPUStatus = log;
             return log;
         }
 

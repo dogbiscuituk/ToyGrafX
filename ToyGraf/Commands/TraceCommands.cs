@@ -2,6 +2,13 @@
 {
     using ToyGraf.Models.Enums;
 
+    internal class TraceTitleCommand : TracePropertyCommand<string>
+    {
+        internal TraceTitleCommand(int index, string value) : base(index, "Title",
+            value, t => t._Title, (t, v) => t._Title = v)
+        { }
+    }
+
     internal class TraceVisibleCommand : TracePropertyCommand<YN>
     {
         internal TraceVisibleCommand(int index, YN value) : base(index, "Visible",

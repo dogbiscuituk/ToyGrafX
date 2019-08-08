@@ -1,9 +1,15 @@
-﻿namespace ToyGraf.Engine.Controllers
+﻿namespace ToyGraf.Engine
 {
     using OpenTK;
 
     public class Camera
     {
+        public Vector3 Orientation
+        {
+            get => new Vector3(Pitch, Yaw, Roll);
+            set { Pitch = value.X; Yaw = value.Y; Roll = value.Z; }
+        }
+
         public Vector3 Position
         {
             get => new Vector3(X, Y, Z);
@@ -13,12 +19,6 @@
         public float X { get; set; }
         public float Y { get; set; }
         public float Z { get; set; }
-
-        public Vector3 Rotation
-        {
-            get => new Vector3(Pitch, Yaw, Roll);
-            set { Pitch = value.X; Yaw = value.Y; Roll = value.Z; }
-        }
 
         public float Pitch
         {
@@ -41,13 +41,13 @@
         public void Reset()
         {
             Position = HomePosition;
-            Rotation = HomeRotation;
+            Orientation = HomeOrientation;
         }
 
         public void Fix()
         {
             HomePosition = Position;
-            HomeRotation = Rotation;
+            HomeOrientation = Orientation;
         }
 
         #region Private Properties
@@ -55,7 +55,7 @@
         private float _Pitch, _Yaw, _Roll;
 
         private Vector3 HomePosition = Vector3.Zero;
-        private Vector3 HomeRotation = Vector3.Zero;
+        private Vector3 HomeOrientation = Vector3.Zero;
 
         #endregion
     }

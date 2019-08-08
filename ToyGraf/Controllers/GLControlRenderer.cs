@@ -114,12 +114,13 @@
         }
 
         private Scene Scene => SceneController.Scene;
-        private List<Trace> Traces => Scene.Traces;
+        private List<Trace> Traces => Scene._Traces;
 
         protected override IEnumerable<IEntity> GetEntities()
         {
-            foreach (var trace in Traces)
-                yield return trace;
+            yield break;
+            //foreach (var trace in Traces)
+            //    yield return trace;
 
             /*
             int xc = 1000, yc = 1000;

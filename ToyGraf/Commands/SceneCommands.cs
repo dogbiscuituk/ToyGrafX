@@ -1,9 +1,18 @@
 ﻿namespace ToyGraf.Commands
 {
+    using OpenTK;
+
     internal class SceneFpsCommand : ScenePropertyCommand<double>
     {
         internal SceneFpsCommand(double value) : base("FPS",
             value, s => s._FPS, (s, v) => s._FPS = v)
+        { }
+    }
+
+    internal class SceneProjectionCommand : ScenePropertyCommand<Matrix4>
+    {
+        internal SceneProjectionCommand(Matrix4 value) : base("Projection",
+            value, s => s.GetProjection(), (s, v) => s.SetProjection(v))
         { }
     }
 

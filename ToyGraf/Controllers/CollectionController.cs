@@ -31,7 +31,6 @@
         private static CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         private static Scene Scene => CommandProcessor?.Scene;
         private static SceneController SceneController;
-        private static List<Trace> Traces => Scene?.Traces;
         private static List<Trace> _Traces => Scene?._Traces;
 
         #endregion

@@ -1,18 +1,27 @@
 ﻿namespace ToyGraf.Models
 {
     using Newtonsoft.Json;
+    using OpenTK;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Drawing;
     using System.Drawing.Design;
     using System.Linq;
     using ToyGraf.Commands;
     using ToyGraf.Controllers;
     using ToyGraf.Controls;
+    using ToyGraf.Engine;
+    using ToyGraf.Engine.Utility;
 
     [DefaultProperty("Traces")]
     public class Scene
     {
         #region Public Interface
+
+        public Scene()
+        {
+            RestoreDefaults();
+        }
 
         internal Scene(SceneController sceneController)
         {
@@ -26,7 +35,9 @@
 
         #endregion
 
-        #region Public Editable Properties
+        #region Browsable Properties
+
+        #region Scene
 
         [Category("Scene")]
         [DefaultValue(Defaults.FPS)]
@@ -53,68 +64,144 @@
             set => _Traces = value;
         }
 
-        [Category("Camera")]
+        #endregion
+
+        #region Camera
+
+        [Category(Defaults.Camera)]
         [DefaultValue(Defaults.CameraX)]
-        [Description("The X component of the camera location.")]
+        [Description("The X component of the camera position.")]
         [DisplayName("Camera (X)")]
         [JsonIgnore]
         public float CameraX { get => _CameraX; set => Run(new CameraXCommand(value)); }
 
-        [Category("Camera")]
+        [Category(Defaults.Camera)]
         [DefaultValue(Defaults.CameraY)]
-        [Description("The Y component of the camera location.")]
+        [Description("The Y component of the camera position.")]
         [DisplayName("Camera (Y)")]
         [JsonIgnore]
         public float CameraY { get => _CameraY; set => Run(new CameraYCommand(value)); }
 
-        [Category("Camera")]
+        [Category(Defaults.Camera)]
         [DefaultValue(Defaults.CameraZ)]
-        [Description("The Z component of the camera location.")]
+        [Description("The Z component of the camera position.")]
         [DisplayName("Camera (Z)")]
         [JsonIgnore]
         public float CameraZ { get => _CameraZ; set => Run(new CameraZCommand(value)); }
 
-        [Category("Camera")]
+        [Category(Defaults.Camera)]
         [DefaultValue(Defaults.CameraPitch)]
-        [Description("The pitch component of the camera rotation (in degrees).")]
+        [Description("The pitch component of the camera orientation (in degrees).")]
         [DisplayName("Camera Pitch°")]
         [JsonIgnore]
         public float CameraPitch { get => _CameraPitch; set => Run(new CameraPitchCommand(value)); }
 
-        [Category("Camera")]
+        [Category(Defaults.Camera)]
         [DefaultValue(Defaults.CameraRoll)]
-        [Description("The roll component of the camera rotation (in degrees).")]
+        [Description("The roll component of the camera orientation (in degrees).")]
         [DisplayName("Camera Roll°")]
         [JsonIgnore]
         public float CameraRoll { get => _CameraRoll; set => Run(new CameraRollCommand(value)); }
 
-        [Category("Camera")]
+        [Category(Defaults.Camera)]
         [DefaultValue(Defaults.CameraYaw)]
-        [Description("The yaw component of the camera rotation (in degrees).")]
+        [Description("The yaw component of the camera orientation (in degrees).")]
         [DisplayName("Camera Yaw°")]
         [JsonIgnore]
         public float CameraYaw { get => _CameraYaw; set => Run(new CameraYawCommand(value)); }
 
-        [Category("Perspective")]
+        #endregion
+
+        #region Projection
+
+        [Category(Defaults.Projection)]
         [DefaultValue(Defaults.FieldOfView)]
-        [Description("The frustrum field of view (Y component, in degrees).")]
+        [Description("The frustrum field of view (Y component, degrees).")]
         [DisplayName("Field of View Y°")]
         [JsonIgnore]
         public float FieldOfView { get => _FieldOfView; set => Run(new FieldOfViewCommand(value)); }
 
-        [Category("Perspective")]
+        [Category(Defaults.Projection)]
         [DefaultValue(Defaults.NearPlane)]
         [Description("The distance from the camera position to the near plane of the frustrum.")]
         [DisplayName("Near Plane")]
         [JsonIgnore]
         public float NearPlane { get => _NearPlane; set => Run(new NearPlaneCommand(value)); }
 
-        [Category("Perspective")]
+        [Category(Defaults.Projection)]
         [DefaultValue(Defaults.FarPlane)]
         [Description("The distance from the camera position to the far plane of the frustrum.")]
         [DisplayName("Far Plane")]
         [JsonIgnore]
         public float FarPlane { get => _FarPlane; set => Run(new FarPlaneCommand(value)); }
+
+        #endregion
+
+        #region Read Only / System
+
+        [Category(Defaults.SystemRO)]
+        [Description("The camera orientation for the scene.")]
+        [DisplayName("Camera Orientation")]
+        [JsonIgnore]
+        public Vector3 CameraOrientation
+        {
+            get => GetCameraOrientation();
+            set => Run(new CameraOrientationCommand(value));
+        }
+
+        [Category(Defaults.SystemRO)]
+        [Description("The camera position for the scene.")]
+        [DisplayName("Camera Position")]
+        [JsonIgnore]
+        public Vector3 CameraPosition
+        {
+            get => GetCameraPosition();
+            set => Run(new CameraPositionCommand(value));
+        }
+
+        [Category(Defaults.SystemRO)]
+        [Description("The camera view matrix for the scene.")]
+        [DisplayName("Camera View")]
+        [JsonIgnore]
+        public Matrix4 CameraView
+        {
+            get => GetCameraView();
+            set => Run(new CameraViewCommand(value));
+        }
+
+        [Category(Defaults.SystemRO)]
+        [Description("The projection matrix for the scene.")]
+        [DisplayName("Projection")]
+        [JsonIgnore]
+        public Matrix4 Projection
+        {
+            get => GetProjection();
+            set => Run(new SceneProjectionCommand(value));
+        }
+
+        #endregion
+
+        internal Vector3 GetCameraOrientation() => new Vector3(_CameraPitch, _CameraYaw, _CameraRoll);
+        internal Vector3 GetCameraPosition() => new Vector3(_CameraX, _CameraY, _CameraZ);
+        internal Matrix4 GetCameraView() => Maths.CreateCameraView(CameraPosition, CameraOrientation);
+        internal Matrix4 GetProjection() => Maths.CreatePerspectiveProjection(FieldOfView, 1980f / 1080f, NearPlane, FarPlane);
+
+        internal void SetCameraOrientation(Vector3 cameraOrientation)
+        {
+            _CameraPitch = cameraOrientation.X;
+            _CameraYaw = cameraOrientation.Y;
+            _CameraRoll = cameraOrientation.Z;
+        }
+
+        internal void SetCameraPosition(Vector3 cameraPosition)
+        {
+            _CameraX = cameraPosition.X;
+            _CameraY = cameraPosition.Y;
+            _CameraZ = cameraPosition.Z;
+        }
+
+        internal void SetCameraView(Matrix4 cameraView) { }
+        internal void SetProjection(Matrix4 projection) { }
 
         #endregion
 
@@ -165,7 +252,7 @@
 
         internal void AttachTraces()
         {
-            foreach (var trace in Traces)
+            foreach (var trace in _Traces)
                 trace.Init(this);
         }
 

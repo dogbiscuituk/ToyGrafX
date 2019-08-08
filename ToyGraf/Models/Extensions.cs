@@ -1,6 +1,4 @@
-﻿using ToyGraf.Models.Enums;
-
-namespace ToyGraf.Models
+﻿namespace ToyGraf.Models
 {
     public static class Extensions
     {
@@ -32,12 +30,13 @@ namespace ToyGraf.Models
             target.Shader4_Geometry = source.Shader4_Geometry;
             target.Shader5_Fragment = source.Shader5_Fragment;
             target.Shader6_Compute = source.Shader6_Compute;
-            target._ShaderStatus = source.ShaderStatus;
+            target._GPUStatus = source.GPUStatus;
             // Terrain
             target.StripCountX = source.StripCountX;
             target.StripCountY = source.StripCountY;
             target.StripCountZ = source.StripCountZ;
             // Trace
+            target.Title = source.Title;
             target.Visible = source.Visible;
         }
     }
