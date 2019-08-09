@@ -29,6 +29,11 @@
             RestoreDefaults();
         }
 
+        public override string ToString() =>
+            !string.IsNullOrWhiteSpace(Title)
+            ? _Title
+            : "New scene";
+
         internal event PropertyChangedEventHandler PropertyChanged;
 
         internal void Clear() { }

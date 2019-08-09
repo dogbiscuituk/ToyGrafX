@@ -35,20 +35,17 @@
             PropertyGridController = new PropertyGridController(this);
             Scene.PropertyChanged += Scene_PropertyChanged;
 
-            PropertyGridController.SelectedObject = Scene;
+            AttachControllers();
 
             Timer = new Timer();
             Timer.Tick += Timer_Tick;
             TimerStart();
         }
 
+        internal void AttachControllers() => PropertyGridController.SelectedObject = Scene;
         internal void BeginUpdate() => UpdateCount++;
-
-        internal void EndUpdate()
-        {
-            if (--UpdateCount == 0)
-                OnPropertyChanged(string.Empty);
-        }
+        internal void DetachControllers() => PropertyGridController.SelectedObject = null;
+        internal void EndUpdate() { if (--UpdateCount == 0) OnPropertyChanged(string.Empty); }
 
         internal static void InitTextureDialog(OpenFileDialog dialog)
         {
@@ -260,11 +257,13 @@
 
         private void FileLoaded()
         {
+            DetachControllers();
             Scene.SceneController = this;
             BeginUpdate();
             Scene.AttachTraces();
             CommandProcessor.Clear();
             EndUpdate();
+            AttachControllers();
         }
 
         private void FilePathRequest(SdiController.FilePathEventArgs e)
