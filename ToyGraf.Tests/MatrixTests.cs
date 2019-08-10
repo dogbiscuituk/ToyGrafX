@@ -165,7 +165,7 @@
         }
 
         /// <summary>
-        /// Get the view matrix for the default camera position & orientation.
+        /// Get the view matrix for the default camera location & orientation.
         /// </summary>
         [TestMethod]
         public void CreateCameraView()
@@ -176,13 +176,13 @@
         }
 
         /// <summary>
-        /// Get the view matrix for an offset camera position.
+        /// Get the view matrix for an offset camera location.
         /// </summary>
         [TestMethod]
-        public void CreateCameraViewPosition()
+        public void CreateCameraViewLocation()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 3, 5, 1);
-            var actual = Maths.CreateCameraView(new Camera { Position = new Vector3(-2, -3, -5) });
+            var actual = Maths.CreateCameraView(new Camera { Location = new Vector3(-2, -3, -5) });
             Assert.AreEqual(expected, actual);
         }
 
@@ -220,14 +220,14 @@
         }
 
         /// <summary>
-        /// Get the view matrix for a general camera position & orientation.
+        /// Get the view matrix for a general camera location & orientation.
         /// </summary>
         [TestMethod]
         public void CreateCameraViewGeneral()
         {
             var expected = new Matrix4(0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 13, -11, -7, 1);
             var actual = Maths.CreateCameraView(new Camera
-            { Position = new Vector3(7, 11, 13), Pitch = 90, Yaw = -90, Roll = 90 });
+            { Location = new Vector3(7, 11, 13), Pitch = 90, Yaw = -90, Roll = 90 });
             CompareMatrices(expected, actual);
         }
 

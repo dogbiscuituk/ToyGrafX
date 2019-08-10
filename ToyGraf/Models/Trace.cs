@@ -51,7 +51,7 @@
             !string.IsNullOrWhiteSpace(Title)
             ? _Title
             : Index >= 0
-            ? $"Trace #{Index}"
+            ? $"Trace #{Index + 1}"
             : "New trace";
 
         //public void MoveBy(float dx, float dy, float dz) => Location += new Vector3(dx, dy, dz);
@@ -164,7 +164,7 @@
         [Category(Defaults.Placement)]
         [DefaultValue(Defaults.RotationX)]
         [Description("The X component of the trace rotation in world co-ordinates (in degrees).")]
-        [DisplayName("Rotation X°")]
+        [DisplayName("Rotation° X")]
         [JsonIgnore]
         public float RotationX
         {
@@ -175,7 +175,7 @@
         [Category(Defaults.Placement)]
         [DefaultValue(Defaults.RotationY)]
         [Description("The Y component of the trace rotation in world co-ordinates (in degrees).")]
-        [DisplayName("Rotation Y°")]
+        [DisplayName("Rotation° Y")]
         [JsonIgnore]
         public float RotationY
         {
@@ -186,7 +186,7 @@
         [Category(Defaults.Placement)]
         [DefaultValue(Defaults.RotationZ)]
         [Description("The Z component of the trace rotation in world co-ordinates (in degrees).")]
-        [DisplayName("Rotation Z°")]
+        [DisplayName("Rotation° Z")]
         [JsonIgnore]
         public float RotationZ
         {

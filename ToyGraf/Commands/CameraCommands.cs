@@ -16,10 +16,10 @@
         { }
     }
 
-    internal class CameraPositionCommand : ScenePropertyCommand<Vector3>
+    internal class CameraLocationCommand : ScenePropertyCommand<Vector3>
     {
-        internal CameraPositionCommand(Vector3 value) : base("Camera Position",
-            value, s => s.GetCameraPosition(), (s, v) => s.SetCameraPosition(v))
+        internal CameraLocationCommand(Vector3 value) : base("Camera Location",
+            value, s => s.GetCameraLocation(), (s, v) => s.SetCameraLocation(v))
         { }
     }
 

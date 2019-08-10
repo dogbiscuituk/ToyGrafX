@@ -139,11 +139,11 @@
 
         public override bool Run(Scene scene)
         {
-            var count = GetItemsCount(scene);
             if (Adding)
             {
                 if (Value == null)
                     Value = GetNewItem(scene);
+                var count = GetItemsCount(scene);
                 if (Index >= 0 && Index < count)
                     InsertItem(scene);
                 else if (Index == count)
@@ -152,11 +152,16 @@
                     return false;
             }
             else
+            {
+                if (Value == null)
+                    Value = GetItem(scene);
                 RemoveItem(scene);
+            }
             return true;
         }
 
         protected abstract void AddItem(Scene scene);
+        protected abstract TItem GetItem(Scene scene);
         protected abstract int GetItemsCount(Scene scene);
         protected abstract TItem GetNewItem(Scene scene);
         protected abstract void InsertItem(Scene scene);
@@ -169,9 +174,10 @@
     {
         internal TracesCommand(int index, bool add) : base(index, add) { PropertyName = "trace"; }
 
-        protected override string Target => "Trace";
+        protected override string Target => Value.ToString();
 
         protected override void AddItem(Scene scene) => scene.AddTrace(Value);
+        protected override Trace GetItem(Scene scene) => scene._Traces[Index];
         protected override int GetItemsCount(Scene scene) => scene._Traces.Count;
         protected override Trace GetNewItem(Scene scene) => scene.NewTrace();
         protected override void InsertItem(Scene scene) => scene.InsertTrace(Index, Value);

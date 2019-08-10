@@ -4,16 +4,16 @@
 
     public class Camera
     {
+        public Vector3 Location
+        {
+            get => new Vector3(X, Y, Z);
+            set { X = value.X; Y = value.Y; Z = value.Z; }
+        }
+
         public Vector3 Orientation
         {
             get => new Vector3(Pitch, Yaw, Roll);
             set { Pitch = value.X; Yaw = value.Y; Roll = value.Z; }
-        }
-
-        public Vector3 Position
-        {
-            get => new Vector3(X, Y, Z);
-            set { X = value.X; Y = value.Y; Z = value.Z; }
         }
 
         public float X { get; set; }
@@ -40,13 +40,13 @@
 
         public void Reset()
         {
-            Position = HomePosition;
+            Location = HomeLocation;
             Orientation = HomeOrientation;
         }
 
         public void Fix()
         {
-            HomePosition = Position;
+            HomeLocation = Location;
             HomeOrientation = Orientation;
         }
 
@@ -54,7 +54,7 @@
 
         private float _Pitch, _Yaw, _Roll;
 
-        private Vector3 HomePosition = Vector3.Zero;
+        private Vector3 HomeLocation = Vector3.Zero;
         private Vector3 HomeOrientation = Vector3.Zero;
 
         #endregion

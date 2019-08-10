@@ -30,10 +30,10 @@
             Matrix4.CreateTranslation(translation);
 
         public static Matrix4 CreateCameraView(Camera camera) =>
-            CreateCameraView(camera.Position, camera.Orientation);
+            CreateCameraView(camera.Location, camera.Orientation);
 
-        public static Matrix4 CreateCameraView(Vector3 position, Vector3 orientation) =>
-            Matrix4.CreateTranslation(-position) *
+        public static Matrix4 CreateCameraView(Vector3 location, Vector3 orientation) =>
+            Matrix4.CreateTranslation(-location) *
             Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(orientation.Z)) *
             Matrix4.CreateRotationY(MathHelper.DegreesToRadians(orientation.Y)) *
             Matrix4.CreateRotationX(MathHelper.DegreesToRadians(orientation.X));
