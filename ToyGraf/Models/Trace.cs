@@ -2,7 +2,6 @@
 {
     using Newtonsoft.Json;
     using OpenTK;
-    //using OpenTK;
     using OpenTK.Graphics.OpenGL;
     using System.ComponentModel;
     using System.ComponentModel.Design;
@@ -13,21 +12,13 @@
     using ToyGraf.Models.Enums;
     using ToyGraf.Shaders;
 
-    [DefaultProperty("Shader1_Vertex")]
+    [DefaultProperty("Shader1Vertex")]
     public class Trace : ITrace//, IEntity
     {
         #region Public Interface
 
-        public Trace()
-        {
-            RestoreDefaults();
-        }
-
-        public Trace(Scene scene)
-        {
-            RestoreDefaults();
-            Init(scene);
-        }
+        public Trace() => RestoreDefaults();
+        public Trace(Scene scene) : this() => Init(scene);
 
         public Trace Clone()
         {
@@ -41,17 +32,17 @@
             switch (shaderType)
             {
                 case ShaderType.VertexShader:
-                    return _VertexShader;
+                    return _Shader1Vertex;
                 case ShaderType.TessControlShader:
-                    return _TessControlShader;
+                    return _Shader2TessControl;
                 case ShaderType.TessEvaluationShader:
-                    return _TessEvaluationShader;
+                    return _Shader3TessEvaluation;
                 case ShaderType.GeometryShader:
-                    return _GeometryShader;
+                    return _Shader4Geometry;
                 case ShaderType.FragmentShader:
-                    return _FragmentShader;
+                    return _Shader5Fragment;
                 case ShaderType.ComputeShader:
-                    return _ComputeShader;
+                    return _Shader6Compute;
             }
             return string.Empty;
         }
@@ -75,22 +66,22 @@
             switch (shaderType)
             {
                 case ShaderType.VertexShader:
-                    _VertexShader = script;
+                    _Shader1Vertex = script;
                     break;
                 case ShaderType.TessControlShader:
-                    _TessControlShader = script;
+                    _Shader2TessControl = script;
                     break;
                 case ShaderType.TessEvaluationShader:
-                    _TessEvaluationShader = script;
+                    _Shader3TessEvaluation = script;
                     break;
                 case ShaderType.GeometryShader:
-                    _GeometryShader = script;
+                    _Shader4Geometry = script;
                     break;
                 case ShaderType.FragmentShader:
-                    _FragmentShader = script;
+                    _Shader5Fragment = script;
                     break;
                 case ShaderType.ComputeShader:
-                    _ComputeShader = script;
+                    _Shader6Compute = script;
                     break;
             }
             if (Shader != null)
@@ -271,23 +262,23 @@
         #region Shaders
 
         [Category(Defaults.Shaders)]
-        [DefaultValue(Defaults.VertexShader)]
+        [DefaultValue(Defaults.Shader1Vertex)]
         [Description(@"The vertex processor is a programmable unit that operates on incoming vertices and their associated data. Compilation units written in the OpenGL Shading Language to run on this processor are called vertex shaders.
 When a set of vertex shaders are successfully compiled and linked, they result in a vertex shader executable that runs on the vertex processor.
 The vertex processor operates on one vertex at a time. It does not replace graphics operations that require knowledge of several vertices at a time.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("1. Vertex Shader (mandatory)")]
+        [DisplayName("Shader #1: Vertex (mandatory)")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string Shader1_Vertex
+        public string Shader1Vertex
         {
-            get => _VertexShader;
+            get => _Shader1Vertex;
             set => Run(new VertexShaderCommand(Index, value));
         }
 
         [Category(Defaults.Shaders)]
-        [DefaultValue(Defaults.TessControlShader)]
+        [DefaultValue(Defaults.Shader2TessControl)]
         [Description(@"The tessellation control processor is a programmable unit that operates on a patch of incoming vertices and their associated data, emitting a new output patch. Compilation units written in the OpenGL Shading Language to run on this processor are called tessellation control shaders.
 When a set of tessellation control shaders are successfully compiled and linked, they result in a tessellation control shader executable that runs on the tessellation control processor.
 The tessellation control shader is invoked for each vertex of the output patch. Each invocation can read the attributes of any vertex in the input or output patches, but can only write per-vertex attributes for the corresponding output patch vertex.
@@ -296,17 +287,17 @@ Tessellation control shader invocations run mostly independently, with undefined
 Tessellation control shaders will get undefined results if one invocation reads a per-vertex or per-patch attribute written by another invocation at any point during the same phase, or if two invocations attempt to write different values to the same per-patch output in a single phase.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("2. Tessellation Control Shader")]
+        [DisplayName("Shader #2: Tessellation Control")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string Shader2_TessControl
+        public string Shader2TessControl
         {
-            get => _TessControlShader;
+            get => _Shader2TessControl;
             set => Run(new TessControlShaderCommand(Index, value));
         }
 
         [Category(Defaults.Shaders)]
-        [DefaultValue(Defaults.TessEvaluationShader)]
+        [DefaultValue(Defaults.Shader3TessEvaluation)]
         [Description(@"The tessellation evaluation processor is a programmable unit that evaluates the position and other attributes of a vertex generated by the tessellation primitive generator, using a patch of incoming vertices and their associated data.
 Compilation units written in the OpenGL Shading Language to run on this processor are called tessellation evaluation shaders.
 When a set of tessellation evaluation shaders are successfully compiled and linked, they result in a tessellation evaluation shader executable that runs on the tessellation evaluation processor.
@@ -314,17 +305,17 @@ Each invocation of the tessellation evaluation executable computes the position 
 The executable can read the attributes of any vertex in the input patch, plus the tessellation coordinate, which is the relative location of the vertex in the primitive being tessellated. The executable writes the position and other attributes of the vertex.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("3. Tessellation Evaluation Shader")]
+        [DisplayName("Shader #3: Tessellation Evaluation")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string Shader3_TessEvaluation
+        public string Shader3TessEvaluation
         {
-            get => _TessEvaluationShader;
+            get => _Shader3TessEvaluation;
             set => Run(new TessEvaluationShaderCommand(Index, value));
         }
 
         [Category(Defaults.Shaders)]
-        [DefaultValue(Defaults.GeometryShader)]
+        [DefaultValue(Defaults.Shader4Geometry)]
         [Description(@"The geometry processor is a programmable unit that operates on data for incoming vertices for a primitive assembled after vertex processing and outputs a sequence of vertices forming output primitives.
 Compilation units written in the OpenGL Shading Language to run on this processor are called geometry shaders.
 When a set of geometry shaders are successfully compiled and linked, they result in a geometry shader executable that runs on the geometry processor.
@@ -332,34 +323,34 @@ A single invocation of the geometry shader executable on the geometry processor 
 This single invocation can emit a variable number of vertices that are assembled into primitives of a declared output primitive type and passed to subsequent pipeline stages.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("4. Geometry Shader")]
+        [DisplayName("Shader #4: Geometry")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string Shader4_Geometry
+        public string Shader4Geometry
         {
-            get => _GeometryShader;
+            get => _Shader4Geometry;
             set => Run(new GeometryShaderCommand(Index, value));
         }
 
         [Category(Defaults.Shaders)]
-        [DefaultValue(Defaults.FragmentShader)]
+        [DefaultValue(Defaults.Shader5Fragment)]
         [Description(@"The fragment processor is a programmable unit that operates on fragment values and their associated data. Compilation units written in the OpenGL Shading Language to run on this processor are called fragment shaders.
 When a set of fragment shaders are successfully compiled and linked, they result in a fragment shader executable that runs on the fragment processor.
 A fragment shader cannot change a fragment's (x, y) position. Access to neighboring fragments is not allowed.
 The values computed by the fragment shader are ultimately used to update framebuffer memory or texture memory, depending on the current OpenGL state and the OpenGL command that caused the fragments to be generated.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("5. Fragment Shader (mandatory)")]
+        [DisplayName("Shader #5: Fragment (mandatory)")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string Shader5_Fragment
+        public string Shader5Fragment
         {
-            get => _FragmentShader;
+            get => _Shader5Fragment;
             set => Run(new FragmentShaderCommand(Index, value));
         }
 
         [Category(Defaults.Shaders)]
-        [DefaultValue(Defaults.ComputeShader)]
+        [DefaultValue(Defaults.Shader6Compute)]
         [Description(@"The compute processor is a programmable unit that operates independently from the other shader processors. Compilation units written in the OpenGL Shading Language to run on this processor are called compute shaders.
 When a set of compute shaders are successfully compiled and linked, they result in a compute shader executable that runs on the compute processor.
 A compute shader has access to many of the same resources as fragment and other shader processors, including textures, buffers, image variables, and atomic counters. It does not have any predefined inputs nor any fixed-function outputs.
@@ -368,12 +359,12 @@ A compute shader operates on a group of work items called a work group. A work g
 An invocation within a work group may share data with other members of the same work group through shared variables and issue memory and control barriers to synchronize with other members of the same work group.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("6. Compute Shader")]
+        [DisplayName("Shader #6: Compute")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string Shader6_Compute
+        public string Shader6Compute
         {
-            get => _ComputeShader;
+            get => _Shader6Compute;
             set => Run(new ComputeShaderCommand(Index, value));
         }
 
@@ -451,12 +442,12 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         [JsonProperty]
         internal string
-            _VertexShader,
-            _TessControlShader,
-            _TessEvaluationShader,
-            _GeometryShader,
-            _FragmentShader,
-            _ComputeShader,
+            _Shader1Vertex,
+            _Shader2TessControl,
+            _Shader3TessEvaluation,
+            _Shader4Geometry,
+            _Shader5Fragment,
+            _Shader6Compute,
             _GPUStatus;
 
         // Terrain
@@ -534,12 +525,12 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
             // Trace Shaders
 
-            _VertexShader = Defaults.VertexShader;
-            _TessControlShader = Defaults.TessControlShader;
-            _TessEvaluationShader = Defaults.TessEvaluationShader;
-            _GeometryShader = Defaults.GeometryShader;
-            _FragmentShader = Defaults.FragmentShader;
-            _ComputeShader = Defaults.ComputeShader;
+            _Shader1Vertex = Defaults.Shader1Vertex;
+            _Shader2TessControl = Defaults.Shader2TessControl;
+            _Shader3TessEvaluation = Defaults.Shader3TessEvaluation;
+            _Shader4Geometry = Defaults.Shader4Geometry;
+            _Shader5Fragment = Defaults.Shader5Fragment;
+            _Shader6Compute = Defaults.Shader6Compute;
             _GPUStatus = Defaults.GPUStatus;
 
             // Trace Terrain

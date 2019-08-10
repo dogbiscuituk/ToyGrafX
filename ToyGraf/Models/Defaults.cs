@@ -71,13 +71,13 @@ namespace ToyGraf.Models
         // Trace Shaders
 
         internal const string
-            VertexShader = "",
-            TessControlShader = "",
-            TessEvaluationShader = "",
-            GeometryShader = "",
-            FragmentShader = "",
-            ComputeShader = "",
-            GPUStatus = "";
+            GPUStatus = "",
+            Shader1Vertex = "",
+            Shader2TessControl = "",
+            Shader3TessEvaluation = "",
+            Shader4Geometry = "",
+            Shader5Fragment = "",
+            Shader6Compute = "";
 
         // Trace Terrain
 

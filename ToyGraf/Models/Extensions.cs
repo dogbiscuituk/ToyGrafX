@@ -24,12 +24,12 @@
             target.RotationZ = source.RotationZ;
             target.Scale = source.Scale;
             // Shaders
-            target.Shader1_Vertex = source.Shader1_Vertex;
-            target.Shader2_TessControl = source.Shader2_TessControl;
-            target.Shader3_TessEvaluation = source.Shader3_TessEvaluation;
-            target.Shader4_Geometry = source.Shader4_Geometry;
-            target.Shader5_Fragment = source.Shader5_Fragment;
-            target.Shader6_Compute = source.Shader6_Compute;
+            target.Shader1Vertex = source.Shader1Vertex;
+            target.Shader2TessControl = source.Shader2TessControl;
+            target.Shader3TessEvaluation = source.Shader3TessEvaluation;
+            target.Shader4Geometry = source.Shader4Geometry;
+            target.Shader5Fragment = source.Shader5Fragment;
+            target.Shader6Compute = source.Shader6Compute;
             target._GPUStatus = source.GPUStatus;
             // Terrain
             target.StripCountX = source.StripCountX;

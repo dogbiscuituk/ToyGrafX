@@ -40,35 +40,38 @@
             GL.ClearColor(Color.White);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Shader.Start();
-
-            lock (this)
-                if (OldProjectionMatrix != NewProjectionMatrix)
-                {
-                    OldProjectionMatrix = NewProjectionMatrix;
-                    LoadProjectionMatrix();
-                }
-
-            GL.VertexAttrib1(1, (float)Time);
-
-            Shader.LoadViewMatrix(Camera);
-            foreach (var entity in Entities)
+            if (Shader != null)
             {
-                var prototype = entity.Prototype;
-                GL.BindVertexArray(prototype.VaoID);
-                GL.EnableVertexAttribArray(0);
+                Shader.Start();
 
-                var transformationMatrix = Maths.CreateTransformation(
-                    entity.Location, entity.Rotation, entity.Scale);
-                Shader.LoadTransformationMatrix(transformationMatrix);
+                lock (this)
+                    if (OldProjectionMatrix != NewProjectionMatrix)
+                    {
+                        OldProjectionMatrix = NewProjectionMatrix;
+                        LoadProjectionMatrix();
+                    }
 
-                //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
-                GL.DrawElements(BeginMode.Triangles, prototype.VertexCount, DrawElementsType.UnsignedInt, 0);
+                GL.VertexAttrib1(1, (float)Time);
 
-                GL.DisableVertexAttribArray(0);
-                GL.BindVertexArray(0);
+                Shader.LoadViewMatrix(Camera);
+                foreach (var entity in Entities)
+                {
+                    var prototype = entity.Prototype;
+                    GL.BindVertexArray(prototype.VaoID);
+                    GL.EnableVertexAttribArray(0);
+
+                    var transformationMatrix = Maths.CreateTransformation(
+                        entity.Location, entity.Rotation, entity.Scale);
+                    Shader.LoadTransformationMatrix(transformationMatrix);
+
+                    //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
+                    GL.DrawElements(BeginMode.Triangles, prototype.VertexCount, DrawElementsType.UnsignedInt, 0);
+
+                    GL.DisableVertexAttribArray(0);
+                    GL.BindVertexArray(0);
+                }
+                Shader.Stop();
             }
-            Shader.Stop();
             SwapBuffers();
         }
 

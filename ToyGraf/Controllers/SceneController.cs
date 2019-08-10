@@ -290,17 +290,17 @@
         {
             switch (propertyGrid.SelectedGridItem?.PropertyDescriptor.Name)
             {
-                case "Shader1_Vertex":
+                case "Shader1Vertex":
                     return "#vertex-processor";
-                case "Shader2_TessControl":
+                case "Shader2TessControl":
                     return "#tessellation-control-processor";
-                case "Shader3_TessEvaluation":
+                case "Shader3TessEvaluation":
                     return "#tessellation-evaluation-processor";
-                case "Shader4_Geometry":
+                case "Shader4Geometry":
                     return "#geometry-processor";
-                case "Shader5_Fragment":
+                case "Shader5Fragment":
                     return "#fragment-processor";
-                case "Shader6_Compute":
+                case "Shader6Compute":
                     return "#compute-processor";
                 default:
                     return string.Empty;
