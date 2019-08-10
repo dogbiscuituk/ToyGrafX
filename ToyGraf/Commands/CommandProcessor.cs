@@ -25,16 +25,7 @@
             SceneForm.tbRedo.DropDownOpening += TbRedo_DropDownOpening;
         }
 
-        internal bool IsModified
-        {
-            get => UndoStack.Any();
-            set
-            {
-                if (!value)
-                    Clear();
-            }
-        }
-
+        internal bool IsModified => UndoStack.Any();
         internal Scene Scene => SceneController.Scene;
         internal List<Trace> Traces => Scene._Traces;
 
@@ -53,7 +44,6 @@
         {
             Redo(command);
             RedoStack.Clear();
-            UpdateUI();
         }
 
         #endregion
@@ -186,6 +176,7 @@
             SceneForm.EditRedo.Text = $"&{redo}";
             SceneForm.tbUndo.ToolTipText = $"{undo} (^Z)";
             SceneForm.tbRedo.ToolTipText = $"{redo} (^Y)";
+            SceneController.ModifiedChanged();
         }
 
         #endregion

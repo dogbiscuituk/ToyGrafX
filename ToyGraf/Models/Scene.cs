@@ -210,13 +210,8 @@
 
         #endregion
 
-        internal bool IsModified
-        {
-            get => CommandProcessor?.IsModified ?? false;
-            set => CommandProcessor.IsModified = value;
-        }
-
         internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
+        internal bool IsModified => CommandProcessor?.IsModified ?? false;
         internal SceneController SceneController;
 
         #region Persistent Fields

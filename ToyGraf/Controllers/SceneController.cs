@@ -46,6 +46,7 @@
         internal void BeginUpdate() => UpdateCount++;
         internal void DetachControllers() => PropertyGridController.SelectedObject = null;
         internal void EndUpdate() { if (--UpdateCount == 0) OnPropertyChanged(string.Empty); }
+        internal void ModifiedChanged() => SceneForm.Text = JsonController.WindowCaption;
 
         internal static void InitTextureDialog(OpenFileDialog dialog)
         {
