@@ -67,7 +67,7 @@
 
     internal class EntityTransformationCommand : TracePropertyCommand<Matrix4>
     {
-        internal EntityTransformationCommand(int index, Matrix4 value) : base(index, "Transformation Matrix",
+        internal EntityTransformationCommand(int index, Matrix4 value) : base(index, "Transformation",
             value, e => e.GetTransformation(), (e, v) => e.SetTransformation(v))
         { }
     }
