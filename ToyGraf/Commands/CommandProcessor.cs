@@ -42,9 +42,8 @@
 
         public void Run(ICommand command)
         {
-            Redo(command);
             RedoStack.Clear();
-            UpdateUI();
+            Redo(command);
         }
 
         #endregion
@@ -64,6 +63,8 @@
         private readonly SceneController SceneController;
         private SceneForm SceneForm => SceneController.SceneForm;
 
+        private int UpdateCount;
+
         #endregion
 
         #region Private Event Handlers
@@ -75,9 +76,27 @@
         private static void UndoRedoItems_MouseEnter(object sender, EventArgs e) => HighlightUndoRedoItems((ToolStripItem)sender);
         private static void UndoRedoItems_Paint(object sender, PaintEventArgs e) => HighlightUndoRedoItems((ToolStripItem)sender);
 
+        private void RedoMultiple(object sender, EventArgs e)
+        {
+            BeginUpdate();
+            var peek = ((ToolStripItem)sender).Tag;
+            do Redo(); while (UndoStack.Peek() != peek);
+            EndUpdate();
+        }
+
+        private void UndoMultiple(object sender, EventArgs e)
+        {
+            BeginUpdate();
+            var peek = ((ToolStripItem)sender).Tag;
+            do Undo(); while (RedoStack.Peek() != peek);
+            EndUpdate();
+        }
+
         #endregion
 
         #region Private Methods
+
+        private void BeginUpdate() { ++UpdateCount; }
 
         private bool CanGroup(ICommand cmd1, ICommand cmd2)
         {
@@ -119,6 +138,12 @@
             }
         }
 
+        private void EndUpdate()
+        {
+            if (--UpdateCount == 0)
+                UpdateUI();
+        }
+
         private static void HighlightUndoRedoItems(ToolStripItem activeItem)
         {
             if (!activeItem.Selected)
@@ -143,12 +168,6 @@
             return true;
         }
 
-        private void RedoMultiple(object sender, EventArgs e)
-        {
-            var peek = ((ToolStripItem)sender).Tag;
-            do Redo(); while (UndoStack.Peek() != peek);
-        }
-
         private bool Undo() => CanUndo && Undo(UndoStack.Pop());
 
         private bool Undo(ICommand command)
@@ -160,14 +179,10 @@
             return true;
         }
 
-        private void UndoMultiple(object sender, EventArgs e)
-        {
-            var peek = ((ToolStripItem)sender).Tag;
-            do Undo(); while (RedoStack.Peek() != peek);
-        }
-
         private void UpdateUI()
         {
+            if (UpdateCount > 0)
+                return;
             string
                 undo = CanUndo ? $"Undo {UndoAction}" : "Undo",
                 redo = CanRedo ? $"Redo {RedoAction}" : "Redo";

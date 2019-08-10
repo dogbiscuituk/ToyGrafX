@@ -12,21 +12,21 @@
     internal class EntityLocationXCommand : TracePropertyCommand<float>
     {
         internal EntityLocationXCommand(int index, float value) : base(index, "X",
-            value, e => e._LocationX, (e, v) => e._LocationX = value)
+            value, e => e._LocationX, (e, v) => e._LocationX = v)
         { }
     }
 
     internal class EntityLocationYCommand : TracePropertyCommand<float>
     {
         internal EntityLocationYCommand(int index, float value) : base(index, "Y",
-            value, e => e._LocationY, (e, v) => e._LocationY = value)
+            value, e => e._LocationY, (e, v) => e._LocationY = v)
         { }
     }
 
     internal class EntityLocationZCommand : TracePropertyCommand<float>
     {
         internal EntityLocationZCommand(int index, float value) : base(index, "Z",
-            value, e => e._LocationZ, (e, v) => e._LocationZ = value)
+            value, e => e._LocationZ, (e, v) => e._LocationZ = v)
         { }
     }
 
@@ -40,21 +40,21 @@
     internal class EntityRotationXCommand : TracePropertyCommand<float>
     {
         internal EntityRotationXCommand(int index, float value) : base(index, "Rotation X",
-            value, e => e._RotationX, (e, v) => e._RotationX = value)
+            value, e => e._RotationX, (e, v) => e._RotationX = v)
         { }
     }
 
     internal class EntityRotationYCommand : TracePropertyCommand<float>
     {
         internal EntityRotationYCommand(int index, float value) : base(index, "Rotation Y",
-            value, e => e._RotationY, (e, v) => e._RotationY = value)
+            value, e => e._RotationY, (e, v) => e._RotationY = v)
         { }
     }
 
     internal class EntityRotationZCommand : TracePropertyCommand<float>
     {
         internal EntityRotationZCommand(int index, float value) : base(index, "Rotation Z",
-            value, e => e._RotationZ, (e, v) => e._RotationZ = value)
+            value, e => e._RotationZ, (e, v) => e._RotationZ = v)
         { }
     }
 

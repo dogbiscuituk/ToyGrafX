@@ -7,7 +7,7 @@
         internal ShaderCommand(int index, ShaderType shaderType, string value)
             : base(index, GetShaderName(shaderType), value,
                   t => t.GetScript(shaderType),
-                  (t, v) => t.SetScript(shaderType, value))
+                  (t, v) => t.SetScript(shaderType, v))
         { }
 
         private static string GetShaderName(ShaderType shaderType)
