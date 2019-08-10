@@ -39,7 +39,7 @@
 
     internal class CameraXCommand : ScenePropertyCommand<float>
     {
-        internal CameraXCommand(float value) : base("Camera Position X",
+        internal CameraXCommand(float value) : base("Camera X",
             value, s => s._CameraX, (s, v) => s._CameraX = value)
         { }
     }
@@ -53,14 +53,14 @@
 
     internal class CameraYCommand : ScenePropertyCommand<float>
     {
-        internal CameraYCommand(float value) : base("Camera Position Y",
+        internal CameraYCommand(float value) : base("Camera Y",
             value, s => s._CameraY, (s, v) => s._CameraY = value)
         { }
     }
 
     internal class CameraZCommand : ScenePropertyCommand<float>
     {
-        internal CameraZCommand(float value) : base("Camera Position Z",
+        internal CameraZCommand(float value) : base("Camera Z",
             value, s => s._CameraZ, (s, v) => s._CameraZ = value)
         { }
     }

@@ -90,7 +90,7 @@
 
         public void RunOn(Scene scene) => Set(scene, Value);
 
-        protected override string Target => "scene";
+        protected override string Target => "Scene";
         protected override Scene GetItem(Scene scene) => scene;
     }
 

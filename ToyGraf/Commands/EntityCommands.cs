@@ -11,21 +11,21 @@
 
     internal class EntityLocationXCommand : TracePropertyCommand<float>
     {
-        internal EntityLocationXCommand(int index, float value) : base(index, "Location X",
+        internal EntityLocationXCommand(int index, float value) : base(index, "X",
             value, e => e._LocationX, (e, v) => e._LocationX = value)
         { }
     }
 
     internal class EntityLocationYCommand : TracePropertyCommand<float>
     {
-        internal EntityLocationYCommand(int index, float value) : base(index, "Location Y",
+        internal EntityLocationYCommand(int index, float value) : base(index, "Y",
             value, e => e._LocationY, (e, v) => e._LocationY = value)
         { }
     }
 
     internal class EntityLocationZCommand : TracePropertyCommand<float>
     {
-        internal EntityLocationZCommand(int index, float value) : base(index, "Location Z",
+        internal EntityLocationZCommand(int index, float value) : base(index, "Z",
             value, e => e._LocationZ, (e, v) => e._LocationZ = value)
         { }
     }
@@ -67,7 +67,7 @@
 
     internal class EntityTransformationCommand : TracePropertyCommand<Matrix4>
     {
-        internal EntityTransformationCommand(int index, Matrix4 value) : base(index, "Transformation Matrix",
+        internal EntityTransformationCommand(int index, Matrix4 value) : base(index, "Transformation",
             value, e => e.GetTransformation(), (e, v) => e.SetTransformation(v))
         { }
     }

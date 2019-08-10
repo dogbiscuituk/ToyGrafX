@@ -44,6 +44,7 @@
         {
             Redo(command);
             RedoStack.Clear();
+            UpdateUI();
         }
 
         #endregion
