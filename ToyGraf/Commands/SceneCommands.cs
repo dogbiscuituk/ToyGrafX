@@ -18,7 +18,7 @@
 
     internal class SceneTitleCommand : ScenePropertyCommand<string>
     {
-        internal SceneTitleCommand(string value) : base("Script",
+        internal SceneTitleCommand(string value) : base("Title",
             value, s => s._Title, (s, v) => s._Title = v)
         { }
     }
