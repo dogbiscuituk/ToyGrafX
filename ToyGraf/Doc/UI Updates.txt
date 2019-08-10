@@ -1,0 +1,26 @@
+The major UI update operations are:
+
+  1. Connect the PropertyGrid to its data source (Scene or List<Trace>);
+  2. Refresh the PropertyGrid when a property has changed;
+  3. Update the Undo/Redo menus, and the IsModified indicator in the SceneForm caption text, in response to edit operations.
+
+
+ScenController() --- OR --- ScenController.FileLoaded()
+ \
+  SceneController.AttachControllers()
+   \
+    PropertyGridController.SelectedObject = Scene;
+
+
+SceneController.OnPropertyChanged()
+ \
+  PropertyGridController.Refresh()
+   \
+    PropertyGrid.Refresh()
+
+
+CommandProcessor.Clear() --- OR --- Undo() --- OR --- Redo() --- OR --- EndUpdate()
+ \
+  CommandProcessor.UpdateUI()
+   \
+    SceneController.ModifiedChanged();

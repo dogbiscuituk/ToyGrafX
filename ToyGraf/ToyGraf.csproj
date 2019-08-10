@@ -410,5 +410,8 @@
     <None Include="Doc\Shader Status.txt" />
     <None Include="Doc\Shader.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Doc\UI Updates.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

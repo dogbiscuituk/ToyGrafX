@@ -239,7 +239,7 @@
 
         private readonly FullScreenController FullScreenController;
         private readonly JsonController JsonController;
-        private Timer Timer;
+        private readonly Timer Timer;
         private int UpdateCount;
 
         private bool Updating => UpdateCount > 0;
