@@ -19,9 +19,9 @@
             target.LocationX = source.LocationX;
             target.LocationY = source.LocationY;
             target.LocationZ = source.LocationZ;
-            target.RotationX = source.RotationX;
-            target.RotationY = source.RotationY;
-            target.RotationZ = source.RotationZ;
+            target.OrientationX = source.OrientationX;
+            target.OrientationY = source.OrientationY;
+            target.OrientationZ = source.OrientationZ;
             target.Scale = source.Scale;
             // Shaders
             target.Shader1Vertex = source.Shader1Vertex;

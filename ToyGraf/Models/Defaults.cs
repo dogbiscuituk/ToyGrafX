@@ -60,9 +60,9 @@ namespace ToyGraf.Models
             LocationX = 0,
             LocationY = 0,
             LocationZ = 0,
-            RotationX = 0,
-            RotationY = 0,
-            RotationZ = 0,
+            OrientationX = 0,
+            OrientationY = 0,
+            OrientationZ = 0,
             Scale = 1;
 
         internal const YN

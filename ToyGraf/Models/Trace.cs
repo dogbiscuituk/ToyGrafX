@@ -13,7 +13,7 @@
     using ToyGraf.Shaders;
 
     [DefaultProperty("Shader1Vertex")]
-    public class Trace : ITrace//, IEntity
+    public class Trace
     {
         #region Public Interface
 
@@ -56,8 +56,8 @@
 
         //public void MoveBy(float dx, float dy, float dz) => Location += new Vector3(dx, dy, dz);
         //public void MoveTo(float x, float y, float z) => Location += new Vector3(x, y, z);
-        //public void RotateBy(float dx, float dy, float dz) => Rotation += new Vector3(dx, dy, dz);
-        //public void RotateTo(float x, float y, float z) => Rotation += new Vector3(x, y, z);
+        //public void RotateBy(float dx, float dy, float dz) => Orientation += new Vector3(dx, dy, dz);
+        //public void RotateTo(float x, float y, float z) => Orientation += new Vector3(x, y, z);
         //public void ScaleBy(float scale) => Scale *= scale;
         //public void ScaleTo(float scale) => Scale = scale;
 
@@ -162,36 +162,36 @@
         }
 
         [Category(Defaults.Placement)]
-        [DefaultValue(Defaults.RotationX)]
-        [Description("The X component of the trace rotation in world co-ordinates (in degrees).")]
-        [DisplayName("Rotation° X")]
+        [DefaultValue(Defaults.OrientationX)]
+        [Description("The X component of the trace orientation in world co-ordinates (in degrees).")]
+        [DisplayName("Orientation° X")]
         [JsonIgnore]
-        public float RotationX
+        public float OrientationX
         {
-            get => _RotationX;
-            set => Run(new EntityRotationXCommand(Index, value));
+            get => _OrientationX;
+            set => Run(new EntityOrientationXCommand(Index, value));
         }
 
         [Category(Defaults.Placement)]
-        [DefaultValue(Defaults.RotationY)]
-        [Description("The Y component of the trace rotation in world co-ordinates (in degrees).")]
-        [DisplayName("Rotation° Y")]
+        [DefaultValue(Defaults.OrientationY)]
+        [Description("The Y component of the trace orientation in world co-ordinates (in degrees).")]
+        [DisplayName("Orientation° Y")]
         [JsonIgnore]
-        public float RotationY
+        public float OrientationY
         {
-            get => _RotationY;
-            set => Run(new EntityRotationYCommand(Index, value));
+            get => _OrientationY;
+            set => Run(new EntityOrientationYCommand(Index, value));
         }
 
         [Category(Defaults.Placement)]
-        [DefaultValue(Defaults.RotationZ)]
-        [Description("The Z component of the trace rotation in world co-ordinates (in degrees).")]
-        [DisplayName("Rotation° Z")]
+        [DefaultValue(Defaults.OrientationZ)]
+        [Description("The Z component of the trace orientation in world co-ordinates (in degrees).")]
+        [DisplayName("Orientation° Z")]
         [JsonIgnore]
-        public float RotationZ
+        public float OrientationZ
         {
-            get => _RotationZ;
-            set => Run(new EntityRotationZCommand(Index, value));
+            get => _OrientationZ;
+            set => Run(new EntityOrientationZCommand(Index, value));
         }
 
         [Category(Defaults.Placement)]
@@ -238,13 +238,13 @@
         }
 
         [Category(Defaults.SystemRO)]
-        [Description("The rotation of the trace in world co-ordinates (in degrees).")]
-        [DisplayName("Rotation°")]
+        [Description("The orientation of the trace in world co-ordinates (in degrees).")]
+        [DisplayName("Orientation°")]
         [JsonIgnore]
-        public Vector3 Rotation
+        public Vector3 Orientation
         {
-            get => GetRotation();
-            set => Run(new EntityRotationCommand(Index, value));
+            get => GetOrientation();
+            set => Run(new EntityOrientationCommand(Index, value));
         }
 
         [Category(Defaults.SystemRO)]
@@ -433,9 +433,9 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _LocationX,
             _LocationY,
             _LocationZ,
-            _RotationX,
-            _RotationY,
-            _RotationZ,
+            _OrientationX,
+            _OrientationY,
+            _OrientationZ,
             _Scale;
 
         // Shaders
@@ -489,8 +489,8 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         #region Non-Public Methods
 
         internal Vector3 GetLocation() => new Vector3(_LocationX, _LocationY, _LocationZ);
-        internal Vector3 GetRotation() => new Vector3(_RotationX, _RotationY, _RotationZ);
-        internal Matrix4 GetTransformation() => Maths.CreateTransformation(Location, Rotation, Scale);
+        internal Vector3 GetOrientation() => new Vector3(_OrientationX, _OrientationY, _OrientationZ);
+        internal Matrix4 GetTransformation() => Maths.CreateTransformation(Location, Orientation, Scale);
 
         internal void Init(Scene scene)
         {
@@ -518,9 +518,9 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _LocationX = Defaults.LocationX;
             _LocationY = Defaults.LocationY;
             _LocationZ = Defaults.LocationZ;
-            _RotationX = Defaults.RotationX;
-            _RotationY = Defaults.RotationY;
-            _RotationZ = Defaults.RotationZ;
+            _OrientationX = Defaults.OrientationX;
+            _OrientationY = Defaults.OrientationY;
+            _OrientationZ = Defaults.OrientationZ;
             _Scale = Defaults.Scale;
 
             // Trace Shaders
@@ -559,18 +559,18 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _LocationZ = location.Z;
         }
 
-        internal void SetRotation(Vector3 rotation)
+        internal void SetOrientation(Vector3 rotation)
         {
-            _RotationX = rotation.X;
-            _RotationY = rotation.Y;
-            _RotationZ = rotation.Z;
+            _OrientationX = rotation.X;
+            _OrientationY = rotation.Y;
+            _OrientationZ = rotation.Z;
         }
 
-        internal void SetRotation(Quaternion rotation)
+        internal void SetOrientation(Quaternion rotation)
         {
-            _RotationX = rotation.X;
-            _RotationY = rotation.Y;
-            _RotationZ = rotation.Z;
+            _OrientationX = rotation.X;
+            _OrientationY = rotation.Y;
+            _OrientationZ = rotation.Z;
         }
 
         internal void SetScale(Vector3 scale) { }
@@ -578,7 +578,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         internal void SetTransformation(Matrix4 transformation)
         {
             SetLocation(transformation.ExtractTranslation());
-            SetRotation(transformation.ExtractRotation());
+            SetOrientation(transformation.ExtractRotation());
             SetScale(transformation.ExtractScale());
         }
 

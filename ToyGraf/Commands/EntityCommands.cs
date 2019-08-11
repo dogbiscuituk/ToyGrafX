@@ -30,31 +30,31 @@
         { }
     }
 
-    internal class EntityRotationCommand : TracePropertyCommand<Vector3>
+    internal class EntityOrientationCommand : TracePropertyCommand<Vector3>
     {
-        internal EntityRotationCommand(int index, Vector3 value) : base(index, "Rotation",
-            value, e => e.GetRotation(), (e, v) => e.SetRotation(v))
+        internal EntityOrientationCommand(int index, Vector3 value) : base(index, "Orientation",
+            value, e => e.GetOrientation(), (e, v) => e.SetOrientation(v))
         { }
     }
 
-    internal class EntityRotationXCommand : TracePropertyCommand<float>
+    internal class EntityOrientationXCommand : TracePropertyCommand<float>
     {
-        internal EntityRotationXCommand(int index, float value) : base(index, "Rotation X",
-            value, e => e._RotationX, (e, v) => e._RotationX = v)
+        internal EntityOrientationXCommand(int index, float value) : base(index, "Orientation X",
+            value, e => e._OrientationX, (e, v) => e._OrientationX = v)
         { }
     }
 
-    internal class EntityRotationYCommand : TracePropertyCommand<float>
+    internal class EntityOrientationYCommand : TracePropertyCommand<float>
     {
-        internal EntityRotationYCommand(int index, float value) : base(index, "Rotation Y",
-            value, e => e._RotationY, (e, v) => e._RotationY = v)
+        internal EntityOrientationYCommand(int index, float value) : base(index, "Orientation Y",
+            value, e => e._OrientationY, (e, v) => e._OrientationY = v)
         { }
     }
 
-    internal class EntityRotationZCommand : TracePropertyCommand<float>
+    internal class EntityOrientationZCommand : TracePropertyCommand<float>
     {
-        internal EntityRotationZCommand(int index, float value) : base(index, "Rotation Z",
-            value, e => e._RotationZ, (e, v) => e._RotationZ = v)
+        internal EntityOrientationZCommand(int index, float value) : base(index, "Orientation Z",
+            value, e => e._OrientationZ, (e, v) => e._OrientationZ = v)
         { }
     }
 

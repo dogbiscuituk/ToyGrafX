@@ -36,6 +36,7 @@
             Scene.PropertyChanged += Scene_PropertyChanged;
 
             AttachControllers();
+            CommandProcessor.Clear();
 
             Timer = new Timer();
             Timer.Tick += Timer_Tick;
@@ -340,7 +341,11 @@
             }
         }
 
-        private void NewEmptyScene() => GetNewSceneController();
+        private void NewEmptyScene()
+        {
+            GetNewSceneController();
+            CommandProcessor.Clear();
+        }
 
         private void NewFromTemplate()
         {

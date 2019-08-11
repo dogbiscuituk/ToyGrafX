@@ -2,10 +2,10 @@
 {
     using OpenTK;
 
-    internal class CameraOrientationCommand : ScenePropertyCommand<Vector3>
+    internal class CameraRotationCommand : ScenePropertyCommand<Vector3>
     {
-        internal CameraOrientationCommand(Vector3 value) : base("Camera Orientation",
-            value, s => s.GetCameraOrientation(), (s, v) => s.SetCameraOrientation(v))
+        internal CameraRotationCommand(Vector3 value) : base("Camera Rotation",
+            value, s => s.GetCameraRotation(), (s, v) => s.SetCameraRotation(v))
         { }
     }
 
@@ -16,10 +16,10 @@
         { }
     }
 
-    internal class CameraLocationCommand : ScenePropertyCommand<Vector3>
+    internal class CameraPositionCommand : ScenePropertyCommand<Vector3>
     {
-        internal CameraLocationCommand(Vector3 value) : base("Camera Location",
-            value, s => s.GetCameraLocation(), (s, v) => s.SetCameraLocation(v))
+        internal CameraPositionCommand(Vector3 value) : base("Camera Position",
+            value, s => s.GetCameraPosition(), (s, v) => s.SetCameraPosition(v))
         { }
     }
 

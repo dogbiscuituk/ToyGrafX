@@ -94,6 +94,9 @@
 
         #region Private Event Handlers
 
+        private void SceneController_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
+            PropertyChanged();
+
         private void HostFormClosing(object sender, FormClosingEventArgs e) =>
             PropertyGridDocked = true;
 
@@ -140,6 +143,8 @@
             toolStrip.Items[4].Visible = false; // Property Pages
             toolStrip.Items[3].Visible = false; // Separator
         }
+
+        private void PropertyChanged() => PropertyGrid.Refresh();
 
         #endregion
     }
