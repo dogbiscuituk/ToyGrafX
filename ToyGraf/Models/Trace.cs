@@ -47,20 +47,6 @@
             return string.Empty;
         }
 
-        public override string ToString() =>
-            !string.IsNullOrWhiteSpace(Title)
-            ? _Title
-            : Index >= 0
-            ? $"Trace #{Index + 1}"
-            : "New trace";
-
-        //public void MoveBy(float dx, float dy, float dz) => Location += new Vector3(dx, dy, dz);
-        //public void MoveTo(float x, float y, float z) => Location += new Vector3(x, y, z);
-        //public void RotateBy(float dx, float dy, float dz) => Orientation += new Vector3(dx, dy, dz);
-        //public void RotateTo(float x, float y, float z) => Orientation += new Vector3(x, y, z);
-        //public void ScaleBy(float scale) => Scale *= scale;
-        //public void ScaleTo(float scale) => Scale = scale;
-
         public void SetScript(ShaderType shaderType, string script)
         {
             switch (shaderType)
@@ -87,6 +73,13 @@
             if (Shader != null)
                 Shader.CreateProgram();
         }
+
+        public override string ToString() =>
+            !string.IsNullOrWhiteSpace(Title)
+            ? _Title
+            : Index >= 0
+            ? $"Trace #{Index + 1}"
+            : "New trace";
 
         #endregion
 

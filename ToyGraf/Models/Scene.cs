@@ -2,8 +2,10 @@
 {
     using Newtonsoft.Json;
     using OpenTK;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Drawing;
     using System.Drawing.Design;
     using System.Linq;
     using ToyGraf.Commands;
@@ -14,11 +16,33 @@
     [DefaultProperty("Traces")]
     public class Scene
     {
-        #region Public Interface
+        #region Internal Interface
 
         public Scene() => RestoreDefaults();
 
         internal Scene(SceneController sceneController) : this() => SceneController = sceneController;
+
+        internal Vector3 GetCameraPosition() => new Vector3(_CameraX, _CameraY, _CameraZ);
+        internal Vector3 GetCameraRotation() => new Vector3(_CameraPitch, _CameraYaw, _CameraRoll);
+        internal Matrix4 GetCameraView() => Maths.CreateCameraView(CameraPosition, CameraRotation);
+        internal Matrix4 GetProjection() => Maths.CreatePerspectiveProjection(FieldOfView, 1980f / 1080f, NearPlane, FarPlane);
+
+        internal void SetCameraPosition(Vector3 cameraPosition)
+        {
+            _CameraX = cameraPosition.X;
+            _CameraY = cameraPosition.Y;
+            _CameraZ = cameraPosition.Z;
+        }
+
+        internal void SetCameraRotation(Vector3 cameraRotation)
+        {
+            _CameraPitch = cameraRotation.X;
+            _CameraYaw = cameraRotation.Y;
+            _CameraRoll = cameraRotation.Z;
+        }
+
+        internal void SetCameraView(Matrix4 cameraView) { }
+        internal void SetProjection(Matrix4 projection) { }
 
         public override string ToString() =>
             !string.IsNullOrWhiteSpace(Title)
@@ -122,6 +146,38 @@
 
         #endregion
 
+        #region Graphics Mode
+
+        [Category("Graphics Mode")]
+        [DefaultValue(8)]
+        [Description("The number of bits per pixel in the Alpha channel.")]
+        [DisplayName("BppAlpha")]
+        [JsonIgnore]
+        public int BppAlpha { get => _BppAlpha; set => Run(new BppAlphaCommand(value)); }
+
+        [Category("Graphics Mode")]
+        [DefaultValue(8)]
+        [Description("The number of bits per pixel in the Red channel.")]
+        [DisplayName("BppRed")]
+        [JsonIgnore]
+        public int BppRed { get => _BppRed; set => Run(new BppRedCommand(value)); }
+
+        [Category("Graphics Mode")]
+        [DefaultValue(8)]
+        [Description("The number of bits per pixel in the Green channel.")]
+        [DisplayName("BppGreen")]
+        [JsonIgnore]
+        public int BppGreen { get => _BppGreen; set => Run(new BppGreenCommand(value)); }
+
+        [Category("Graphics Mode")]
+        [DefaultValue(8)]
+        [Description("The number of bits per pixel in the Blue channel.")]
+        [DisplayName("BppBlue")]
+        [JsonIgnore]
+        public int BppBlue { get => _BppBlue; set => Run(new BppBlueCommand(value)); }
+
+        #endregion
+
         #region Projection
 
         [Category(Defaults.Projection)]
@@ -181,27 +237,23 @@
 
         #endregion
 
-        internal Vector3 GetCameraPosition() => new Vector3(_CameraX, _CameraY, _CameraZ);
-        internal Vector3 GetCameraRotation() => new Vector3(_CameraPitch, _CameraYaw, _CameraRoll);
-        internal Matrix4 GetCameraView() => Maths.CreateCameraView(CameraPosition, CameraRotation);
-        internal Matrix4 GetProjection() => Maths.CreatePerspectiveProjection(FieldOfView, 1980f / 1080f, NearPlane, FarPlane);
+        #region Renderer
 
-        internal void SetCameraPosition(Vector3 cameraPosition)
-        {
-            _CameraX = cameraPosition.X;
-            _CameraY = cameraPosition.Y;
-            _CameraZ = cameraPosition.Z;
-        }
+        [Category("Renderer")]
+        [DefaultValue(typeof(Color), "White")]
+        [Description("The colour of the background.")]
+        [DisplayName("Background Colour")]
+        [JsonIgnore]
+        public Color BackgroundColour { get => _BackgroundColour; set => Run(new BackgroundColourCommand(value)); }
 
-        internal void SetCameraRotation(Vector3 cameraRotation)
-        {
-            _CameraPitch = cameraRotation.X;
-            _CameraYaw = cameraRotation.Y;
-            _CameraRoll = cameraRotation.Z;
-        }
+        [Category("Renderer")]
+        [DefaultValue(0)]
+        [Description("The number of Full Screen Anti-Aliasing (FSAA) samples used.")]
+        [DisplayName("FSAA Sample Count")]
+        [JsonIgnore]
+        public int SampleCount { get => _SampleCount; set => Run(new SampleCountCommand(value)); }
 
-        internal void SetCameraView(Matrix4 cameraView) { }
-        internal void SetProjection(Matrix4 projection) { }
+        #endregion
 
         #endregion
 
@@ -214,6 +266,15 @@
         #endregion
 
         #region Persistent Fields
+
+        [JsonProperty]
+        internal int
+            _BppAlpha,
+            _BppBlue,
+            _BppGreen,
+            _BppRed,
+            _SampleCount;
+
 
         [JsonProperty]
         internal float
@@ -236,6 +297,10 @@
         [JsonProperty]
         internal string
             _Title;
+
+        [JsonProperty]
+        internal Color
+            _BackgroundColour;
 
         [JsonProperty]
         internal List<Trace>
@@ -315,6 +380,11 @@
                 CommandProcessor.Run(command);
             else
                 command.RunOn(this);
+        }
+
+        public object Clone()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

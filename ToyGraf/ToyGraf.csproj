@@ -63,6 +63,8 @@
     <Compile Include="Commands\CommandProcessor.cs" />
     <Compile Include="Commands\EntityCommands.cs" />
     <Compile Include="Commands\FrustrumCommands.cs" />
+    <Compile Include="Commands\GraphicsModeCommands.cs" />
+    <Compile Include="Commands\RendererCommands.cs" />
     <Compile Include="Commands\SceneCommands.cs" />
     <Compile Include="Commands\ShaderCommands.cs" />
     <Compile Include="Commands\TerrainCommands.cs" />

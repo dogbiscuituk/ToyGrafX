@@ -35,6 +35,11 @@ namespace ToyGraf.Models
         internal const double
             FPS = 60;
 
+        // Scene Renderer
+
+        internal const int
+            _SampleCount = 0;
+
         // Scene Title
 
         internal const string
@@ -42,7 +47,8 @@ namespace ToyGraf.Models
 
         // Scene Traces
 
-        internal static List<Trace> Traces => new List<Trace>();
+        internal static List<Trace> Traces =>
+            new List<Trace>();
 
         // Trace Domain & Range
 
