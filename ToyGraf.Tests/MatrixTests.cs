@@ -50,7 +50,7 @@
         public void CreateTransformationDefault()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(translation: Vector3.Zero, rotation: Vector3.Zero, scale: Unity);
+            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: Vector3.Zero, scale: Unity);
             Assert.AreEqual(expected, actual);
         }
 
@@ -61,7 +61,7 @@
         public void CreateRotationX()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(translation: Vector3.Zero, rotation: RotateX, scale: Unity);
+            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateX, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -72,7 +72,7 @@
         public void CreateRotationY()
         {
             var expected = new Matrix4(0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(translation: Vector3.Zero, rotation: RotateY, scale: Unity);
+            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateY, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -83,7 +83,7 @@
         public void CreateRotationZ()
         {
             var expected = new Matrix4(0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(translation: Vector3.Zero, rotation: RotateZ, scale: Unity);
+            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateZ, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -94,7 +94,7 @@
         public void CreateRotationXY()
         {
             var expected = new Matrix4(0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(translation: Vector3.Zero, rotation: RotateXY, scale: Unity);
+            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateXY, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -105,7 +105,7 @@
         public void CreateRotationXZ()
         {
             var expected = new Matrix4(0, 0, 1, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(translation: Vector3.Zero, rotation: RotateXZ, scale: Unity);
+            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateXZ, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -116,7 +116,7 @@
         public void CreateRotationYZ()
         {
             var expected = new Matrix4(0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(translation: Vector3.Zero, rotation: RotateYZ, scale: Unity);
+            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateYZ, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -127,7 +127,7 @@
         public void CreateRotationXYZ()
         {
             var expected = new Matrix4(0, 0, 1, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(translation: Vector3.Zero, rotation: RotateXYZ, scale: Unity);
+            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateXYZ, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -138,7 +138,7 @@
         public void CreateScaling()
         {
             var expected = new Matrix4(9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(translation: Vector3.Zero, rotation: Vector3.Zero, scale: 9f);
+            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: Vector3.Zero, scale: 9f);
             Assert.AreEqual(expected, actual);
         }
 
@@ -149,7 +149,7 @@
         public void CreateTransformationGeneral()
         {
             var expected = new Matrix4(0, 0, 9, 0, 0, -9, 0, 0, 9, 0, 0, 0, 7, 11, 13, 1);
-            var actual = Maths.CreateTransformation(translation: new Vector3(7, 11, 13), rotation: RotateXYZ, scale: 9f);
+            var actual = Maths.CreateTransformation(location: new Vector3(7, 11, 13), orientation: RotateXYZ, scale: 9f);
             CompareMatrices(expected, actual);
         }
 
@@ -160,7 +160,7 @@
         public void CreateTranslation()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 3, 5, 1);
-            var actual = Maths.CreateTransformation(translation: new Vector3(2, 3, 5), rotation: Vector3.Zero, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Vector3(2, 3, 5), orientation: Vector3.Zero, scale: Unity);
             Assert.AreEqual(expected, actual);
         }
 
@@ -176,13 +176,13 @@
         }
 
         /// <summary>
-        /// Get the view matrix for an offset camera location.
+        /// Get the view matrix for an offset camera position.
         /// </summary>
         [TestMethod]
-        public void CreateCameraViewLocation()
+        public void CreateCameraViewPosition()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 3, 5, 1);
-            var actual = Maths.CreateCameraView(new Camera { Location = new Vector3(-2, -3, -5) });
+            var actual = Maths.CreateCameraView(new Camera { Position = new Vector3(-2, -3, -5) });
             Assert.AreEqual(expected, actual);
         }
 
@@ -227,7 +227,7 @@
         {
             var expected = new Matrix4(0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 13, -11, -7, 1);
             var actual = Maths.CreateCameraView(new Camera
-            { Location = new Vector3(7, 11, 13), Pitch = 90, Yaw = -90, Roll = 90 });
+            { Position = new Vector3(7, 11, 13), Pitch = 90, Yaw = -90, Roll = 90 });
             CompareMatrices(expected, actual);
         }
 

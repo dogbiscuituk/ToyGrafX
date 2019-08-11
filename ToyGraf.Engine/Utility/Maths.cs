@@ -1,10 +1,18 @@
 ﻿namespace ToyGraf.Engine.Utility
 {
     using OpenTK;
-    using ToyGraf.Engine.Controllers;
 
     public static class Maths
     {
+        public static Matrix4 CreateCameraView(Camera camera) =>
+            CreateCameraView(camera.Position, camera.Rotation);
+
+        public static Matrix4 CreateCameraView(Vector3 location, Vector3 orientation) =>
+            Matrix4.CreateTranslation(-location) *
+            Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(orientation.Z)) *
+            Matrix4.CreateRotationY(MathHelper.DegreesToRadians(orientation.Y)) *
+            Matrix4.CreateRotationX(MathHelper.DegreesToRadians(orientation.X));
+
         public static Matrix4 CreateOrthographicProjection(
             float width, float height, float zNear, float zFar) =>
             Matrix4.CreateOrthographic(width, height, zNear, zFar);
@@ -22,20 +30,11 @@
             Matrix4.CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar);
 
         public static Matrix4 CreateTransformation(
-            Vector3 translation, Vector3 rotation, float scale) =>
+            Vector3 location, Vector3 orientation, float scale) =>
             Matrix4.CreateScale(scale) *
-            Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation.Z)) *
-            Matrix4.CreateRotationY(MathHelper.DegreesToRadians(rotation.Y)) *
-            Matrix4.CreateRotationX(MathHelper.DegreesToRadians(rotation.X)) *
-            Matrix4.CreateTranslation(translation);
-
-        public static Matrix4 CreateCameraView(Camera camera) =>
-            CreateCameraView(camera.Location, camera.Orientation);
-
-        public static Matrix4 CreateCameraView(Vector3 location, Vector3 orientation) =>
-            Matrix4.CreateTranslation(-location) *
             Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(orientation.Z)) *
             Matrix4.CreateRotationY(MathHelper.DegreesToRadians(orientation.Y)) *
-            Matrix4.CreateRotationX(MathHelper.DegreesToRadians(orientation.X));
+            Matrix4.CreateRotationX(MathHelper.DegreesToRadians(orientation.X)) *
+            Matrix4.CreateTranslation(location);
     }
 }

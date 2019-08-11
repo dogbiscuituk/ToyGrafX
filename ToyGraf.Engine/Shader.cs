@@ -3,7 +3,6 @@
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
     using System.Text;
-    using ToyGraf.Engine.Controllers;
     using ToyGraf.Engine.Utility;
 
     public abstract class Shader
@@ -13,20 +12,6 @@
         public Shader() { }
 
         public virtual void Cleanup() => DeleteProgram();
-
-        public void LoadProjectionMatrix(Matrix4 matrix) => LoadMatrix(location_projectionMatrix, matrix);
-        public void LoadTransformationMatrix(Matrix4 matrix) => LoadMatrix(location_transformationMatrix, matrix);
-        public void LoadViewMatrix(Camera camera) => LoadMatrix(location_viewMatrix, Maths.CreateCameraView(camera));
-
-        public void Start() => GL.UseProgram(ProgramID);
-        public void Stop() => GL.UseProgram(0);
-
-        #endregion
-
-        protected void BindAttribute(int attributeIndex, string variableName) =>
-            GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
-
-        protected abstract void BindAttributes();
 
         public virtual string CreateProgram()
         {
@@ -46,11 +31,29 @@
             return log;
         }
 
+        public void LoadProjectionMatrix(Matrix4 matrix) => LoadMatrix(location_projectionMatrix, matrix);
+        public void LoadTransformationMatrix(Matrix4 matrix) => LoadMatrix(location_transformationMatrix, matrix);
+        public void LoadViewMatrix(Camera camera) => LoadMatrix(location_viewMatrix, Maths.CreateCameraView(camera));
+
+        public void Start() => GL.UseProgram(ProgramID);
+        public void Stop() => GL.UseProgram(0);
+
+        #endregion
+
+        #region Protected Methods
+
+        protected void BindAttribute(int attributeIndex, string variableName) =>
+            GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
+
+        protected abstract void BindAttributes();
+
         protected int GetUniformLocation(string uniformName) => GL.GetUniformLocation(ProgramID, uniformName);
         protected void LoadFloat(int location, float value) => GL.Uniform1(location, value);
         protected void LoadVector(int location, Vector3 vector) => GL.Uniform3(location, vector);
         protected void LoadBoolean(int location, bool value) => GL.Uniform1(location, value ? 1f : 0f);
         protected void LoadMatrix(int location, Matrix4 value) => GL.UniformMatrix4(location, false, ref value);
+
+        #endregion
 
         #region Private Properties
 
@@ -68,24 +71,28 @@
             location_transformationMatrix,
             location_viewMatrix;
 
+        private StringBuilder ShaderLog;
+
         #endregion
+
+        #region Private Methods
+
+        private void AppendLog(string log)
+        {
+            if (!string.IsNullOrWhiteSpace(log))
+                ShaderLog.AppendLine(log);
+        }
 
         private int CreateShader(ShaderType shaderType, bool mandatory = false)
         {
-            ShaderLog.Append($"Creating {shaderType}: ");
             var shaderSource = GetScript(shaderType);
             if (string.IsNullOrWhiteSpace(shaderSource))
-            {
-                ShaderLog.AppendLine($"{shaderType} is null.");
                 return 0;
-            }
             var shaderID = GL.CreateShader(shaderType);
             GL.ShaderSource(shaderID, shaderSource);
             GL.CompileShader(shaderID);
-            var log = GL.GetShaderInfoLog(shaderID);
-            ShaderLog.AppendLine($"{(string.IsNullOrWhiteSpace(log) ? "OK." : $"\n{log}")}");
+            AppendLog(GL.GetShaderInfoLog(shaderID));
             GL.AttachShader(ProgramID, shaderID);
-
             return shaderID;
         }
 
@@ -136,6 +143,6 @@
 
         protected abstract string GetScript(ShaderType shaderType);
 
-        private StringBuilder ShaderLog;
+        #endregion
     }
 }

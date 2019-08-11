@@ -191,7 +191,7 @@
 
         #region Private Event Handlers
 
-        private void SceneForm_FormClosed(object sender, FormClosedEventArgs e) { }
+        private void SceneForm_FormClosed(object sender, FormClosedEventArgs e) => FormClosed();
         private void SceneForm_FormClosing(object sender, FormClosingEventArgs e) => e.Cancel = !FormClosing(e.CloseReason);
 
         private void FileNewEmptyScene_Click(object sender, System.EventArgs e) => NewEmptyScene();
@@ -279,13 +279,9 @@
             Camera.Fix();
         }
 
-        private bool FormClosing(CloseReason closeReason)
-        {
-            var cancel = !JsonController.SaveIfModified();
-            if (!cancel)
-                Cleanup();
-            return !cancel;
-        }
+        private bool FormClosing(CloseReason closeReason) => JsonController.SaveIfModified();
+
+        private void FormClosed() => Cleanup();
 
         private static string GetBookmark(PropertyGrid propertyGrid)
         {

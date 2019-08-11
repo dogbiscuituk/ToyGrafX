@@ -1,0 +1,29 @@
+The Naming Of Parts
+===================
+
+The Camera in a Scene has a Position and a Rotation.
+A Trace in a Scene has a Location and an Orientation.
+
+Camera
+ \
+  Position
+  Rotation
+
+Trace
+ \
+  Location
+  Orientation
+
+
+Components of a Projection Matrix
+---------------------------------
+
+			fovy	aspect	width	height	left	right	bottom	top	zNear	zFar
+
+ProjectionType
+ \
+  Orthographic		-	-	Y	Y	-	-	-	-	Y	Y
+  OrthographicOffset	-	-	-	-	Y	Y	Y	Y	Y	Y
+  Perspective		Y	Y	-	-	-	-	-	-	Y	Y
+  PerspectiveOffset	-	-	-	-	Y	Y	Y	Y	Y	Y
+

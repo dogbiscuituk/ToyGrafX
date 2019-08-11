@@ -631,22 +631,5 @@ void main()
 }";
 
         #endregion
-
-        [Browsable(false)]
-        [JsonIgnore]
-        public Prototype Prototype
-        {
-            get => GetPrototype();
-            set { }
-        }
-
-        private Prototype GetPrototype()
-        {
-            uint xc = StripCountX, yc = StripCountY;
-            var vertices = Grids.GetGrid(xc, yc, 0);
-            var indices = Grids.GetTriangleIndicesXY(xc, yc);
-
-            return new Prototype(vertices, indices);
-        }
     }
 }

@@ -16,16 +16,9 @@
     {
         #region Public Interface
 
-        public Scene()
-        {
-            RestoreDefaults();
-        }
+        public Scene() => RestoreDefaults();
 
-        internal Scene(SceneController sceneController)
-        {
-            SceneController = sceneController;
-            RestoreDefaults();
-        }
+        internal Scene(SceneController sceneController) : this() => SceneController = sceneController;
 
         public override string ToString() =>
             !string.IsNullOrWhiteSpace(Title)
@@ -212,9 +205,13 @@
 
         #endregion
 
+        #region Internal Properties
+
         internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         internal bool IsModified => CommandProcessor?.IsModified ?? false;
         internal SceneController SceneController;
+
+        #endregion
 
         #region Persistent Fields
 
@@ -224,23 +221,25 @@
             _CameraY,
             _CameraZ,
             _CameraPitch,
-            _CameraRoll,
-            _CameraYaw;
+            _CameraYaw,
+            _CameraRoll;
 
         [JsonProperty]
         internal double _FPS;
 
         [JsonProperty]
         internal float
-            _FarPlane,
             _FieldOfView,
+            _FarPlane,
             _NearPlane;
 
         [JsonProperty]
-        internal string _Title;
+        internal string
+            _Title;
 
         [JsonProperty]
-        internal List<Trace> _Traces = new List<Trace>();
+        internal List<Trace>
+            _Traces = new List<Trace>();
 
         #endregion
 
@@ -281,12 +280,6 @@
                 _Traces.RemoveAt(index);
                 OnPropertyChanged("Traces");
             }
-        }
-
-        public void RemoveTraceRange(int index, int count)
-        {
-            while (count-- > 0)
-                RemoveTrace(index + count);
         }
 
         private void RestoreDefaults()
