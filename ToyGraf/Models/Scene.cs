@@ -2,7 +2,6 @@
 {
     using Newtonsoft.Json;
     using OpenTK;
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
@@ -12,6 +11,7 @@
     using ToyGraf.Controllers;
     using ToyGraf.Controls;
     using ToyGraf.Engine.Utility;
+    using ToyGraf.Views;
 
     [DefaultProperty("Traces")]
     public class Scene
@@ -25,7 +25,7 @@
         internal Vector3 GetCameraPosition() => new Vector3(_CameraX, _CameraY, _CameraZ);
         internal Vector3 GetCameraRotation() => new Vector3(_CameraPitch, _CameraYaw, _CameraRoll);
         internal Matrix4 GetCameraView() => Maths.CreateCameraView(CameraPosition, CameraRotation);
-        internal Matrix4 GetProjection() => Maths.CreatePerspectiveProjection(FieldOfView, 1980f / 1080f, NearPlane, FarPlane);
+        internal Matrix4 GetProjection() => Maths.CreatePerspectiveProjection(FieldOfView, AspectRatio, NearPlane, FarPlane);
 
         internal void SetCameraPosition(Vector3 cameraPosition)
         {
@@ -71,7 +71,7 @@
         public double FPS { get => _FPS; set => Run(new SceneFpsCommand(value)); }
 
         [Category("Scene")]
-        [DefaultValue(Defaults.SceneTitle)]
+        [DefaultValue(Defaults.Title)]
         [Description("A title for this scene.")]
         [DisplayName("Title")]
         [JsonIgnore]
@@ -148,33 +148,54 @@
 
         #region Graphics Mode
 
-        [Category("Graphics Mode")]
-        [DefaultValue(8)]
-        [Description("The number of bits per pixel in the Alpha channel.")]
-        [DisplayName("BppAlpha")]
-        [JsonIgnore]
-        public int BppAlpha { get => _BppAlpha; set => Run(new BppAlphaCommand(value)); }
-
-        [Category("Graphics Mode")]
-        [DefaultValue(8)]
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.BppRed)]
         [Description("The number of bits per pixel in the Red channel.")]
-        [DisplayName("BppRed")]
+        [DisplayName("BPP: Red")]
         [JsonIgnore]
         public int BppRed { get => _BppRed; set => Run(new BppRedCommand(value)); }
 
-        [Category("Graphics Mode")]
-        [DefaultValue(8)]
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.BppGreen)]
         [Description("The number of bits per pixel in the Green channel.")]
-        [DisplayName("BppGreen")]
+        [DisplayName("BPP: Green")]
         [JsonIgnore]
         public int BppGreen { get => _BppGreen; set => Run(new BppGreenCommand(value)); }
 
-        [Category("Graphics Mode")]
-        [DefaultValue(8)]
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.BppBlue)]
         [Description("The number of bits per pixel in the Blue channel.")]
-        [DisplayName("BppBlue")]
+        [DisplayName("BPP: Blue")]
         [JsonIgnore]
         public int BppBlue { get => _BppBlue; set => Run(new BppBlueCommand(value)); }
+
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.BppAlpha)]
+        [Description("The number of bits per pixel in the Alpha channel.")]
+        [DisplayName("BPP: Alpha")]
+        [JsonIgnore]
+        public int BppAlpha { get => _BppAlpha; set => Run(new BppAlphaCommand(value)); }
+
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.Depth)]
+        [Description("The number of bits in the depth buffer.")]
+        [DisplayName("Depth Bits")]
+        [JsonIgnore]
+        public int Depth { get => _Depth; set => Run(new DepthCommand(value)); }
+
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.Stencil)]
+        [Description("The number of bits in the stencil buffer.")]
+        [DisplayName("Stencil Bits")]
+        [JsonIgnore]
+        public int Stencil { get => _Stencil; set => Run(new StencilCommand(value)); }
+
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.SampleCount)]
+        [Description("The number of Full Screen Anti-Aliasing (FSAA) samples used.")]
+        [DisplayName("Sample Count")]
+        [JsonIgnore]
+        public int SampleCount { get => _SampleCount; set => Run(new SampleCountCommand(value)); }
 
         #endregion
 
@@ -239,19 +260,12 @@
 
         #region Renderer
 
-        [Category("Renderer")]
-        [DefaultValue(typeof(Color), "White")]
+        [Category(Defaults.Renderer)]
+        [DefaultValue(typeof(Color), Defaults.BackgroundColourName)]
         [Description("The colour of the background.")]
         [DisplayName("Background Colour")]
         [JsonIgnore]
         public Color BackgroundColour { get => _BackgroundColour; set => Run(new BackgroundColourCommand(value)); }
-
-        [Category("Renderer")]
-        [DefaultValue(0)]
-        [Description("The number of Full Screen Anti-Aliasing (FSAA) samples used.")]
-        [DisplayName("FSAA Sample Count")]
-        [JsonIgnore]
-        public int SampleCount { get => _SampleCount; set => Run(new SampleCountCommand(value)); }
 
         #endregion
 
@@ -273,8 +287,9 @@
             _BppBlue,
             _BppGreen,
             _BppRed,
+            _Depth,
+            _Stencil,
             _SampleCount;
-
 
         [JsonProperty]
         internal float
@@ -308,6 +323,28 @@
 
         #endregion
 
+        #region Private Properties
+
+        private float AspectRatio
+        {
+            get
+            {
+                var glControl = GLControl;
+                if (glControl != null)
+                {
+                    float w = glControl.Width, h = glControl.Height;
+                    if (w > 0 && h > 0)
+                        return w / h;
+                }
+                return 1920f / 1080f;
+            }
+        }
+
+        private GLControl GLControl => SceneForm?.GLControl;
+        private SceneForm SceneForm => SceneController?.SceneForm;
+
+        #endregion
+
         #region Non-Public Methods
 
         internal void AddTrace(Trace trace)
@@ -335,7 +372,7 @@
             return trace;
         }
 
-        internal void OnPropertyChanged(string propertyName) => 
+        internal void OnPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         internal void RemoveTrace(int index)
@@ -349,7 +386,15 @@
 
         private void RestoreDefaults()
         {
-            // Scene Camera & Perspective
+            _Title = Defaults.Title;
+
+            _BppAlpha = Defaults.BppAlpha;
+            _BppRed = Defaults.BppRed;
+            _BppGreen = Defaults.BppGreen;
+            _BppBlue = Defaults.BppBlue;
+            _Depth = Defaults.Depth;
+            _Stencil = Defaults.Stencil;
+            _SampleCount = Defaults.SampleCount;
 
             _CameraX = Defaults.CameraX;
             _CameraY = Defaults.CameraY;
@@ -361,15 +406,9 @@
             _NearPlane = Defaults.NearPlane;
             _FarPlane = Defaults.FarPlane;
 
-            // Scene FPS
-
             _FPS = Defaults.FPS;
 
-            // Scene Title
-
-            _Title = Defaults.SceneTitle;
-
-            // Scene Traces
+            _BackgroundColour = Defaults.BackgroundColour;
 
             _Traces = Defaults.Traces;
         }
@@ -382,11 +421,51 @@
                 command.RunOn(this);
         }
 
-        public object Clone()
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
+
+        private class Defaults
+        {
+            internal const string
+                Camera = "Camera",
+                GraphicsMode = "Graphics Mode",
+                Projection = "Projection",
+                Renderer = "Renderer",
+                SystemRO = "Read Only / System";
+
+            internal const string
+                Title = "";
+
+            internal const int
+                BppAlpha = 8,
+                BppRed = 8,
+                BppGreen = 8,
+                BppBlue = 8,
+                Depth = 24,
+                Stencil = 8,
+                SampleCount = 0;
+
+            internal const float
+                CameraX = 0,
+                CameraY = 0,
+                CameraZ = 0,
+                CameraPitch = 0,
+                CameraRoll = 0,
+                CameraYaw = 0,
+                FieldOfView = 75,
+                NearPlane = 0.1f,
+                FarPlane = 1000;
+
+            internal const double
+                FPS = 60;
+
+            internal static Color
+                BackgroundColour = Color.White;
+
+            internal const string
+                BackgroundColourName = "White";
+
+            internal static List<Trace> Traces =>
+                new List<Trace>();
+        }
     }
 }

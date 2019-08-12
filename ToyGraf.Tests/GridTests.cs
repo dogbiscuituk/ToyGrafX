@@ -235,7 +235,7 @@
         [TestMethod]
         public void GetTriangleIndices()
         {
-            var expected = new uint[]
+            var expected = new int[]
             {
                 00, 09, 01, 01, 09, 10, 01, 10, 02, 02, 10, 11, 02, 11, 03, 03, 11, 12, 03, 12, 04, 04, 12, 13,
                 04, 13, 05, 05, 13, 14, 05, 14, 06, 06, 14, 15, 06, 15, 07, 07, 15, 16, 07, 16, 08, 08, 16, 17,
@@ -261,7 +261,7 @@
         [TestMethod]
         public void GetTriangleStripIndices()
         {
-            var expected = new uint[]
+            var expected = new int[]
             {
                 00,
                 09, 01, 10, 02, 11, 03, 12, 04, 13, 05, 14, 06, 15, 07, 16, 08, 17,

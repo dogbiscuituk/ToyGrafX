@@ -366,32 +366,32 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         #region Terrain
 
         [Category(Defaults.Terrain)]
-        [DefaultValue(typeof(uint), "0")]
+        [DefaultValue(Defaults.StripCountX)]
         [Description("The number of discrete strips into which the trace is divided in the X direction.")]
         [DisplayName("Strip Count X")]
         [JsonIgnore]
-        public uint StripCountX { get => _StripCountX; set => Run(new TerrainStripCountXCommand(Index, value)); }
+        public int StripCountX { get => _StripCountX; set => Run(new TerrainStripCountXCommand(Index, value)); }
 
         [Category(Defaults.Terrain)]
-        [DefaultValue(typeof(uint), "0")]
+        [DefaultValue(Defaults.StripCountY)]
         [Description("The number of discrete strips into which the trace is divided in the Y direction.")]
         [DisplayName("Strip Count Y")]
         [JsonIgnore]
-        public uint StripCountY { get => _StripCountY; set => Run(new TerrainStripCountYCommand(Index, value)); }
+        public int StripCountY { get => _StripCountY; set => Run(new TerrainStripCountYCommand(Index, value)); }
 
         [Category(Defaults.Terrain)]
-        [DefaultValue(typeof(uint), "0")]
+        [DefaultValue(Defaults.StripCountZ)]
         [Description("The number of discrete strips into which the trace is divided in the Z direction.")]
         [DisplayName("Strip Count Z")]
         [JsonIgnore]
-        public uint StripCountZ { get => _StripCountZ; set => Run(new TerrainStripCountZCommand(Index, value)); }
+        public int StripCountZ { get => _StripCountZ; set => Run(new TerrainStripCountZCommand(Index, value)); }
 
         #endregion
 
         #region Trace
 
         [Category(Defaults.Trace)]
-        [DefaultValue(Defaults.TraceTitle)]
+        [DefaultValue(Defaults.Title)]
         [Description("A title for this trace.")]
         [DisplayName("Title")]
         [JsonIgnore]
@@ -446,7 +446,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         // Terrain
 
         [JsonProperty]
-        internal uint
+        internal int
             _StripCountX,
             _StripCountY,
             _StripCountZ;
@@ -493,20 +493,19 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         private void RestoreDefaults()
         {
-            // System
+            _GPUStatus = Defaults.GPUStatus;
+            _Shader1Vertex = Defaults.Shader1Vertex;
+            _Shader2TessControl = Defaults.Shader2TessControl;
+            _Shader3TessEvaluation = Defaults.Shader3TessEvaluation;
+            _Shader4Geometry = Defaults.Shader4Geometry;
+            _Shader5Fragment = Defaults.Shader5Fragment;
+            _Shader6Compute = Defaults.Shader6Compute;
+            _Title = Defaults.Title;
 
-            _Index = -1;
-
-            // Trace Domain & Range
-
-            _Xmin = Defaults.Xmin;
-            _Xmax = Defaults.Xmax;
-            _Ymin = Defaults.Ymin;
-            _Ymax = Defaults.Ymax;
-            _Zmin = Defaults.Zmin;
-            _Zmax = Defaults.Zmax;
-
-            // Trace Placement
+            _Index = Defaults.Index;
+            _StripCountX = Defaults.StripCountX;
+            _StripCountY = Defaults.StripCountY;
+            _StripCountZ = Defaults.StripCountZ;
 
             _LocationX = Defaults.LocationX;
             _LocationY = Defaults.LocationY;
@@ -516,23 +515,12 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _OrientationZ = Defaults.OrientationZ;
             _Scale = Defaults.Scale;
 
-            // Trace Shaders
-
-            _Shader1Vertex = Defaults.Shader1Vertex;
-            _Shader2TessControl = Defaults.Shader2TessControl;
-            _Shader3TessEvaluation = Defaults.Shader3TessEvaluation;
-            _Shader4Geometry = Defaults.Shader4Geometry;
-            _Shader5Fragment = Defaults.Shader5Fragment;
-            _Shader6Compute = Defaults.Shader6Compute;
-            _GPUStatus = Defaults.GPUStatus;
-
-            // Trace Terrain
-
-            _StripCountX = Defaults.StripCountX;
-            _StripCountY = Defaults.StripCountY;
-            _StripCountZ = Defaults.StripCountZ;
-
-            // Trace Miscellaneous
+            _Xmin = Defaults.Xmin;
+            _Xmax = Defaults.Xmax;
+            _Ymin = Defaults.Ymin;
+            _Ymax = Defaults.Ymax;
+            _Zmin = Defaults.Zmin;
+            _Zmax = Defaults.Zmax;
 
             _Visible = Defaults.Visible;
         }
@@ -624,5 +612,52 @@ void main()
 }";
 
         #endregion
+
+        private class Defaults
+        {
+            internal const string
+                DomainRange = "Domain / Range",
+                Placement = "Placement",
+                Shaders = "Shaders",
+                SystemRO = "Read Only / System",
+                Terrain = "Terrain",
+                Trace = "Trace";
+
+            internal const string
+                GPUStatus = "",
+                Shader1Vertex = "",
+                Shader2TessControl = "",
+                Shader3TessEvaluation = "",
+                Shader4Geometry = "",
+                Shader5Fragment = "",
+                Shader6Compute = "",
+                Title = "";
+
+            internal const int
+                Index = -1,
+                StripCountX = 0,
+                StripCountY = 0,
+                StripCountZ = 0;
+
+            internal const float
+                LocationX = 0,
+                LocationY = 0,
+                LocationZ = 0,
+                OrientationX = 0,
+                OrientationY = 0,
+                OrientationZ = 0,
+                Scale = 1;
+
+            internal const double
+                Xmin = -11,
+                Xmax = +11,
+                Ymin = -11,
+                Ymax = +11,
+                Zmin = -11,
+                Zmax = +11;
+
+            internal const YN
+                Visible = YN.Yes;
+        }
     }
 }

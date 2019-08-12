@@ -8,7 +8,7 @@
     {
         #region Public Interface
 
-        public Prototype(float[] positions, uint[] indices)
+        public Prototype(float[] positions, int[] indices)
         {
             VaoID = CreateVao();
             VertexCount = indices.Length;
@@ -25,11 +25,11 @@
 
         #region Private Methods
 
-        private void BindIndicesBuffer(uint[] indices)
+        private void BindIndicesBuffer(int[] indices)
         {
             var vboID = CreateVbo();
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, vboID);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(uint), indices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(int), indices, BufferUsageHint.StaticDraw);
         }
 
         private int CreateVao()

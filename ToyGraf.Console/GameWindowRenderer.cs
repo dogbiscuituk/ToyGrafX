@@ -149,7 +149,7 @@
 
         protected override IEnumerable<IEntity> GetEntities()
         {
-            uint cx = 1000, cy = 1000;
+            int cx = 1000, cy = 1000;
             var vertices = Grids.GetGrid(cx, cy).ToArray();
             var indices = Grids.GetTriangleIndicesXY(cx, cy).ToArray();
 

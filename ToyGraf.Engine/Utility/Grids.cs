@@ -17,7 +17,7 @@
         /// <returns>
         /// 3(cx+1)(cy+1)(cz+1) floats, being the xyz coordinates of the points in the lattice.
         /// </returns>
-        public static float[] GetGrid(uint cx = 0, uint cy = 0, uint cz = 0)
+        public static float[] GetGrid(int cx = 0, int cy = 0, int cz = 0)
         {
             var result = new float[3 * (cx + 1) * (cy + 1) * (cz + 1)];
             var p = 0;
@@ -45,17 +45,17 @@
         /// </summary>
         /// <param name="cx">The number of steps along the x axis.</param>
         /// <param name="cy">The number of steps along the y axis.</param>
-        /// A total of 6*cx*cy uints, ranging from 0 to 3(cx+1)(cy+1)-1 inclusive. These are the
+        /// A total of 6*cx*cy ints, ranging from 0 to 3(cx+1)(cy+1)-1 inclusive. These are the
         /// required vertex indices. Note that these must be multiplied by 3 to index the float data
         /// returned by GetVertexCoords, as every such vertex is postprocessed to add a z coordinate
         /// of zero, and so eventually comprises 3 floats in total.
-        public static uint[] GetTriangleIndicesXY(uint cx, uint cy)
+        public static int[] GetTriangleIndicesXY(int cx, int cy)
         {
-            var result = new uint[6 * cx * cy];
-            uint p = 0, q = 0;
-            for (uint i = 0; i < cx; i++)
+            var result = new int[6 * cx * cy];
+            int p = 0, q = 0;
+            for (var i = 0; i < cx; i++)
             {
-                for (uint j = 0; j < cy; j++)
+                for (var j = 0; j < cy; j++)
                 {
                     result[p++] = q;
                     result[p++] = q++ + cy + 1;
@@ -104,20 +104,19 @@
         /// <param name="cx">The number of steps along the x axis.</param>
         /// <param name="cy">The number of steps along the y axis.</param>
         /// <returns>
-        /// A total of cx(2cy+1)+1 uints, ranging from 0 to 3(cx+1)(cy+1)-1 inclusive. These are the
+        /// A total of cx(2cy+1)+1 ints, ranging from 0 to 3(cx+1)(cy+1)-1 inclusive. These are the
         /// required vertex indices. Note that these must be multiplied by 3 to index the float data
         /// returned by GetVertexCoords, as every such vertex is postprocessed to add a z coordinate
         /// of zero, and so eventually comprises 3 floats in total.
         /// </returns>
-        public static uint[] GetTriangleStripIndicesXY(uint cx, uint cy)
+        public static int[] GetTriangleStripIndicesXY(int cx, int cy)
         {
-            var result = new uint[cx * (2 * cy + 1) + 1];
-            uint p = 0;
+            var result = new int[cx * (2 * cy + 1) + 1];
+            int p = 0, q = 0;
             result[p++] = 0;
-            uint q = 0;
-            for (uint i = 0; i < cx; i++)
+            for (var i = 0; i < cx; i++)
             {
-                for (uint j = 0; j < cy; j++)
+                for (var j = 0; j < cy; j++)
                 {
                     result[p++] = q + cy + 1;
                     result[p++] = (i & 1) == 0 ? ++q : --q;
