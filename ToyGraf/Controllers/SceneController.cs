@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Controllers
 {
+    using OpenTK;
     using System;
     using System.ComponentModel;
     using System.Windows.Forms;
@@ -132,6 +133,8 @@
 
                     SceneForm.HelpOpenGLShadingLanguage.Click -= HelpTheOpenGLShadingLanguage_Click;
                     SceneForm.HelpAbout.Click -= HelpAbout_Click;
+
+                    SceneForm.GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
                 }
                 _SceneForm = value;
                 if (SceneForm != null)
@@ -171,6 +174,8 @@
 
                     SceneForm.HelpOpenGLShadingLanguage.Click += HelpTheOpenGLShadingLanguage_Click;
                     SceneForm.HelpAbout.Click += HelpAbout_Click;
+
+                    SceneForm.GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
                 }
             }
         }
@@ -181,8 +186,8 @@
 
         public CommandProcessor CommandProcessor { get; private set; }
 
-        internal readonly TraceTableController EntityTableController;
         internal readonly PropertyGridController PropertyGridController;
+        internal readonly TraceTableController EntityTableController;
 
         internal void Render() => Renderer.Render();
         internal void Show() => SceneForm.Show();
@@ -205,6 +210,14 @@
 
         private void TbOpen_DropDownOpening(object sender, EventArgs e) => SceneForm.FileReopen.CloneTo(SceneForm.tbOpen);
         private void TbSave_Click(object sender, EventArgs e) => SaveOrSaveAs();
+
+        private void GLControl_ClientSizeChanged(object sender, EventArgs e)
+        {
+            OnPropertyChanged("DisplaySize");
+            MakeCurrent(true);
+            // TODO: Render!
+            MakeCurrent(false);
+        }
 
         private void CameraMoveLeft_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Left);
         private void CameraMoveRight_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Right);
@@ -238,6 +251,7 @@
 
         private SceneForm _SceneForm;
 
+        private GLControl GLControl => SceneForm.GLControl;
         private readonly FullScreenController FullScreenController;
         private readonly JsonController JsonController;
         private readonly Timer Timer;
@@ -315,6 +329,14 @@
         }
 
         internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
+
+        private void MakeCurrent(bool current)
+        {
+            if (current)
+                GLControl?.MakeCurrent();
+            else
+                GLControl?.Context.MakeCurrent(null);
+        }
 
         private void MoveCamera(CameraMove cameraMove)
         {
