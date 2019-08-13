@@ -1,5 +1,25 @@
 ﻿namespace ToyGraf.Commands
 {
+    internal class AccumBppAlphaCommand : ScenePropertyCommand<int>
+    {
+        internal AccumBppAlphaCommand(int value) : base("Accumulator Alpha BPP", value, p => p._AccumBppAlpha, (p, v) => p._AccumBppAlpha = v) { }
+    }
+
+    internal class AccumBppBlueCommand : ScenePropertyCommand<int>
+    {
+        internal AccumBppBlueCommand(int value) : base("Accumulator Blue BPP", value, p => p._AccumBppBlue, (p, v) => p._AccumBppBlue = v) { }
+    }
+
+    internal class AccumBppGreenCommand : ScenePropertyCommand<int>
+    {
+        internal AccumBppGreenCommand(int value) : base("Accumulator Green BPP", value, p => p._AccumBppGreen, (p, v) => p._AccumBppGreen = v) { }
+    }
+
+    internal class AccumBppRedCommand : ScenePropertyCommand<int>
+    {
+        internal AccumBppRedCommand(int value) : base("Accumulator Red BPP", value, p => p._AccumBppRed, (p, v) => p._AccumBppRed = v) { }
+    }
+
     internal class BppAlphaCommand : ScenePropertyCommand<int>
     {
         internal BppAlphaCommand(int value) : base("Alpha BPP", value, p => p._BppAlpha, (p, v) => p._BppAlpha = v) { }
@@ -20,9 +40,19 @@
         internal BppRedCommand(int value) : base("Red BPP", value, p => p._BppRed, (p, v) => p._BppRed = v) { }
     }
 
+    internal class BuffersCommand : ScenePropertyCommand<int>
+    {
+        internal BuffersCommand(int value) : base("Buffers", value, r => r._Buffers, (r, v) => r._Buffers = v) { }
+    }
+
     internal class DepthCommand : ScenePropertyCommand<int>
     {
         internal DepthCommand(int value) : base("Depth Buffer Size", value, r => r._Depth, (r, v) => r._Depth = v) { }
+    }
+
+    internal class SampleCountCommand : ScenePropertyCommand<int>
+    {
+        internal SampleCountCommand(int value) : base("FSAA Sample Count", value, r => r._SampleCount, (r, v) => r._SampleCount = v) { }
     }
 
     internal class StencilCommand : ScenePropertyCommand<int>
@@ -30,8 +60,8 @@
         internal StencilCommand(int value) : base("Stencil Buffer Size", value, r => r._Stencil, (r, v) => r._Stencil = v) { }
     }
 
-    internal class SampleCountCommand : ScenePropertyCommand<int>
+    internal class StereoCommand : ScenePropertyCommand<bool>
     {
-        internal SampleCountCommand(int value) : base("FSAA Sample Count", value, r => r._SampleCount, (r, v) => r._SampleCount = v) { }
+        internal StereoCommand(bool value) : base("Stereo", value, r => r._Stereo, (r, v) => r._Stereo = v) { }
     }
 }

@@ -197,6 +197,48 @@
         [JsonIgnore]
         public int SampleCount { get => _SampleCount; set => Run(new SampleCountCommand(value)); }
 
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.AccumBppRed)]
+        [Description("The number of bits per pixel in the Accumulator Red channel.")]
+        [DisplayName("Accumulator BPP: Red")]
+        [JsonIgnore]
+        public int AccumBppRed { get => _AccumBppRed; set => Run(new AccumBppRedCommand(value)); }
+
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.AccumBppGreen)]
+        [Description("The number of bits per pixel in the Accumulator Green channel.")]
+        [DisplayName("Accumulator BPP: Green")]
+        [JsonIgnore]
+        public int AccumBppGreen { get => _AccumBppGreen; set => Run(new AccumBppGreenCommand(value)); }
+
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.AccumBppBlue)]
+        [Description("The number of bits per pixel in the Accumulator Blue channel.")]
+        [DisplayName("Accumulator BPP: Blue")]
+        [JsonIgnore]
+        public int AccumBppBlue { get => _AccumBppBlue; set => Run(new AccumBppBlueCommand(value)); }
+
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.AccumBppAlpha)]
+        [Description("The number of bits per pixel in the Accumulator Alpha channel.")]
+        [DisplayName("Accumulator BPP: Alpha")]
+        [JsonIgnore]
+        public int AccumBppAlpha { get => _AccumBppAlpha; set => Run(new AccumBppAlphaCommand(value)); }
+
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.Buffers)]
+        [Description("The number of buffers associated with this display mode.")]
+        [DisplayName("Buffers")]
+        [JsonIgnore]
+        public int Buffers { get => _Buffers; set => Run(new BuffersCommand(value)); }
+
+        [Category(Defaults.GraphicsMode)]
+        [DefaultValue(Defaults.Stereo)]
+        [Description("Whether this display mode is stereoscopic.")]
+        [DisplayName("Stereo")]
+        [JsonIgnore]
+        public bool Stereo { get => _Stereo; set => Run(new StereoCommand(value)); }
+
         #endregion
 
         #region Projection
@@ -282,6 +324,10 @@
         #region Persistent Fields
 
         [JsonProperty]
+        internal bool
+            _Stereo;
+
+        [JsonProperty]
         internal int
             _BppAlpha,
             _BppBlue,
@@ -289,7 +335,12 @@
             _BppRed,
             _Depth,
             _Stencil,
-            _SampleCount;
+            _SampleCount,
+            _AccumBppAlpha,
+            _AccumBppRed,
+            _AccumBppGreen,
+            _AccumBppBlue,
+            _Buffers;
 
         [JsonProperty]
         internal float
@@ -395,6 +446,12 @@
             _Depth = Defaults.Depth;
             _Stencil = Defaults.Stencil;
             _SampleCount = Defaults.SampleCount;
+            _AccumBppAlpha = Defaults.AccumBppAlpha;
+            _AccumBppRed = Defaults.AccumBppRed;
+            _AccumBppGreen = Defaults.AccumBppGreen;
+            _AccumBppBlue = Defaults.AccumBppBlue;
+            _Buffers = Defaults.Buffers;
+            _Stereo = Defaults.Stereo;
 
             _CameraX = Defaults.CameraX;
             _CameraY = Defaults.CameraY;
@@ -435,6 +492,9 @@
             internal const string
                 Title = "";
 
+            internal const bool
+                Stereo = false;
+
             internal const int
                 BppAlpha = 8,
                 BppRed = 8,
@@ -442,7 +502,12 @@
                 BppBlue = 8,
                 Depth = 24,
                 Stencil = 8,
-                SampleCount = 0;
+                SampleCount = 0,
+                AccumBppAlpha = 0,
+                AccumBppRed = 0,
+                AccumBppGreen = 0,
+                AccumBppBlue = 0,
+                Buffers = 2;
 
             internal const float
                 CameraX = 0,

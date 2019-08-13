@@ -20,7 +20,7 @@
         #region Virtuals
 
         protected GraphicsMode GraphicsMode => new GraphicsMode(
-            color: new ColorFormat(8, 8, 8, 8),
+            color: new ColorFormat(32),
             depth: 24,
             stencil: 8,
             samples: 0);

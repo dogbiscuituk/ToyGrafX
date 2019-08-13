@@ -21,7 +21,7 @@
             SceneForm = new SceneForm();
             Scene = new Scene(this);
             CommandProcessor = new CommandProcessor(this);
-            Renderer = new GLControlRenderer(this);
+            //Renderer = new GLControlRenderer(this);
             EntityTableController = new TraceTableController(this);
             FullScreenController = new FullScreenController(this);
 
@@ -135,6 +135,7 @@
                     SceneForm.HelpAbout.Click -= HelpAbout_Click;
 
                     SceneForm.GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
+                    GLControl.Resize -= GLControl_Resize;
                 }
                 _SceneForm = value;
                 if (SceneForm != null)
@@ -175,7 +176,8 @@
                     SceneForm.HelpOpenGLShadingLanguage.Click += HelpTheOpenGLShadingLanguage_Click;
                     SceneForm.HelpAbout.Click += HelpAbout_Click;
 
-                    SceneForm.GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
+                    GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
+                    GLControl.Resize += GLControl_Resize;
                 }
             }
         }
@@ -189,7 +191,7 @@
         internal readonly PropertyGridController PropertyGridController;
         internal readonly TraceTableController EntityTableController;
 
-        internal void Render() => Renderer.Render();
+        internal void Render() { } // => Renderer.Render();
         internal void Show() => SceneForm.Show();
 
         #endregion
@@ -214,9 +216,15 @@
         private void GLControl_ClientSizeChanged(object sender, EventArgs e)
         {
             OnPropertyChanged("DisplaySize");
-            MakeCurrent(true);
-            // TODO: Render!
-            MakeCurrent(false);
+            if (MakeCurrent(true))
+            {
+
+                MakeCurrent(false);
+            }
+        }
+
+        private void GLControl_Resize(object sender, EventArgs e)
+        {
         }
 
         private void CameraMoveLeft_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Left);
@@ -251,7 +259,7 @@
 
         private SceneForm _SceneForm;
 
-        private GLControl GLControl => SceneForm.GLControl;
+        private GLControl GLControl => SceneForm?.GLControl;
         private readonly FullScreenController FullScreenController;
         private readonly JsonController JsonController;
         private readonly Timer Timer;
@@ -330,12 +338,15 @@
 
         internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
 
-        private void MakeCurrent(bool current)
+        private bool MakeCurrent(bool current)
         {
+            if (!GLControl.HasValidContext)
+                return false;
             if (current)
-                GLControl?.MakeCurrent();
+                GLControl.MakeCurrent();
             else
-                GLControl?.Context.MakeCurrent(null);
+                GLControl.Context.MakeCurrent(null);
+            return true;
         }
 
         private void MoveCamera(CameraMove cameraMove)
