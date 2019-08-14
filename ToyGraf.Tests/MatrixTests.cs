@@ -133,13 +133,13 @@
         }
 
         /// <summary>
-        /// Get the transformation matrix for a scale factor of 9.
+        /// Get the transformation matrix for a scale factor of 1:4:9.
         /// </summary>
         [TestMethod]
         public void CreateScaling()
         {
-            var expected = new Matrix4(9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: new Euler3F(), scale: new Point3F(9, 9, 9));
+            var expected = new Matrix4(1, 0, 0, 0, 0, 4, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1);
+            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: new Euler3F(), scale: new Point3F(1, 4, 9));
             Assert.AreEqual(expected, actual);
         }
 
