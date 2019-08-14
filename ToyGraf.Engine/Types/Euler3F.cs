@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Engine.Types
 {
+    using System;
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
 
@@ -23,5 +24,12 @@
             p.Pitch == Pitch && p.Yaw == Yaw && p.Roll == Roll;
         public override int GetHashCode() => Pitch.GetHashCode() ^ Yaw.GetHashCode() ^ Roll.GetHashCode();
         public override string ToString() => $"(Pitch: {Pitch}, Yaw: {Yaw}, Roll: {Roll})";
+
+        public static Euler3F Parse(string s)
+        {
+            var t = s.Split(new[] { "(Pitch: ", ", Yaw: ", ", Roll: ", ")" },
+                StringSplitOptions.RemoveEmptyEntries);
+            return new Euler3F(float.Parse(t[0]), float.Parse(t[1]), float.Parse(t[2]));
+        }
     }
 }

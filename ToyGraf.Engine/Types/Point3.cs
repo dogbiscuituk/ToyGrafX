@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Engine.Types
 {
+    using System;
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
 
@@ -22,5 +23,12 @@
         public override bool Equals(object obj) => obj is Point3 p && p.X == X && p.Y == Y && p.Z == Z;
         public override int GetHashCode() => X ^ Y ^ Z;
         public override string ToString() => $"(X: {X}, Y: {Y}, Z: {Z})";
+
+        public static Point3 Parse(string s)
+        {
+            var t = s.Split(new[] { "(X: ", ", Y: ", ", Z: ", ")" },
+                StringSplitOptions.RemoveEmptyEntries);
+            return new Point3(int.Parse(t[0]), int.Parse(t[1]), int.Parse(t[2]));
+        }
     }
 }
