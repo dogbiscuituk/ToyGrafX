@@ -1,67 +1,46 @@
 ﻿namespace ToyGraf.Commands
 {
-    internal class AccumBppAlphaCommand : ScenePropertyCommand<int>
-    {
-        internal AccumBppAlphaCommand(int value) : base("Accumulator Alpha BPP", value, p => p._AccumBppAlpha, (p, v) => p._AccumBppAlpha = v) { }
-    }
+    using ToyGraf.Engine.Types;
 
-    internal class AccumBppBlueCommand : ScenePropertyCommand<int>
+    internal class AccumColourFormatCommand : ScenePropertyCommand<ColourFormat>
     {
-        internal AccumBppBlueCommand(int value) : base("Accumulator Blue BPP", value, p => p._AccumBppBlue, (p, v) => p._AccumBppBlue = v) { }
-    }
-
-    internal class AccumBppGreenCommand : ScenePropertyCommand<int>
-    {
-        internal AccumBppGreenCommand(int value) : base("Accumulator Green BPP", value, p => p._AccumBppGreen, (p, v) => p._AccumBppGreen = v) { }
-    }
-
-    internal class AccumBppRedCommand : ScenePropertyCommand<int>
-    {
-        internal AccumBppRedCommand(int value) : base("Accumulator Red BPP", value, p => p._AccumBppRed, (p, v) => p._AccumBppRed = v) { }
-    }
-
-    internal class BppAlphaCommand : ScenePropertyCommand<int>
-    {
-        internal BppAlphaCommand(int value) : base("Alpha BPP", value, p => p._BppAlpha, (p, v) => p._BppAlpha = v) { }
-    }
-
-    internal class BppBlueCommand : ScenePropertyCommand<int>
-    {
-        internal BppBlueCommand(int value) : base("Blue BPP", value, p => p._BppBlue, (p, v) => p._BppBlue = v) { }
-    }
-
-    internal class BppGreenCommand : ScenePropertyCommand<int>
-    {
-        internal BppGreenCommand(int value) : base("Green BPP", value, p => p._BppGreen, (p, v) => p._BppGreen = v) { }
-    }
-
-    internal class BppRedCommand : ScenePropertyCommand<int>
-    {
-        internal BppRedCommand(int value) : base("Red BPP", value, p => p._BppRed, (p, v) => p._BppRed = v) { }
+        internal AccumColourFormatCommand(ColourFormat value) : base("Accumulator Colour Format", value,
+            s => s._AccumColourFormat, (s, v) => s._AccumColourFormat = v) { }
     }
 
     internal class BuffersCommand : ScenePropertyCommand<int>
     {
-        internal BuffersCommand(int value) : base("Buffers", value, r => r._Buffers, (r, v) => r._Buffers = v) { }
+        internal BuffersCommand(int value) : base("Buffers", value,
+            s => s._Buffers, (s, v) => s._Buffers = v) { }
+    }
+
+    internal class ColourFormatCommand : ScenePropertyCommand<ColourFormat>
+    {
+        internal ColourFormatCommand(ColourFormat value) : base("Colour Format", value,
+            s => s._ColourFormat, (s, v) => s._ColourFormat = v) { }
     }
 
     internal class DepthCommand : ScenePropertyCommand<int>
     {
-        internal DepthCommand(int value) : base("Depth Buffer Size", value, r => r._Depth, (r, v) => r._Depth = v) { }
+        internal DepthCommand(int value) : base("Depth Buffer Size", value,
+            s => s._Depth, (s, v) => s._Depth = v) { }
     }
 
     internal class SampleCountCommand : ScenePropertyCommand<int>
     {
-        internal SampleCountCommand(int value) : base("FSAA Sample Count", value, r => r._SampleCount, (r, v) => r._SampleCount = v) { }
+        internal SampleCountCommand(int value) : base("FSAA Sample Count", value,
+            s => s._SampleCount, (s, v) => s._SampleCount = v) { }
     }
 
     internal class StencilCommand : ScenePropertyCommand<int>
     {
-        internal StencilCommand(int value) : base("Stencil Buffer Size", value, r => r._Stencil, (r, v) => r._Stencil = v) { }
+        internal StencilCommand(int value) : base("Stencil Buffer Size", value,
+            s => s._Stencil, (s, v) => s._Stencil = v) { }
     }
 
     internal class StereoCommand : ScenePropertyCommand<bool>
     {
-        internal StereoCommand(bool value) : base("Stereo", value, r => r._Stereo, (r, v) => r._Stereo = v) { }
+        internal StereoCommand(bool value) : base("Stereo", value,
+            s => s._Stereo, (s, v) => s._Stereo = v) { }
     }
 }

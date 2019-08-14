@@ -61,7 +61,7 @@
                     GL.EnableVertexAttribArray(0);
 
                     var transformationMatrix = Maths.CreateTransformation(
-                        entity.Location, entity.Rotation, entity.Scale);
+                        entity.Location.ToPoint3F(), entity.Rotation.ToEuler3F(), entity.Scale);
                     Shader.LoadTransformationMatrix(transformationMatrix);
 
                     //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);

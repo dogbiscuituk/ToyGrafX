@@ -1,32 +1,19 @@
 ﻿namespace ToyGraf.Commands
 {
     using OpenTK;
+    using ToyGraf.Engine.Types;
 
-    internal class CameraRotationCommand : ScenePropertyCommand<Vector3>
+    internal class CameraPositionCommand : ScenePropertyCommand<Point3F>
     {
-        internal CameraRotationCommand(Vector3 value) : base("Camera Rotation",
-            value, s => s.GetCameraRotation(), (s, v) => s.SetCameraRotation(v))
+        internal CameraPositionCommand(Point3F value) : base("Camera Position",
+            value, s => s._CameraPosition, (s, v) => s._CameraPosition = v)
         { }
     }
 
-    internal class CameraPitchCommand : ScenePropertyCommand<float>
+    internal class CameraRotationCommand : ScenePropertyCommand<Euler3F>
     {
-        internal CameraPitchCommand(float value) : base("Camera Pitch",
-            value, s => s._CameraPitch, (s, v) => s._CameraPitch = v)
-        { }
-    }
-
-    internal class CameraPositionCommand : ScenePropertyCommand<Vector3>
-    {
-        internal CameraPositionCommand(Vector3 value) : base("Camera Position",
-            value, s => s.GetCameraPosition(), (s, v) => s.SetCameraPosition(v))
-        { }
-    }
-
-    internal class CameraRollCommand : ScenePropertyCommand<float>
-    {
-        internal CameraRollCommand(float value) : base("Camera Roll",
-            value, s => s._CameraRoll, (s, v) => s._CameraRoll = v)
+        internal CameraRotationCommand(Euler3F value) : base("Camera Rotation",
+            value, s => s._CameraRotation, (s, v) => s._CameraRotation = v)
         { }
     }
 
@@ -34,34 +21,6 @@
     {
         internal CameraViewCommand(Matrix4 value) : base("Camera View",
             value, s => s.GetCameraView(), (s, v) => s.SetCameraView(v))
-        { }
-    }
-
-    internal class CameraXCommand : ScenePropertyCommand<float>
-    {
-        internal CameraXCommand(float value) : base("Camera X",
-            value, s => s._CameraX, (s, v) => s._CameraX = v)
-        { }
-    }
-
-    internal class CameraYawCommand : ScenePropertyCommand<float>
-    {
-        internal CameraYawCommand(float value) : base("Camera Yaw",
-            value, s => s._CameraYaw, (s, v) => s._CameraYaw = v)
-        { }
-    }
-
-    internal class CameraYCommand : ScenePropertyCommand<float>
-    {
-        internal CameraYCommand(float value) : base("Camera Y",
-            value, s => s._CameraY, (s, v) => s._CameraY = v)
-        { }
-    }
-
-    internal class CameraZCommand : ScenePropertyCommand<float>
-    {
-        internal CameraZCommand(float value) : base("Camera Z",
-            value, s => s._CameraZ, (s, v) => s._CameraZ = v)
         { }
     }
 }

@@ -11,7 +11,7 @@
     <AssemblyName>ToyGraf.Engine</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <Deterministic>false</Deterministic>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -51,6 +51,14 @@
     <Compile Include="Controllers\Renderer.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="ShiftKeys.cs" />
+    <Compile Include="TypeConverters\Euler3FTypeConverter.cs" />
+    <Compile Include="TypeConverters\Point3TypeConverter.cs" />
+    <Compile Include="Types\ColourFormat.cs" />
+    <Compile Include="Types\Euler3F.cs" />
+    <Compile Include="Types\Point3.cs" />
+    <Compile Include="Types\Point3F.cs" />
+    <Compile Include="TypeConverters\ColourFormatTypeConverter.cs" />
+    <Compile Include="TypeConverters\Point3FTypeConverter.cs" />
     <Compile Include="Utility\Functions.cs" />
     <Compile Include="Utility\Grids.cs" />
     <Compile Include="Utility\Maths.cs" />

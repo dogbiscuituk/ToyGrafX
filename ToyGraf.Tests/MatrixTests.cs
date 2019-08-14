@@ -3,6 +3,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using OpenTK;
     using ToyGraf.Engine;
+    using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
 
     /// <summary>
@@ -50,7 +51,7 @@
         public void CreateTransformationDefault()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: Vector3.Zero, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: new Euler3F(), scale: Unity);
             Assert.AreEqual(expected, actual);
         }
 
@@ -61,7 +62,7 @@
         public void CreateRotationX()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateX, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateX, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -72,7 +73,7 @@
         public void CreateRotationY()
         {
             var expected = new Matrix4(0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateY, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateY, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -83,7 +84,7 @@
         public void CreateRotationZ()
         {
             var expected = new Matrix4(0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateZ, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateZ, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -94,7 +95,7 @@
         public void CreateRotationXY()
         {
             var expected = new Matrix4(0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateXY, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateXY, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -105,7 +106,7 @@
         public void CreateRotationXZ()
         {
             var expected = new Matrix4(0, 0, 1, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateXZ, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateXZ, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -116,7 +117,7 @@
         public void CreateRotationYZ()
         {
             var expected = new Matrix4(0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateYZ, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateYZ, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -127,7 +128,7 @@
         public void CreateRotationXYZ()
         {
             var expected = new Matrix4(0, 0, 1, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: RotateXYZ, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateXYZ, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -138,7 +139,7 @@
         public void CreateScaling()
         {
             var expected = new Matrix4(9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: Vector3.Zero, orientation: Vector3.Zero, scale: 9f);
+            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: new Euler3F(), scale: 9f);
             Assert.AreEqual(expected, actual);
         }
 
@@ -149,7 +150,7 @@
         public void CreateTransformationGeneral()
         {
             var expected = new Matrix4(0, 0, 9, 0, 0, -9, 0, 0, 9, 0, 0, 0, 7, 11, 13, 1);
-            var actual = Maths.CreateTransformation(location: new Vector3(7, 11, 13), orientation: RotateXYZ, scale: 9f);
+            var actual = Maths.CreateTransformation(location: new Point3F(7, 11, 13), orientation: RotateXYZ, scale: 9f);
             CompareMatrices(expected, actual);
         }
 
@@ -160,7 +161,7 @@
         public void CreateTranslation()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 3, 5, 1);
-            var actual = Maths.CreateTransformation(location: new Vector3(2, 3, 5), orientation: Vector3.Zero, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Point3F(2, 3, 5), orientation: new Euler3F(), scale: Unity);
             Assert.AreEqual(expected, actual);
         }
 
@@ -232,14 +233,14 @@
         }
 
         private const float Unity = 1f;
-        private static Vector3
-            RotateX = new Vector3(90, 0, 0),
-            RotateY = new Vector3(0, 90, 0),
-            RotateZ = new Vector3(0, 0, 90),
-            RotateXY = new Vector3(90, 90, 0),
-            RotateXZ = new Vector3(90, 0, 90),
-            RotateYZ = new Vector3(0, 90, 90),
-            RotateXYZ = new Vector3(90, 90, 90);
+        private static Euler3F
+            RotateX = new Euler3F(90, 0, 0),
+            RotateY = new Euler3F(0, 90, 0),
+            RotateZ = new Euler3F(0, 0, 90),
+            RotateXY = new Euler3F(90, 90, 0),
+            RotateXZ = new Euler3F(90, 0, 90),
+            RotateYZ = new Euler3F(0, 90, 90),
+            RotateXYZ = new Euler3F(90, 90, 90);
 
         private void CompareMatrices(Matrix4 expected, Matrix4 actual, float delta = 1e-6f)
         {

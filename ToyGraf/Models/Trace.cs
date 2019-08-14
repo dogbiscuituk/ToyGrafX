@@ -8,6 +8,7 @@
     using System.Drawing.Design;
     using ToyGraf.Commands;
     using ToyGraf.Engine.Entities;
+    using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models.Enums;
     using ToyGraf.Shaders;
@@ -87,107 +88,35 @@
 
         #region Domain & Range
 
-        [Category(Defaults.DomainRange)]
-        [DefaultValue(Defaults.Xmax)]
+        [Category(Categories.DomainRange)]
+        [DefaultValue(typeof(Point3F), Defaults.MaximumString)]
         [JsonIgnore]
-        public double Xmax { get => _Xmax; set => Run(new TraceXmaxCommand(Index, value)); }
+        public Point3F Maximum { get => _Maximum; set => Run(new MaximumCommand(Index, value)); }
 
-        [Category(Defaults.DomainRange)]
-        [DefaultValue(Defaults.Xmin)]
+        [Category(Categories.DomainRange)]
+        [DefaultValue(typeof(Point3F), Defaults.MinimumString)]
         [JsonIgnore]
-        public double Xmin { get => _Xmin; set => Run(new TraceXminCommand(Index, value)); }
-
-        [Category(Defaults.DomainRange)]
-        [DefaultValue(Defaults.Ymax)]
-        [JsonIgnore]
-        public double Ymax { get => _Ymax; set => Run(new TraceYmaxCommand(Index, value)); }
-
-        [Category(Defaults.DomainRange)]
-        [DefaultValue(Defaults.Ymin)]
-        [JsonIgnore]
-        public double Ymin { get => _Ymin; set => Run(new TraceYminCommand(Index, value)); }
-
-        [Category(Defaults.DomainRange)]
-        [DefaultValue(Defaults.Zmax)]
-        [JsonIgnore]
-        public double Zmax { get => _Zmax; set => Run(new TraceZmaxCommand(Index, value)); }
-
-        [Category(Defaults.DomainRange)]
-        [DefaultValue(Defaults.Zmin)]
-        [JsonIgnore]
-        public double Zmin { get => _Zmin; set => Run(new TraceZminCommand(Index, value)); }
+        public Point3F Minimum { get => _Minimum; set => Run(new MinimumCommand(Index, value)); }
 
         #endregion
 
         #region Placement
 
-        [Category(Defaults.Placement)]
-        [DefaultValue(Defaults.LocationX)]
-        [Description("The X component of the trace location in world co-ordinates.")]
-        [DisplayName("Location X")]
+        [Category(Categories.Placement)]
+        [DefaultValue(typeof(Point3F), Defaults.LocationString)]
+        [Description("The location of the trace in world co-ordinates.")]
+        [DisplayName("Location")]
         [JsonIgnore]
-        public float LocationX
-        {
-            get => _LocationX;
-            set => Run(new EntityLocationXCommand(Index, value));
-        }
+        public Point3F Location { get => _Location; set => Run(new EntityLocationCommand(Index, value)); }
 
-        [Category(Defaults.Placement)]
-        [DefaultValue(Defaults.LocationY)]
-        [Description("The Y component of the trace location in world co-ordinates.")]
-        [DisplayName("Location Y")]
+        [Category(Categories.Placement)]
+        [DefaultValue(typeof(Euler3F), Defaults.OrientationString)]
+        [Description("The orientation of the trace in world co-ordinates (in degrees).")]
+        [DisplayName("Orientation°")]
         [JsonIgnore]
-        public float LocationY
-        {
-            get => _LocationY;
-            set => Run(new EntityLocationYCommand(Index, value));
-        }
+        public Euler3F Orientation { get => _Orientation; set => Run(new EntityOrientationCommand(Index, value)); }
 
-        [Category(Defaults.Placement)]
-        [DefaultValue(Defaults.LocationZ)]
-        [Description("The Z component of the trace location in world co-ordinates.")]
-        [DisplayName("Location Z")]
-        [JsonIgnore]
-        public float LocationZ
-        {
-            get => _LocationZ;
-            set => Run(new EntityLocationZCommand(Index, value));
-        }
-
-        [Category(Defaults.Placement)]
-        [DefaultValue(Defaults.OrientationX)]
-        [Description("The X component of the trace orientation in world co-ordinates (in degrees).")]
-        [DisplayName("Orientation° X")]
-        [JsonIgnore]
-        public float OrientationX
-        {
-            get => _OrientationX;
-            set => Run(new EntityOrientationXCommand(Index, value));
-        }
-
-        [Category(Defaults.Placement)]
-        [DefaultValue(Defaults.OrientationY)]
-        [Description("The Y component of the trace orientation in world co-ordinates (in degrees).")]
-        [DisplayName("Orientation° Y")]
-        [JsonIgnore]
-        public float OrientationY
-        {
-            get => _OrientationY;
-            set => Run(new EntityOrientationYCommand(Index, value));
-        }
-
-        [Category(Defaults.Placement)]
-        [DefaultValue(Defaults.OrientationZ)]
-        [Description("The Z component of the trace orientation in world co-ordinates (in degrees).")]
-        [DisplayName("Orientation° Z")]
-        [JsonIgnore]
-        public float OrientationZ
-        {
-            get => _OrientationZ;
-            set => Run(new EntityOrientationZCommand(Index, value));
-        }
-
-        [Category(Defaults.Placement)]
+        [Category(Categories.Placement)]
         [DefaultValue(Defaults.Scale)]
         [Description("The relative size of the trace.")]
         [DisplayName("Scale")]
@@ -198,7 +127,7 @@
             set => Run(new EntityScaleCommand(Index, value));
         }
 
-        [Category(Defaults.Placement)]
+        [Category(Categories.Placement)]
         [DefaultValue(Defaults.Visible)]
         [Description("Take a wild guess.")]
         [DisplayName("Visible?")]
@@ -209,7 +138,7 @@
 
         #region Read Only / System
 
-        [Category(Defaults.SystemRO)]
+        [Category(Categories.SystemRO)]
         [DefaultValue(Defaults.GPUStatus)]
         [Description("The status of the most recent GPU compilation action. An empty value indicates successful compilation.")]
         [DisplayName("GPU Status")]
@@ -220,27 +149,7 @@
             get => _GPUStatus;
         }
 
-        [Category(Defaults.SystemRO)]
-        [Description("The location of the trace in world co-ordinates.")]
-        [DisplayName("Location")]
-        [JsonIgnore]
-        public Vector3 Location
-        {
-            get => GetLocation();
-            set => Run(new EntityLocationCommand(Index, value));
-        }
-
-        [Category(Defaults.SystemRO)]
-        [Description("The orientation of the trace in world co-ordinates (in degrees).")]
-        [DisplayName("Orientation°")]
-        [JsonIgnore]
-        public Vector3 Orientation
-        {
-            get => GetOrientation();
-            set => Run(new EntityOrientationCommand(Index, value));
-        }
-
-        [Category(Defaults.SystemRO)]
+        [Category(Categories.SystemRO)]
         [Description("The transformation matrix of the trace.")]
         [DisplayName("Transformation")]
         [JsonIgnore]
@@ -254,7 +163,7 @@
 
         #region Shaders
 
-        [Category(Defaults.Shaders)]
+        [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader1Vertex)]
         [Description(@"The vertex processor is a programmable unit that operates on incoming vertices and their associated data. Compilation units written in the OpenGL Shading Language to run on this processor are called vertex shaders.
 When a set of vertex shaders are successfully compiled and linked, they result in a vertex shader executable that runs on the vertex processor.
@@ -270,7 +179,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             set => Run(new VertexShaderCommand(Index, value));
         }
 
-        [Category(Defaults.Shaders)]
+        [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader2TessControl)]
         [Description(@"The tessellation control processor is a programmable unit that operates on a patch of incoming vertices and their associated data, emitting a new output patch. Compilation units written in the OpenGL Shading Language to run on this processor are called tessellation control shaders.
 When a set of tessellation control shaders are successfully compiled and linked, they result in a tessellation control shader executable that runs on the tessellation control processor.
@@ -289,7 +198,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             set => Run(new TessControlShaderCommand(Index, value));
         }
 
-        [Category(Defaults.Shaders)]
+        [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader3TessEvaluation)]
         [Description(@"The tessellation evaluation processor is a programmable unit that evaluates the position and other attributes of a vertex generated by the tessellation primitive generator, using a patch of incoming vertices and their associated data.
 Compilation units written in the OpenGL Shading Language to run on this processor are called tessellation evaluation shaders.
@@ -307,7 +216,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             set => Run(new TessEvaluationShaderCommand(Index, value));
         }
 
-        [Category(Defaults.Shaders)]
+        [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader4Geometry)]
         [Description(@"The geometry processor is a programmable unit that operates on data for incoming vertices for a primitive assembled after vertex processing and outputs a sequence of vertices forming output primitives.
 Compilation units written in the OpenGL Shading Language to run on this processor are called geometry shaders.
@@ -325,7 +234,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             set => Run(new GeometryShaderCommand(Index, value));
         }
 
-        [Category(Defaults.Shaders)]
+        [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader5Fragment)]
         [Description(@"The fragment processor is a programmable unit that operates on fragment values and their associated data. Compilation units written in the OpenGL Shading Language to run on this processor are called fragment shaders.
 When a set of fragment shaders are successfully compiled and linked, they result in a fragment shader executable that runs on the fragment processor.
@@ -342,7 +251,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             set => Run(new FragmentShaderCommand(Index, value));
         }
 
-        [Category(Defaults.Shaders)]
+        [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader6Compute)]
         [Description(@"The compute processor is a programmable unit that operates independently from the other shader processors. Compilation units written in the OpenGL Shading Language to run on this processor are called compute shaders.
 When a set of compute shaders are successfully compiled and linked, they result in a compute shader executable that runs on the compute processor.
@@ -365,32 +274,18 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #region Terrain
 
-        [Category(Defaults.Terrain)]
-        [DefaultValue(Defaults.StripCountX)]
-        [Description("The number of discrete strips into which the trace is divided in the X direction.")]
-        [DisplayName("Strip Count X")]
+        [Category(Categories.Terrain)]
+        [DefaultValue(typeof(Point3), Defaults.StripCountString)]
+        [Description("The number of discrete strips into which the trace is divided along each axis.")]
+        [DisplayName("Strip Count")]
         [JsonIgnore]
-        public int StripCountX { get => _StripCountX; set => Run(new TerrainStripCountXCommand(Index, value)); }
-
-        [Category(Defaults.Terrain)]
-        [DefaultValue(Defaults.StripCountY)]
-        [Description("The number of discrete strips into which the trace is divided in the Y direction.")]
-        [DisplayName("Strip Count Y")]
-        [JsonIgnore]
-        public int StripCountY { get => _StripCountY; set => Run(new TerrainStripCountYCommand(Index, value)); }
-
-        [Category(Defaults.Terrain)]
-        [DefaultValue(Defaults.StripCountZ)]
-        [Description("The number of discrete strips into which the trace is divided in the Z direction.")]
-        [DisplayName("Strip Count Z")]
-        [JsonIgnore]
-        public int StripCountZ { get => _StripCountZ; set => Run(new TerrainStripCountZCommand(Index, value)); }
+        public Point3 StripCount { get => _StripCount; set => Run(new StripCountCommand(Index, value)); }
 
         #endregion
 
         #region Trace
 
-        [Category(Defaults.Trace)]
+        [Category(Categories.Trace)]
         [DefaultValue(Defaults.Title)]
         [Description("A title for this trace.")]
         [DisplayName("Title")]
@@ -403,64 +298,41 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #region Fields
 
-        // System
-
         private int
             _Index;
-
-        // Domain & Range
-
-        [JsonProperty]
-        internal double
-            _Xmin,
-            _Xmax,
-            _Ymin,
-            _Ymax,
-            _Zmin,
-            _Zmax;
-
-        // Placement
-
-        [JsonProperty]
-        internal float
-            _LocationX,
-            _LocationY,
-            _LocationZ,
-            _OrientationX,
-            _OrientationY,
-            _OrientationZ,
-            _Scale;
-
-        // Shaders
-
-        [JsonProperty]
-        internal string
-            _Shader1Vertex,
-            _Shader2TessControl,
-            _Shader3TessEvaluation,
-            _Shader4Geometry,
-            _Shader5Fragment,
-            _Shader6Compute,
-            _GPUStatus;
-
-        // Terrain
-
-        [JsonProperty]
-        internal int
-            _StripCountX,
-            _StripCountY,
-            _StripCountZ;
-
-        // Trace
 
         [JsonProperty]
         internal YN
             _Visible;
 
         [JsonProperty]
-        internal string
-            _Title;
+        internal float
+            _Scale;
 
+        [JsonProperty]
+        internal Point3
+            _StripCount;
+
+        [JsonProperty]
+        internal Euler3F
+            _Orientation;
+
+        [JsonProperty]
+        internal Point3F
+            _Location,
+            _Maximum,
+            _Minimum;
+
+        [JsonProperty]
+        internal string
+            _GPUStatus,
+            _Shader1Vertex,
+            _Shader2TessControl,
+            _Shader3TessEvaluation,
+            _Shader4Geometry,
+            _Shader5Fragment,
+            _Shader6Compute,
+            _Title;
 
         #endregion
 
@@ -481,8 +353,6 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #region Non-Public Methods
 
-        internal Vector3 GetLocation() => new Vector3(_LocationX, _LocationY, _LocationZ);
-        internal Vector3 GetOrientation() => new Vector3(_OrientationX, _OrientationY, _OrientationZ);
         internal Matrix4 GetTransformation() => Maths.CreateTransformation(Location, Orientation, Scale);
 
         internal void Init(Scene scene)
@@ -503,24 +373,14 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _Title = Defaults.Title;
 
             _Index = Defaults.Index;
-            _StripCountX = Defaults.StripCountX;
-            _StripCountY = Defaults.StripCountY;
-            _StripCountZ = Defaults.StripCountZ;
+            _StripCount = Defaults.StripCount;
 
-            _LocationX = Defaults.LocationX;
-            _LocationY = Defaults.LocationY;
-            _LocationZ = Defaults.LocationZ;
-            _OrientationX = Defaults.OrientationX;
-            _OrientationY = Defaults.OrientationY;
-            _OrientationZ = Defaults.OrientationZ;
+            _Maximum = Defaults.Maximum;
+            _Minimum = Defaults.Maximum;
+
+            _Location = Defaults.Location;
+            _Orientation = Defaults.Orientation;
             _Scale = Defaults.Scale;
-
-            _Xmin = Defaults.Xmin;
-            _Xmax = Defaults.Xmax;
-            _Ymin = Defaults.Ymin;
-            _Ymax = Defaults.Ymax;
-            _Zmin = Defaults.Zmin;
-            _Zmax = Defaults.Zmax;
 
             _Visible = Defaults.Visible;
         }
@@ -533,27 +393,9 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
                 command.RunOn(this);
         }
 
-        internal void SetLocation(Vector3 location)
-        {
-            _LocationX = location.X;
-            _LocationY = location.Y;
-            _LocationZ = location.Z;
-        }
-
-        internal void SetOrientation(Vector3 rotation)
-        {
-            _OrientationX = rotation.X;
-            _OrientationY = rotation.Y;
-            _OrientationZ = rotation.Z;
-        }
-
-        internal void SetOrientation(Quaternion rotation)
-        {
-            _OrientationX = rotation.X;
-            _OrientationY = rotation.Y;
-            _OrientationZ = rotation.Z;
-        }
-
+        internal void SetLocation(Vector3 location) => Location = location.ToPoint3F();
+        internal void SetOrientation(Vector3 orientation) => Orientation = orientation.ToEuler3F();
+        internal void SetOrientation(Quaternion orientation) => Orientation = orientation.ToEuler3F();
         internal void SetScale(Vector3 scale) { }
 
         internal void SetTransformation(Matrix4 transformation)
@@ -613,7 +455,7 @@ void main()
 
         #endregion
 
-        private class Defaults
+        private class Categories
         {
             internal const string
                 DomainRange = "Domain / Range",
@@ -622,15 +464,23 @@ void main()
                 SystemRO = "Read Only / System",
                 Terrain = "Terrain",
                 Trace = "Trace";
+        }
 
+        private class Defaults
+        {
             internal const string
                 GPUStatus = "",
+                LocationString = "(X: 0, Y: 0, Z: 0)",
+                MaximumString = "(X: 0, Y: 0, Z: 0)",
+                MinimumString = "(X: 0, Y: 0, Z: 0)",
+                OrientationString = "(Pitch: 0, Yaw: 0, Roll: 0)",
                 Shader1Vertex = "",
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
                 Shader5Fragment = "",
                 Shader6Compute = "",
+                StripCountString = "(X: 0, Y: 0, Z: 0)",
                 Title = "";
 
             internal const int
@@ -655,6 +505,17 @@ void main()
                 Ymax = +11,
                 Zmin = -11,
                 Zmax = +11;
+
+            internal static Euler3F
+                Orientation = new Euler3F();
+
+            internal static Point3
+                StripCount = new Point3();
+
+            internal static Point3F
+                Location = new Point3F(),
+                Maximum = new Point3F(),
+                Minimum = new Point3F();
 
             internal const YN
                 Visible = YN.Yes;

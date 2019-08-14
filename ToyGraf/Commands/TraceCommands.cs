@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Commands
 {
+    using ToyGraf.Engine.Types;
     using ToyGraf.Models.Enums;
 
     internal class TraceTitleCommand : TracePropertyCommand<string>
@@ -16,45 +17,17 @@
         { }
     }
 
-    internal class TraceXmaxCommand : TracePropertyCommand<double>
+    internal class MaximumCommand : TracePropertyCommand<Point3F>
     {
-        internal TraceXmaxCommand(int index, double value) : base(index, "Xmax",
-            value, t => t._Xmax, (t, v) => t._Xmax = v)
+        internal MaximumCommand(int index, Point3F value) : base(index, "Domain/Range Maximum",
+            value, t => t._Maximum, (t, v) => t._Maximum = v)
         { }
     }
 
-    internal class TraceXminCommand : TracePropertyCommand<double>
+    internal class MinimumCommand : TracePropertyCommand<Point3F>
     {
-        internal TraceXminCommand(int index, double value) : base(index, "Xmin",
-            value, t => t._Xmin, (t, v) => t._Xmin = v)
-        { }
-    }
-
-    internal class TraceYmaxCommand : TracePropertyCommand<double>
-    {
-        internal TraceYmaxCommand(int index, double value) : base(index, "Ymax",
-            value, t => t._Ymax, (t, v) => t._Ymax = v)
-        { }
-    }
-
-    internal class TraceYminCommand : TracePropertyCommand<double>
-    {
-        internal TraceYminCommand(int index, double value) : base(index, "Ymin",
-            value, t => t._Ymin, (t, v) => t._Ymin = v)
-        { }
-    }
-
-    internal class TraceZmaxCommand : TracePropertyCommand<double>
-    {
-        internal TraceZmaxCommand(int index, double value) : base(index, "Zmax",
-            value, t => t._Zmax, (t, v) => t._Zmax = v)
-        { }
-    }
-
-    internal class TraceZminCommand : TracePropertyCommand<double>
-    {
-        internal TraceZminCommand(int index, double value) : base(index, "Zmin",
-            value, t => t._Zmin, (t, v) => t._Zmin = v)
+        internal MinimumCommand(int index, Point3F value) : base(index, "Domain/Range Minimum",
+            value, t => t._Minimum, (t, v) => t._Minimum = v)
         { }
     }
 }

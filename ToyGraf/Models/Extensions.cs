@@ -9,19 +9,11 @@
             // System
             target.Index = source.Index;
             // Domain & Range
-            target.Xmax = source.Xmax;
-            target.Xmin = source.Xmin;
-            target.Ymax = source.Ymax;
-            target.Ymin = source.Ymin;
-            target.Zmax = source.Zmax;
-            target.Zmin = source.Zmin;
+            target.Maximum = source.Maximum;
+            target.Minimum = source.Minimum;
             // Placement
-            target.LocationX = source.LocationX;
-            target.LocationY = source.LocationY;
-            target.LocationZ = source.LocationZ;
-            target.OrientationX = source.OrientationX;
-            target.OrientationY = source.OrientationY;
-            target.OrientationZ = source.OrientationZ;
+            target.Location = source.Location;
+            target.Orientation = source.Orientation;
             target.Scale = source.Scale;
             // Shaders
             target.Shader1Vertex = source.Shader1Vertex;
@@ -32,9 +24,7 @@
             target.Shader6Compute = source.Shader6Compute;
             target._GPUStatus = source.GPUStatus;
             // Terrain
-            target.StripCountX = source.StripCountX;
-            target.StripCountY = source.StripCountY;
-            target.StripCountZ = source.StripCountZ;
+            target.StripCount = source.StripCount;
             // Trace
             target.Title = source.Title;
             target.Visible = source.Visible;

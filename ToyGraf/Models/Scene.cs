@@ -10,6 +10,7 @@
     using ToyGraf.Commands;
     using ToyGraf.Controllers;
     using ToyGraf.Controls;
+    using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Views;
 
@@ -22,24 +23,8 @@
 
         internal Scene(SceneController sceneController) : this() => SceneController = sceneController;
 
-        internal Vector3 GetCameraPosition() => new Vector3(_CameraX, _CameraY, _CameraZ);
-        internal Vector3 GetCameraRotation() => new Vector3(_CameraPitch, _CameraYaw, _CameraRoll);
         internal Matrix4 GetCameraView() => Maths.CreateCameraView(CameraPosition, CameraRotation);
         internal Matrix4 GetProjection() => Maths.CreatePerspectiveProjection(FieldOfView, AspectRatio, NearPlane, FarPlane);
-
-        internal void SetCameraPosition(Vector3 cameraPosition)
-        {
-            _CameraX = cameraPosition.X;
-            _CameraY = cameraPosition.Y;
-            _CameraZ = cameraPosition.Z;
-        }
-
-        internal void SetCameraRotation(Vector3 cameraRotation)
-        {
-            _CameraPitch = cameraRotation.X;
-            _CameraYaw = cameraRotation.Y;
-            _CameraRoll = cameraRotation.Z;
-        }
 
         internal void SetCameraView(Matrix4 cameraView) { }
         internal void SetProjection(Matrix4 projection) { }
@@ -92,147 +77,67 @@
 
         #region Camera
 
-        [Category(Defaults.SystemRO)]
+        [Category(Categories.Camera)]
+        [DefaultValue(typeof(Point3F), Defaults.CameraPositionString)]
         [Description("The camera position for the scene.")]
         [DisplayName("Position")]
         [JsonIgnore]
-        public Vector3 CameraPosition
-        {
-            get => GetCameraPosition();
-            set => Run(new CameraPositionCommand(value));
-        }
+        public Point3F CameraPosition { get => _CameraPosition; set => Run(new CameraPositionCommand(value)); }
 
-        [Category(Defaults.Camera)]
-        [DefaultValue(Defaults.CameraX)]
-        [Description("The X component of the camera position.")]
-        [DisplayName("Position X")]
+        [Category(Categories.Camera)]
+        [DefaultValue(typeof(Euler3F), Defaults.CameraRotationString)]
+        [Description("The camera rotation for the scene (in degrees).")]
+        [DisplayName("Rotation°")]
         [JsonIgnore]
-        public float CameraX { get => _CameraX; set => Run(new CameraXCommand(value)); }
-
-        [Category(Defaults.Camera)]
-        [DefaultValue(Defaults.CameraY)]
-        [Description("The Y component of the camera position.")]
-        [DisplayName("Position Y")]
-        [JsonIgnore]
-        public float CameraY { get => _CameraY; set => Run(new CameraYCommand(value)); }
-
-        [Category(Defaults.Camera)]
-        [DefaultValue(Defaults.CameraZ)]
-        [Description("The Z component of the camera position.")]
-        [DisplayName("Position Z")]
-        [JsonIgnore]
-        public float CameraZ { get => _CameraZ; set => Run(new CameraZCommand(value)); }
-
-        [Category(Defaults.Camera)]
-        [DefaultValue(Defaults.CameraPitch)]
-        [Description("The pitch component of the camera rotation (in degrees).")]
-        [DisplayName("Rotation° Pitch")]
-        [JsonIgnore]
-        public float CameraPitch { get => _CameraPitch; set => Run(new CameraPitchCommand(value)); }
-
-        [Category(Defaults.Camera)]
-        [DefaultValue(Defaults.CameraRoll)]
-        [Description("The roll component of the camera rotation (in degrees).")]
-        [DisplayName("Rotation° Roll")]
-        [JsonIgnore]
-        public float CameraRoll { get => _CameraRoll; set => Run(new CameraRollCommand(value)); }
-
-        [Category(Defaults.Camera)]
-        [DefaultValue(Defaults.CameraYaw)]
-        [Description("The yaw component of the camera rotation (in degrees).")]
-        [DisplayName("Rotation° Yaw")]
-        [JsonIgnore]
-        public float CameraYaw { get => _CameraYaw; set => Run(new CameraYawCommand(value)); }
+        public Euler3F CameraRotation { get => _CameraRotation; set => Run(new CameraRotationCommand(value)); }
 
         #endregion
 
         #region Graphics Mode
 
-        [Category(Defaults.GraphicsMode)]
-        [DefaultValue(Defaults.BppRed)]
-        [Description("The number of bits per pixel in the Red channel.")]
-        [DisplayName("BPP: Red")]
+        [Category(Categories.GraphicsMode)]
+        [DefaultValue(typeof(ColourFormat), Defaults.AccumColourFormatString)]
+        [Description("The number of bits per pixel in each accumulator colour channel.")]
+        [DisplayName("Accumulator Colour Format")]
         [JsonIgnore]
-        public int BppRed { get => _BppRed; set => Run(new BppRedCommand(value)); }
+        public ColourFormat AccumColourFormat { get => _AccumColourFormat; set => Run(new AccumColourFormatCommand(value)); }
 
-        [Category(Defaults.GraphicsMode)]
-        [DefaultValue(Defaults.BppGreen)]
-        [Description("The number of bits per pixel in the Green channel.")]
-        [DisplayName("BPP: Green")]
+        [Category(Categories.GraphicsMode)]
+        [DefaultValue(typeof(ColourFormat), Defaults.ColourFormatString)]
+        [Description("The number of bits per pixel in each colour channel.")]
+        [DisplayName("Colour Format")]
         [JsonIgnore]
-        public int BppGreen { get => _BppGreen; set => Run(new BppGreenCommand(value)); }
+        public ColourFormat ColourFormat { get => _ColourFormat; set => Run(new ColourFormatCommand(value)); }
 
-        [Category(Defaults.GraphicsMode)]
-        [DefaultValue(Defaults.BppBlue)]
-        [Description("The number of bits per pixel in the Blue channel.")]
-        [DisplayName("BPP: Blue")]
-        [JsonIgnore]
-        public int BppBlue { get => _BppBlue; set => Run(new BppBlueCommand(value)); }
-
-        [Category(Defaults.GraphicsMode)]
-        [DefaultValue(Defaults.BppAlpha)]
-        [Description("The number of bits per pixel in the Alpha channel.")]
-        [DisplayName("BPP: Alpha")]
-        [JsonIgnore]
-        public int BppAlpha { get => _BppAlpha; set => Run(new BppAlphaCommand(value)); }
-
-        [Category(Defaults.GraphicsMode)]
+        [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.Depth)]
         [Description("The number of bits in the depth buffer.")]
         [DisplayName("Depth Bits")]
         [JsonIgnore]
         public int Depth { get => _Depth; set => Run(new DepthCommand(value)); }
 
-        [Category(Defaults.GraphicsMode)]
+        [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.Stencil)]
         [Description("The number of bits in the stencil buffer.")]
         [DisplayName("Stencil Bits")]
         [JsonIgnore]
         public int Stencil { get => _Stencil; set => Run(new StencilCommand(value)); }
 
-        [Category(Defaults.GraphicsMode)]
+        [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.SampleCount)]
         [Description("The number of Full Screen Anti-Aliasing (FSAA) samples used.")]
         [DisplayName("Sample Count")]
         [JsonIgnore]
         public int SampleCount { get => _SampleCount; set => Run(new SampleCountCommand(value)); }
 
-        [Category(Defaults.GraphicsMode)]
-        [DefaultValue(Defaults.AccumBppRed)]
-        [Description("The number of bits per pixel in the Accumulator Red channel.")]
-        [DisplayName("Accumulator BPP: Red")]
-        [JsonIgnore]
-        public int AccumBppRed { get => _AccumBppRed; set => Run(new AccumBppRedCommand(value)); }
-
-        [Category(Defaults.GraphicsMode)]
-        [DefaultValue(Defaults.AccumBppGreen)]
-        [Description("The number of bits per pixel in the Accumulator Green channel.")]
-        [DisplayName("Accumulator BPP: Green")]
-        [JsonIgnore]
-        public int AccumBppGreen { get => _AccumBppGreen; set => Run(new AccumBppGreenCommand(value)); }
-
-        [Category(Defaults.GraphicsMode)]
-        [DefaultValue(Defaults.AccumBppBlue)]
-        [Description("The number of bits per pixel in the Accumulator Blue channel.")]
-        [DisplayName("Accumulator BPP: Blue")]
-        [JsonIgnore]
-        public int AccumBppBlue { get => _AccumBppBlue; set => Run(new AccumBppBlueCommand(value)); }
-
-        [Category(Defaults.GraphicsMode)]
-        [DefaultValue(Defaults.AccumBppAlpha)]
-        [Description("The number of bits per pixel in the Accumulator Alpha channel.")]
-        [DisplayName("Accumulator BPP: Alpha")]
-        [JsonIgnore]
-        public int AccumBppAlpha { get => _AccumBppAlpha; set => Run(new AccumBppAlphaCommand(value)); }
-
-        [Category(Defaults.GraphicsMode)]
+        [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.Buffers)]
         [Description("The number of buffers associated with this display mode.")]
         [DisplayName("Buffers")]
         [JsonIgnore]
         public int Buffers { get => _Buffers; set => Run(new BuffersCommand(value)); }
 
-        [Category(Defaults.GraphicsMode)]
+        [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.Stereo)]
         [Description("Whether this display mode is stereoscopic.")]
         [DisplayName("Stereo")]
@@ -243,21 +148,21 @@
 
         #region Projection
 
-        [Category(Defaults.Projection)]
+        [Category(Categories.Projection)]
         [DefaultValue(Defaults.FieldOfView)]
         [Description("The frustrum field of view (Y component, degrees).")]
         [DisplayName("Field of View° Y")]
         [JsonIgnore]
         public float FieldOfView { get => _FieldOfView; set => Run(new FieldOfViewCommand(value)); }
 
-        [Category(Defaults.Projection)]
+        [Category(Categories.Projection)]
         [DefaultValue(Defaults.NearPlane)]
         [Description("The distance from the camera position to the near plane of the frustrum.")]
         [DisplayName("Near Plane")]
         [JsonIgnore]
         public float NearPlane { get => _NearPlane; set => Run(new NearPlaneCommand(value)); }
 
-        [Category(Defaults.Projection)]
+        [Category(Categories.Projection)]
         [DefaultValue(Defaults.FarPlane)]
         [Description("The distance from the camera position to the far plane of the frustrum.")]
         [DisplayName("Far Plane")]
@@ -268,17 +173,7 @@
 
         #region Read Only / System
 
-        [Category(Defaults.SystemRO)]
-        [Description("The camera rotation for the scene (in degrees).")]
-        [DisplayName("Rotation°")]
-        [JsonIgnore]
-        public Vector3 CameraRotation
-        {
-            get => GetCameraRotation();
-            set => Run(new CameraRotationCommand(value));
-        }
-
-        [Category(Defaults.SystemRO)]
+        [Category(Categories.SystemRO)]
         [Description("The camera view matrix for the scene.")]
         [DisplayName("Camera View")]
         [JsonIgnore]
@@ -288,7 +183,7 @@
             set => Run(new CameraViewCommand(value));
         }
 
-        [Category(Defaults.SystemRO)]
+        [Category(Categories.SystemRO)]
         [Description("The projection matrix for the scene.")]
         [DisplayName("Projection")]
         [JsonIgnore]
@@ -302,8 +197,8 @@
 
         #region Renderer
 
-        [Category(Defaults.Renderer)]
-        [DefaultValue(typeof(Color), Defaults.BackgroundColourName)]
+        [Category(Categories.Renderer)]
+        [DefaultValue(typeof(Color), Defaults.BackgroundColourString)]
         [Description("The colour of the background.")]
         [DisplayName("Background Colour")]
         [JsonIgnore]
@@ -329,30 +224,10 @@
 
         [JsonProperty]
         internal int
-            _BppAlpha,
-            _BppBlue,
-            _BppGreen,
-            _BppRed,
+            _Buffers,
             _Depth,
-            _Stencil,
             _SampleCount,
-            _AccumBppAlpha,
-            _AccumBppRed,
-            _AccumBppGreen,
-            _AccumBppBlue,
-            _Buffers;
-
-        [JsonProperty]
-        internal float
-            _CameraX,
-            _CameraY,
-            _CameraZ,
-            _CameraPitch,
-            _CameraYaw,
-            _CameraRoll;
-
-        [JsonProperty]
-        internal double _FPS;
+            _Stencil;
 
         [JsonProperty]
         internal float
@@ -361,12 +236,29 @@
             _NearPlane;
 
         [JsonProperty]
+        internal double
+            _FPS;
+
+        [JsonProperty]
+        internal Euler3F
+            _CameraRotation;
+
+        [JsonProperty]
+        internal Point3F
+            _CameraPosition;
+
+        [JsonProperty]
         internal string
             _Title;
 
         [JsonProperty]
         internal Color
             _BackgroundColour;
+
+        [JsonProperty]
+        internal ColourFormat
+            _AccumColourFormat,
+            _ColourFormat;
 
         [JsonProperty]
         internal List<Trace>
@@ -439,29 +331,19 @@
         {
             _Title = Defaults.Title;
 
-            _BppAlpha = Defaults.BppAlpha;
-            _BppRed = Defaults.BppRed;
-            _BppGreen = Defaults.BppGreen;
-            _BppBlue = Defaults.BppBlue;
-            _Depth = Defaults.Depth;
-            _Stencil = Defaults.Stencil;
-            _SampleCount = Defaults.SampleCount;
-            _AccumBppAlpha = Defaults.AccumBppAlpha;
-            _AccumBppRed = Defaults.AccumBppRed;
-            _AccumBppGreen = Defaults.AccumBppGreen;
-            _AccumBppBlue = Defaults.AccumBppBlue;
+            _AccumColourFormat = Defaults.AccumColourFormat;
             _Buffers = Defaults.Buffers;
+            _ColourFormat = Defaults.ColourFormat;
+            _Depth = Defaults.Depth;
+            _SampleCount = Defaults.SampleCount;
+            _Stencil = Defaults.Stencil;
             _Stereo = Defaults.Stereo;
 
-            _CameraX = Defaults.CameraX;
-            _CameraY = Defaults.CameraY;
-            _CameraZ = Defaults.CameraZ;
-            _CameraPitch = Defaults.CameraPitch;
-            _CameraRoll = Defaults.CameraRoll;
-            _CameraYaw = Defaults.CameraYaw;
+            _CameraPosition = Defaults.CameraPosition;
+            _CameraRotation = Defaults.CameraRotation;
+            _FarPlane = Defaults.FarPlane;
             _FieldOfView = Defaults.FieldOfView;
             _NearPlane = Defaults.NearPlane;
-            _FarPlane = Defaults.FarPlane;
 
             _FPS = Defaults.FPS;
 
@@ -480,7 +362,7 @@
 
         #endregion
 
-        private class Defaults
+        private class Categories
         {
             internal const string
                 Camera = "Camera",
@@ -488,34 +370,28 @@
                 Projection = "Projection",
                 Renderer = "Renderer",
                 SystemRO = "Read Only / System";
+        }
 
+        private class Defaults
+        {
             internal const string
+                AccumColourFormatString = "(Red: 0, Green: 0, Blue: 0, Alpha: 0)",
+                BackgroundColourString = "White",
+                CameraPositionString = "(X: 0, Y: 0, Z: 0)",
+                CameraRotationString = "(Pitch: 0, Yaw: 0, Roll: 0)",
+                ColourFormatString = "(Red: 8, Green: 8, Blue: 8, Alpha: 8)",
                 Title = "";
 
             internal const bool
                 Stereo = false;
 
             internal const int
-                BppAlpha = 8,
-                BppRed = 8,
-                BppGreen = 8,
-                BppBlue = 8,
+                Buffers = 2,
                 Depth = 24,
-                Stencil = 8,
                 SampleCount = 0,
-                AccumBppAlpha = 0,
-                AccumBppRed = 0,
-                AccumBppGreen = 0,
-                AccumBppBlue = 0,
-                Buffers = 2;
+                Stencil = 8;
 
             internal const float
-                CameraX = 0,
-                CameraY = 0,
-                CameraZ = 0,
-                CameraPitch = 0,
-                CameraRoll = 0,
-                CameraYaw = 0,
                 FieldOfView = 75,
                 NearPlane = 0.1f,
                 FarPlane = 1000;
@@ -526,8 +402,15 @@
             internal static Color
                 BackgroundColour = Color.White;
 
-            internal const string
-                BackgroundColourName = "White";
+            internal static ColourFormat
+                ColourFormat = new ColourFormat(8),
+                AccumColourFormat = new ColourFormat();
+
+            internal static Euler3F
+                CameraRotation = new Euler3F();
+
+            internal static Point3F
+                CameraPosition = new Point3F();
 
             internal static List<Trace> Traces =>
                 new List<Trace>();
