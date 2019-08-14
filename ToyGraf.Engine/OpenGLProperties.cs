@@ -3,9 +3,9 @@
     using OpenTK.Graphics.OpenGL;
     using System.Collections.Generic;
 
-    public class AboutOpenGL
+    public class OpenGLProperties
     {
-        public AboutOpenGL()
+        public OpenGLProperties()
         {
             MajorVersionNumber = GL.GetInteger(GetPName.MajorVersion);
             MinorVersionNumber = GL.GetInteger(GetPName.MinorVersion);

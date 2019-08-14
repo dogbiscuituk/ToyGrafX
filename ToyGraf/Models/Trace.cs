@@ -7,7 +7,6 @@
     using System.ComponentModel.Design;
     using System.Drawing.Design;
     using ToyGraf.Commands;
-    using ToyGraf.Engine.Entities;
     using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models.Enums;
@@ -123,17 +122,6 @@
         #endregion
 
         #region Read Only / System
-
-        [Category(Categories.SystemRO)]
-        [DefaultValue(Defaults.GPUStatus)]
-        [Description("The status of the most recent GPU compilation action. An empty value indicates successful compilation.")]
-        [DisplayName("GPU Status")]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
-        [JsonIgnore]
-        public string GPUStatus
-        {
-            get => _GPUStatus;
-        }
 
         [Category(Categories.SystemRO)]
         [Description("The transformation matrix of the trace.")]
@@ -290,7 +278,6 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #region Persistent Fields
 
-        [JsonProperty] internal string _GPUStatus;
         [JsonProperty] internal Point3F _Location;
         [JsonProperty] internal Point3F _Maximum;
         [JsonProperty] internal Point3F _Minimum;
@@ -308,11 +295,8 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #endregion
 
-        #region Non-Public Properties
+        #region Internal Properties
 
-        private CommandProcessor CommandProcessor => Scene?.CommandProcessor;
-
-        private int _Index;
         internal int Index
         {
             get => Scene?._Traces.IndexOf(this) ?? _Index;
@@ -320,11 +304,18 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         }
 
         internal Scene Scene;
+
+        #endregion
+
+        #region Private Properties
+
+        private CommandProcessor CommandProcessor => Scene?.CommandProcessor;
+        private int _Index;
         private TraceShader Shader;
 
         #endregion
 
-        #region Non-Public Methods
+        #region Internal Methods
 
         internal Matrix4 GetTransformation() => Maths.CreateTransformation(Location, Orientation, Scale);
 
@@ -334,9 +325,19 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             Shader = new TraceShader(this);
         }
 
+        internal void SetTransformation(Matrix4 transformation)
+        {
+            SetLocation(transformation.ExtractTranslation());
+            SetOrientation(transformation.ExtractRotation());
+            SetScale(transformation.ExtractScale());
+        }
+
+        #endregion
+
+        #region Private Methods
+
         private void RestoreDefaults()
         {
-            _GPUStatus = Defaults.GPUStatus;
             _Index = Defaults.Index;
             _Location = Defaults.Location;
             _Maximum = Defaults.Maximum;
@@ -365,14 +366,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         internal void SetLocation(Vector3 location) => Location = location.ToPoint3F();
         internal void SetOrientation(Vector3 orientation) => Orientation = orientation.ToEuler3F();
         internal void SetOrientation(Quaternion orientation) => Orientation = orientation.ToEuler3F();
-        internal void SetScale(Vector3 scale) { }
-
-        internal void SetTransformation(Matrix4 transformation)
-        {
-            SetLocation(transformation.ExtractTranslation());
-            SetOrientation(transformation.ExtractRotation());
-            SetScale(transformation.ExtractScale());
-        }
+        internal void SetScale(Vector3 scale) => Scale = scale.ToPoint3F();
 
         #endregion
 
@@ -438,7 +432,6 @@ void main()
         private class Defaults
         {
             internal const string
-                GPUStatus = "",
                 LocationString = "0, 0, 0",
                 MaximumString = "0, 0, 0",
                 MinimumString = "0, 0, 0",

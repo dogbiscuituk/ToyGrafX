@@ -16,7 +16,6 @@
             MakeCurrent(true);
             var log = base.CreateProgram();
             MakeCurrent(false);
-            Trace._GPUStatus = log;
             return log;
         }
 
@@ -34,8 +33,6 @@
 
         protected override void BindAttributes()
         {
-            BindAttribute(0, "position");
-            BindAttribute(1, "time");
         }
 
         protected override string GetScript(ShaderType shaderType) => Trace.GetScript(shaderType);

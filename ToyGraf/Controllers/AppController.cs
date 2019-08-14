@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Windows.Forms;
+    using ToyGraf.Engine;
     using ToyGraf.Models.Enums;
     using ToyGraf.Models.Structs;
     using ToyGraf.Properties;
@@ -54,20 +55,7 @@
                 Close();
         }
 
-        private static void Timer_Tick(object sender, EventArgs e)
-        {
-            Timer.Enabled = false;
-            Timer.Dispose();
-            Timer = null;
-            AboutDialog.Hide();
-        }
-
-        private static readonly string DefaultFilesFolderPath =
-            $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\{Application.ProductName}";
-        private static AboutDialog _AboutDialog;
-        private static Timer Timer;
-
-        #region Properties
+        #region Internal Properties
 
         internal static AboutDialog AboutDialog
         {
@@ -76,6 +64,16 @@
                 if (_AboutDialog == null)
                     _AboutDialog = new AboutController().View;
                 return _AboutDialog;
+            }
+        }
+
+        internal static OpenGLProperties OpenGLProperties
+        {
+            get
+            {
+                if (_OpenGLProperties == null)
+                    _OpenGLProperties = new OpenGLProperties();
+                return _OpenGLProperties;
             }
         }
 
@@ -109,7 +107,28 @@
 
         internal static List<SceneController> SceneControllers = new List<SceneController>();
 
+        #endregion
+
+        #region Private Properties
+
+        private static AboutDialog _AboutDialog;
+        private static readonly string DefaultFilesFolderPath =
+            $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\{Application.ProductName}";
+        private static OpenGLProperties _OpenGLProperties;
         private static Settings Settings => Settings.Default;
+        private static Timer Timer;
+
+        #endregion
+
+        #region Private Event Handlers
+
+        private static void Timer_Tick(object sender, EventArgs e)
+        {
+            Timer.Enabled = false;
+            Timer.Dispose();
+            Timer = null;
+            AboutDialog.Hide();
+        }
 
         #endregion
 

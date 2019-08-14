@@ -22,7 +22,6 @@
             target.Shader4Geometry = source.Shader4Geometry;
             target.Shader5Fragment = source.Shader5Fragment;
             target.Shader6Compute = source.Shader6Compute;
-            target._GPUStatus = source.GPUStatus;
             // Terrain
             target.StripCount = source.StripCount;
             // Trace

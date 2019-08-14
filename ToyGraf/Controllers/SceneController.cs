@@ -5,6 +5,7 @@
     using System.ComponentModel;
     using System.Windows.Forms;
     using ToyGraf.Commands;
+    using ToyGraf.Engine;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
     using ToyGraf.Models.Enums;
@@ -302,7 +303,7 @@
 
         internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
 
-        private bool MakeCurrent(bool current)
+        internal bool MakeCurrent(bool current)
         {
             if (!GLControl.HasValidContext)
                 return false;
