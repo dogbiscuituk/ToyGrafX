@@ -19,20 +19,19 @@
             Alpha = alpha;
         }
 
-        public int Red { get; set; }
-        public int Green { get; set; }
-        public int Blue { get; set; }
-        public int Alpha { get; set; }
+        [DefaultValue(0)] public int Red { get; set; }
+        [DefaultValue(0)] public int Green { get; set; }
+        [DefaultValue(0)] public int Blue { get; set; }
+        [DefaultValue(0)] public int Alpha { get; set; }
 
         public override bool Equals(object obj) => obj is ColourFormat f &&
             f.Red == Red && f.Green == Green && f.Blue == Blue && f.Alpha == Alpha;
         public override int GetHashCode() => Red ^ Green ^ Blue ^ Alpha;
-        public override string ToString() => $"(Red: {Red}, Green: {Green}, Blue: {Blue}, Alpha: {Alpha})";
+        public override string ToString() => $"{Red}, {Green}, {Blue}, {Alpha}";
 
         public static ColourFormat Parse(string s)
         {
-            var t = s.Split(new[] { "(Red: ", ", Green: ", ", Blue: ", ", Alpha: ", ")" },
-                StringSplitOptions.RemoveEmptyEntries);
+            var t = s.Split(',');
             return new ColourFormat(int.Parse(t[0]), int.Parse(t[1]), int.Parse(t[2]), int.Parse(t[3]));
         }
     }

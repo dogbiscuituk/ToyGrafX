@@ -41,6 +41,14 @@
     internal class StereoCommand : ScenePropertyCommand<bool>
     {
         internal StereoCommand(bool value) : base("Stereo", value,
-            s => s._Stereo, (s, v) => s._Stereo = v) { }
+            s => s._Stereo, (s, v) => s._Stereo = v)
+        { }
+    }
+
+    internal class VSyncCommand : ScenePropertyCommand<bool>
+    {
+        internal VSyncCommand(bool value) : base("VSync", value,
+            s => s._VSync, (s, v) => s._VSync = v)
+        { }
     }
 }

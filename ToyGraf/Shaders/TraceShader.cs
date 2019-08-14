@@ -24,7 +24,6 @@
 
         #region Non-Public Properties
 
-        private GLControlRenderer Renderer => SceneController.Renderer;
         private Scene Scene => Trace.Scene;
         private SceneController SceneController => Scene.SceneController;
         private readonly Trace Trace;
@@ -41,7 +40,7 @@
 
         protected override string GetScript(ShaderType shaderType) => Trace.GetScript(shaderType);
 
-        private void MakeCurrent(bool current) => Renderer.MakeCurrent(current);
+        private void MakeCurrent(bool current) => MakeCurrent(current);
 
         #endregion
     }

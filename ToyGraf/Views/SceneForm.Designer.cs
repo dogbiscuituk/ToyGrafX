@@ -32,15 +32,6 @@
             this.GLControl = new OpenTK.GLControl();
             this.ToolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.StatusBar = new ToyGraf.Controls.TgStatusStrip();
-            this.tbDecelerate = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tbReverse = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tbStop = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tbPause = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tbForward = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tbAccelerate = new System.Windows.Forms.ToolStripDropDownButton();
-            this.SpeedLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.TimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.FpsLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
             this.SplitContainer2 = new System.Windows.Forms.SplitContainer();
             this.PropertyGrid = new System.Windows.Forms.PropertyGrid();
@@ -105,34 +96,6 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.ViewPropertyGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewTraceTable = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMove = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMoveLeft = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMoveRight = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.CameraMoveUp = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMoveDown = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-            this.CameraMoveIn = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMoveOut = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraRotate = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraRotateLeft = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraRotateRight = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
-            this.CameraRotateUp = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraRotateDown = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
-            this.CameraRotateAnticlockwise = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraRotateClockwise = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
-            this.CameraHome = new System.Windows.Forms.ToolStripMenuItem();
-            this.TimeMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.TimeDecelerate = new System.Windows.Forms.ToolStripMenuItem();
-            this.TimeReverse = new System.Windows.Forms.ToolStripMenuItem();
-            this.TimeStop = new System.Windows.Forms.ToolStripMenuItem();
-            this.TimePause = new System.Windows.Forms.ToolStripMenuItem();
-            this.TimeForward = new System.Windows.Forms.ToolStripMenuItem();
-            this.TimeAccelerate = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpOpenGLShadingLanguage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripSeparator();
@@ -142,7 +105,6 @@
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
             this.ToolStripContainer.TopToolStripPanel.SuspendLayout();
             this.ToolStripContainer.SuspendLayout();
-            this.StatusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer1)).BeginInit();
             this.SplitContainer1.Panel1.SuspendLayout();
             this.SplitContainer1.Panel2.SuspendLayout();
@@ -164,7 +126,7 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(329, 313);
+            this.GLControl.Size = new System.Drawing.Size(327, 311);
             this.GLControl.TabIndex = 1;
             this.GLControl.VSync = false;
             // 
@@ -197,108 +159,11 @@
             // StatusBar
             // 
             this.StatusBar.Dock = System.Windows.Forms.DockStyle.None;
-            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tbDecelerate,
-            this.tbReverse,
-            this.tbStop,
-            this.tbPause,
-            this.tbForward,
-            this.tbAccelerate,
-            this.SpeedLabel,
-            this.TimeLabel,
-            this.FpsLabel});
             this.StatusBar.Location = new System.Drawing.Point(0, 0);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(624, 22);
             this.StatusBar.TabIndex = 2;
             this.StatusBar.Text = "statusStrip1";
-            // 
-            // tbDecelerate
-            // 
-            this.tbDecelerate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbDecelerate.Image = global::ToyGraf.Properties.Resources.RewindHS;
-            this.tbDecelerate.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbDecelerate.Name = "tbDecelerate";
-            this.tbDecelerate.ShowDropDownArrow = false;
-            this.tbDecelerate.Size = new System.Drawing.Size(20, 20);
-            this.tbDecelerate.Text = "toolStripDropDownButton1";
-            this.tbDecelerate.ToolTipText = "Decelerate";
-            // 
-            // tbReverse
-            // 
-            this.tbReverse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbReverse.Image = global::ToyGraf.Properties.Resources.BackHS;
-            this.tbReverse.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbReverse.Name = "tbReverse";
-            this.tbReverse.ShowDropDownArrow = false;
-            this.tbReverse.Size = new System.Drawing.Size(20, 20);
-            this.tbReverse.Text = "toolStripDropDownButton2";
-            this.tbReverse.ToolTipText = "Reverse";
-            // 
-            // tbStop
-            // 
-            this.tbStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbStop.Image = global::ToyGraf.Properties.Resources.StopHS;
-            this.tbStop.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbStop.Name = "tbStop";
-            this.tbStop.ShowDropDownArrow = false;
-            this.tbStop.Size = new System.Drawing.Size(20, 20);
-            this.tbStop.Text = "toolStripDropDownButton3";
-            this.tbStop.ToolTipText = "Stop";
-            // 
-            // tbPause
-            // 
-            this.tbPause.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbPause.Image = global::ToyGraf.Properties.Resources.PauseHS;
-            this.tbPause.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbPause.Name = "tbPause";
-            this.tbPause.ShowDropDownArrow = false;
-            this.tbPause.Size = new System.Drawing.Size(20, 20);
-            this.tbPause.Text = "toolStripDropDownButton4";
-            this.tbPause.ToolTipText = "Pause";
-            // 
-            // tbForward
-            // 
-            this.tbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbForward.Image = global::ToyGraf.Properties.Resources.PlayHS;
-            this.tbForward.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbForward.Name = "tbForward";
-            this.tbForward.ShowDropDownArrow = false;
-            this.tbForward.Size = new System.Drawing.Size(20, 20);
-            this.tbForward.Text = "toolStripDropDownButton5";
-            this.tbForward.ToolTipText = "Forward";
-            // 
-            // tbAccelerate
-            // 
-            this.tbAccelerate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbAccelerate.Image = global::ToyGraf.Properties.Resources.FFwdHS;
-            this.tbAccelerate.ImageTransparentColor = System.Drawing.Color.White;
-            this.tbAccelerate.Name = "tbAccelerate";
-            this.tbAccelerate.ShowDropDownArrow = false;
-            this.tbAccelerate.Size = new System.Drawing.Size(20, 20);
-            this.tbAccelerate.Text = "toolStripDropDownButton6";
-            this.tbAccelerate.ToolTipText = "Accelerate";
-            // 
-            // SpeedLabel
-            // 
-            this.SpeedLabel.AutoSize = false;
-            this.SpeedLabel.Name = "SpeedLabel";
-            this.SpeedLabel.Size = new System.Drawing.Size(64, 17);
-            this.SpeedLabel.Text = "time × 1";
-            // 
-            // TimeLabel
-            // 
-            this.TimeLabel.AutoSize = false;
-            this.TimeLabel.Name = "TimeLabel";
-            this.TimeLabel.Size = new System.Drawing.Size(64, 17);
-            this.TimeLabel.Text = "t=0.0";
-            // 
-            // FpsLabel
-            // 
-            this.FpsLabel.AutoSize = false;
-            this.FpsLabel.Name = "FpsLabel";
-            this.FpsLabel.Size = new System.Drawing.Size(64, 17);
-            this.FpsLabel.Text = "fps=0.0";
             // 
             // SplitContainer1
             // 
@@ -316,7 +181,7 @@
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.TraceTable);
             this.SplitContainer1.Size = new System.Drawing.Size(591, 395);
-            this.SplitContainer1.SplitterDistance = 313;
+            this.SplitContainer1.SplitterDistance = 311;
             this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
@@ -334,8 +199,8 @@
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(591, 313);
-            this.SplitContainer2.SplitterDistance = 329;
+            this.SplitContainer2.Size = new System.Drawing.Size(591, 311);
+            this.SplitContainer2.SplitterDistance = 327;
             this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
             // 
@@ -345,7 +210,7 @@
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(257, 313);
+            this.PropertyGrid.Size = new System.Drawing.Size(259, 311);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -391,7 +256,7 @@
             this.TraceTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.TraceTable.RowHeadersVisible = false;
             this.TraceTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TraceTable.Size = new System.Drawing.Size(591, 77);
+            this.TraceTable.Size = new System.Drawing.Size(591, 79);
             this.TraceTable.TabIndex = 0;
             // 
             // colXmin
@@ -462,7 +327,7 @@
             this.tbAdd});
             this.Toolbar.Location = new System.Drawing.Point(0, 3);
             this.Toolbar.Name = "Toolbar";
-            this.Toolbar.Size = new System.Drawing.Size(33, 272);
+            this.Toolbar.Size = new System.Drawing.Size(33, 253);
             this.Toolbar.TabIndex = 2;
             this.Toolbar.Text = "toolStrip1";
             // 
@@ -597,8 +462,6 @@
             this.EditMenu,
             this.SceneMenu,
             this.ViewMenu,
-            this.CameraMenu,
-            this.TimeMenu,
             this.HelpMenu});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
@@ -732,7 +595,7 @@
             this.EditUndo.Name = "EditUndo";
             this.EditUndo.ShortcutKeyDisplayString = "^Z";
             this.EditUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.EditUndo.Size = new System.Drawing.Size(180, 22);
+            this.EditUndo.Size = new System.Drawing.Size(155, 22);
             this.EditUndo.Text = "&Undo";
             // 
             // EditRedo
@@ -743,13 +606,13 @@
             this.EditRedo.Name = "EditRedo";
             this.EditRedo.ShortcutKeyDisplayString = "^Y";
             this.EditRedo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.EditRedo.Size = new System.Drawing.Size(180, 22);
+            this.EditRedo.Size = new System.Drawing.Size(155, 22);
             this.EditRedo.Text = "&Redo";
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(152, 6);
             // 
             // EditCut
             // 
@@ -759,7 +622,7 @@
             this.EditCut.Name = "EditCut";
             this.EditCut.ShortcutKeyDisplayString = "^X";
             this.EditCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.EditCut.Size = new System.Drawing.Size(180, 22);
+            this.EditCut.Size = new System.Drawing.Size(155, 22);
             this.EditCut.Text = "Cu&t";
             // 
             // EditCopy
@@ -770,7 +633,7 @@
             this.EditCopy.Name = "EditCopy";
             this.EditCopy.ShortcutKeyDisplayString = "^C";
             this.EditCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.EditCopy.Size = new System.Drawing.Size(180, 22);
+            this.EditCopy.Size = new System.Drawing.Size(155, 22);
             this.EditCopy.Text = "&Copy";
             // 
             // EditPaste
@@ -781,7 +644,7 @@
             this.EditPaste.Name = "EditPaste";
             this.EditPaste.ShortcutKeyDisplayString = "^V";
             this.EditPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.EditPaste.Size = new System.Drawing.Size(180, 22);
+            this.EditPaste.Size = new System.Drawing.Size(155, 22);
             this.EditPaste.Text = "&Paste";
             // 
             // EditDelete
@@ -790,35 +653,35 @@
             this.EditDelete.Image = global::ToyGraf.Properties.Resources.Delete;
             this.EditDelete.ImageTransparentColor = System.Drawing.Color.White;
             this.EditDelete.Name = "EditDelete";
-            this.EditDelete.Size = new System.Drawing.Size(180, 22);
+            this.EditDelete.Size = new System.Drawing.Size(155, 22);
             this.EditDelete.Text = "&Delete";
             // 
             // toolStripMenuItem9
             // 
             this.toolStripMenuItem9.Name = "toolStripMenuItem9";
-            this.toolStripMenuItem9.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(152, 6);
             // 
             // EditSelectAll
             // 
             this.EditSelectAll.Name = "EditSelectAll";
-            this.EditSelectAll.Size = new System.Drawing.Size(180, 22);
+            this.EditSelectAll.Size = new System.Drawing.Size(155, 22);
             this.EditSelectAll.Text = "Select &All";
             // 
             // EditInvertSelection
             // 
             this.EditInvertSelection.Name = "EditInvertSelection";
-            this.EditInvertSelection.Size = new System.Drawing.Size(180, 22);
+            this.EditInvertSelection.Size = new System.Drawing.Size(155, 22);
             this.EditInvertSelection.Text = "&Invert Selection";
             // 
             // toolStripMenuItem10
             // 
             this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(152, 6);
             // 
             // EditOptions
             // 
             this.EditOptions.Name = "EditOptions";
-            this.EditOptions.Size = new System.Drawing.Size(180, 22);
+            this.EditOptions.Size = new System.Drawing.Size(155, 22);
             this.EditOptions.Text = "&Options...";
             // 
             // SceneMenu
@@ -875,244 +738,6 @@
             this.ViewTraceTable.Size = new System.Drawing.Size(156, 22);
             this.ViewTraceTable.Text = "&Trace Table";
             // 
-            // CameraMenu
-            // 
-            this.CameraMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CameraMove,
-            this.CameraRotate,
-            this.toolStripMenuItem11,
-            this.CameraHome});
-            this.CameraMenu.Name = "CameraMenu";
-            this.CameraMenu.Size = new System.Drawing.Size(60, 20);
-            this.CameraMenu.Text = "&Camera";
-            // 
-            // CameraMove
-            // 
-            this.CameraMove.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CameraMoveLeft,
-            this.CameraMoveRight,
-            this.toolStripMenuItem4,
-            this.CameraMoveUp,
-            this.CameraMoveDown,
-            this.toolStripMenuItem5,
-            this.CameraMoveIn,
-            this.CameraMoveOut});
-            this.CameraMove.Name = "CameraMove";
-            this.CameraMove.Size = new System.Drawing.Size(155, 22);
-            this.CameraMove.Text = "&Move";
-            // 
-            // CameraMoveLeft
-            // 
-            this.CameraMoveLeft.Name = "CameraMoveLeft";
-            this.CameraMoveLeft.ShortcutKeyDisplayString = "^Left";
-            this.CameraMoveLeft.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Left)));
-            this.CameraMoveLeft.Size = new System.Drawing.Size(173, 22);
-            this.CameraMoveLeft.Text = "&Left";
-            // 
-            // CameraMoveRight
-            // 
-            this.CameraMoveRight.Name = "CameraMoveRight";
-            this.CameraMoveRight.ShortcutKeyDisplayString = "^Right";
-            this.CameraMoveRight.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Right)));
-            this.CameraMoveRight.Size = new System.Drawing.Size(173, 22);
-            this.CameraMoveRight.Text = "&Right";
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(170, 6);
-            // 
-            // CameraMoveUp
-            // 
-            this.CameraMoveUp.Name = "CameraMoveUp";
-            this.CameraMoveUp.ShortcutKeyDisplayString = "^Up";
-            this.CameraMoveUp.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
-            this.CameraMoveUp.Size = new System.Drawing.Size(173, 22);
-            this.CameraMoveUp.Text = "&Up";
-            // 
-            // CameraMoveDown
-            // 
-            this.CameraMoveDown.Name = "CameraMoveDown";
-            this.CameraMoveDown.ShortcutKeyDisplayString = "^Down";
-            this.CameraMoveDown.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
-            this.CameraMoveDown.Size = new System.Drawing.Size(173, 22);
-            this.CameraMoveDown.Text = "&Down";
-            // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(170, 6);
-            // 
-            // CameraMoveIn
-            // 
-            this.CameraMoveIn.Name = "CameraMoveIn";
-            this.CameraMoveIn.ShortcutKeyDisplayString = "^PgUp";
-            this.CameraMoveIn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.PageUp)));
-            this.CameraMoveIn.Size = new System.Drawing.Size(173, 22);
-            this.CameraMoveIn.Text = "Zoom &In";
-            // 
-            // CameraMoveOut
-            // 
-            this.CameraMoveOut.Name = "CameraMoveOut";
-            this.CameraMoveOut.ShortcutKeyDisplayString = "^PgDn";
-            this.CameraMoveOut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Next)));
-            this.CameraMoveOut.Size = new System.Drawing.Size(173, 22);
-            this.CameraMoveOut.Text = "Zoom &Out";
-            // 
-            // CameraRotate
-            // 
-            this.CameraRotate.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CameraRotateLeft,
-            this.CameraRotateRight,
-            this.toolStripMenuItem6,
-            this.CameraRotateUp,
-            this.CameraRotateDown,
-            this.toolStripMenuItem7,
-            this.CameraRotateAnticlockwise,
-            this.CameraRotateClockwise});
-            this.CameraRotate.Name = "CameraRotate";
-            this.CameraRotate.Size = new System.Drawing.Size(155, 22);
-            this.CameraRotate.Text = "&Rotate";
-            // 
-            // CameraRotateLeft
-            // 
-            this.CameraRotateLeft.Name = "CameraRotateLeft";
-            this.CameraRotateLeft.ShortcutKeyDisplayString = "Shift+^Left";
-            this.CameraRotateLeft.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Left)));
-            this.CameraRotateLeft.Size = new System.Drawing.Size(223, 22);
-            this.CameraRotateLeft.Text = "&Left";
-            // 
-            // CameraRotateRight
-            // 
-            this.CameraRotateRight.Name = "CameraRotateRight";
-            this.CameraRotateRight.ShortcutKeyDisplayString = "Shift+^Right";
-            this.CameraRotateRight.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Right)));
-            this.CameraRotateRight.Size = new System.Drawing.Size(223, 22);
-            this.CameraRotateRight.Text = "&Right";
-            // 
-            // toolStripMenuItem6
-            // 
-            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(220, 6);
-            // 
-            // CameraRotateUp
-            // 
-            this.CameraRotateUp.Name = "CameraRotateUp";
-            this.CameraRotateUp.ShortcutKeyDisplayString = "Shift+^Up";
-            this.CameraRotateUp.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Up)));
-            this.CameraRotateUp.Size = new System.Drawing.Size(223, 22);
-            this.CameraRotateUp.Text = "&Up";
-            // 
-            // CameraRotateDown
-            // 
-            this.CameraRotateDown.Name = "CameraRotateDown";
-            this.CameraRotateDown.ShortcutKeyDisplayString = "Shift+^Down";
-            this.CameraRotateDown.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Down)));
-            this.CameraRotateDown.Size = new System.Drawing.Size(223, 22);
-            this.CameraRotateDown.Text = "&Down";
-            // 
-            // toolStripMenuItem7
-            // 
-            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(220, 6);
-            // 
-            // CameraRotateAnticlockwise
-            // 
-            this.CameraRotateAnticlockwise.Name = "CameraRotateAnticlockwise";
-            this.CameraRotateAnticlockwise.ShortcutKeyDisplayString = "Shift+^PgUp";
-            this.CameraRotateAnticlockwise.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.PageUp)));
-            this.CameraRotateAnticlockwise.Size = new System.Drawing.Size(223, 22);
-            this.CameraRotateAnticlockwise.Text = "&Anticlockwise";
-            // 
-            // CameraRotateClockwise
-            // 
-            this.CameraRotateClockwise.Name = "CameraRotateClockwise";
-            this.CameraRotateClockwise.ShortcutKeyDisplayString = "Shift+^PgDn";
-            this.CameraRotateClockwise.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Next)));
-            this.CameraRotateClockwise.Size = new System.Drawing.Size(223, 22);
-            this.CameraRotateClockwise.Text = "&Clockwise";
-            // 
-            // toolStripMenuItem11
-            // 
-            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(152, 6);
-            // 
-            // CameraHome
-            // 
-            this.CameraHome.Name = "CameraHome";
-            this.CameraHome.ShortcutKeyDisplayString = "^Home";
-            this.CameraHome.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Home)));
-            this.CameraHome.Size = new System.Drawing.Size(155, 22);
-            this.CameraHome.Text = "&Home";
-            // 
-            // TimeMenu
-            // 
-            this.TimeMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TimeDecelerate,
-            this.TimeReverse,
-            this.TimeStop,
-            this.TimePause,
-            this.TimeForward,
-            this.TimeAccelerate});
-            this.TimeMenu.Name = "TimeMenu";
-            this.TimeMenu.Size = new System.Drawing.Size(46, 20);
-            this.TimeMenu.Text = "&Time";
-            // 
-            // TimeDecelerate
-            // 
-            this.TimeDecelerate.Image = global::ToyGraf.Properties.Resources.RewindHS;
-            this.TimeDecelerate.ImageTransparentColor = System.Drawing.Color.White;
-            this.TimeDecelerate.Name = "TimeDecelerate";
-            this.TimeDecelerate.Size = new System.Drawing.Size(129, 22);
-            this.TimeDecelerate.Text = "&Decelerate";
-            // 
-            // TimeReverse
-            // 
-            this.TimeReverse.Image = global::ToyGraf.Properties.Resources.BackHS;
-            this.TimeReverse.ImageTransparentColor = System.Drawing.Color.White;
-            this.TimeReverse.Name = "TimeReverse";
-            this.TimeReverse.Size = new System.Drawing.Size(129, 22);
-            this.TimeReverse.Text = "&Reverse";
-            // 
-            // TimeStop
-            // 
-            this.TimeStop.Image = global::ToyGraf.Properties.Resources.StopHS;
-            this.TimeStop.ImageTransparentColor = System.Drawing.Color.White;
-            this.TimeStop.Name = "TimeStop";
-            this.TimeStop.Size = new System.Drawing.Size(129, 22);
-            this.TimeStop.Text = "&Stop";
-            this.TimeStop.Click += new System.EventHandler(this.StopToolStripMenuItem_Click);
-            // 
-            // TimePause
-            // 
-            this.TimePause.Image = global::ToyGraf.Properties.Resources.PauseHS;
-            this.TimePause.ImageTransparentColor = System.Drawing.Color.White;
-            this.TimePause.Name = "TimePause";
-            this.TimePause.Size = new System.Drawing.Size(129, 22);
-            this.TimePause.Text = "&Pause";
-            // 
-            // TimeForward
-            // 
-            this.TimeForward.Image = global::ToyGraf.Properties.Resources.PlayHS;
-            this.TimeForward.ImageTransparentColor = System.Drawing.Color.White;
-            this.TimeForward.Name = "TimeForward";
-            this.TimeForward.Size = new System.Drawing.Size(129, 22);
-            this.TimeForward.Text = "&Forward";
-            // 
-            // TimeAccelerate
-            // 
-            this.TimeAccelerate.Image = global::ToyGraf.Properties.Resources.FFwdHS;
-            this.TimeAccelerate.ImageTransparentColor = System.Drawing.Color.White;
-            this.TimeAccelerate.Name = "TimeAccelerate";
-            this.TimeAccelerate.Size = new System.Drawing.Size(129, 22);
-            this.TimeAccelerate.Text = "&Accelerate";
-            // 
             // HelpMenu
             // 
             this.HelpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1160,8 +785,6 @@
             this.ToolStripContainer.TopToolStripPanel.PerformLayout();
             this.ToolStripContainer.ResumeLayout(false);
             this.ToolStripContainer.PerformLayout();
-            this.StatusBar.ResumeLayout(false);
-            this.StatusBar.PerformLayout();
             this.SplitContainer1.Panel1.ResumeLayout(false);
             this.SplitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer1)).EndInit();
@@ -1219,25 +842,6 @@
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         internal System.Windows.Forms.ToolStripMenuItem ViewPropertyGrid;
         internal System.Windows.Forms.ToolStripMenuItem ViewTraceTable;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMenu;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMove;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMoveLeft;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMoveRight;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMoveUp;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMoveDown;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMoveIn;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMoveOut;
-        internal System.Windows.Forms.ToolStripMenuItem CameraRotate;
-        internal System.Windows.Forms.ToolStripMenuItem CameraRotateLeft;
-        internal System.Windows.Forms.ToolStripMenuItem CameraRotateRight;
-        internal System.Windows.Forms.ToolStripMenuItem CameraRotateUp;
-        internal System.Windows.Forms.ToolStripMenuItem CameraRotateDown;
-        internal System.Windows.Forms.ToolStripMenuItem CameraRotateClockwise;
-        internal System.Windows.Forms.ToolStripMenuItem CameraRotateAnticlockwise;
-        internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
-        internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
-        internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
-        internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
         internal System.Windows.Forms.ToolStripMenuItem EditUndo;
         internal System.Windows.Forms.ToolStripMenuItem EditRedo;
         internal System.Windows.Forms.ToolStripMenuItem tbNewEmptyScene;
@@ -1263,25 +867,7 @@
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         internal System.Windows.Forms.ToolStripButton tbAdd;
         internal System.Windows.Forms.ToolStripMenuItem SceneMenu;
-        internal System.Windows.Forms.ToolStripMenuItem TimeMenu;
         internal System.Windows.Forms.ToolStripMenuItem SceneAddNewTrace;
-        internal System.Windows.Forms.ToolStripMenuItem TimeDecelerate;
-        internal System.Windows.Forms.ToolStripMenuItem TimeReverse;
-        internal System.Windows.Forms.ToolStripMenuItem TimeStop;
-        internal System.Windows.Forms.ToolStripMenuItem TimePause;
-        internal System.Windows.Forms.ToolStripMenuItem TimeForward;
-        internal System.Windows.Forms.ToolStripMenuItem TimeAccelerate;
-        internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem11;
-        internal System.Windows.Forms.ToolStripMenuItem CameraHome;
-        internal System.Windows.Forms.ToolStripDropDownButton tbDecelerate;
-        internal System.Windows.Forms.ToolStripDropDownButton tbReverse;
-        internal System.Windows.Forms.ToolStripDropDownButton tbStop;
-        internal System.Windows.Forms.ToolStripDropDownButton tbPause;
-        internal System.Windows.Forms.ToolStripDropDownButton tbForward;
-        internal System.Windows.Forms.ToolStripDropDownButton tbAccelerate;
-        internal System.Windows.Forms.ToolStripStatusLabel SpeedLabel;
-        internal System.Windows.Forms.ToolStripStatusLabel TimeLabel;
-        internal System.Windows.Forms.ToolStripStatusLabel FpsLabel;
         internal System.Windows.Forms.ToolStripMenuItem HelpOpenGLShadingLanguage;
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem12;
         private System.Windows.Forms.DataGridViewTextBoxColumn colXmin;

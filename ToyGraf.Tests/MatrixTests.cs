@@ -139,7 +139,7 @@
         public void CreateScaling()
         {
             var expected = new Matrix4(9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: new Euler3F(), scale: 9f);
+            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: new Euler3F(), scale: new Point3F(9, 9, 9));
             Assert.AreEqual(expected, actual);
         }
 
@@ -150,7 +150,7 @@
         public void CreateTransformationGeneral()
         {
             var expected = new Matrix4(0, 0, 9, 0, 0, -9, 0, 0, 9, 0, 0, 0, 7, 11, 13, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(7, 11, 13), orientation: RotateXYZ, scale: 9f);
+            var actual = Maths.CreateTransformation(location: new Point3F(7, 11, 13), orientation: RotateXYZ, scale: new Point3F(9, 9, 9));
             CompareMatrices(expected, actual);
         }
 
@@ -232,7 +232,7 @@
             CompareMatrices(expected, actual);
         }
 
-        private const float Unity = 1f;
+        private static Point3F Unity = new Point3F(1, 1, 1);
         private static Euler3F
             RotateX = new Euler3F(90, 0, 0),
             RotateY = new Euler3F(0, 90, 0),

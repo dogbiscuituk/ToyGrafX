@@ -31,8 +31,8 @@
             Matrix4.CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar);
 
         public static Matrix4 CreateTransformation(
-            Point3F location, Euler3F orientation, float scale) =>
-            Matrix4.CreateScale(scale) *
+            Point3F location, Euler3F orientation, Point3F scale) =>
+            Matrix4.CreateScale(scale.X, scale.Y, scale.Z) *
             Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(orientation.Roll)) *
             Matrix4.CreateRotationY(MathHelper.DegreesToRadians(orientation.Yaw)) *
             Matrix4.CreateRotationX(MathHelper.DegreesToRadians(orientation.Pitch)) *

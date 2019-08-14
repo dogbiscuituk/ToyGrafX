@@ -44,7 +44,7 @@
 
     #region Abstract Property Commands
 
-    internal abstract class PropertyCommand<TItem, TValue> : Command<TValue>, IPropertyCommand
+    internal abstract class PropertyCommand<TItem, TValue> : Command<TValue>
     {
         protected PropertyCommand(int index, string propertyName,
             TValue value, Func<TItem, TValue> get, Action<TItem, TValue> set)

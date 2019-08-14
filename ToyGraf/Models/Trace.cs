@@ -86,20 +86,6 @@
 
         #region Browsable Properties
 
-        #region Domain & Range
-
-        [Category(Categories.DomainRange)]
-        [DefaultValue(typeof(Point3F), Defaults.MaximumString)]
-        [JsonIgnore]
-        public Point3F Maximum { get => _Maximum; set => Run(new MaximumCommand(Index, value)); }
-
-        [Category(Categories.DomainRange)]
-        [DefaultValue(typeof(Point3F), Defaults.MinimumString)]
-        [JsonIgnore]
-        public Point3F Minimum { get => _Minimum; set => Run(new MinimumCommand(Index, value)); }
-
-        #endregion
-
         #region Placement
 
         [Category(Categories.Placement)]
@@ -107,24 +93,24 @@
         [Description("The location of the trace in world co-ordinates.")]
         [DisplayName("Location")]
         [JsonIgnore]
-        public Point3F Location { get => _Location; set => Run(new EntityLocationCommand(Index, value)); }
+        public Point3F Location { get => _Location; set => Run(new LocationCommand(Index, value)); }
 
         [Category(Categories.Placement)]
         [DefaultValue(typeof(Euler3F), Defaults.OrientationString)]
         [Description("The orientation of the trace in world co-ordinates (in degrees).")]
         [DisplayName("Orientation°")]
         [JsonIgnore]
-        public Euler3F Orientation { get => _Orientation; set => Run(new EntityOrientationCommand(Index, value)); }
+        public Euler3F Orientation { get => _Orientation; set => Run(new OrientationCommand(Index, value)); }
 
         [Category(Categories.Placement)]
-        [DefaultValue(Defaults.Scale)]
+        [DefaultValue(typeof(Point3F), Defaults.ScaleString)]
         [Description("The relative size of the trace.")]
         [DisplayName("Scale")]
         [JsonIgnore]
-        public float Scale
+        public Point3F Scale
         {
             get => _Scale;
-            set => Run(new EntityScaleCommand(Index, value));
+            set => Run(new ScaleCommand(Index, value));
         }
 
         [Category(Categories.Placement)]
@@ -156,7 +142,7 @@
         public Matrix4 Transformation
         {
             get => GetTransformation();
-            set => Run(new EntityTransformationCommand(Index, value));
+            set => Run(new TransformationCommand(Index, value));
         }
 
         #endregion
@@ -272,18 +258,24 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #endregion
 
-        #region Terrain
+        #region Trace
 
-        [Category(Categories.Terrain)]
+        [Category(Categories.Trace)]
+        [DefaultValue(typeof(Point3F), Defaults.MaximumString)]
+        [JsonIgnore]
+        public Point3F Maximum { get => _Maximum; set => Run(new MaximumCommand(Index, value)); }
+
+        [Category(Categories.Trace)]
+        [DefaultValue(typeof(Point3F), Defaults.MinimumString)]
+        [JsonIgnore]
+        public Point3F Minimum { get => _Minimum; set => Run(new MinimumCommand(Index, value)); }
+
+        [Category(Categories.Trace)]
         [DefaultValue(typeof(Point3), Defaults.StripCountString)]
         [Description("The number of discrete strips into which the trace is divided along each axis.")]
         [DisplayName("Strip Count")]
         [JsonIgnore]
         public Point3 StripCount { get => _StripCount; set => Run(new StripCountCommand(Index, value)); }
-
-        #endregion
-
-        #region Trace
 
         [Category(Categories.Trace)]
         [DefaultValue(Defaults.Title)]
@@ -296,50 +288,31 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #endregion
 
-        #region Fields
+        #region Persistent Fields
 
-        private int
-            _Index;
-
-        [JsonProperty]
-        internal YN
-            _Visible;
-
-        [JsonProperty]
-        internal float
-            _Scale;
-
-        [JsonProperty]
-        internal Point3
-            _StripCount;
-
-        [JsonProperty]
-        internal Euler3F
-            _Orientation;
-
-        [JsonProperty]
-        internal Point3F
-            _Location,
-            _Maximum,
-            _Minimum;
-
-        [JsonProperty]
-        internal string
-            _GPUStatus,
-            _Shader1Vertex,
-            _Shader2TessControl,
-            _Shader3TessEvaluation,
-            _Shader4Geometry,
-            _Shader5Fragment,
-            _Shader6Compute,
-            _Title;
+        [JsonProperty] internal string _GPUStatus;
+        [JsonProperty] internal Point3F _Location;
+        [JsonProperty] internal Point3F _Maximum;
+        [JsonProperty] internal Point3F _Minimum;
+        [JsonProperty] internal Euler3F _Orientation;
+        [JsonProperty] internal Point3F _Scale;
+        [JsonProperty] internal string _Shader1Vertex;
+        [JsonProperty] internal string _Shader2TessControl;
+        [JsonProperty] internal string _Shader3TessEvaluation;
+        [JsonProperty] internal string _Shader4Geometry;
+        [JsonProperty] internal string _Shader5Fragment;
+        [JsonProperty] internal string _Shader6Compute;
+        [JsonProperty] internal Point3 _StripCount;
+        [JsonProperty] internal string _Title;
+        [JsonProperty] internal YN _Visible;
 
         #endregion
 
         #region Non-Public Properties
 
-        private ICommandProcessor CommandProcessor => Scene?.CommandProcessor;
+        private CommandProcessor CommandProcessor => Scene?.CommandProcessor;
 
+        private int _Index;
         internal int Index
         {
             get => Scene?._Traces.IndexOf(this) ?? _Index;
@@ -364,24 +337,20 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         private void RestoreDefaults()
         {
             _GPUStatus = Defaults.GPUStatus;
+            _Index = Defaults.Index;
+            _Location = Defaults.Location;
+            _Maximum = Defaults.Maximum;
+            _Minimum = Defaults.Maximum;
+            _Orientation = Defaults.Orientation;
+            _Scale = Defaults.Scale;
             _Shader1Vertex = Defaults.Shader1Vertex;
             _Shader2TessControl = Defaults.Shader2TessControl;
             _Shader3TessEvaluation = Defaults.Shader3TessEvaluation;
             _Shader4Geometry = Defaults.Shader4Geometry;
             _Shader5Fragment = Defaults.Shader5Fragment;
             _Shader6Compute = Defaults.Shader6Compute;
-            _Title = Defaults.Title;
-
-            _Index = Defaults.Index;
             _StripCount = Defaults.StripCount;
-
-            _Maximum = Defaults.Maximum;
-            _Minimum = Defaults.Maximum;
-
-            _Location = Defaults.Location;
-            _Orientation = Defaults.Orientation;
-            _Scale = Defaults.Scale;
-
+            _Title = Defaults.Title;
             _Visible = Defaults.Visible;
         }
 
@@ -455,14 +424,14 @@ void main()
 
         #endregion
 
+        #region Private Classes
+
         private class Categories
         {
             internal const string
-                DomainRange = "Domain / Range",
                 Placement = "Placement",
                 Shaders = "Shaders",
                 SystemRO = "Read Only / System",
-                Terrain = "Terrain",
                 Trace = "Trace";
         }
 
@@ -470,44 +439,23 @@ void main()
         {
             internal const string
                 GPUStatus = "",
-                LocationString = "(X: 0, Y: 0, Z: 0)",
-                MaximumString = "(X: 0, Y: 0, Z: 0)",
-                MinimumString = "(X: 0, Y: 0, Z: 0)",
-                OrientationString = "(Pitch: 0, Yaw: 0, Roll: 0)",
+                LocationString = "0, 0, 0",
+                MaximumString = "0, 0, 0",
+                MinimumString = "0, 0, 0",
+                OrientationString = "0, 0, 0",
+                ScaleString = "1, 1, 1",
                 Shader1Vertex = "",
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
                 Shader5Fragment = "",
                 Shader6Compute = "",
-                StripCountString = "(X: 0, Y: 0, Z: 0)",
+                StripCountString = "0, 0, 0",
                 Title = "";
 
-            internal const int
-                Index = -1,
-                StripCountX = 0,
-                StripCountY = 0,
-                StripCountZ = 0;
+            internal const int Index = -1;
 
-            internal const float
-                LocationX = 0,
-                LocationY = 0,
-                LocationZ = 0,
-                OrientationX = 0,
-                OrientationY = 0,
-                OrientationZ = 0,
-                Scale = 1;
-
-            internal const double
-                Xmin = -11,
-                Xmax = +11,
-                Ymin = -11,
-                Ymax = +11,
-                Zmin = -11,
-                Zmax = +11;
-
-            internal static Euler3F
-                Orientation = new Euler3F();
+            internal static Euler3F Orientation = new Euler3F();
 
             internal static Point3
                 StripCount = new Point3();
@@ -515,10 +463,12 @@ void main()
             internal static Point3F
                 Location = new Point3F(),
                 Maximum = new Point3F(),
-                Minimum = new Point3F();
+                Minimum = new Point3F(),
+                Scale = new Point3F(1, 1, 1);
 
-            internal const YN
-                Visible = YN.Yes;
+            internal const YN Visible = YN.Yes;
         }
+
+        #endregion
     }
 }

@@ -46,61 +46,21 @@
 
         #region Browsable Properties
 
-        #region Scene
-
-        [Category("Scene")]
-        [DefaultValue(Defaults.FPS)]
-        [Description("Frames per second: a cap on this scene's rendering frequency.")]
-        [DisplayName("FPS")]
-        [JsonIgnore]
-        public double FPS { get => _FPS; set => Run(new SceneFpsCommand(value)); }
-
-        [Category("Scene")]
-        [DefaultValue(Defaults.Title)]
-        [Description("A title for this scene.")]
-        [DisplayName("Title")]
-        [JsonIgnore]
-        public string Title { get => _Title; set => Run(new SceneTitleCommand(value)); }
-
-        [Category("Scene")]
-        [Description("A list of the traces in this scene.")]
-        [DisplayName("Traces")]
-        [Editor(typeof(TgCollectionEditor), typeof(UITypeEditor))]
-        [JsonIgnore]
-        public List<Trace> Traces
-        {
-            get => _Traces.Select(t => t.Clone()).ToList();
-            set => _Traces = value;
-        }
-
-        #endregion
-
-        #region Camera
-
-        [Category(Categories.Camera)]
-        [DefaultValue(typeof(Point3F), Defaults.CameraPositionString)]
-        [Description("The camera position for the scene.")]
-        [DisplayName("Position")]
-        [JsonIgnore]
-        public Point3F CameraPosition { get => _CameraPosition; set => Run(new CameraPositionCommand(value)); }
-
-        [Category(Categories.Camera)]
-        [DefaultValue(typeof(Euler3F), Defaults.CameraRotationString)]
-        [Description("The camera rotation for the scene (in degrees).")]
-        [DisplayName("Rotation°")]
-        [JsonIgnore]
-        public Euler3F CameraRotation { get => _CameraRotation; set => Run(new CameraRotationCommand(value)); }
-
-        #endregion
-
         #region Graphics Mode
 
         [Category(Categories.GraphicsMode)]
-        [DefaultValue(typeof(ColourFormat), Defaults.AccumColourFormatString)]
+        [DefaultValue(typeof(ColourFormat), Defaults.ColourFormatString)]
         [Description("The number of bits per pixel in each accumulator colour channel.")]
         [DisplayName("Accumulator Colour Format")]
         [JsonIgnore]
         public ColourFormat AccumColourFormat { get => _AccumColourFormat; set => Run(new AccumColourFormatCommand(value)); }
+
+        [Category(Categories.GraphicsMode)]
+        [DefaultValue(typeof(Color), Defaults.BackgroundColourString)]
+        [Description("The colour of the background.")]
+        [DisplayName("Background Colour")]
+        [JsonIgnore]
+        public Color BackgroundColour { get => _BackgroundColour; set => Run(new BackgroundColourCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(typeof(ColourFormat), Defaults.ColourFormatString)]
@@ -139,10 +99,17 @@
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.Stereo)]
-        [Description("Whether this display mode is stereoscopic.")]
+        [Description("Indicates whether this display mode is stereoscopic 3D.")]
         [DisplayName("Stereo")]
         [JsonIgnore]
         public bool Stereo { get => _Stereo; set => Run(new StereoCommand(value)); }
+
+        [Category(Categories.GraphicsMode)]
+        [DefaultValue(Defaults.VSync)]
+        [Description("Indicates whether GLControl updates are synced to the monitor's refresh rate.")]
+        [DisplayName("VSync")]
+        [JsonIgnore]
+        public bool VSync { get => _VSync; set => Run(new VSyncCommand(value)); }
 
         #endregion
 
@@ -195,14 +162,46 @@
 
         #endregion
 
-        #region Renderer
+        #region Scene
 
-        [Category(Categories.Renderer)]
-        [DefaultValue(typeof(Color), Defaults.BackgroundColourString)]
-        [Description("The colour of the background.")]
-        [DisplayName("Background Colour")]
+        [Category(Categories.Scene)]
+        [DefaultValue(typeof(Point3F), Defaults.CameraPositionString)]
+        [Description("The camera position for the scene.")]
+        [DisplayName("Camera Position")]
         [JsonIgnore]
-        public Color BackgroundColour { get => _BackgroundColour; set => Run(new BackgroundColourCommand(value)); }
+        public Point3F CameraPosition { get => _CameraPosition; set => Run(new CameraPositionCommand(value)); }
+
+        [Category(Categories.Scene)]
+        [DefaultValue(typeof(Euler3F), Defaults.CameraRotationString)]
+        [Description("The camera rotation for the scene (in degrees).")]
+        [DisplayName("Camera Rotation°")]
+        [JsonIgnore]
+        public Euler3F CameraRotation { get => _CameraRotation; set => Run(new CameraRotationCommand(value)); }
+
+        [Category(Categories.Scene)]
+        [DefaultValue(Defaults.FPS)]
+        [Description("Frames per second: a cap on this scene's rendering frequency.")]
+        [DisplayName("FPS")]
+        [JsonIgnore]
+        public double FPS { get => _FPS; set => Run(new SceneFpsCommand(value)); }
+
+        [Category(Categories.Scene)]
+        [DefaultValue(Defaults.Title)]
+        [Description("A title for this scene.")]
+        [DisplayName("Title")]
+        [JsonIgnore]
+        public string Title { get => _Title; set => Run(new SceneTitleCommand(value)); }
+
+        [Category(Categories.Scene)]
+        [Description("A list of the traces in this scene.")]
+        [DisplayName("Traces")]
+        [Editor(typeof(TgCollectionEditor), typeof(UITypeEditor))]
+        [JsonIgnore]
+        public List<Trace> Traces
+        {
+            get => _Traces.Select(t => t.Clone()).ToList();
+            set => _Traces = value;
+        }
 
         #endregion
 
@@ -218,51 +217,23 @@
 
         #region Persistent Fields
 
-        [JsonProperty]
-        internal bool
-            _Stereo;
-
-        [JsonProperty]
-        internal int
-            _Buffers,
-            _Depth,
-            _SampleCount,
-            _Stencil;
-
-        [JsonProperty]
-        internal float
-            _FieldOfView,
-            _FarPlane,
-            _NearPlane;
-
-        [JsonProperty]
-        internal double
-            _FPS;
-
-        [JsonProperty]
-        internal Euler3F
-            _CameraRotation;
-
-        [JsonProperty]
-        internal Point3F
-            _CameraPosition;
-
-        [JsonProperty]
-        internal string
-            _Title;
-
-        [JsonProperty]
-        internal Color
-            _BackgroundColour;
-
-        [JsonProperty]
-        internal ColourFormat
-            _AccumColourFormat,
-            _ColourFormat;
-
-        [JsonProperty]
-        internal List<Trace>
-            _Traces = new List<Trace>();
+        [JsonProperty] internal ColourFormat _AccumColourFormat;
+        [JsonProperty] internal Color _BackgroundColour;
+        [JsonProperty] internal int _Buffers;
+        [JsonProperty] internal Point3F _CameraPosition;
+        [JsonProperty] internal Euler3F _CameraRotation;
+        [JsonProperty] internal ColourFormat _ColourFormat;
+        [JsonProperty] internal int _Depth;
+        [JsonProperty] internal float _FarPlane;
+        [JsonProperty] internal float _FieldOfView;
+        [JsonProperty] internal double _FPS;
+        [JsonProperty] internal float _NearPlane;
+        [JsonProperty] internal int _SampleCount;
+        [JsonProperty] internal int _Stencil;
+        [JsonProperty] internal bool _Stereo;
+        [JsonProperty] internal string _Title;
+        [JsonProperty] internal List<Trace> _Traces = new List<Trace>();
+        [JsonProperty] internal bool _VSync;
 
         #endregion
 
@@ -329,27 +300,23 @@
 
         private void RestoreDefaults()
         {
-            _Title = Defaults.Title;
-
             _AccumColourFormat = Defaults.AccumColourFormat;
+            _BackgroundColour = Defaults.BackgroundColour;
             _Buffers = Defaults.Buffers;
+            _CameraPosition = Defaults.CameraPosition;
+            _CameraRotation = Defaults.CameraRotation;
             _ColourFormat = Defaults.ColourFormat;
             _Depth = Defaults.Depth;
+            _FarPlane = Defaults.FarPlane;
+            _FieldOfView = Defaults.FieldOfView;
+            _FPS = Defaults.FPS;
+            _NearPlane = Defaults.NearPlane;
             _SampleCount = Defaults.SampleCount;
             _Stencil = Defaults.Stencil;
             _Stereo = Defaults.Stereo;
-
-            _CameraPosition = Defaults.CameraPosition;
-            _CameraRotation = Defaults.CameraRotation;
-            _FarPlane = Defaults.FarPlane;
-            _FieldOfView = Defaults.FieldOfView;
-            _NearPlane = Defaults.NearPlane;
-
-            _FPS = Defaults.FPS;
-
-            _BackgroundColour = Defaults.BackgroundColour;
-
+            _Title = Defaults.Title;
             _Traces = Defaults.Traces;
+            _VSync = Defaults.VSync;
         }
 
         private void Run(IScenePropertyCommand command)
@@ -362,24 +329,25 @@
 
         #endregion
 
+        #region Private Classes
+
         private class Categories
         {
             internal const string
                 Camera = "Camera",
                 GraphicsMode = "Graphics Mode",
                 Projection = "Projection",
-                Renderer = "Renderer",
+                Scene = "Scene",
                 SystemRO = "Read Only / System";
         }
 
         private class Defaults
         {
             internal const string
-                AccumColourFormatString = "(Red: 0, Green: 0, Blue: 0, Alpha: 0)",
                 BackgroundColourString = "White",
-                CameraPositionString = "(X: 0, Y: 0, Z: 0)",
-                CameraRotationString = "(Pitch: 0, Yaw: 0, Roll: 0)",
-                ColourFormatString = "(Red: 8, Green: 8, Blue: 8, Alpha: 8)",
+                CameraPositionString = "0, 0, 0",
+                CameraRotationString = "0, 0, 0",
+                ColourFormatString = "0, 0, 0, 0",
                 Title = "";
 
             internal const bool
@@ -414,6 +382,10 @@
 
             internal static List<Trace> Traces =>
                 new List<Trace>();
+
+            internal const bool VSync = false;
         }
+
+        #endregion
     }
 }

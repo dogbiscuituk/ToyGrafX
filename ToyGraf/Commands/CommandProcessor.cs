@@ -9,7 +9,7 @@
     using ToyGraf.Models;
     using ToyGraf.Views;
 
-    internal class CommandProcessor : ICommandProcessor
+    internal class CommandProcessor
     {
         #region Public/Internal Interface
 
@@ -105,7 +105,7 @@
             if (cmd1.GetType() == cmd2.GetType())
                 switch (cmd1)
                 {
-                    case IScenePropertyCommand gpc1: return true;
+                    case IScenePropertyCommand _: return true;
                     case ITracePropertyCommand tpc1: return tpc1.Index == ((ITracePropertyCommand)cmd2).Index;
                 }
             else if (cmd1 is ICollectionCommand cc1 && !cc1.Adding)

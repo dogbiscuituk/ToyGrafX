@@ -2,6 +2,11 @@
 {
     using ToyGraf.Models;
 
+    internal interface ICollectionCommand : ICommand
+    {
+        bool Adding { get; set; }
+    }
+
     internal interface ICommand
     {
         int Index { get; }
@@ -14,35 +19,18 @@
         bool Run(Scene scene);
     }
 
-    internal interface IPropertyCommand : ICommand { }
-
-    internal interface IScenePropertyCommand : IPropertyCommand
+    internal interface IScenePropertyCommand : ICommand
     {
         void RunOn(Scene scene);
     }
 
-    internal interface ITracePropertyCommand : IPropertyCommand
+    internal interface ITracePropertyCommand : ICommand
     {
         void RunOn(Trace trace);
-    }
-
-    internal interface ICollectionCommand : ICommand
-    {
-        bool Adding { get; set; }
     }
 
     internal interface ITracesCommand : ICollectionCommand
     {
         Trace Value { get; set; }
-    }
-
-    internal interface ICommandProcessor
-    {
-        void Run(ICommand command);
-    }
-
-    internal interface ISceneController
-    {
-        ICommandProcessor CommandProcessor { get; }
     }
 }

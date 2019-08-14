@@ -156,7 +156,7 @@
             var prototype = new Prototype(vertices, indices);
             //Prototypes.Add(prototype);
 
-            yield return new Entity(prototype, new Vector3(0, 0, -2), new Vector3(45, 45, 0), 1);
+            yield return new Entity(prototype, new Vector3(0, 0, -2), new Vector3(45, 45, 0), new Vector3(1, 1, 1));
         }
 
         #endregion

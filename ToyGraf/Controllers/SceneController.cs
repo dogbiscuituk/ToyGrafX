@@ -5,7 +5,6 @@
     using System.ComponentModel;
     using System.Windows.Forms;
     using ToyGraf.Commands;
-    using ToyGraf.Engine;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
     using ToyGraf.Models.Enums;
@@ -98,92 +97,16 @@
                     return;
                 if (SceneForm != null)
                 {
-                    SceneForm.FormClosed -= SceneForm_FormClosed;
-                    SceneForm.FormClosing -= SceneForm_FormClosing;
-
-                    SceneForm.FileNewEmptyScene.Click -= FileNewEmptyScene_Click;
-                    SceneForm.FileNewFromTemplate.Click -= FileNewFromTemplate_Click;
-                    SceneForm.FileOpen.Click -= FileOpen_Click;
-                    SceneForm.FileSave.Click -= FileSave_Click;
-                    SceneForm.FileSaveAs.Click -= FileSaveAs_Click;
-                    SceneForm.FileClose.Click -= FileClose_Click;
-                    SceneForm.FileExit.Click -= FileExit_Click;
-                    SceneForm.EditOptions.Click -= EditOptions_Click;
-
-                    SceneForm.tbNew.ButtonClick -= FileNewEmptyScene_Click;
-                    SceneForm.tbNewEmptyScene.Click -= FileNewEmptyScene_Click;
-                    SceneForm.tbNewFromTemplate.Click -= FileNewFromTemplate_Click;
-                    SceneForm.tbOpen.ButtonClick -= FileOpen_Click;
-                    SceneForm.tbOpen.DropDownOpening -= TbOpen_DropDownOpening;
-                    SceneForm.tbSave.Click -= TbSave_Click;
-
-                    SceneForm.CameraMoveLeft.Click -= CameraMoveLeft_Click;
-                    SceneForm.CameraMoveRight.Click -= CameraMoveRight_Click;
-                    SceneForm.CameraMoveUp.Click -= CameraMoveUp_Click;
-                    SceneForm.CameraMoveDown.Click -= CameraMoveDown_Click;
-                    SceneForm.CameraMoveIn.Click -= CameraMoveIn_Click;
-                    SceneForm.CameraMoveOut.Click -= CameraMoveOut_Click;
-                    SceneForm.CameraRotateLeft.Click -= CameraRotateLeft_Click;
-                    SceneForm.CameraRotateRight.Click -= CameraRotateRight_Click;
-                    SceneForm.CameraRotateUp.Click -= CameraRotateUp_Click;
-                    SceneForm.CameraRotateDown.Click -= CameraRotateDown_Click;
-                    SceneForm.CameraRotateAnticlockwise.Click -= CameraRotateAnticlockwise_Click;
-                    SceneForm.CameraRotateClockwise.Click -= CameraRotateClockwise_Click;
-                    SceneForm.CameraHome.Click -= CameraHome_Click;
-
-                    SceneForm.HelpOpenGLShadingLanguage.Click -= HelpTheOpenGLShadingLanguage_Click;
-                    SceneForm.HelpAbout.Click -= HelpAbout_Click;
-
-                    SceneForm.GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
-                    GLControl.Resize -= GLControl_Resize;
+                    DetachEventHandlers();
                 }
                 _SceneForm = value;
                 if (SceneForm != null)
                 {
-                    SceneForm.FormClosed += SceneForm_FormClosed;
-                    SceneForm.FormClosing += SceneForm_FormClosing;
-
-                    SceneForm.FileNewEmptyScene.Click += FileNewEmptyScene_Click;
-                    SceneForm.FileNewFromTemplate.Click += FileNewFromTemplate_Click;
-                    SceneForm.FileOpen.Click += FileOpen_Click;
-                    SceneForm.FileSave.Click += FileSave_Click;
-                    SceneForm.FileSaveAs.Click += FileSaveAs_Click;
-                    SceneForm.FileClose.Click += FileClose_Click;
-                    SceneForm.FileExit.Click += FileExit_Click;
-                    SceneForm.EditOptions.Click += EditOptions_Click;
-
-                    SceneForm.tbNew.ButtonClick += FileNewEmptyScene_Click;
-                    SceneForm.tbNewEmptyScene.Click += FileNewEmptyScene_Click;
-                    SceneForm.tbNewFromTemplate.Click += FileNewFromTemplate_Click;
-                    SceneForm.tbOpen.ButtonClick += FileOpen_Click;
-                    SceneForm.tbOpen.DropDownOpening += TbOpen_DropDownOpening;
-                    SceneForm.tbSave.Click += TbSave_Click;
-
-                    SceneForm.CameraMoveLeft.Click += CameraMoveLeft_Click;
-                    SceneForm.CameraMoveRight.Click += CameraMoveRight_Click;
-                    SceneForm.CameraMoveUp.Click += CameraMoveUp_Click;
-                    SceneForm.CameraMoveDown.Click += CameraMoveDown_Click;
-                    SceneForm.CameraMoveIn.Click += CameraMoveIn_Click;
-                    SceneForm.CameraMoveOut.Click += CameraMoveOut_Click;
-                    SceneForm.CameraRotateLeft.Click += CameraRotateLeft_Click;
-                    SceneForm.CameraRotateRight.Click += CameraRotateRight_Click;
-                    SceneForm.CameraRotateUp.Click += CameraRotateUp_Click;
-                    SceneForm.CameraRotateDown.Click += CameraRotateDown_Click;
-                    SceneForm.CameraRotateAnticlockwise.Click += CameraRotateAnticlockwise_Click;
-                    SceneForm.CameraRotateClockwise.Click += CameraRotateClockwise_Click;
-                    SceneForm.CameraHome.Click += CameraHome_Click;
-
-                    SceneForm.HelpOpenGLShadingLanguage.Click += HelpTheOpenGLShadingLanguage_Click;
-                    SceneForm.HelpAbout.Click += HelpAbout_Click;
-
-                    GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
-                    GLControl.Resize += GLControl_Resize;
+                    AttachEventHandlers();
                 }
             }
         }
 
-        internal Camera Camera => Renderer.Camera;
-        internal GLControlRenderer Renderer;
         internal Scene Scene;
 
         public CommandProcessor CommandProcessor { get; private set; }
@@ -227,20 +150,6 @@
         {
         }
 
-        private void CameraMoveLeft_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Left);
-        private void CameraMoveRight_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Right);
-        private void CameraMoveUp_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Up);
-        private void CameraMoveDown_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Down);
-        private void CameraMoveIn_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.In);
-        private void CameraMoveOut_Click(object sender, System.EventArgs e) => MoveCamera(CameraMove.Out);
-        private void CameraRotateLeft_Click(object sender, EventArgs e) => MoveCamera(CameraMove.YawLeft);
-        private void CameraRotateRight_Click(object sender, EventArgs e) => MoveCamera(CameraMove.YawRight);
-        private void CameraRotateUp_Click(object sender, EventArgs e) => MoveCamera(CameraMove.PitchUp);
-        private void CameraRotateDown_Click(object sender, EventArgs e) => MoveCamera(CameraMove.PitchDown);
-        private void CameraRotateAnticlockwise_Click(object sender, EventArgs e) => MoveCamera(CameraMove.RollLeft);
-        private void CameraRotateClockwise_Click(object sender, EventArgs e) => MoveCamera(CameraMove.RollRight);
-        private void CameraHome_Click(object sender, EventArgs e) => MoveCamera(CameraMove.Home);
-
         private void HelpTheOpenGLShadingLanguage_Click(object sender, EventArgs e) =>
             ShowOpenGLSLBook(SceneForm.PropertyGrid);
 
@@ -273,6 +182,62 @@
 
         #region Non-Public Methods
 
+        private void AttachEventHandlers()
+        {
+            SceneForm.FormClosed += SceneForm_FormClosed;
+            SceneForm.FormClosing += SceneForm_FormClosing;
+
+            SceneForm.FileNewEmptyScene.Click += FileNewEmptyScene_Click;
+            SceneForm.FileNewFromTemplate.Click += FileNewFromTemplate_Click;
+            SceneForm.FileOpen.Click += FileOpen_Click;
+            SceneForm.FileSave.Click += FileSave_Click;
+            SceneForm.FileSaveAs.Click += FileSaveAs_Click;
+            SceneForm.FileClose.Click += FileClose_Click;
+            SceneForm.FileExit.Click += FileExit_Click;
+            SceneForm.EditOptions.Click += EditOptions_Click;
+
+            SceneForm.tbNew.ButtonClick += FileNewEmptyScene_Click;
+            SceneForm.tbNewEmptyScene.Click += FileNewEmptyScene_Click;
+            SceneForm.tbNewFromTemplate.Click += FileNewFromTemplate_Click;
+            SceneForm.tbOpen.ButtonClick += FileOpen_Click;
+            SceneForm.tbOpen.DropDownOpening += TbOpen_DropDownOpening;
+            SceneForm.tbSave.Click += TbSave_Click;
+
+            SceneForm.HelpOpenGLShadingLanguage.Click += HelpTheOpenGLShadingLanguage_Click;
+            SceneForm.HelpAbout.Click += HelpAbout_Click;
+
+            GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
+            GLControl.Resize += GLControl_Resize;
+        }
+
+        private void DetachEventHandlers()
+        {
+            SceneForm.FormClosed -= SceneForm_FormClosed;
+            SceneForm.FormClosing -= SceneForm_FormClosing;
+
+            SceneForm.FileNewEmptyScene.Click -= FileNewEmptyScene_Click;
+            SceneForm.FileNewFromTemplate.Click -= FileNewFromTemplate_Click;
+            SceneForm.FileOpen.Click -= FileOpen_Click;
+            SceneForm.FileSave.Click -= FileSave_Click;
+            SceneForm.FileSaveAs.Click -= FileSaveAs_Click;
+            SceneForm.FileClose.Click -= FileClose_Click;
+            SceneForm.FileExit.Click -= FileExit_Click;
+            SceneForm.EditOptions.Click -= EditOptions_Click;
+
+            SceneForm.tbNew.ButtonClick -= FileNewEmptyScene_Click;
+            SceneForm.tbNewEmptyScene.Click -= FileNewEmptyScene_Click;
+            SceneForm.tbNewFromTemplate.Click -= FileNewFromTemplate_Click;
+            SceneForm.tbOpen.ButtonClick -= FileOpen_Click;
+            SceneForm.tbOpen.DropDownOpening -= TbOpen_DropDownOpening;
+            SceneForm.tbSave.Click -= TbSave_Click;
+
+            SceneForm.HelpOpenGLShadingLanguage.Click -= HelpTheOpenGLShadingLanguage_Click;
+            SceneForm.HelpAbout.Click -= HelpAbout_Click;
+
+            SceneForm.GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
+            GLControl.Resize -= GLControl_Resize;
+        }
+
         private void EditOptions()
         {
             using (var optionsController = new OptionsController(this))
@@ -298,7 +263,6 @@
 
         private void FileSaved()
         {
-            Camera.Fix();
         }
 
         private bool FormClosing(CloseReason closeReason) => JsonController.SaveIfModified();
@@ -349,27 +313,6 @@
             return true;
         }
 
-        private void MoveCamera(CameraMove cameraMove)
-        {
-            const float r = 2f, s = 0.02f;
-            switch (cameraMove)
-            {
-                case CameraMove.Home: Camera.Reset(); break;
-                case CameraMove.Left: Camera.X -= s; break;
-                case CameraMove.Right: Camera.X += s; break;
-                case CameraMove.Up: Camera.Y += s; break;
-                case CameraMove.Down: Camera.Y -= s; break;
-                case CameraMove.In: Camera.Z -= s; break;
-                case CameraMove.Out: Camera.Z += s; break;
-                case CameraMove.YawLeft: Camera.Yaw -= r; break;
-                case CameraMove.YawRight: Camera.Yaw += r; break;
-                case CameraMove.PitchUp: Camera.Pitch -= r; break;
-                case CameraMove.PitchDown: Camera.Pitch += r; break;
-                case CameraMove.RollLeft: Camera.Roll -= r; break;
-                case CameraMove.RollRight: Camera.Roll += r; break;
-            }
-        }
-
         private void NewEmptyScene()
         {
             GetNewSceneController();
@@ -405,22 +348,5 @@
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
 
         #endregion
-
-        private enum CameraMove
-        {
-            Home,
-            Left,
-            Right,
-            Up,
-            Down,
-            In,
-            Out,
-            YawLeft,
-            YawRight,
-            PitchUp,
-            PitchDown,
-            RollLeft,
-            RollRight
-        }
     }
 }
