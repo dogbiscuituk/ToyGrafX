@@ -145,7 +145,7 @@
 
         [Category(Categories.SystemRO)]
         [Description("The camera view matrix for the scene.")]
-        [DisplayName("Camera View")]
+        [DisplayName("View")]
         [JsonIgnore]
         public Matrix4 CameraView
         {
