@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-    using System.Linq;
     using System.Windows.Forms;
     using ToyGraf.Controllers;
     using ToyGraf.Models;
@@ -25,12 +24,13 @@
             SceneForm.tbRedo.DropDownOpening += TbRedo_DropDownOpening;
         }
 
-        internal bool IsModified => UndoStack.Any();
+        internal bool IsModified => LastSave != UndoStack.Count;
         internal Scene Scene => SceneController.Scene;
         internal List<Trace> Traces => Scene._Traces;
 
         internal void Clear()
         {
+            LastSave = 0;
             UndoStack.Clear();
             RedoStack.Clear();
             UpdateUI();
@@ -42,8 +42,16 @@
 
         public void Run(ICommand command)
         {
+            if (LastSave > UndoStack.Count)
+                LastSave = -1;
             RedoStack.Clear();
             Redo(command);
+        }
+
+        public void Save()
+        {
+            LastSave = UndoStack.Count;
+            UpdateUI();
         }
 
         #endregion
@@ -56,14 +64,13 @@
         private readonly Stack<ICommand> UndoStack = new Stack<ICommand>();
         private readonly Stack<ICommand> RedoStack = new Stack<ICommand>();
 
-        private bool GroupUndo => AppController.Options.GroupUndo;
         private string UndoAction => UndoStack.Peek().UndoAction;
         private string RedoAction => RedoStack.Peek().RedoAction;
 
         private readonly SceneController SceneController;
         private SceneForm SceneForm => SceneController.SceneForm;
 
-        private int UpdateCount;
+        private int LastSave, UpdateCount;
 
         #endregion
 
@@ -97,30 +104,6 @@
         #region Private Methods
 
         private void BeginUpdate() { ++UpdateCount; }
-
-        private bool CanGroup(ICommand cmd1, ICommand cmd2)
-        {
-            if (cmd2 is ICollectionCommand)
-                return false;
-            if (cmd1.GetType() == cmd2.GetType())
-                switch (cmd1)
-                {
-                    case IScenePropertyCommand _: return true;
-                    case ITracePropertyCommand tpc1: return tpc1.Index == ((ITracePropertyCommand)cmd2).Index;
-                }
-            else if (cmd1 is ICollectionCommand cc1 && !cc1.Adding)
-                switch (cc1)
-                {
-                    case ITracesCommand tc1:
-                        if (cmd2 is ITracePropertyCommand tpc2 && tpc2.Index == tc1.Index)
-                        {
-                            if (tc1.Value == null) tc1.Value = Traces[tc1.Index];
-                            return true;
-                        }
-                        break;
-                }
-            return false;
-        }
 
         private void Copy(Stack<ICommand> source, ToolStripDropDownItem target, EventHandler handler)
         {
@@ -162,8 +145,7 @@
         {
             if (!command.Do(Scene))
                 return false;
-            if (!(GroupUndo && CanUndo && CanGroup(UndoStack.Peek(), command)))
-                UndoStack.Push(command);
+            UndoStack.Push(command);
             UpdateUI();
             return true;
         }

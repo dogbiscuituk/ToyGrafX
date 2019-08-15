@@ -84,7 +84,6 @@
                 var options = new Options
                 {
                     OpenInNewWindow = Settings.Options_OpenInNewWindow,
-                    GroupUndo = Settings.Options_GroupUndo,
                     FilesFolderPath = Settings.FilesFolderPath,
                     TemplatesFolderPath = Settings.TemplatesFolderPath,
                 };
@@ -97,7 +96,6 @@
             set
             {
                 Settings.Options_OpenInNewWindow = value.OpenInNewWindow;
-                Settings.Options_GroupUndo = value.GroupUndo;
                 Settings.FilesFolderPath = value.FilesFolderPath;
                 Settings.TemplatesFolderPath = value.TemplatesFolderPath;
                 Settings.Save();

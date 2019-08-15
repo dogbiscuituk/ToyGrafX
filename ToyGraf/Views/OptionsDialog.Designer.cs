@@ -33,9 +33,6 @@
             this.rbWindowNew = new System.Windows.Forms.RadioButton();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.rbNoGroupUndo = new System.Windows.Forms.RadioButton();
-            this.rbGroupUndo = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnTemplatesFolder = new System.Windows.Forms.Button();
             this.btnFilesFolder = new System.Windows.Forms.Button();
@@ -44,7 +41,6 @@
             this.edFilesFolder = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,15 +70,15 @@
             this.rbWindowNew.AutoSize = true;
             this.rbWindowNew.Location = new System.Drawing.Point(8, 22);
             this.rbWindowNew.Name = "rbWindowNew";
-            this.rbWindowNew.Size = new System.Drawing.Size(213, 19);
+            this.rbWindowNew.Size = new System.Drawing.Size(237, 19);
             this.rbWindowNew.TabIndex = 0;
-            this.rbWindowNew.Text = "&Create a new window for the graph.";
+            this.rbWindowNew.Text = "&Create a new window for the new scene.";
             this.rbWindowNew.UseVisualStyleBackColor = true;
             // 
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(273, 267);
+            this.btnOK.Location = new System.Drawing.Point(273, 186);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(87, 27);
             this.btnOK.TabIndex = 2;
@@ -92,43 +88,12 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(366, 267);
+            this.btnCancel.Location = new System.Drawing.Point(366, 186);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(87, 27);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.rbNoGroupUndo);
-            this.groupBox2.Controls.Add(this.rbGroupUndo);
-            this.groupBox2.Location = new System.Drawing.Point(14, 93);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(436, 74);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "When several property edits are performed on the same scene or trace:";
-            // 
-            // rbNoGroupUndo
-            // 
-            this.rbNoGroupUndo.AutoSize = true;
-            this.rbNoGroupUndo.Location = new System.Drawing.Point(8, 48);
-            this.rbNoGroupUndo.Name = "rbNoGroupUndo";
-            this.rbNoGroupUndo.Size = new System.Drawing.Size(287, 19);
-            this.rbNoGroupUndo.TabIndex = 1;
-            this.rbNoGroupUndo.Text = "Treat each as a &separate, individual edit operation.";
-            this.rbNoGroupUndo.UseVisualStyleBackColor = true;
-            // 
-            // rbGroupUndo
-            // 
-            this.rbGroupUndo.AutoSize = true;
-            this.rbGroupUndo.Location = new System.Drawing.Point(8, 22);
-            this.rbGroupUndo.Name = "rbGroupUndo";
-            this.rbGroupUndo.Size = new System.Drawing.Size(381, 19);
-            this.rbGroupUndo.TabIndex = 0;
-            this.rbGroupUndo.Text = "&Group into a single, composite operatrion for Undo/Redo purposes.";
-            this.rbGroupUndo.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
@@ -138,7 +103,7 @@
             this.groupBox3.Controls.Add(this.edTemplatesFolder);
             this.groupBox3.Controls.Add(this.edFilesFolder);
             this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Location = new System.Drawing.Point(14, 174);
+            this.groupBox3.Location = new System.Drawing.Point(14, 93);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(436, 87);
             this.groupBox3.TabIndex = 4;
@@ -209,9 +174,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(465, 305);
+            this.ClientSize = new System.Drawing.Size(465, 223);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.groupBox1);
@@ -224,8 +188,6 @@
             this.Text = "Editor Options";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
@@ -239,9 +201,6 @@
         internal System.Windows.Forms.Button btnCancel;
         internal System.Windows.Forms.RadioButton rbWindowReuse;
         internal System.Windows.Forms.RadioButton rbWindowNew;
-        internal System.Windows.Forms.GroupBox groupBox2;
-        internal System.Windows.Forms.RadioButton rbGroupUndo;
-        internal System.Windows.Forms.RadioButton rbNoGroupUndo;
         internal System.Windows.Forms.GroupBox groupBox3;
         internal System.Windows.Forms.Button btnTemplatesFolder;
         internal System.Windows.Forms.Button btnFilesFolder;

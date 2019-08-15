@@ -247,7 +247,7 @@
         private void FileSaved()
         {
             BeginUpdate();
-            CommandProcessor.Clear();
+            CommandProcessor.Save();
             EndUpdate();
         }
 

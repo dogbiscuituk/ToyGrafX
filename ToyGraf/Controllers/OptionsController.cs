@@ -69,7 +69,6 @@
         private Options GetOptions() => new Options
         {
             OpenInNewWindow = OptionsDialog.rbWindowNew.Checked,
-            GroupUndo = OptionsDialog.rbGroupUndo.Checked,
             FilesFolderPath = OptionsDialog.edFilesFolder.Text,
             TemplatesFolderPath = OptionsDialog.edTemplatesFolder.Text,
         };
@@ -78,8 +77,6 @@
         {
             OptionsDialog.rbWindowNew.Checked = options.OpenInNewWindow;
             OptionsDialog.rbWindowReuse.Checked = !options.OpenInNewWindow;
-            OptionsDialog.rbGroupUndo.Checked = options.GroupUndo;
-            OptionsDialog.rbNoGroupUndo.Checked = !options.GroupUndo;
             OptionsDialog.edFilesFolder.Text = options.FilesFolderPath;
             OptionsDialog.edTemplatesFolder.Text = options.TemplatesFolderPath;
         }
