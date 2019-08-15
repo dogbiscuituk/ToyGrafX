@@ -85,17 +85,6 @@
             dialog.Title = "Select Texture";
         }
 
-        internal bool MakeCurrent(bool current)
-        {
-            if (!GLControl.HasValidContext)
-                return false;
-            if (current)
-                GLControl.MakeCurrent();
-            else
-                GLControl.Context.MakeCurrent(null);
-            return true;
-        }
-
         internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
             $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
 
@@ -124,11 +113,7 @@
         private void GLControl_ClientSizeChanged(object sender, EventArgs e)
         {
             OnPropertyChanged("DisplaySize");
-            if (MakeCurrent(true))
-            {
-
-                MakeCurrent(false);
-            }
+            InitViewport();
         }
 
         private void GLControl_Resize(object sender, EventArgs e)
@@ -138,7 +123,20 @@
         private void HelpTheOpenGLShadingLanguage_Click(object sender, EventArgs e) =>
             ShowOpenGLSLBook(SceneForm.PropertyGrid);
 
-        private void HelpAbout_Click(object sender, System.EventArgs e) => new AboutController().ShowDialog(SceneForm);
+        private void HelpAbout_Click(object sender, System.EventArgs e) => HelpAbout();
+
+        bool foo;
+
+        private void HelpAbout()
+        {
+            new AboutController().ShowDialog(SceneForm);
+
+            foo = !foo;
+            if (foo)
+                CreateProgram();
+            else
+                DeleteProgram();
+        }
 
         private void JsonController_FileLoaded(object sender, EventArgs e) => FileLoaded();
         private void JsonController_FilePathChanged(object sender, EventArgs e) => UpdateCaption();
@@ -345,9 +343,7 @@
 
         #endregion
 
-        #region Renderer
-
-        #region Properties
+        #region Renderer Properties
 
         private int
             ProgramID,
@@ -356,11 +352,16 @@
             TessEvaluationShaderID,
             GeometryShaderID,
             FragmentShaderID,
-            ComputeShaderID;
+            ComputeShaderID,
+            LocationOfProjectionMatrix,
+            LocationOfTimeValue,
+            LocationOfTransformationMatrix,
+            LocationOfViewMatrix,
+            CurrencyCount;
 
         #endregion
 
-        #region Methods
+        #region Renderer Methods
 
         private void AppendLog(StringBuilder log, string s)
         {
@@ -374,12 +375,12 @@
         private void BindAttributes()
         {
             BindAttribute(0, "position");
-            BindAttribute(1, "time");
         }
 
         private void CreateProgram()
         {
-            MakeCurrent(true);
+            if (!MakeCurrent(true))
+                return;
             var log = new StringBuilder();
             ProgramID = GL.CreateProgram();
             CreateShaders(log);
@@ -387,11 +388,9 @@
             GL.LinkProgram(ProgramID);
             GL.ValidateProgram(ProgramID);
             AppendLog(log, GL.GetProgramInfoLog(ProgramID));
-            GetAllUniformLocations();
-
+            GetUniformLocations();
             Scene._GPUStatus = log.ToString();
             log = null;
-
             DeleteShaders();
             MakeCurrent(false);
         }
@@ -429,6 +428,15 @@
             ComputeShaderID = CreateShader(ShaderType.ComputeShader, log);
         }
 
+        private void DeleteProgram()
+        {
+            if (ProgramID == 0)
+                return;
+            DeleteShaders();
+            GL.DeleteProgram(ProgramID);
+            ProgramID = 0;
+        }
+
         private void DeleteShader(ref int shaderID)
         {
             if (shaderID == 0)
@@ -448,12 +456,65 @@
             DeleteShader(ref ComputeShaderID);
         }
 
-        private void GetAllUniformLocations()
-        {
+        private int GetUniformLocation(string uniformName) => GL.GetUniformLocation(ProgramID, uniformName);
 
+        private void GetUniformLocations()
+        {
+            LocationOfProjectionMatrix = GetUniformLocation("projectionMatrix");
+            LocationOfTimeValue = GetUniformLocation("timeValue");
+            LocationOfTransformationMatrix = GetUniformLocation("transformationMatrix");
+            LocationOfViewMatrix = GetUniformLocation("viewMatrix");
         }
 
-        #endregion
+        private bool InitViewport()
+        {
+            var result = MakeCurrent(true);
+            if (result)
+            {
+                GL.Viewport(GLControl.Size);
+                MakeCurrent(false);
+            }
+            return result;
+        }
+
+        private void LoadBoolean(int location, bool value) => GL.Uniform1(location, value ? 1f : 0f);
+        private void LoadFloat(int location, float value) => GL.Uniform1(location, value);
+        private void LoadInt(int location, int value) => GL.Uniform1(location, value);
+        private void LoadMatrix(int location, Matrix4 value) => GL.UniformMatrix4(location, false, ref value);
+        private void LoadVector(int location, Vector3 vector) => GL.Uniform3(location, vector);
+
+        private bool MakeCurrent(bool current)
+        {
+            if (!GLControl.HasValidContext)
+                return false;
+            if (current)
+            {
+                CurrencyCount++;
+                if (CurrencyCount == 1)
+                    GLControl.MakeCurrent();
+            }
+            else
+            {
+                CurrencyCount--;
+                if (CurrencyCount == 0)
+                    GLControl.Context.MakeCurrent(null);
+            }
+            return true;
+        }
+
+        private bool Start() => UseProgram(true);
+        private bool Stop() => UseProgram(false);
+
+        private bool UseProgram(bool use)
+        {
+            var result = MakeCurrent(true);
+            if (result)
+            {
+                GL.UseProgram(use ? ProgramID : 0);
+                MakeCurrent(false);
+            }
+            return result;
+        }
 
         #endregion
     }
