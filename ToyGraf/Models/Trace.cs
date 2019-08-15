@@ -70,8 +70,6 @@
                     _Shader6Compute = script;
                     break;
             }
-            if (Shader != null)
-                Shader.CreateProgram();
         }
 
         public override string ToString() =>
@@ -150,7 +148,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         public string Shader1Vertex
         {
             get => _Shader1Vertex;
-            set => Run(new VertexShaderCommand(Index, value));
+            set => Run(new TraceVertexShaderCommand(Index, value));
         }
 
         [Category(Categories.Shaders)]
@@ -169,7 +167,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         public string Shader2TessControl
         {
             get => _Shader2TessControl;
-            set => Run(new TessControlShaderCommand(Index, value));
+            set => Run(new TraceTessControlShaderCommand(Index, value));
         }
 
         [Category(Categories.Shaders)]
@@ -187,7 +185,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         public string Shader3TessEvaluation
         {
             get => _Shader3TessEvaluation;
-            set => Run(new TessEvaluationShaderCommand(Index, value));
+            set => Run(new TraceTessEvaluationShaderCommand(Index, value));
         }
 
         [Category(Categories.Shaders)]
@@ -205,7 +203,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         public string Shader4Geometry
         {
             get => _Shader4Geometry;
-            set => Run(new GeometryShaderCommand(Index, value));
+            set => Run(new TraceGeometryShaderCommand(Index, value));
         }
 
         [Category(Categories.Shaders)]
@@ -222,7 +220,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         public string Shader5Fragment
         {
             get => _Shader5Fragment;
-            set => Run(new FragmentShaderCommand(Index, value));
+            set => Run(new TraceFragmentShaderCommand(Index, value));
         }
 
         [Category(Categories.Shaders)]
@@ -241,7 +239,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         public string Shader6Compute
         {
             get => _Shader6Compute;
-            set => Run(new ComputeShaderCommand(Index, value));
+            set => Run(new TraceComputeShaderCommand(Index, value));
         }
 
         #endregion
@@ -311,7 +309,6 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         private CommandProcessor CommandProcessor => Scene?.CommandProcessor;
         private int _Index;
-        private TraceShader Shader;
 
         #endregion
 
@@ -322,7 +319,6 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         internal void Init(Scene scene)
         {
             Scene = scene;
-            Shader = new TraceShader(this);
         }
 
         internal void SetTransformation(Matrix4 transformation)

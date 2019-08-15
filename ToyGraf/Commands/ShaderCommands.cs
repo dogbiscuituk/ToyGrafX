@@ -2,15 +2,9 @@
 {
     using OpenTK.Graphics.OpenGL;
 
-    internal class ShaderCommand : TracePropertyCommand<string>
+    internal static class ShaderNames
     {
-        internal ShaderCommand(int index, ShaderType shaderType, string value)
-            : base(index, GetShaderName(shaderType), value,
-                  t => t.GetScript(shaderType),
-                  (t, v) => t.SetScript(shaderType, v))
-        { }
-
-        private static string GetShaderName(ShaderType shaderType)
+        internal static string GetShaderName(this ShaderType shaderType)
         {
             switch (shaderType)
             {
@@ -31,33 +25,82 @@
         }
     }
 
-    internal class ComputeShaderCommand : ShaderCommand
+    internal class SceneShaderCommand : ScenePropertyCommand<string>
     {
-        internal ComputeShaderCommand(int index, string value) : base(index, ShaderType.ComputeShader, value) { }
+        internal SceneShaderCommand(ShaderType shaderType, string value)
+            : base(shaderType.GetShaderName(), value,
+                  s => s.GetScript(shaderType),
+                  (s, v) => s.SetScript(shaderType, v))
+        { }
     }
 
-    internal class FragmentShaderCommand : ShaderCommand
+    internal class TraceShaderCommand : TracePropertyCommand<string>
     {
-        internal FragmentShaderCommand(int index, string value) : base(index, ShaderType.FragmentShader, value) { }
+        internal TraceShaderCommand(int index, ShaderType shaderType, string value)
+            : base(index, shaderType.GetShaderName(), value,
+                  t => t.GetScript(shaderType),
+                  (t, v) => t.SetScript(shaderType, v))
+        { }
     }
 
-    internal class GeometryShaderCommand : ShaderCommand
+    internal class SceneComputeShaderCommand : SceneShaderCommand
     {
-        internal GeometryShaderCommand(int index, string value) : base(index, ShaderType.GeometryShader, value) { }
+        internal SceneComputeShaderCommand(string value) : base(ShaderType.ComputeShader, value) { }
     }
 
-    internal class TessControlShaderCommand : ShaderCommand
+    internal class SceneFragmentShaderCommand : SceneShaderCommand
     {
-        internal TessControlShaderCommand(int index, string value) : base(index, ShaderType.TessControlShader, value) { }
+        internal SceneFragmentShaderCommand(string value) : base(ShaderType.FragmentShader, value) { }
     }
 
-    internal class TessEvaluationShaderCommand : ShaderCommand
+    internal class SceneGeometryShaderCommand : SceneShaderCommand
     {
-        internal TessEvaluationShaderCommand(int index, string value) : base(index, ShaderType.TessEvaluationShader, value) { }
+        internal SceneGeometryShaderCommand(string value) : base(ShaderType.GeometryShader, value) { }
     }
 
-    internal class VertexShaderCommand : ShaderCommand
+    internal class SceneTessControlShaderCommand : SceneShaderCommand
     {
-        internal VertexShaderCommand(int index, string value) : base(index, ShaderType.VertexShader, value) { }
+        internal SceneTessControlShaderCommand(string value) : base(ShaderType.TessControlShader, value) { }
     }
+
+    internal class SceneTessEvaluationShaderCommand : SceneShaderCommand
+    {
+        internal SceneTessEvaluationShaderCommand(string value) : base(ShaderType.TessEvaluationShader, value) { }
+    }
+
+    internal class SceneVertexShaderCommand : SceneShaderCommand
+    {
+        internal SceneVertexShaderCommand(string value) : base(ShaderType.VertexShader, value) { }
+    }
+
+    internal class TraceComputeShaderCommand : TraceShaderCommand
+    {
+        internal TraceComputeShaderCommand(int index, string value) : base(index, ShaderType.ComputeShader, value) { }
+    }
+
+    internal class TraceFragmentShaderCommand : TraceShaderCommand
+    {
+        internal TraceFragmentShaderCommand(int index, string value) : base(index, ShaderType.FragmentShader, value) { }
+    }
+
+    internal class TraceGeometryShaderCommand : TraceShaderCommand
+    {
+        internal TraceGeometryShaderCommand(int index, string value) : base(index, ShaderType.GeometryShader, value) { }
+    }
+
+    internal class TraceTessControlShaderCommand : TraceShaderCommand
+    {
+        internal TraceTessControlShaderCommand(int index, string value) : base(index, ShaderType.TessControlShader, value) { }
+    }
+
+    internal class TraceTessEvaluationShaderCommand : TraceShaderCommand
+    {
+        internal TraceTessEvaluationShaderCommand(int index, string value) : base(index, ShaderType.TessEvaluationShader, value) { }
+    }
+
+    internal class TraceVertexShaderCommand : TraceShaderCommand
+    {
+        internal TraceVertexShaderCommand(int index, string value) : base(index, ShaderType.VertexShader, value) { }
+    }
+
 }
