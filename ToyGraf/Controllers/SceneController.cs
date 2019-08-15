@@ -88,7 +88,6 @@
         internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
             $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
 
-        internal void Render() { } // => Renderer.Render();
         internal void Show() => SceneForm.Show();
 
         #endregion
@@ -109,16 +108,6 @@
 
         private void TbOpen_DropDownOpening(object sender, EventArgs e) => SceneForm.FileReopen.CloneTo(SceneForm.tbOpen);
         private void TbSave_Click(object sender, EventArgs e) => SaveOrSaveAs();
-
-        private void GLControl_ClientSizeChanged(object sender, EventArgs e)
-        {
-            OnPropertyChanged("DisplaySize");
-            InitViewport();
-        }
-
-        private void GLControl_Resize(object sender, EventArgs e)
-        {
-        }
 
         private void HelpTheOpenGLShadingLanguage_Click(object sender, EventArgs e) =>
             ShowOpenGLSLBook(SceneForm.PropertyGrid);
@@ -190,6 +179,8 @@
             SceneForm.HelpAbout.Click += HelpAbout_Click;
 
             GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
+            GLControl.Load += GLControl_Load;
+            GLControl.Paint += GLControl_Paint;
             GLControl.Resize += GLControl_Resize;
         }
 
@@ -224,7 +215,9 @@
             SceneForm.HelpOpenGLShadingLanguage.Click -= HelpTheOpenGLShadingLanguage_Click;
             SceneForm.HelpAbout.Click -= HelpAbout_Click;
 
-            SceneForm.GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
+            GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
+            GLControl.Load -= GLControl_Load;
+            GLControl.Paint -= GLControl_Paint;
             GLControl.Resize -= GLControl_Resize;
         }
 
@@ -340,6 +333,29 @@
         private void Timer_Tick(object sender, EventArgs e) { Render(); }
 
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
+
+        #endregion
+
+        #region Render Event Handlers
+
+        private void GLControl_ClientSizeChanged(object sender, EventArgs e)
+        {
+            OnPropertyChanged("DisplaySize");
+            InitViewport();
+        }
+
+        private void GLControl_Paint(object sender, PaintEventArgs e)
+        {
+            Render();
+        }
+
+        private void GLControl_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void GLControl_Resize(object sender, EventArgs e)
+        {
+        }
 
         #endregion
 
@@ -500,6 +516,26 @@
                     GLControl.Context.MakeCurrent(null);
             }
             return true;
+        }
+
+        private bool Render()
+        {
+            var result = MakeCurrent(true);
+            if (result)
+            {
+                RenderFrame();
+                MakeCurrent(false);
+            }
+            return result;
+        }
+
+        private void RenderFrame()
+        {
+            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.Texture2D);
+            GL.ClearColor(Scene.BackgroundColour);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GLControl.SwapBuffers();
         }
 
         private bool Start() => UseProgram(true);

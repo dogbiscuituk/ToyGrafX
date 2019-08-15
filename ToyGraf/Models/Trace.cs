@@ -10,7 +10,6 @@
     using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models.Enums;
-    using ToyGraf.Shaders;
 
     [DefaultProperty("Shader1Vertex")]
     public class Trace
@@ -374,11 +373,11 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 #version 330 core
 
 layout (location = 0) in vec3 position;
-layout (location = 1) in float time;
 out vec3 colour;
 
-uniform mat4 transformationMatrix;
 uniform mat4 projectionMatrix;
+uniform float timeValue;
+uniform mat4 transformationMatrix;
 uniform mat4 viewMatrix;
 
 void main()
