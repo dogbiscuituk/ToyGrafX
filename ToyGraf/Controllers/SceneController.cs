@@ -1,11 +1,12 @@
 ﻿namespace ToyGraf.Controllers
 {
     using OpenTK;
+    using OpenTK.Graphics.OpenGL;
     using System;
     using System.ComponentModel;
+    using System.Text;
     using System.Windows.Forms;
     using ToyGraf.Commands;
-    using ToyGraf.Engine;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
     using ToyGraf.Models.Enums;
@@ -14,15 +15,14 @@
 
     internal class SceneController
     {
-        #region Internal Interface
+        #region Constructors
 
         internal SceneController()
         {
             SceneForm = new SceneForm();
             Scene = new Scene(this);
             CommandProcessor = new CommandProcessor(this);
-            //Renderer = new GLControlRenderer(this);
-            EntityTableController = new TraceTableController(this);
+            TraceTableController = new TraceTableController(this);
             FullScreenController = new FullScreenController(this);
 
             JsonController = new JsonController(this);
@@ -44,50 +44,14 @@
             TimerStart();
         }
 
-        internal void AttachControllers() => PropertyGridController.SelectedObject = Scene;
-        internal void BeginUpdate() => UpdateCount++;
-        internal void DetachControllers() => PropertyGridController.SelectedObject = null;
-        internal void EndUpdate() { if (--UpdateCount == 0) OnPropertyChanged(string.Empty); }
-        internal void ModifiedChanged() => SceneForm.Text = JsonController.WindowCaption;
+        #endregion
 
-        internal static void InitTextureDialog(OpenFileDialog dialog)
-        {
-            dialog.Filter = Settings.Default.ImageFilter;
-            dialog.Title = "Select Texture";
-        }
+        #region Internal Properties
 
-        private void TimerInit() => Timer.Interval = GetFrameMilliseconds();
-        private void TimerStart() { TimerInit(); Timer.Start(); }
-        private void TimerStop() => Timer.Stop();
-        private void Timer_Tick(object sender, EventArgs e) { Render(); }
-
-        private int GetFrameMilliseconds() => (int)Math.Round(1000 / Math.Min(Math.Max(Scene.FPS, 1), int.MaxValue));
-
-        private void Cleanup()
-        {
-            TimerStop();
-            Timer.Tick -= Timer_Tick;
-            AppController.Remove(this);
-        }
-
-        private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
-            OnPropertyChanged(e.PropertyName);
-
-        internal event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (Updating)
-                return;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            switch (propertyName)
-            {
-                case "FramesPerSecond":
-                    TimerInit();
-                    break;
-            }
-            PropertyGridController.Refresh();
-        }
+        public CommandProcessor CommandProcessor { get; private set; }
+        internal readonly PropertyGridController PropertyGridController;
+        internal Scene Scene;
+        internal readonly TraceTableController TraceTableController;
 
         internal SceneForm SceneForm
         {
@@ -97,23 +61,43 @@
                 if (SceneForm == value)
                     return;
                 if (SceneForm != null)
-                {
                     DetachEventHandlers();
-                }
                 _SceneForm = value;
                 if (SceneForm != null)
-                {
                     AttachEventHandlers();
-                }
             }
         }
 
-        internal Scene Scene;
+        #endregion
 
-        public CommandProcessor CommandProcessor { get; private set; }
+        #region Internal Methods
 
-        internal readonly PropertyGridController PropertyGridController;
-        internal readonly TraceTableController EntityTableController;
+        internal void AttachControllers() => PropertyGridController.SelectedObject = Scene;
+        internal void BeginUpdate() => UpdateCount++;
+        internal void DetachControllers() => PropertyGridController.SelectedObject = null;
+        internal void EndUpdate() { if (--UpdateCount == 0) OnPropertyChanged(string.Empty); }
+        internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
+        internal void ModifiedChanged() => SceneForm.Text = JsonController.WindowCaption;
+
+        internal static void InitTextureDialog(OpenFileDialog dialog)
+        {
+            dialog.Filter = Settings.Default.ImageFilter;
+            dialog.Title = "Select Texture";
+        }
+
+        internal bool MakeCurrent(bool current)
+        {
+            if (!GLControl.HasValidContext)
+                return false;
+            if (current)
+                GLControl.MakeCurrent();
+            else
+                GLControl.Context.MakeCurrent(null);
+            return true;
+        }
+
+        internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
+            $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
 
         internal void Render() { } // => Renderer.Render();
         internal void Show() => SceneForm.Show();
@@ -163,25 +147,25 @@
         private void JsonController_FileSaved(object sender, EventArgs e) => FileSaved();
         private void JsonController_FileSaving(object sender, CancelEventArgs e) => e.Cancel = false;
 
+        private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
+            OnPropertyChanged(e.PropertyName);
+
         #endregion
 
         #region Private Properties
 
-        private SceneForm _SceneForm;
-
-        private GLControl GLControl => SceneForm?.GLControl;
         private readonly FullScreenController FullScreenController;
+        private GLControl GLControl => SceneForm?.GLControl;
+        private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
+        private SceneForm _SceneForm;
         private readonly Timer Timer;
         private int UpdateCount;
-
         private bool Updating => UpdateCount > 0;
-
-        private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
 
         #endregion
 
-        #region Non-Public Methods
+        #region Private Methods
 
         private void AttachEventHandlers()
         {
@@ -209,6 +193,13 @@
 
             GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
             GLControl.Resize += GLControl_Resize;
+        }
+
+        private void Cleanup()
+        {
+            TimerStop();
+            Timer.Tick -= Timer_Tick;
+            AppController.Remove(this);
         }
 
         private void DetachEventHandlers()
@@ -291,6 +282,8 @@
             }
         }
 
+        private int GetFrameMilliseconds() => (int)Math.Round(1000 / Math.Min(Math.Max(Scene.FPS, 1), int.MaxValue));
+
         private SceneController GetNewSceneController()
         {
             if (AppController.Options.OpenInNewWindow)
@@ -299,19 +292,6 @@
                 return null;
             JsonController.Clear();
             return this;
-        }
-
-        internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
-
-        internal bool MakeCurrent(bool current)
-        {
-            if (!GLControl.HasValidContext)
-                return false;
-            if (current)
-                GLControl.MakeCurrent();
-            else
-                GLControl.Context.MakeCurrent(null);
-            return true;
         }
 
         private void NewEmptyScene()
@@ -325,6 +305,19 @@
             var sceneController = OpenFile(FilterIndex.Template);
             if (sceneController != null)
                 sceneController.JsonController.FilePath = string.Empty;
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (Updating)
+                return;
+            switch (propertyName)
+            {
+                case "FramesPerSecond":
+                    TimerInit();
+                    break;
+            }
+            PropertyGridController.Refresh();
         }
 
         private SceneController OpenFile(FilterIndex filterIndex = FilterIndex.File) =>
@@ -343,10 +336,124 @@
         private bool SaveFileAs() => JsonController.SaveAs();
         private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();
 
-        internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
-            $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
+        private void TimerInit() => Timer.Interval = GetFrameMilliseconds();
+        private void TimerStart() { TimerInit(); Timer.Start(); }
+        private void TimerStop() => Timer.Stop();
+        private void Timer_Tick(object sender, EventArgs e) { Render(); }
 
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
+
+        #endregion
+
+        #region Renderer
+
+        #region Properties
+
+        private int
+            ProgramID,
+            VertexShaderID,
+            TessControlShaderID,
+            TessEvaluationShaderID,
+            GeometryShaderID,
+            FragmentShaderID,
+            ComputeShaderID;
+
+        #endregion
+
+        #region Methods
+
+        private void AppendLog(StringBuilder log, string s)
+        {
+            if (!string.IsNullOrWhiteSpace(s))
+                log.AppendLine(s);
+        }
+
+        private void BindAttribute(int attributeIndex, string variableName) =>
+            GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
+
+        private void BindAttributes()
+        {
+            BindAttribute(0, "position");
+            BindAttribute(1, "time");
+        }
+
+        private void CreateProgram()
+        {
+            MakeCurrent(true);
+            var log = new StringBuilder();
+            ProgramID = GL.CreateProgram();
+            CreateShaders(log);
+            BindAttributes();
+            GL.LinkProgram(ProgramID);
+            GL.ValidateProgram(ProgramID);
+            AppendLog(log, GL.GetProgramInfoLog(ProgramID));
+            GetAllUniformLocations();
+
+            Scene._GPUStatus = log.ToString();
+            log = null;
+
+            DeleteShaders();
+            MakeCurrent(false);
+        }
+
+        private int CreateShader(ShaderType shaderType, StringBuilder log, bool mandatory = false)
+        {
+            var scripts = new StringBuilder();
+            foreach (var trace in Scene._Traces)
+            {
+                var script = trace.GetScript(shaderType);
+                if (!string.IsNullOrWhiteSpace(script))
+                    scripts.AppendLine(script);
+            }
+            if (scripts.Length < 1)
+                return 0;
+            scripts.Insert(0, $@"// {shaderType}\n");
+            scripts.Insert(0, '\n');
+            scripts.Insert(0, $@"# {AppController.OpenGLProperties.OpenGLVersionNumber}\n");
+            scripts.Insert(0, '\n');
+            var shaderID = GL.CreateShader(shaderType);
+            GL.ShaderSource(shaderID, scripts.ToString());
+            GL.CompileShader(shaderID);
+            AppendLog(log, GL.GetShaderInfoLog(shaderID));
+            GL.AttachShader(ProgramID, shaderID);
+            return shaderID;
+        }
+
+        private void CreateShaders(StringBuilder log)
+        {
+            VertexShaderID = CreateShader(ShaderType.VertexShader, log, true);
+            TessControlShaderID = CreateShader(ShaderType.TessControlShader, log);
+            TessEvaluationShaderID = CreateShader(ShaderType.TessEvaluationShader, log);
+            GeometryShaderID = CreateShader(ShaderType.GeometryShader, log);
+            FragmentShaderID = CreateShader(ShaderType.FragmentShader, log, true);
+            ComputeShaderID = CreateShader(ShaderType.ComputeShader, log);
+        }
+
+        private void DeleteShader(ref int shaderID)
+        {
+            if (shaderID == 0)
+                return;
+            GL.DetachShader(ProgramID, shaderID);
+            GL.DeleteShader(shaderID);
+            shaderID = 0;
+        }
+
+        private void DeleteShaders()
+        {
+            DeleteShader(ref VertexShaderID);
+            DeleteShader(ref TessControlShaderID);
+            DeleteShader(ref TessEvaluationShaderID);
+            DeleteShader(ref GeometryShaderID);
+            DeleteShader(ref FragmentShaderID);
+            DeleteShader(ref ComputeShaderID);
+        }
+
+        private void GetAllUniformLocations()
+        {
+
+        }
+
+        #endregion
 
         #endregion
     }

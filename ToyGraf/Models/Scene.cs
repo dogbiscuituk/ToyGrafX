@@ -2,14 +2,12 @@
 {
     using Newtonsoft.Json;
     using OpenTK;
-    using OpenTK.Graphics.OpenGL;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.Design;
     using System.Drawing;
     using System.Drawing.Design;
     using System.Linq;
-    using System.Text;
     using ToyGraf.Commands;
     using ToyGraf.Controllers;
     using ToyGraf.Controls;
@@ -313,115 +311,9 @@
         private GLControl GLControl => SceneForm?.GLControl;
         private SceneForm SceneForm => SceneController?.SceneForm;
 
-        private int ProgramID;
-        private StringBuilder ShaderLog = new StringBuilder();
-
-        private int
-            VertexShaderID,
-            TessControlShaderID,
-            TessEvaluationShaderID,
-            GeometryShaderID,
-            FragmentShaderID,
-            ComputeShaderID;
-
         #endregion
 
         #region Private Methods
-
-        private void AppendLog(string s)
-        {
-            if (!string.IsNullOrWhiteSpace(s))
-                ShaderLog.AppendLine(s);
-        }
-
-        private void BindAttribute(int attributeIndex, string variableName) =>
-            GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
-
-        private void BindAttributes()
-        {
-            BindAttribute(0, "position");
-            BindAttribute(1, "time");
-        }
-
-        private void CreateProgram()
-        {
-            MakeCurrent(true);
-            ShaderLog = new StringBuilder();
-            ProgramID = GL.CreateProgram();
-            CreateShaders();
-            BindAttributes();
-            GL.LinkProgram(ProgramID);
-            GL.ValidateProgram(ProgramID);
-            GetAllUniformLocations();
-
-
-            var log = ShaderLog.ToString();
-            ShaderLog = null;
-#if DEBUG
-            System.Diagnostics.Debug.WriteLine(log);
-#endif
-            DeleteShaders();
-            MakeCurrent(false);
-        }
-
-        private int CreateShader(ShaderType shaderType, bool mandatory = false)
-        {
-            var scripts = new StringBuilder();
-            foreach (var trace in _Traces)
-            {
-                var script = trace.GetScript(shaderType);
-                if (!string.IsNullOrWhiteSpace(script))
-                    scripts.AppendLine(script);
-            }
-            if (scripts.Length < 1)
-                return 0;
-            scripts.Insert(0, $@"// {shaderType}\n");
-            scripts.Insert(0, '\n');
-            scripts.Insert(0, $@"# {AppController.OpenGLProperties.OpenGLVersionNumber}\n");
-            scripts.Insert(0, '\n');
-            var shaderID = GL.CreateShader(shaderType);
-            GL.ShaderSource(shaderID, scripts.ToString());
-            GL.CompileShader(shaderID);
-            AppendLog(GL.GetShaderInfoLog(shaderID));
-            GL.AttachShader(ProgramID, shaderID);
-            return shaderID;
-        }
-
-        private void CreateShaders()
-        {
-            VertexShaderID = CreateShader(ShaderType.VertexShader, true);
-            TessControlShaderID = CreateShader(ShaderType.TessControlShader);
-            TessEvaluationShaderID = CreateShader(ShaderType.TessEvaluationShader);
-            GeometryShaderID = CreateShader(ShaderType.GeometryShader);
-            FragmentShaderID = CreateShader(ShaderType.FragmentShader, true);
-            ComputeShaderID = CreateShader(ShaderType.ComputeShader);
-        }
-
-        private void DeleteShader(ref int shaderID)
-        {
-            if (shaderID == 0)
-                return;
-            GL.DetachShader(ProgramID, shaderID);
-            GL.DeleteShader(shaderID);
-            shaderID = 0;
-        }
-
-        private void DeleteShaders()
-        {
-            DeleteShader(ref VertexShaderID);
-            DeleteShader(ref TessControlShaderID);
-            DeleteShader(ref TessEvaluationShaderID);
-            DeleteShader(ref GeometryShaderID);
-            DeleteShader(ref FragmentShaderID);
-            DeleteShader(ref ComputeShaderID);
-        }
-
-        private void GetAllUniformLocations()
-        {
-
-        }
-
-        private bool MakeCurrent(bool current) => SceneController.MakeCurrent(current);
 
         private void RestoreDefaults()
         {

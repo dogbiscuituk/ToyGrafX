@@ -21,7 +21,7 @@
         private readonly SceneController SceneController;
         private SceneForm Form => SceneController.SceneForm;
         private PropertyGridController PropertyGridController => SceneController.PropertyGridController;
-        private TraceTableController EntityTableController => SceneController.EntityTableController;
+        private TraceTableController EntityTableController => SceneController.TraceTableController;
 
         private FormState SavedFormState;
 
