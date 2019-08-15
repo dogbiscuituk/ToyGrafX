@@ -272,7 +272,7 @@ When a set of vertex shaders are successfully compiled and linked, they result i
 The vertex processor operates on one vertex at a time. It does not replace graphics operations that require knowledge of several vertices at a time.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("Shader #1: Vertex (mandatory)")]
+        [DisplayName("Shader 1: Vertex (mandatory)")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader1Vertex
@@ -291,7 +291,7 @@ Tessellation control shader invocations run mostly independently, with undefined
 Tessellation control shaders will get undefined results if one invocation reads a per-vertex or per-patch attribute written by another invocation at any point during the same phase, or if two invocations attempt to write different values to the same per-patch output in a single phase.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("Shader #2: Tessellation Control")]
+        [DisplayName("Shader 2: Tessellation Control")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader2TessControl
@@ -309,7 +309,7 @@ Each invocation of the tessellation evaluation executable computes the position 
 The executable can read the attributes of any vertex in the input patch, plus the tessellation coordinate, which is the relative location of the vertex in the primitive being tessellated. The executable writes the position and other attributes of the vertex.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("Shader #3: Tessellation Evaluation")]
+        [DisplayName("Shader 3: Tessellation Evaluation")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader3TessEvaluation
@@ -327,7 +327,7 @@ A single invocation of the geometry shader executable on the geometry processor 
 This single invocation can emit a variable number of vertices that are assembled into primitives of a declared output primitive type and passed to subsequent pipeline stages.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("Shader #4: Geometry")]
+        [DisplayName("Shader 4: Geometry")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader4Geometry
@@ -344,7 +344,7 @@ A fragment shader cannot change a fragment's (x, y) position. Access to neighbor
 The values computed by the fragment shader are ultimately used to update framebuffer memory or texture memory, depending on the current OpenGL state and the OpenGL command that caused the fragments to be generated.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("Shader #5: Fragment (mandatory)")]
+        [DisplayName("Shader 5: Fragment (mandatory)")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader5Fragment
@@ -363,7 +363,7 @@ A compute shader operates on a group of work items called a work group. A work g
 An invocation within a work group may share data with other members of the same work group through shared variables and issue memory and control barriers to synchronize with other members of the same work group.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("Shader #6: Compute")]
+        [DisplayName("Shader 6: Compute")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader6Compute

@@ -368,16 +368,23 @@
             TessEvaluationShaderID,
             GeometryShaderID,
             FragmentShaderID,
-            ComputeShaderID,
-            LocationOfProjectionMatrix,
-            LocationOfTimeValue,
-            LocationOfTransformationMatrix,
-            LocationOfViewMatrix,
+            ComputeShaderID;
+
+        private int
+            Loc_CameraView,
+            Loc_Projection,
+            Loc_TimeValue,
+            Loc_TraceIndex,
+            Loc_Transform;
+
+        private int
             CurrencyCount;
 
         #endregion
 
         #region Renderer Methods
+
+        #region Create / Delete Program
 
         private void AppendLog(StringBuilder log, string s)
         {
@@ -472,15 +479,115 @@
             DeleteShader(ref ComputeShaderID);
         }
 
-        private int GetUniformLocation(string uniformName) => GL.GetUniformLocation(ProgramID, uniformName);
+        #endregion
 
-        private void GetUniformLocations()
+        #region Load / Unload Traces
+
+        private int BindIndicesBuffer(int[] indices)
         {
-            LocationOfProjectionMatrix = GetUniformLocation("projectionMatrix");
-            LocationOfTimeValue = GetUniformLocation("timeValue");
-            LocationOfTransformationMatrix = GetUniformLocation("transformationMatrix");
-            LocationOfViewMatrix = GetUniformLocation("viewMatrix");
+            var vboID = CreateVbo();
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, vboID);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(int), indices, BufferUsageHint.StaticDraw);
+            return vboID;
         }
+
+        private int CreateVao()
+        {
+            GL.GenVertexArrays(1, out int vaoID);
+            return vaoID;
+        }
+
+        private int CreateVbo()
+        {
+            GL.GenBuffers(1, out int vboID);
+            return vboID;
+        }
+
+        private void DeleteVao(ref int vaoID)
+        {
+            if (vaoID != 0)
+            {
+                GL.DeleteVertexArray(vaoID);
+                vaoID = 0;
+            }
+        }
+
+        private void DeleteVbo(ref int vboID)
+        {
+            if (vboID != 0)
+            {
+                GL.DeleteBuffer(vboID);
+                vboID = 0;
+            }
+        }
+
+        private bool Reload()
+        {
+            var result = MakeCurrent(true);
+            if (result)
+            {
+                UnloadTraces();
+                ReloadTraces();
+                MakeCurrent(false);
+            }
+            return result;
+        }
+
+        private void ReloadTraces()
+        {
+            ShaderStart();
+            LoadProjection();
+            LoadCameraView();
+            for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
+            {
+                var trace = Scene._Traces[traceIndex];
+                var coords = Grids.GetGrid(trace.StripCount);
+                var indices = Grids.GetIndices(trace.StripCount, trace.Pattern);
+                GL.BindVertexArray(trace.VaoID = CreateVao());
+                trace.IndexVboID = BindIndicesBuffer(indices);
+                trace.VertexVboID = StoreDataInAttributeList(0, coords);
+                UnbindVao();
+            }
+            ShaderStop();
+        }
+
+        private int StoreDataInAttributeList(int attributeNumber, float[] data)
+        {
+            var vboID = CreateVbo();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vboID);
+            GL.BufferData(BufferTarget.ArrayBuffer, data.Length * sizeof(float), data, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(attributeNumber, 3, VertexAttribPointerType.Float, false, 0, 0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            return vboID;
+        }
+
+        private void UnbindVao() => GL.BindVertexArray(0);
+
+        private bool Unload()
+        {
+            var result = MakeCurrent(true);
+            if (result)
+            {
+                UnloadTraces();
+                MakeCurrent(false);
+            }
+            return result;
+        }
+
+        private void UnloadTraces()
+        {
+            for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
+            {
+                var trace = Scene._Traces[traceIndex];
+                DeleteVbo(ref trace.VertexVboID);
+                DeleteVbo(ref trace.IndexVboID);
+                DeleteVao(ref trace.VaoID);
+            }
+        }
+
+        #endregion
+
+        #region Render
 
         private bool InitViewport()
         {
@@ -492,17 +599,6 @@
             }
             return result;
         }
-
-        private void LoadBoolean(int location, bool value) => GL.Uniform1(location, value ? 1f : 0f);
-        private void LoadFloat(int location, float value) => GL.Uniform1(location, value);
-        private void LoadInt(int location, int value) => GL.Uniform1(location, value);
-        private void LoadMatrix(int location, Matrix4 value) => GL.UniformMatrix4(location, false, ref value);
-        private void LoadVector(int location, Vector3 value) => GL.Uniform3(location, value);
-
-        private void LoadProjectionMatrix() => LoadMatrix(LocationOfProjectionMatrix, Scene.GetProjection());
-        private void LoadTimeValue() => LoadFloat(LocationOfTimeValue, 0f);
-        private void LoadTransformationMatrix(Trace trace) => LoadMatrix(LocationOfTransformationMatrix, trace.GetTransformation());
-        private void LoadViewMatrix() => LoadMatrix(LocationOfViewMatrix, Scene.GetCameraView());
 
         private bool MakeCurrent(bool current)
         {
@@ -521,48 +617,6 @@
                     GLControl.Context.MakeCurrent(null);
             }
             return true;
-        }
-
-        private bool Reload()
-        {
-            var result = MakeCurrent(true);
-            if (result)
-            {
-                UnloadTraces();
-                ReloadTraces();
-                MakeCurrent(false);
-            }
-            return result;
-        }
-
-        private bool Unload()
-        {
-            var result = MakeCurrent(true);
-            if (result)
-            {
-                UnloadTraces();
-                MakeCurrent(false);
-            }
-            return result;
-        }
-
-        private void ReloadTraces()
-        {
-            ShaderStart();
-            LoadProjectionMatrix();
-            LoadViewMatrix();
-            for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
-            {
-                var trace = Scene._Traces[traceIndex];
-                var vertices = Grids.GetGrid(trace.StripCount);
-                var indices = Grids.GetIndices(trace.StripCount, trace.Pattern);
-            }
-            ShaderStop();
-        }
-
-        private void UnloadTraces()
-        {
-
         }
 
         private bool Render()
@@ -587,10 +641,13 @@
             for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
             {
                 var trace = Scene._Traces[traceIndex];
-                LoadTransformationMatrix(trace);
-                //GL.BindVertexArray(VaoID);
-                //GL.EnableVertexAttribArray(0);
+                LoadTraceIndex(traceIndex);
+                LoadTransform(trace);
+                GL.BindVertexArray(trace.VaoID);
+                GL.EnableVertexAttribArray(0);
 
+                GL.DisableVertexAttribArray(0);
+                GL.BindVertexArray(0);
             }
 
             ShaderStop();
@@ -599,9 +656,6 @@
 
         private bool ShaderStart() => UseProgram(true);
         private bool ShaderStop() => UseProgram(false);
-        private void TimerInit() => Timer.Interval = GetFrameMilliseconds();
-        private void TimerStart() { TimerInit(); Timer.Start(); }
-        private void TimerStop() => Timer.Stop();
 
         private bool UseProgram(bool use)
         {
@@ -613,6 +667,43 @@
             }
             return result;
         }
+
+        #endregion
+
+        #region Timer
+
+        private void TimerInit() => Timer.Interval = GetFrameMilliseconds();
+        private void TimerStart() { TimerInit(); Timer.Start(); }
+        private void TimerStop() => Timer.Stop();
+
+        #endregion
+
+        #region Uniforms
+
+        private int GetUniformLocation(string uniformName) => GL.GetUniformLocation(ProgramID, uniformName);
+
+        private void GetUniformLocations()
+        {
+            Loc_CameraView = GetUniformLocation("cameraView");
+            Loc_Projection = GetUniformLocation("projection");
+            Loc_TimeValue = GetUniformLocation("timeValue");
+            Loc_TraceIndex = GetUniformLocation("traceIndex");
+            Loc_Transform = GetUniformLocation("transform");
+        }
+
+        private void LoadBoolean(int location, bool value) => GL.Uniform1(location, value ? 1f : 0f);
+        private void LoadFloat(int location, float value) => GL.Uniform1(location, value);
+        private void LoadInt(int location, int value) => GL.Uniform1(location, value);
+        private void LoadMatrix(int location, Matrix4 value) => GL.UniformMatrix4(location, false, ref value);
+        private void LoadVector(int location, Vector3 value) => GL.Uniform3(location, value);
+
+        private void LoadProjection() => LoadMatrix(Loc_Projection, Scene.GetProjection());
+        private void LoadTimeValue() => LoadFloat(Loc_TimeValue, 0f);
+        private void LoadTraceIndex(int traceIndex) => LoadInt(Loc_TraceIndex, traceIndex);
+        private void LoadTransform(Trace trace) => LoadMatrix(Loc_Transform, trace.GetTransform());
+        private void LoadCameraView() => LoadMatrix(Loc_CameraView, Scene.GetCameraView());
+
+        #endregion
 
         #endregion
     }

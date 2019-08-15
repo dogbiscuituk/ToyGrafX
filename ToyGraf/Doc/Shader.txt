@@ -8,6 +8,6 @@ Target Properties
 
 Source Properties
 -----------------
-Scene.ProjectionMatrix
-Scene.ViewMatrix
-Trace.TransformationMatrix
+Scene.Projection
+Scene.CameraView
+Trace.Transform

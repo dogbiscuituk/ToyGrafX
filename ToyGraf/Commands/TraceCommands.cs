@@ -70,7 +70,7 @@
     internal class TransformationCommand : TracePropertyCommand<Matrix4>
     {
         internal TransformationCommand(int index, Matrix4 value) : base(index, "Transformation",
-            value, e => e.GetTransformation(), (e, v) => e.SetTransformation(v))
+            value, e => e.GetTransform(), (e, v) => e.SetTransform(v))
         { }
     }
 }
