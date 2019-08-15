@@ -256,6 +256,13 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         public Point3F Minimum { get => _Minimum; set => Run(new MinimumCommand(Index, value)); }
 
         [Category(Categories.Trace)]
+        [DefaultValue(typeof(Pattern), Defaults.PatternString)]
+        [Description("The pattern applied to the grid of computed points.")]
+        [DisplayName("Pattern")]
+        [JsonIgnore]
+        public Pattern Pattern { get => _Pattern; set => Run(new PatternCommand(Index, value)); }
+
+        [Category(Categories.Trace)]
         [DefaultValue(typeof(Point3), Defaults.StripCountString)]
         [Description("The number of discrete strips into which the trace is divided along each axis.")]
         [DisplayName("Strip Count")]
@@ -279,6 +286,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         [JsonProperty] internal Point3F _Maximum;
         [JsonProperty] internal Point3F _Minimum;
         [JsonProperty] internal Euler3F _Orientation;
+        [JsonProperty] internal Pattern _Pattern;
         [JsonProperty] internal Point3F _Scale;
         [JsonProperty] internal string _Shader1Vertex;
         [JsonProperty] internal string _Shader2TessControl;
@@ -338,6 +346,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             _Maximum = Defaults.Maximum;
             _Minimum = Defaults.Maximum;
             _Orientation = Defaults.Orientation;
+            _Pattern = Defaults.Pattern;
             _Scale = Defaults.Scale;
             _Shader1Vertex = Defaults.Shader1Vertex;
             _Shader2TessControl = Defaults.Shader2TessControl;
@@ -426,24 +435,17 @@ void main()
 
         private class Defaults
         {
-            internal const string
-                LocationString = "0, 0, 0",
-                MaximumString = "0, 0, 0",
-                MinimumString = "0, 0, 0",
-                OrientationString = "0, 0, 0",
-                ScaleString = "1, 1, 1",
-                Shader1Vertex = "",
-                Shader2TessControl = "",
-                Shader3TessEvaluation = "",
-                Shader4Geometry = "",
-                Shader5Fragment = "",
-                Shader6Compute = "",
-                StripCountString = "0, 0, 0",
-                Title = "";
+            internal const Pattern
+                Pattern = Engine.Types.Pattern.TriangleStrip;
 
-            internal const int Index = -1;
+            internal const YN
+                Visible = YN.Yes;
 
-            internal static Euler3F Orientation = new Euler3F();
+            internal const int
+                Index = -1;
+
+            internal static Euler3F
+                Orientation = new Euler3F();
 
             internal static Point3
                 StripCount = new Point3();
@@ -454,7 +456,21 @@ void main()
                 Minimum = new Point3F(),
                 Scale = new Point3F(1, 1, 1);
 
-            internal const YN Visible = YN.Yes;
+            internal const string
+                LocationString = "0, 0, 0",
+                MaximumString = "0, 0, 0",
+                MinimumString = "0, 0, 0",
+                OrientationString = "0, 0, 0",
+                PatternString = "TriangleStrip",
+                ScaleString = "1, 1, 1",
+                Shader1Vertex = "",
+                Shader2TessControl = "",
+                Shader3TessEvaluation = "",
+                Shader4Geometry = "",
+                Shader5Fragment = "",
+                Shader6Compute = "",
+                StripCountString = "0, 0, 0",
+                Title = "";
         }
 
         #endregion

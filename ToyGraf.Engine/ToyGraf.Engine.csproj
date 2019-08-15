@@ -55,6 +55,7 @@
     <Compile Include="TypeConverters\Point3TypeConverter.cs" />
     <Compile Include="Types\ColourFormat.cs" />
     <Compile Include="Types\Euler3F.cs" />
+    <Compile Include="Types\Pattern.cs" />
     <Compile Include="Types\Point3.cs" />
     <Compile Include="Types\Point3F.cs" />
     <Compile Include="TypeConverters\ColourFormatTypeConverter.cs" />

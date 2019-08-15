@@ -262,6 +262,7 @@
                     {
                         FilePath = filePath;
                         AddItem(filePath);
+                        OnFileSaved();
                     }
                 }
             return result;

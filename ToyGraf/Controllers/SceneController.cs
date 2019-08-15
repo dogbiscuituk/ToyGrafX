@@ -246,6 +246,9 @@
 
         private void FileSaved()
         {
+            BeginUpdate();
+            CommandProcessor.Clear();
+            EndUpdate();
         }
 
         private bool FormClosing(CloseReason closeReason) => JsonController.SaveIfModified();
@@ -327,11 +330,6 @@
         private bool SaveFileAs() => JsonController.SaveAs();
         private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();
 
-        private void TimerInit() => Timer.Interval = GetFrameMilliseconds();
-        private void TimerStart() { TimerInit(); Timer.Start(); }
-        private void TimerStop() => Timer.Stop();
-        private void Timer_Tick(object sender, EventArgs e) { Render(); }
-
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
 
         #endregion
@@ -356,6 +354,8 @@
         private void GLControl_Resize(object sender, EventArgs e)
         {
         }
+
+        private void Timer_Tick(object sender, EventArgs e) { Render(); }
 
         #endregion
 
@@ -497,7 +497,12 @@
         private void LoadFloat(int location, float value) => GL.Uniform1(location, value);
         private void LoadInt(int location, int value) => GL.Uniform1(location, value);
         private void LoadMatrix(int location, Matrix4 value) => GL.UniformMatrix4(location, false, ref value);
-        private void LoadVector(int location, Vector3 vector) => GL.Uniform3(location, vector);
+        private void LoadVector(int location, Vector3 value) => GL.Uniform3(location, value);
+
+        private void LoadProjectionMatrix() => LoadMatrix(LocationOfProjectionMatrix, Scene.GetProjection());
+        private void LoadTimeValue() => LoadFloat(LocationOfTimeValue, 0f);
+        private void LoadTransformationMatrix(Trace trace) => LoadMatrix(LocationOfTransformationMatrix, trace.GetTransformation());
+        private void LoadViewMatrix() => LoadMatrix(LocationOfViewMatrix, Scene.GetCameraView());
 
         private bool MakeCurrent(bool current)
         {
@@ -518,6 +523,48 @@
             return true;
         }
 
+        private bool Reload()
+        {
+            var result = MakeCurrent(true);
+            if (result)
+            {
+                UnloadTraces();
+                ReloadTraces();
+                MakeCurrent(false);
+            }
+            return result;
+        }
+
+        private bool Unload()
+        {
+            var result = MakeCurrent(true);
+            if (result)
+            {
+                UnloadTraces();
+                MakeCurrent(false);
+            }
+            return result;
+        }
+
+        private void ReloadTraces()
+        {
+            ShaderStart();
+            LoadProjectionMatrix();
+            LoadViewMatrix();
+            for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
+            {
+                var trace = Scene._Traces[traceIndex];
+                var vertices = Grids.GetGrid(trace.StripCount);
+                var indices = Grids.GetIndices(trace.StripCount, trace.Pattern);
+            }
+            ShaderStop();
+        }
+
+        private void UnloadTraces()
+        {
+
+        }
+
         private bool Render()
         {
             var result = MakeCurrent(true);
@@ -535,11 +582,26 @@
             GL.Enable(EnableCap.Texture2D);
             GL.ClearColor(Scene.BackgroundColour);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            ShaderStart();
+
+            for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
+            {
+                var trace = Scene._Traces[traceIndex];
+                LoadTransformationMatrix(trace);
+                //GL.BindVertexArray(VaoID);
+                //GL.EnableVertexAttribArray(0);
+
+            }
+
+            ShaderStop();
             GLControl.SwapBuffers();
         }
 
-        private bool Start() => UseProgram(true);
-        private bool Stop() => UseProgram(false);
+        private bool ShaderStart() => UseProgram(true);
+        private bool ShaderStop() => UseProgram(false);
+        private void TimerInit() => Timer.Interval = GetFrameMilliseconds();
+        private void TimerStart() { TimerInit(); Timer.Start(); }
+        private void TimerStop() => Timer.Stop();
 
         private bool UseProgram(bool use)
         {

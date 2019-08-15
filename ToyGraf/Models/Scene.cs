@@ -546,7 +546,8 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
                 Title = "";
 
             internal const bool
-                Stereo = false;
+                Stereo = false,
+                VSync = false;
 
             internal const int
                 Buffers = 2,
@@ -575,10 +576,8 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             internal static Point3F
                 CameraPosition = new Point3F();
 
-            internal static List<Trace> Traces =>
-                new List<Trace>();
-
-            internal const bool VSync = false;
+            internal static List<Trace>
+                Traces => new List<Trace>();
         }
 
         #endregion

@@ -1,13 +1,26 @@
-﻿namespace ToyGraf.Engine.Utility
+﻿using System;
+using ToyGraf.Engine.Types;
+
+namespace ToyGraf.Engine.Utility
 {
     public static class Grids
     {
         /// <summary>
         /// Get the coordinates of all points in a regular 3D xyz lattice, where -1 <= x,y,z <= +1.
+        /// For full details, please refer to GetGrid(int, int, int).
+        /// </summary>
+        /// <param name="p">The number of steps along the x/y/x axes.</param>
+        /// <returns>
+        /// 3(cx+1)(cy+1)(cz+1) floats, being the xyz coordinates of the points in the lattice.
+        /// </returns>
+        public static float[] GetGrid(Point3 p) => GetGrid(p.X, p.Y, p.Z);
+
+        /// <summary>
+        /// Get the coordinates of all points in a regular 3D xyz lattice, where -1 <= x,y,z <= +1.
         /// Points are returned ordered by x value, then by y value, and finally by z value.
         /// In other words, x varies most slowly, and z most quickly.
         /// To get the points on a regular 2D grid, set the missing axis strip count to 0.
-        /// For example, GetVertexCoords(8, 8, 0) returns the vertices of an 8x8, xy chessboard.
+        /// For example, GetVertexCoords(8, 8, 0) returns the 81 vertices of an 8x8, xy chessboard.
         /// To get the points along a single axis, set both missing axes' strip counts to 0.
         /// For example, GetVertexCoords(8, 0, 0) returns 9 points evenly spaced along the x axis.
         /// </summary>
@@ -39,6 +52,30 @@
             return result;
         }
 
+        public static int[] GetIndices(Point3 p, Pattern pattern)
+        {
+            switch (pattern)
+            {
+                case Pattern.None:
+                    return new int[0];
+                case Pattern.LinesStrip:
+                    return GetLineIndicesX(p.X);
+                case Pattern.Triangles:
+                    return GetTriangleIndicesXY(p.X, p.Y);
+                case Pattern.TriangleStrip:
+                    return GetTriangleStripIndicesXY(p.X, p.Y);
+            }
+            return new int[0];
+        }
+
+        public static int[] GetLineIndicesX(int cx)
+        {
+            var result = new int[cx + 1];
+            for (var i = 0; i <= cx; i++)
+                result[i] = i;
+            return result;
+        }
+
         /// <summary>
         /// Get the order of vertices required to draw triangles covering the grid.
         /// This method uses the vertex return order implemented by GetVertexCoords.
@@ -52,9 +89,7 @@
         public static int[] GetTriangleIndicesXY(int cx, int cy)
         {
             var result = new int[6 * cx * cy];
-            int p = 0, q = 0;
-            for (var i = 0; i < cx; i++)
-            {
+            for (int i = 0, p = 0, q = 0; i < cx; i++, q++)
                 for (var j = 0; j < cy; j++)
                 {
                     result[p++] = q;
@@ -64,8 +99,6 @@
                     result[p++] = q + cy;
                     result[p++] = q + cy + 1;
                 }
-                q++;
-            }
             return result;
         }
 

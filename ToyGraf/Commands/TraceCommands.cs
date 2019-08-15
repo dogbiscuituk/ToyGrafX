@@ -32,6 +32,13 @@
         { }
     }
 
+    internal class PatternCommand : TracePropertyCommand<Pattern>
+    {
+        internal PatternCommand(int index, Pattern value) : base(index, "Pattern",
+            value, t => t._Pattern, (t, v) => t._Pattern = v)
+        { }
+    }
+
     internal class ScaleCommand : TracePropertyCommand<Point3F>
     {
         internal ScaleCommand(int index, Point3F value) : base(index, "Scale",
