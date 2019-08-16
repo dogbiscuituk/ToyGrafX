@@ -72,8 +72,8 @@
         }
 
         public override string ToString() =>
-            !string.IsNullOrWhiteSpace(Title)
-            ? _Title
+            !string.IsNullOrWhiteSpace(Description)
+            ? _Description
             : Index >= 0
             ? $"Trace #{Index + 1}"
             : "New trace";
@@ -87,21 +87,21 @@
         [Category(Categories.Placement)]
         [DefaultValue(typeof(Point3F), Defaults.LocationString)]
         [Description("The location of the trace in world co-ordinates.")]
-        [DisplayName("Location")]
+        [DisplayName(PropertyNames.Location)]
         [JsonIgnore]
         public Point3F Location { get => _Location; set => Run(new LocationCommand(Index, value)); }
 
         [Category(Categories.Placement)]
         [DefaultValue(typeof(Euler3F), Defaults.OrientationString)]
         [Description("The orientation of the trace in world co-ordinates (in degrees).")]
-        [DisplayName("Orientation°")]
+        [DisplayName(PropertyNames.Orientation)]
         [JsonIgnore]
         public Euler3F Orientation { get => _Orientation; set => Run(new OrientationCommand(Index, value)); }
 
         [Category(Categories.Placement)]
         [DefaultValue(typeof(Point3F), Defaults.ScaleString)]
         [Description("The relative size of the trace.")]
-        [DisplayName("Scale")]
+        [DisplayName(PropertyNames.Scale)]
         [JsonIgnore]
         public Point3F Scale
         {
@@ -112,9 +112,9 @@
         [Category(Categories.Placement)]
         [DefaultValue(Defaults.Visible)]
         [Description("Take a wild guess.")]
-        [DisplayName("Visible?")]
+        [DisplayName(PropertyNames.Visible)]
         [JsonIgnore]
-        public YN Visible { get => _Visible; set => Run(new TraceVisibleCommand(Index, value)); }
+        public YN Visible { get => _Visible; set => Run(new VisibleCommand(Index, value)); }
 
         #endregion
 
@@ -122,7 +122,7 @@
 
         [Category(Categories.SystemRO)]
         [Description("The transformation matrix of the trace.")]
-        [DisplayName("Transformation")]
+        [DisplayName(PropertyNames.Transformation)]
         [JsonIgnore]
         public Matrix4 Transformation
         {
@@ -141,7 +141,7 @@ When a set of vertex shaders are successfully compiled and linked, they result i
 The vertex processor operates on one vertex at a time. It does not replace graphics operations that require knowledge of several vertices at a time.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("Shader 1: Vertex (mandatory)")]
+        [DisplayName(PropertyNames.Shader1Vertex)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader1Vertex
@@ -160,7 +160,7 @@ Tessellation control shader invocations run mostly independently, with undefined
 Tessellation control shaders will get undefined results if one invocation reads a per-vertex or per-patch attribute written by another invocation at any point during the same phase, or if two invocations attempt to write different values to the same per-patch output in a single phase.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("Shader 2: Tessellation Control")]
+        [DisplayName(PropertyNames.Shader2TessControl)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader2TessControl
@@ -178,7 +178,7 @@ Each invocation of the tessellation evaluation executable computes the position 
 The executable can read the attributes of any vertex in the input patch, plus the tessellation coordinate, which is the relative location of the vertex in the primitive being tessellated. The executable writes the position and other attributes of the vertex.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("Shader 3: Tessellation Evaluation")]
+        [DisplayName(PropertyNames.Shader3TessEvaluation)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader3TessEvaluation
@@ -196,7 +196,7 @@ A single invocation of the geometry shader executable on the geometry processor 
 This single invocation can emit a variable number of vertices that are assembled into primitives of a declared output primitive type and passed to subsequent pipeline stages.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("Shader 4: Geometry")]
+        [DisplayName(PropertyNames.Shader4Geometry)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader4Geometry
@@ -213,7 +213,7 @@ A fragment shader cannot change a fragment's (x, y) position. Access to neighbor
 The values computed by the fragment shader are ultimately used to update framebuffer memory or texture memory, depending on the current OpenGL state and the OpenGL command that caused the fragments to be generated.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("Shader 5: Fragment (mandatory)")]
+        [DisplayName(PropertyNames.Shader5Fragment)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader5Fragment
@@ -232,7 +232,7 @@ A compute shader operates on a group of work items called a work group. A work g
 An invocation within a work group may share data with other members of the same work group through shared variables and issue memory and control barriers to synchronize with other members of the same work group.
 
 Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
-        [DisplayName("Shader 6: Compute")]
+        [DisplayName(PropertyNames.Shader6Compute)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader6Compute
@@ -246,35 +246,37 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         #region Trace
 
         [Category(Categories.Trace)]
+        [DefaultValue(Defaults.Description)]
+        [Description("A description for this trace.")]
+        [DisplayName(PropertyNames.Description)]
+        [JsonIgnore]
+        public string Description { get => _Description; set => Run(new DescriptionCommand(Index, value)); }
+
+        [Category(Categories.Trace)]
         [DefaultValue(typeof(Point3F), Defaults.MaximumString)]
+        [DisplayName(PropertyNames.Maximum)]
         [JsonIgnore]
         public Point3F Maximum { get => _Maximum; set => Run(new MaximumCommand(Index, value)); }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Point3F), Defaults.MinimumString)]
+        [DisplayName(PropertyNames.Minimum)]
         [JsonIgnore]
         public Point3F Minimum { get => _Minimum; set => Run(new MinimumCommand(Index, value)); }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Pattern), Defaults.PatternString)]
         [Description("The pattern applied to the grid of computed points.")]
-        [DisplayName("Pattern")]
+        [DisplayName(PropertyNames.Pattern)]
         [JsonIgnore]
         public Pattern Pattern { get => _Pattern; set => Run(new PatternCommand(Index, value)); }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Point3), Defaults.StripCountString)]
         [Description("The number of discrete strips into which the trace is divided along each axis.")]
-        [DisplayName("Strip Count")]
+        [DisplayName(PropertyNames.StripCount)]
         [JsonIgnore]
         public Point3 StripCount { get => _StripCount; set => Run(new StripCountCommand(Index, value)); }
-
-        [Category(Categories.Trace)]
-        [DefaultValue(Defaults.Title)]
-        [Description("A title for this trace.")]
-        [DisplayName("Title")]
-        [JsonIgnore]
-        public string Title { get => _Title; set => Run(new TraceTitleCommand(Index, value)); }
 
         #endregion
 
@@ -282,6 +284,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #region Persistent Fields
 
+        [JsonProperty] internal string _Description;
         [JsonProperty] internal Point3F _Location;
         [JsonProperty] internal Point3F _Maximum;
         [JsonProperty] internal Point3F _Minimum;
@@ -295,7 +298,6 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         [JsonProperty] internal string _Shader5Fragment;
         [JsonProperty] internal string _Shader6Compute;
         [JsonProperty] internal Point3 _StripCount;
-        [JsonProperty] internal string _Title;
         [JsonProperty] internal YN _Visible;
 
         #endregion
@@ -367,6 +369,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
                 Scale = new Point3F(1, 1, 1);
 
             internal const string
+                Description = "",
                 LocationString = "0, 0, 0",
                 MaximumString = "0, 0, 0",
                 MinimumString = "0, 0, 0",
@@ -388,8 +391,7 @@ colour = vec3(r, g, b);",
                 Shader5Fragment = @"
 FragColor = vec4(colour, 0.1f);",
                 Shader6Compute = "",
-                StripCountString = "0, 0, 0",
-                Title = "";
+                StripCountString = "0, 0, 0";
         }
 
         #endregion
@@ -419,7 +421,7 @@ FragColor = vec4(colour, 0.1f);",
             _Shader5Fragment = Defaults.Shader5Fragment;
             _Shader6Compute = Defaults.Shader6Compute;
             _StripCount = Defaults.StripCount;
-            _Title = Defaults.Title;
+            _Description = Defaults.Description;
             _Visible = Defaults.Visible;
         }
 

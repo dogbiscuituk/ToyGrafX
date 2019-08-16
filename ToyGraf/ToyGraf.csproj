@@ -80,6 +80,7 @@
     <Compile Include="Models\Enums\FilterIndex.cs" />
     <Compile Include="Models\Enums\YN.cs" />
     <Compile Include="Models\Extensions.cs" />
+    <Compile Include="Models\PropertyNames.cs" />
     <Compile Include="Models\Scene.cs" />
     <Compile Include="Models\Structs\Options.cs" />
     <Compile Include="Models\Trace.cs" />

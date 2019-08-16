@@ -71,7 +71,7 @@
             return result;
         }
 
-        public override string ToString() => $"{Target} {PropertyName} = {Value}";
+        public override string ToString() => $"{PropertyName} = {Value}";
         private string Action => $"{PropertyName} change";
 
         protected Func<TItem, TValue> Get;
@@ -102,7 +102,7 @@
 
         public void RunOn(Trace trace) => Set(trace, Value);
 
-        protected override string Target => $"Trace";
+        protected override string Target => "Trace";
         protected override Trace GetItem(Scene scene) => scene._Traces[Index];
     }
 
@@ -166,7 +166,7 @@
 
     internal class TracesCommand : CollectionCommand<Trace>
     {
-        internal TracesCommand(int index, bool add) : base(index, add) { PropertyName = "TraceList"; }
+        internal TracesCommand(int index, bool add) : base(index, add) { PropertyName = "Trace"; }
 
         protected override string Target => Value.ToString();
 

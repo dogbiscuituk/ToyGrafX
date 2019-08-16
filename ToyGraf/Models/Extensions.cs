@@ -25,7 +25,7 @@
             // Terrain
             target.StripCount = source.StripCount;
             // Trace
-            target.Title = source.Title;
+            target.Description = source.Description;
             target.Visible = source.Visible;
         }
     }

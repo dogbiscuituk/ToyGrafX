@@ -3,6 +3,7 @@
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Text;
     using System.Windows.Forms;
@@ -56,8 +57,19 @@
             }
         }
 
-        internal void BeginUpdate() => UpdateCount++;
-        internal void EndUpdate() { if (--UpdateCount == 0) OnPropertyChanged(string.Empty); }
+        internal void BeginUpdate() => ++UpdateCount;
+
+        internal void EndUpdate()
+        {
+            if (--UpdateCount == 0)
+            {
+                foreach (var propertyName in ChangedPropertyNames)
+                    OnPropertyChanged(propertyName);
+                ChangedPropertyNames.Clear();
+            }
+        }
+
+
         internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
         internal void ModifiedChanged() => SceneForm.Text = JsonController.WindowCaption;
 
@@ -116,6 +128,7 @@
 
         #region Private Properties
 
+        private readonly List<string> ChangedPropertyNames = new List<string>();
         private readonly FullScreenController FullScreenController;
         private GLControl GLControl => SceneForm?.GLControl;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
@@ -313,9 +326,13 @@
 
         private void OnPropertyChanged(string propertyName)
         {
-            System.Diagnostics.Debug.WriteLine($"Property '{propertyName}' Changed");
             if (Updating)
+            {
+                if (!ChangedPropertyNames.Contains(propertyName))
+                    ChangedPropertyNames.Add(propertyName);
                 return;
+            }
+            System.Diagnostics.Debug.WriteLine($"Property '{propertyName}' changed");
             switch (propertyName)
             {
                 case "FramesPerSecond":

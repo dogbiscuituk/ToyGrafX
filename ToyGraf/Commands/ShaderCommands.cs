@@ -4,8 +4,8 @@
 
     internal class SceneShaderCommand : ScenePropertyCommand<string>
     {
-        internal SceneShaderCommand(ShaderType shaderType, string value):
-            base(shaderType.GetShaderName(), value, s => s.GetScript(shaderType), (s, v) => s.SetScript(shaderType, v))
+        internal SceneShaderCommand(ShaderType shaderType, string value) : base(shaderType.GetShaderName(),
+            value, s => s.GetScript(shaderType), (s, v) => s.SetScript(shaderType, v))
         { }
     }
 
@@ -41,8 +41,8 @@
 
     internal class TraceShaderCommand : TracePropertyCommand<string>
     {
-        internal TraceShaderCommand(int index, ShaderType shaderType, string value) :
-            base(index, shaderType.GetShaderName(), value, t => t.GetScript(shaderType), (t, v) => t.SetScript(shaderType, v))
+        internal TraceShaderCommand(int index, ShaderType shaderType, string value) : base(index, shaderType.GetShaderName(),
+            value, t => t.GetScript(shaderType), (t, v) => t.SetScript(shaderType, v))
         { }
     }
 

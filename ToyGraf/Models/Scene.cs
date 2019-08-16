@@ -219,7 +219,7 @@
         public Matrix4 Projection
         {
             get => GetProjection();
-            set => Run(new SceneProjectionCommand(value));
+            set => Run(new ProjectionCommand(value));
         }
 
         #endregion
@@ -245,14 +245,14 @@
         [Description("Frames per second: a cap on this scene's rendering frequency.")]
         [DisplayName("FPS")]
         [JsonIgnore]
-        public double FPS { get => _FPS; set => Run(new SceneFpsCommand(value)); }
+        public double FPS { get => _FPS; set => Run(new FpsCommand(value)); }
 
         [Category(Categories.Scene)]
         [DefaultValue(Defaults.Title)]
         [Description("A title for this scene.")]
         [DisplayName("Title")]
         [JsonIgnore]
-        public string Title { get => _Title; set => Run(new SceneTitleCommand(value)); }
+        public string Title { get => _Title; set => Run(new TitleCommand(value)); }
 
         [Category(Categories.Scene)]
         [Description("A list of the traces in this scene.")]
