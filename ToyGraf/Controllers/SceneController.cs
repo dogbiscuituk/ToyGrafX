@@ -23,26 +23,11 @@
             SceneForm = new SceneForm();
             Scene = new Scene(this);
             CommandProcessor = new CommandProcessor(this);
-            TraceTableController = new TraceTableController(this);
             FullScreenController = new FullScreenController(this);
-
             JsonController = new JsonController(this);
-            JsonController.FileLoaded += JsonController_FileLoaded;
-            JsonController.FilePathChanged += JsonController_FilePathChanged;
-            JsonController.FilePathRequest += JsonController_FilePathRequest;
-            JsonController.FileReopen += JsonController_FileReopen;
-            JsonController.FileSaving += JsonController_FileSaving;
-            JsonController.FileSaved += JsonController_FileSaved;
-
             PropertyGridController = new PropertyGridController(this);
-            Scene.PropertyChanged += Scene_PropertyChanged;
-
-            AttachControllers();
-            CommandProcessor.Clear();
-
-            Timer = new Timer();
-            Timer.Tick += Timer_Tick;
-            TimerStart();
+            TraceTableController = new TraceTableController(this);
+            ConnectAll(true);
         }
 
         #endregion
@@ -52,30 +37,26 @@
         public CommandProcessor CommandProcessor { get; private set; }
         internal readonly PropertyGridController PropertyGridController;
         internal Scene Scene;
+        internal SceneForm SceneForm;
         internal readonly TraceTableController TraceTableController;
-
-        internal SceneForm SceneForm
-        {
-            get => _SceneForm;
-            set
-            {
-                if (SceneForm == value)
-                    return;
-                if (SceneForm != null)
-                    DetachEventHandlers();
-                _SceneForm = value;
-                if (SceneForm != null)
-                    AttachEventHandlers();
-            }
-        }
 
         #endregion
 
         #region Internal Methods
 
-        internal void AttachControllers() => PropertyGridController.SelectedObject = Scene;
+        private void ConnectControllers(bool connect)
+        {
+            if (connect)
+            {
+                PropertyGridController.SelectedObject = Scene;
+            }
+            else
+            {
+                PropertyGridController.SelectedObject = null;
+            }
+        }
+
         internal void BeginUpdate() => UpdateCount++;
-        internal void DetachControllers() => PropertyGridController.SelectedObject = null;
         internal void EndUpdate() { if (--UpdateCount == 0) OnPropertyChanged(string.Empty); }
         internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
         internal void ModifiedChanged() => SceneForm.Text = JsonController.WindowCaption;
@@ -89,7 +70,11 @@
         internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
             $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
 
-        internal void Show() => SceneForm.Show();
+        internal void Show()
+        {
+            SceneForm.Show();
+            CreateProgram();
+        }
 
         #endregion
 
@@ -115,12 +100,7 @@
 
         private void HelpAbout_Click(object sender, System.EventArgs e) => HelpAbout();
 
-        private void HelpAbout()
-        {
-            new AboutController().ShowDialog(SceneForm);
-            CreateProgram();
-            DeleteProgram();
-        }
+        private void HelpAbout() => new AboutController().ShowDialog(SceneForm);
 
         private void JsonController_FileLoaded(object sender, EventArgs e) => FileLoaded();
         private void JsonController_FilePathChanged(object sender, EventArgs e) => UpdateCaption();
@@ -140,8 +120,7 @@
         private GLControl GLControl => SceneForm?.GLControl;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
-        private SceneForm _SceneForm;
-        private readonly Timer Timer;
+        private Timer Timer;
         private int UpdateCount;
         private bool Updating => UpdateCount > 0;
 
@@ -149,71 +128,106 @@
 
         #region Private Methods
 
-        private void AttachEventHandlers()
+        private void ConnectAll(bool connect)
         {
-            SceneForm.FormClosed += SceneForm_FormClosed;
-            SceneForm.FormClosing += SceneForm_FormClosing;
-
-            SceneForm.FileNewEmptyScene.Click += FileNewEmptyScene_Click;
-            SceneForm.FileNewFromTemplate.Click += FileNewFromTemplate_Click;
-            SceneForm.FileOpen.Click += FileOpen_Click;
-            SceneForm.FileSave.Click += FileSave_Click;
-            SceneForm.FileSaveAs.Click += FileSaveAs_Click;
-            SceneForm.FileClose.Click += FileClose_Click;
-            SceneForm.FileExit.Click += FileExit_Click;
-            SceneForm.EditOptions.Click += EditOptions_Click;
-
-            SceneForm.tbNew.ButtonClick += FileNewEmptyScene_Click;
-            SceneForm.tbNewEmptyScene.Click += FileNewEmptyScene_Click;
-            SceneForm.tbNewFromTemplate.Click += FileNewFromTemplate_Click;
-            SceneForm.tbOpen.ButtonClick += FileOpen_Click;
-            SceneForm.tbOpen.DropDownOpening += TbOpen_DropDownOpening;
-            SceneForm.tbSave.Click += TbSave_Click;
-
-            SceneForm.HelpOpenGLShadingLanguage.Click += HelpTheOpenGLShadingLanguage_Click;
-            SceneForm.HelpAbout.Click += HelpAbout_Click;
-
-            GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
-            GLControl.Load += GLControl_Load;
-            GLControl.Paint += GLControl_Paint;
-            GLControl.Resize += GLControl_Resize;
+            if (connect)
+            {
+                ConnectEventHandlers(true);
+                ConnectControllers(true);
+                CommandProcessor.Clear();
+                Timer = new Timer();
+                Timer.Tick += Timer_Tick;
+                TimerStart();
+            }
+            else
+            {
+                TimerStop();
+                Timer.Tick -= Timer_Tick;
+                DeleteProgram();
+                ConnectControllers(false);
+                ConnectEventHandlers(false);
+                AppController.Remove(this);
+            }
         }
 
-        private void Cleanup()
+        private void ConnectEventHandlers(bool connect)
         {
-            TimerStop();
-            Timer.Tick -= Timer_Tick;
-            AppController.Remove(this);
-        }
+            if (connect)
+            {
+                SceneForm.FormClosed += SceneForm_FormClosed;
+                SceneForm.FormClosing += SceneForm_FormClosing;
 
-        private void DetachEventHandlers()
-        {
-            SceneForm.FormClosed -= SceneForm_FormClosed;
-            SceneForm.FormClosing -= SceneForm_FormClosing;
+                SceneForm.FileNewEmptyScene.Click += FileNewEmptyScene_Click;
+                SceneForm.FileNewFromTemplate.Click += FileNewFromTemplate_Click;
+                SceneForm.FileOpen.Click += FileOpen_Click;
+                SceneForm.FileSave.Click += FileSave_Click;
+                SceneForm.FileSaveAs.Click += FileSaveAs_Click;
+                SceneForm.FileClose.Click += FileClose_Click;
+                SceneForm.FileExit.Click += FileExit_Click;
+                SceneForm.EditOptions.Click += EditOptions_Click;
 
-            SceneForm.FileNewEmptyScene.Click -= FileNewEmptyScene_Click;
-            SceneForm.FileNewFromTemplate.Click -= FileNewFromTemplate_Click;
-            SceneForm.FileOpen.Click -= FileOpen_Click;
-            SceneForm.FileSave.Click -= FileSave_Click;
-            SceneForm.FileSaveAs.Click -= FileSaveAs_Click;
-            SceneForm.FileClose.Click -= FileClose_Click;
-            SceneForm.FileExit.Click -= FileExit_Click;
-            SceneForm.EditOptions.Click -= EditOptions_Click;
+                SceneForm.tbNew.ButtonClick += FileNewEmptyScene_Click;
+                SceneForm.tbNewEmptyScene.Click += FileNewEmptyScene_Click;
+                SceneForm.tbNewFromTemplate.Click += FileNewFromTemplate_Click;
+                SceneForm.tbOpen.ButtonClick += FileOpen_Click;
+                SceneForm.tbOpen.DropDownOpening += TbOpen_DropDownOpening;
+                SceneForm.tbSave.Click += TbSave_Click;
 
-            SceneForm.tbNew.ButtonClick -= FileNewEmptyScene_Click;
-            SceneForm.tbNewEmptyScene.Click -= FileNewEmptyScene_Click;
-            SceneForm.tbNewFromTemplate.Click -= FileNewFromTemplate_Click;
-            SceneForm.tbOpen.ButtonClick -= FileOpen_Click;
-            SceneForm.tbOpen.DropDownOpening -= TbOpen_DropDownOpening;
-            SceneForm.tbSave.Click -= TbSave_Click;
+                SceneForm.HelpOpenGLShadingLanguage.Click += HelpTheOpenGLShadingLanguage_Click;
+                SceneForm.HelpAbout.Click += HelpAbout_Click;
 
-            SceneForm.HelpOpenGLShadingLanguage.Click -= HelpTheOpenGLShadingLanguage_Click;
-            SceneForm.HelpAbout.Click -= HelpAbout_Click;
+                GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
+                GLControl.Load += GLControl_Load;
+                GLControl.Paint += GLControl_Paint;
+                GLControl.Resize += GLControl_Resize;
 
-            GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
-            GLControl.Load -= GLControl_Load;
-            GLControl.Paint -= GLControl_Paint;
-            GLControl.Resize -= GLControl_Resize;
+                JsonController.FileLoaded += JsonController_FileLoaded;
+                JsonController.FilePathChanged += JsonController_FilePathChanged;
+                JsonController.FilePathRequest += JsonController_FilePathRequest;
+                JsonController.FileReopen += JsonController_FileReopen;
+                JsonController.FileSaving += JsonController_FileSaving;
+                JsonController.FileSaved += JsonController_FileSaved;
+
+                Scene.PropertyChanged += Scene_PropertyChanged;
+            }
+            else
+            {
+                SceneForm.FormClosed -= SceneForm_FormClosed;
+                SceneForm.FormClosing -= SceneForm_FormClosing;
+
+                SceneForm.FileNewEmptyScene.Click -= FileNewEmptyScene_Click;
+                SceneForm.FileNewFromTemplate.Click -= FileNewFromTemplate_Click;
+                SceneForm.FileOpen.Click -= FileOpen_Click;
+                SceneForm.FileSave.Click -= FileSave_Click;
+                SceneForm.FileSaveAs.Click -= FileSaveAs_Click;
+                SceneForm.FileClose.Click -= FileClose_Click;
+                SceneForm.FileExit.Click -= FileExit_Click;
+                SceneForm.EditOptions.Click -= EditOptions_Click;
+
+                SceneForm.tbNew.ButtonClick -= FileNewEmptyScene_Click;
+                SceneForm.tbNewEmptyScene.Click -= FileNewEmptyScene_Click;
+                SceneForm.tbNewFromTemplate.Click -= FileNewFromTemplate_Click;
+                SceneForm.tbOpen.ButtonClick -= FileOpen_Click;
+                SceneForm.tbOpen.DropDownOpening -= TbOpen_DropDownOpening;
+                SceneForm.tbSave.Click -= TbSave_Click;
+
+                SceneForm.HelpOpenGLShadingLanguage.Click -= HelpTheOpenGLShadingLanguage_Click;
+                SceneForm.HelpAbout.Click -= HelpAbout_Click;
+
+                GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
+                GLControl.Load -= GLControl_Load;
+                GLControl.Paint -= GLControl_Paint;
+                GLControl.Resize -= GLControl_Resize;
+
+                JsonController.FileLoaded -= JsonController_FileLoaded;
+                JsonController.FilePathChanged -= JsonController_FilePathChanged;
+                JsonController.FilePathRequest -= JsonController_FilePathRequest;
+                JsonController.FileReopen -= JsonController_FileReopen;
+                JsonController.FileSaving -= JsonController_FileSaving;
+                JsonController.FileSaved -= JsonController_FileSaved;
+
+                Scene.PropertyChanged -= Scene_PropertyChanged;
+            }
         }
 
         private void EditOptions()
@@ -224,13 +238,13 @@
 
         private void FileLoaded()
         {
-            DetachControllers();
+            ConnectControllers(false);
             Scene.SceneController = this;
             BeginUpdate();
             Scene.AttachTraces();
             CommandProcessor.Clear();
             EndUpdate();
-            AttachControllers();
+            ConnectControllers(true);
         }
 
         private void FilePathRequest(SdiController.FilePathEventArgs e)
@@ -248,7 +262,7 @@
 
         private bool FormClosing(CloseReason closeReason) => JsonController.SaveIfModified();
 
-        private void FormClosed() => Cleanup();
+        private void FormClosed() => ConnectAll(false);
 
         private static string GetBookmark(PropertyGrid propertyGrid)
         {
@@ -393,6 +407,7 @@
 
         private void CreateProgram()
         {
+            DeleteProgram();
             if (!MakeCurrent(true))
                 return;
             Scene._GPUStatus = GPUStatus.OK;
@@ -464,20 +479,22 @@
 
         private void DeleteProgram()
         {
-            if (ProgramID == 0)
-                return;
             DeleteShaders();
-            GL.DeleteProgram(ProgramID);
-            ProgramID = 0;
+            if (ProgramID != 0)
+            {
+                GL.DeleteProgram(ProgramID);
+                ProgramID = 0;
+            }
         }
 
         private void DeleteShader(ref int shaderID)
         {
-            if (shaderID == 0)
-                return;
-            GL.DetachShader(ProgramID, shaderID);
-            GL.DeleteShader(shaderID);
-            shaderID = 0;
+            if (shaderID != 0)
+            {
+                GL.DetachShader(ProgramID, shaderID);
+                GL.DeleteShader(shaderID);
+                shaderID = 0;
+            }
         }
 
         private void DeleteShaders()
