@@ -332,6 +332,68 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #endregion
 
+        #region Private Classes
+
+        private class Categories
+        {
+            internal const string
+                Placement = "Placement",
+                Shaders = "Shader Code",
+                SystemRO = "Read Only / System",
+                Trace = "Trace";
+        }
+
+        private class Defaults
+        {
+            internal const Pattern
+                Pattern = Engine.Types.Pattern.TriangleStrip;
+
+            internal const YN
+                Visible = YN.Yes;
+
+            internal const int
+                Index = -1;
+
+            internal static Euler3F
+                Orientation = new Euler3F();
+
+            internal static Point3
+                StripCount = new Point3();
+
+            internal static Point3F
+                Location = new Point3F(),
+                Maximum = new Point3F(),
+                Minimum = new Point3F(),
+                Scale = new Point3F(1, 1, 1);
+
+            internal const string
+                LocationString = "0, 0, 0",
+                MaximumString = "0, 0, 0",
+                MinimumString = "0, 0, 0",
+                OrientationString = "0, 0, 0",
+                PatternString = "TriangleStrip",
+                ScaleString = "1, 1, 1",
+                Shader1Vertex = @"
+z = sqrt(x * x + y * y);
+z = cos(20 * z - 10 * t) * exp(-3 * z);
+r = (x + 1) / 2;
+g = (y + 1) / 2;
+b = clamp(abs(5 * z), 0, 1);
+
+gl_Position = projection * cameraView * transform * vec4(x, y, z, 1.0);
+colour = vec3(r, g, b);",
+                Shader2TessControl = "",
+                Shader3TessEvaluation = "",
+                Shader4Geometry = "",
+                Shader5Fragment = @"
+FragColor = vec4(colour, 0.1f);",
+                Shader6Compute = "",
+            StripCountString = "0, 0, 0",
+                Title = "";
+        }
+
+        #endregion
+
         #region Private Properties
 
         private CommandProcessor CommandProcessor => Scene?.CommandProcessor;
@@ -373,107 +435,6 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         internal void SetOrientation(Vector3 orientation) => Orientation = orientation.ToEuler3F();
         internal void SetOrientation(Quaternion orientation) => Orientation = orientation.ToEuler3F();
         internal void SetScale(Vector3 scale) => Scale = scale.ToPoint3F();
-
-        #endregion
-
-        #region Private Classes
-
-        private class Categories
-        {
-            internal const string
-                Placement = "Placement",
-                Shaders = "Shaders",
-                SystemRO = "Read Only / System",
-                Trace = "Trace";
-        }
-
-        private class Defaults
-        {
-            internal const Pattern
-                Pattern = Engine.Types.Pattern.TriangleStrip;
-
-            internal const YN
-                Visible = YN.Yes;
-
-            internal const int
-                Index = -1;
-
-            internal static Euler3F
-                Orientation = new Euler3F();
-
-            internal static Point3
-                StripCount = new Point3();
-
-            internal static Point3F
-                Location = new Point3F(),
-                Maximum = new Point3F(),
-                Minimum = new Point3F(),
-                Scale = new Point3F(1, 1, 1);
-
-            internal const string
-                LocationString = "0, 0, 0",
-                MaximumString = "0, 0, 0",
-                MinimumString = "0, 0, 0",
-                OrientationString = "0, 0, 0",
-                PatternString = "TriangleStrip",
-                ScaleString = "1, 1, 1",
-                Shader1Vertex = "",
-                Shader2TessControl = "",
-                Shader3TessEvaluation = "",
-                Shader4Geometry = "",
-                Shader5Fragment = "",
-                Shader6Compute = "",
-                StripCountString = "0, 0, 0",
-                Title = "";
-        }
-
-        #endregion
-
-        #region Default Shaders
-
-        internal const string
-            DefaultVertexShader = @"// Vertex Shader
-
-#version 330 core
-
-layout (location = 0) in vec3 position;
-out vec3 colour;
-
-uniform mat4 projection;
-uniform float timeValue;
-uniform mat4 transform;
-uniform mat4 cameraView;
-
-void main()
-{
-    float
-        x = position.x,
-        y = position.y,
-        z = position.z,
-        r = 0,
-        g = 0,
-        b = 0;
-
-    z = sqrt(x * x + y * y);
-    z = cos(20 * z - 10 * time) * exp(-3 * z);
-    r = (x + 1) / 2;
-    g = (y + 1) / 2;
-    b = clamp(abs(5 * z), 0, 1);
-
-    gl_Position = projection * cameraView * transform * vec4(x, y, z, 1.0);
-    colour = vec3(r, g, b);
-}",
-            DefaultFragmentShader = @"// Fragment Shader
-
-#version 330 core
-
-in vec3 colour;
-out vec4 FragColor;
-
-void main()
-{
-    FragColor = vec4(colour, 0.1f);
-}";
 
         #endregion
     }

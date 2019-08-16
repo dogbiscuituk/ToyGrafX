@@ -198,15 +198,12 @@
         }
 
         [Category(Categories.SystemRO)]
-        [DefaultValue(Defaults.GPUStatus)]
-        [Description("The status of the most recent GPU compilation action. An empty value indicates successful compilation.")]
-        [DisplayName("GPU Status")]
+        [DefaultValue(Defaults.GPULog)]
+        [Description("The log from the most recent GPU compilation.")]
+        [DisplayName("GPU Log")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public string GPUStatus
-        {
-            get => _GPUStatus;
-        }
+        public string GPULog => _GPULog;
 
         [Category(Categories.SystemRO)]
         [Description("The projection matrix for the scene.")]
@@ -388,7 +385,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         [JsonProperty] internal float _FarPlane;
         [JsonProperty] internal float _FieldOfView;
         [JsonProperty] internal double _FPS;
-        [JsonProperty] internal string _GPUStatus;
+        [JsonProperty] internal string _GPULog;
         [JsonProperty] internal float _NearPlane;
         [JsonProperty] internal int _SampleCount;
         [JsonProperty] internal string _Shader1Vertex;
@@ -454,68 +451,6 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #endregion
 
-        #region Private Properties
-
-        private float AspectRatio
-        {
-            get
-            {
-                var glControl = GLControl;
-                if (glControl != null)
-                {
-                    float w = glControl.Width, h = glControl.Height;
-                    if (w > 0 && h > 0)
-                        return w / h;
-                }
-                return 1920f / 1080f;
-            }
-        }
-
-        private GLControl GLControl => SceneForm?.GLControl;
-        private SceneForm SceneForm => SceneController?.SceneForm;
-
-        #endregion
-
-        #region Private Methods
-
-        private void RestoreDefaults()
-        {
-            _AccumColourFormat = Defaults.AccumColourFormat;
-            _BackgroundColour = Defaults.BackgroundColour;
-            _Buffers = Defaults.Buffers;
-            _CameraPosition = Defaults.CameraPosition;
-            _CameraRotation = Defaults.CameraRotation;
-            _ColourFormat = Defaults.ColourFormat;
-            _Depth = Defaults.Depth;
-            _FarPlane = Defaults.FarPlane;
-            _FieldOfView = Defaults.FieldOfView;
-            _FPS = Defaults.FPS;
-            _GPUStatus = Defaults.GPUStatus;
-            _NearPlane = Defaults.NearPlane;
-            _SampleCount = Defaults.SampleCount;
-            _Shader1Vertex = Defaults.Shader1Vertex;
-            _Shader2TessControl = Defaults.Shader2TessControl;
-            _Shader3TessEvaluation = Defaults.Shader3TessEvaluation;
-            _Shader4Geometry = Defaults.Shader4Geometry;
-            _Shader5Fragment = Defaults.Shader5Fragment;
-            _Shader6Compute = Defaults.Shader6Compute;
-            _Stencil = Defaults.Stencil;
-            _Stereo = Defaults.Stereo;
-            _Title = Defaults.Title;
-            _Traces = Defaults.Traces;
-            _VSync = Defaults.VSync;
-        }
-
-        private void Run(IScenePropertyCommand command)
-        {
-            if (CommandProcessor != null)
-                CommandProcessor.Run(command);
-            else
-                command.RunOn(this);
-        }
-
-        #endregion
-
         #region Private Classes
 
         private class Categories
@@ -525,7 +460,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
                 GraphicsMode = "Graphics Mode",
                 Projection = "Projection",
                 Scene = "Scene",
-                Shaders = "Shaders",
+                Shaders = "Shader Templates",
                 SystemRO = "Read Only / System";
         }
 
@@ -536,12 +471,47 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
                 CameraPositionString = "0, 0, 0",
                 CameraRotationString = "0, 0, 0",
                 ColourFormatString = "0, 0, 0, 0",
-                GPUStatus = "",
-                Shader1Vertex = "",
+                GPULog = "",
+                Shader1Vertex = @"// Vertex Shader
+#version 330 core
+
+layout (location = 0) in vec3 position;
+out vec3 colour;
+
+uniform mat4 cameraView;
+uniform mat4 projection;
+uniform float timeValue;
+uniform int traceIndex;
+uniform mat4 transform;
+
+void main()
+{
+    float
+        t = timeValue,
+        x = position.x,
+        y = position.y,
+        z = position.z,
+        r = 0,
+        g = 0,
+        b = 0;
+
+    switch (traceIndex)
+    {",
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
-                Shader5Fragment = "",
+                Shader5Fragment = @"// Fragment Shader
+#version 330 core
+
+in vec3 colour;
+out vec4 FragColor;
+
+uniform int traceIndex;
+
+void main()
+{
+    switch (traceIndex)
+    {",
                 Shader6Compute = "",
                 Title = "";
 
@@ -578,6 +548,68 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
             internal static List<Trace>
                 Traces => new List<Trace>();
+        }
+
+        #endregion
+
+        #region Private Properties
+
+        private float AspectRatio
+        {
+            get
+            {
+                var glControl = GLControl;
+                if (glControl != null)
+                {
+                    float w = glControl.Width, h = glControl.Height;
+                    if (w > 0 && h > 0)
+                        return w / h;
+                }
+                return 1920f / 1080f;
+            }
+        }
+
+        private GLControl GLControl => SceneForm?.GLControl;
+        private SceneForm SceneForm => SceneController?.SceneForm;
+
+        #endregion
+
+        #region Private Methods
+
+        private void RestoreDefaults()
+        {
+            _AccumColourFormat = Defaults.AccumColourFormat;
+            _BackgroundColour = Defaults.BackgroundColour;
+            _Buffers = Defaults.Buffers;
+            _CameraPosition = Defaults.CameraPosition;
+            _CameraRotation = Defaults.CameraRotation;
+            _ColourFormat = Defaults.ColourFormat;
+            _Depth = Defaults.Depth;
+            _FarPlane = Defaults.FarPlane;
+            _FieldOfView = Defaults.FieldOfView;
+            _FPS = Defaults.FPS;
+            _GPULog = Defaults.GPULog;
+            _NearPlane = Defaults.NearPlane;
+            _SampleCount = Defaults.SampleCount;
+            _Shader1Vertex = Defaults.Shader1Vertex;
+            _Shader2TessControl = Defaults.Shader2TessControl;
+            _Shader3TessEvaluation = Defaults.Shader3TessEvaluation;
+            _Shader4Geometry = Defaults.Shader4Geometry;
+            _Shader5Fragment = Defaults.Shader5Fragment;
+            _Shader6Compute = Defaults.Shader6Compute;
+            _Stencil = Defaults.Stencil;
+            _Stereo = Defaults.Stereo;
+            _Title = Defaults.Title;
+            _Traces = Defaults.Traces;
+            _VSync = Defaults.VSync;
+        }
+
+        private void Run(IScenePropertyCommand command)
+        {
+            if (CommandProcessor != null)
+                CommandProcessor.Run(command);
+            else
+                command.RunOn(this);
         }
 
         #endregion

@@ -114,17 +114,11 @@
 
         private void HelpAbout_Click(object sender, System.EventArgs e) => HelpAbout();
 
-        bool foo;
-
         private void HelpAbout()
         {
             new AboutController().ShowDialog(SceneForm);
-
-            foo = !foo;
-            if (foo)
-                CreateProgram();
-            else
-                DeleteProgram();
+            CreateProgram();
+            DeleteProgram();
         }
 
         private void JsonController_FileLoaded(object sender, EventArgs e) => FileLoaded();
@@ -384,7 +378,7 @@
 
         #region Renderer Methods
 
-        #region Create / Delete Program
+        #region Create / Delete Shaders
 
         private void AppendLog(StringBuilder log, string s)
         {
@@ -410,9 +404,10 @@
             BindAttributes();
             GL.LinkProgram(ProgramID);
             GL.ValidateProgram(ProgramID);
+            AppendLog(log, "Linking Program...");
             AppendLog(log, GL.GetProgramInfoLog(ProgramID));
             GetUniformLocations();
-            Scene._GPUStatus = log.ToString();
+            Scene._GPULog = log.ToString();
             log = null;
             DeleteShaders();
             MakeCurrent(false);
@@ -420,22 +415,35 @@
 
         private int CreateShader(ShaderType shaderType, StringBuilder log, bool mandatory = false)
         {
-            var scripts = new StringBuilder();
-            foreach (var trace in Scene._Traces)
+            StringBuilder shader = null;
+            for (var traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
             {
+                var trace = Scene._Traces[traceIndex];
                 var script = trace.GetScript(shaderType);
                 if (!string.IsNullOrWhiteSpace(script))
-                    scripts.AppendLine(script);
+                {
+                    if (shader == null)
+                    {
+                        shader = new StringBuilder();
+                        shader.AppendLine(Scene.GetScript(shaderType));
+                    }
+                    shader.AppendLine($@"
+        case {traceIndex}:
+{script}
+            break;");
+                }
             }
-            if (scripts.Length < 1)
+            if (shader == null)
                 return 0;
-            scripts.Insert(0, $@"// {shaderType}\n");
-            scripts.Insert(0, '\n');
-            scripts.Insert(0, $@"# {AppController.OpenGLProperties.OpenGLVersionNumber}\n");
-            scripts.Insert(0, '\n');
+            shader.AppendLine(@"
+        default:
+            break;
+    }
+}");
             var shaderID = GL.CreateShader(shaderType);
-            GL.ShaderSource(shaderID, scripts.ToString());
+            GL.ShaderSource(shaderID, shader.ToString());
             GL.CompileShader(shaderID);
+            AppendLog(log, $"Compiling {shaderType.GetShaderName()}...");
             AppendLog(log, GL.GetShaderInfoLog(shaderID));
             GL.AttachShader(ProgramID, shaderID);
             return shaderID;
