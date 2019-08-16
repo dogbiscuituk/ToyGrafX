@@ -144,6 +144,7 @@
                 TimerStop();
                 Timer.Tick -= Timer_Tick;
                 DeleteProgram();
+                CommandProcessor.Clear();
                 ConnectControllers(false);
                 ConnectEventHandlers(false);
                 AppController.Remove(this);
@@ -312,6 +313,7 @@
 
         private void OnPropertyChanged(string propertyName)
         {
+            System.Diagnostics.Debug.WriteLine($"Property '{propertyName}' Changed");
             if (Updating)
                 return;
             switch (propertyName)

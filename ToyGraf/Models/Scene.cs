@@ -420,11 +420,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         #region Internal Methods
 
-        internal void AddTrace(Trace trace)
-        {
-            _Traces.Add(trace);
-            OnPropertyChanged("Traces");
-        }
+        internal void AddTrace(Trace trace) => _Traces.Add(trace);
 
         internal void AttachTraces()
         {
@@ -432,11 +428,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
                 trace.Init(this);
         }
 
-        internal void InsertTrace(int index, Trace trace)
-        {
-            _Traces.Insert(index, trace);
-            OnPropertyChanged("Traces");
-        }
+        internal void InsertTrace(int index, Trace trace) => _Traces.Insert(index, trace);
 
         internal Trace NewTrace()
         {
@@ -451,10 +443,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         internal void RemoveTrace(int index)
         {
             if (index >= 0 && index < _Traces.Count)
-            {
                 _Traces.RemoveAt(index);
-                OnPropertyChanged("Traces");
-            }
         }
 
         #endregion

@@ -62,18 +62,12 @@
         public override bool Run(Scene scene)
         {
             var value = GetValue(scene);
-
-            System.Diagnostics.Debug.WriteLine($"Before execution: scene value = {value}, command value = {Value}");
-
             var result = !Equals(value, Value);
             if (result)
             {
                 SetValue(scene, Value);
                 Value = value;
             }
-
-            System.Diagnostics.Debug.WriteLine($"After execution: scene value = {GetValue(scene)}, command value = {Value}");
-
             return result;
         }
 
@@ -172,7 +166,7 @@
 
     internal class TracesCommand : CollectionCommand<Trace>
     {
-        internal TracesCommand(int index, bool add) : base(index, add) { PropertyName = "trace"; }
+        internal TracesCommand(int index, bool add) : base(index, add) { PropertyName = "TraceList"; }
 
         protected override string Target => Value.ToString();
 
