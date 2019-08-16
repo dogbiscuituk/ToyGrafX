@@ -7,6 +7,7 @@
     using System.Text;
     using System.Windows.Forms;
     using ToyGraf.Commands;
+    using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
     using ToyGraf.Models.Enums;
@@ -374,16 +375,23 @@
         private int
             CurrencyCount;
 
+        private StringBuilder ShaderLog;
+
         #endregion
 
         #region Renderer Methods
 
         #region Create / Delete Shaders
 
-        private void AppendLog(StringBuilder log, string s)
+        private void AppendLog(string s)
         {
-            if (!string.IsNullOrWhiteSpace(s))
-                log.AppendLine(s);
+            if (string.IsNullOrWhiteSpace(s))
+                return;
+            ShaderLog.AppendLine(s.Trim());
+            if (s.Contains("ERROR:"))
+                Scene._GPUStatus |= GPUStatus.Error;
+            if (s.Contains("WARNING:"))
+                Scene._GPUStatus |= GPUStatus.Warning;
         }
 
         private void BindAttribute(int attributeIndex, string variableName) =>
@@ -398,22 +406,24 @@
         {
             if (!MakeCurrent(true))
                 return;
-            var log = new StringBuilder();
+            Scene._GPUStatus = GPUStatus.OK;
+            ShaderLog = new StringBuilder();
             ProgramID = GL.CreateProgram();
-            CreateShaders(log);
+            CreateShaders();
+            AppendLog("Linking pogram...");
             BindAttributes();
             GL.LinkProgram(ProgramID);
             GL.ValidateProgram(ProgramID);
-            AppendLog(log, "Linking Program...");
-            AppendLog(log, GL.GetProgramInfoLog(ProgramID));
+            AppendLog(GL.GetProgramInfoLog(ProgramID));
+            AppendLog("Done.");
+            Scene._GPULog = ShaderLog.ToString().TrimEnd();
+            ShaderLog = null;
             GetUniformLocations();
-            Scene._GPULog = log.ToString();
-            log = null;
             DeleteShaders();
             MakeCurrent(false);
         }
 
-        private int CreateShader(ShaderType shaderType, StringBuilder log, bool mandatory = false)
+        private int CreateShader(ShaderType shaderType, bool mandatory = false)
         {
             StringBuilder shader = null;
             for (var traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
@@ -434,29 +444,33 @@
                 }
             }
             if (shader == null)
+            {
+                if (mandatory)
+                    AppendLog("ERROR: Mandatory shader missing.");
                 return 0;
+            }
             shader.AppendLine(@"
         default:
             break;
     }
 }");
+            AppendLog($"Compiling {shaderType.GetShaderName()}...");
             var shaderID = GL.CreateShader(shaderType);
             GL.ShaderSource(shaderID, shader.ToString());
             GL.CompileShader(shaderID);
-            AppendLog(log, $"Compiling {shaderType.GetShaderName()}...");
-            AppendLog(log, GL.GetShaderInfoLog(shaderID));
             GL.AttachShader(ProgramID, shaderID);
+            AppendLog(GL.GetShaderInfoLog(shaderID));
             return shaderID;
         }
 
-        private void CreateShaders(StringBuilder log)
+        private void CreateShaders()
         {
-            VertexShaderID = CreateShader(ShaderType.VertexShader, log, true);
-            TessControlShaderID = CreateShader(ShaderType.TessControlShader, log);
-            TessEvaluationShaderID = CreateShader(ShaderType.TessEvaluationShader, log);
-            GeometryShaderID = CreateShader(ShaderType.GeometryShader, log);
-            FragmentShaderID = CreateShader(ShaderType.FragmentShader, log, true);
-            ComputeShaderID = CreateShader(ShaderType.ComputeShader, log);
+            VertexShaderID = CreateShader(ShaderType.VertexShader, true);
+            TessControlShaderID = CreateShader(ShaderType.TessControlShader);
+            TessEvaluationShaderID = CreateShader(ShaderType.TessEvaluationShader);
+            GeometryShaderID = CreateShader(ShaderType.GeometryShader);
+            FragmentShaderID = CreateShader(ShaderType.FragmentShader, true);
+            ComputeShaderID = CreateShader(ShaderType.ComputeShader);
         }
 
         private void DeleteProgram()
