@@ -121,8 +121,7 @@
         private void JsonController_FileSaved(object sender, EventArgs e) => FileSaved();
         private void JsonController_FileSaving(object sender, CancelEventArgs e) => e.Cancel = false;
 
-        private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
-            OnPropertyChanged(e.PropertyName);
+        private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
 
         #endregion
 
@@ -332,10 +331,10 @@
                     ChangedPropertyNames.Add(propertyName);
                 return;
             }
-            System.Diagnostics.Debug.WriteLine($"Property '{propertyName}' changed");
+            System.Diagnostics.Debug.WriteLine($"{propertyName} changed");
             switch (propertyName)
             {
-                case "FramesPerSecond":
+                case PropertyNames.FPS:
                     TimerInit();
                     break;
             }

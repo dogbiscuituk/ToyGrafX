@@ -22,6 +22,12 @@
             var toolStrip = FindToolStrip(PropertyGrid);
             HidePropertyPagesButton(toolStrip);
             AddTitleLabel(toolStrip);
+            PropertyGrid.PropertyValueChanged += PropertyGrid_PropertyValueChanged;
+        }
+
+        private void PropertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            return;
         }
 
         internal bool PropertyGridVisible
