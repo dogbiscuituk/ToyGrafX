@@ -383,17 +383,6 @@
 
         #region Create / Delete Shaders
 
-        private void AppendLog(string s)
-        {
-            if (string.IsNullOrWhiteSpace(s))
-                return;
-            ShaderLog.AppendLine(s.Trim());
-            if (s.Contains("ERROR:"))
-                Scene._GPUStatus |= GPUStatus.Error;
-            if (s.Contains("WARNING:"))
-                Scene._GPUStatus |= GPUStatus.Warning;
-        }
-
         private void BindAttribute(int attributeIndex, string variableName) =>
             GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
 
@@ -410,12 +399,12 @@
             ShaderLog = new StringBuilder();
             ProgramID = GL.CreateProgram();
             CreateShaders();
-            AppendLog("Linking pogram...");
+            Log("Linking program...");
             BindAttributes();
             GL.LinkProgram(ProgramID);
             GL.ValidateProgram(ProgramID);
-            AppendLog(GL.GetProgramInfoLog(ProgramID));
-            AppendLog("Done.");
+            Log(GL.GetProgramInfoLog(ProgramID));
+            Log("Done.");
             Scene._GPULog = ShaderLog.ToString().TrimEnd();
             ShaderLog = null;
             GetUniformLocations();
@@ -446,7 +435,7 @@
             if (shader == null)
             {
                 if (mandatory)
-                    AppendLog("ERROR: Mandatory shader missing.");
+                    Log("ERROR: Mandatory shader missing.");
                 return 0;
             }
             shader.AppendLine(@"
@@ -454,12 +443,12 @@
             break;
     }
 }");
-            AppendLog($"Compiling {shaderType.GetShaderName()}...");
+            Log($"Compiling {shaderType.GetShaderName()}...");
             var shaderID = GL.CreateShader(shaderType);
             GL.ShaderSource(shaderID, shader.ToString());
             GL.CompileShader(shaderID);
             GL.AttachShader(ProgramID, shaderID);
-            AppendLog(GL.GetShaderInfoLog(shaderID));
+            Log(GL.GetShaderInfoLog(shaderID));
             return shaderID;
         }
 
@@ -499,6 +488,17 @@
             DeleteShader(ref GeometryShaderID);
             DeleteShader(ref FragmentShaderID);
             DeleteShader(ref ComputeShaderID);
+        }
+
+        private void Log(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+                return;
+            ShaderLog.AppendLine(s.Trim());
+            if (s.Contains("ERROR:"))
+                Scene._GPUStatus |= GPUStatus.Error;
+            if (s.Contains("WARNING:"))
+                Scene._GPUStatus |= GPUStatus.Warning;
         }
 
         #endregion
