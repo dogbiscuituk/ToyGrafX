@@ -25,10 +25,8 @@
             PropertyGrid.PropertyValueChanged += PropertyGrid_PropertyValueChanged;
         }
 
-        private void PropertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            return;
-        }
+        private void PropertyGrid_PropertyValueChanged(object sender, PropertyValueChangedEventArgs e) =>
+            SceneController?.PropertyChanged(e);
 
         internal bool PropertyGridVisible
         {

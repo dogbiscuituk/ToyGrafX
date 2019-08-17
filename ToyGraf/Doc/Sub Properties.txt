@@ -1,0 +1,48 @@
+======================================================== PropertyPath[0], [1],...
+
+--------------------------------------------------------------------- Categorized
+
+Red			Accumulator Colour Format	Graphics Mode	New scene
+Green			Accumulator Colour Format	Graphics Mode	New scene
+Blue			Accumulator Colour Format	Graphics Mode	New scene
+Alpha			Accumulator Colour Format	Graphics Mode	New scene
+
+Background Colour	Graphics Mode			New Scene
+Buffers			Graphics Mode			New Scene
+
+Red			Colour Format			Graphics Mode	New scene
+Green			Colour Format			Graphics Mode	New scene
+Blue			Colour Format			Graphics Mode	New scene
+Alpha			Colour Format			Graphics Mode	New scene
+
+X			Camera Position			Scene		New scene
+Y			Camera Position			Scene		New scene
+Z			Camera Position			Scene		New scene
+
+Pitch			Camera Rotation°		Scene		New scene
+Yaw			Camera Rotation°		Scene		New scene
+Roll			Camera Rotation°		Scene		New scene
+
+-------------------------------------------------------------------- Alphabetical
+
+Red			Accumulator Colour Format	New scene
+Green			Accumulator Colour Format	New scene
+Blue			Accumulator Colour Format	New scene
+Alpha			Accumulator Colour Format	New scene
+
+Background Colour	New Scene
+Buffers			New Scene
+
+Red			Colour Format			New scene
+Green			Colour Format			New scene
+Blue			Colour Format			New scene
+Alpha			Colour Format			New scene
+
+X			Camera Position			New scene
+Y			Camera Position			New scene
+Z			Camera Position			New scene
+
+Pitch			Camera Rotation°		New scene
+Yaw			Camera Rotation°		New scene
+Roll			Camera Rotation°		New scene
+

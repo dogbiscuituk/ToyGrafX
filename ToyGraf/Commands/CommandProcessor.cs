@@ -40,12 +40,12 @@
         internal void DeleteTrace(int index) => Run(new TraceDeleteCommand(index));
         internal void InsertTrace(int index) => Run(new TraceInsertCommand(index));
 
-        public void Run(ICommand command)
+        public void Run(ICommand command, bool spoof = false)
         {
             if (LastSave > UndoStack.Count)
                 LastSave = -1;
             RedoStack.Clear();
-            Redo(command);
+            Redo(command, spoof);
         }
 
         public void Save()
@@ -141,13 +141,15 @@
 
         private bool Redo() => CanRedo && Redo(RedoStack.Pop());
 
-        private bool Redo(ICommand command)
+        private bool Redo(ICommand command, bool spoof = false)
         {
-            if (!command.Do(Scene))
-                return false;
-            UndoStack.Push(command);
-            UpdateUI();
-            return true;
+            var result = spoof || command.Do(Scene);
+            if (result)
+            {
+                UndoStack.Push(command);
+                UpdateUI();
+            }
+            return result;
         }
 
         private bool Undo() => CanUndo && Undo(UndoStack.Pop());

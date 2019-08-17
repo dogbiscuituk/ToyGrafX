@@ -10,6 +10,22 @@
 
         public ColourFormat(int bpp) : this(bpp, bpp, bpp, bpp) { }
 
+        public ColourFormat(ColourFormat colourFormat) :
+            this(colourFormat.Red, colourFormat.Green, colourFormat.Blue, colourFormat.Alpha)
+        { }
+
+        public ColourFormat(ColourFormat colourFormat, string fieldName, int value) :
+            this(colourFormat)
+        {
+            switch (fieldName)
+            {
+                case "Red": Red = value; break;
+                case "Blue": Blue = value; break;
+                case "Green": Green = value; break;
+                case "Alpha": Alpha = value; break;
+            }
+        }
+
         public ColourFormat(int red, int green, int blue, int alpha)
         {
             Red = red;

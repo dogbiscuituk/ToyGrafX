@@ -9,6 +9,18 @@
     {
         public Point3F() : this(0, 0, 0) { }
 
+        public Point3F(Point3F p) : this(p.X, p.Y, p.Z) { }
+
+        public Point3F(Point3F p, string fieldName, float value) : this(p)
+        {
+            switch (fieldName)
+            {
+                case "X": X = value; break;
+                case "Y": Y = value; break;
+                case "Z": Z = value; break;
+            }
+        }
+
         public Point3F(float x, float y, float z)
         {
             X = x;

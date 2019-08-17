@@ -79,6 +79,38 @@
             dialog.Title = "Select Texture";
         }
 
+        /// <summary>
+        /// When the PropertyGrid signals editing of a subproperty, it has already modified the
+        /// parent property directly, bypassing the Command pattern. Therefore we need to spoof the
+        /// appropriate command, to ensure the undo/redo mechanism is kept in sync with the state of
+        /// the model.
+        /// </summary>
+        /// <param name="e">The EventArgs from the original event.</param>
+        internal void PropertyChanged(PropertyValueChangedEventArgs e)
+        {
+            var item = e.ChangedItem;
+            var label = item.Label;
+            var parentItem = item.Parent;
+            var parentlabel = parentItem.Label;
+            switch (parentlabel)
+            {
+                case PropertyNames.AccumColourFormat:
+                    Spoof(new AccumColourFormatCommand(new ColourFormat(Scene.AccumColourFormat, label, (int)e.OldValue)));
+                    break;
+                case PropertyNames.ColourFormat:
+                    Spoof(new ColourFormatCommand(new ColourFormat(Scene.ColourFormat, label, (int)e.OldValue)));
+                    break;
+                case PropertyNames.CameraPosition:
+                    Spoof(new CameraPositionCommand(new Point3F(Scene.CameraPosition, label, (float)e.OldValue)));
+                    break;
+                case PropertyNames.CameraRotation:
+                    Spoof(new CameraRotationCommand(new Euler3F(Scene.CameraRotation, label, (float)e.OldValue)));
+                    break;
+            }
+        }
+
+        private void Spoof(ICommand command) => CommandProcessor.Run(command, true);
+
         internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
             $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
 

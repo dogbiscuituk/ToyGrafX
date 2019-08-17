@@ -2,8 +2,8 @@
 {
     using System;
     using System.ComponentModel;
-    using System.Linq;
     using System.Windows.Forms;
+    using ToyGraf.Models;
     using ToyGraf.Views;
 
     internal class TraceTableController
@@ -16,6 +16,8 @@
             TraceTable = SceneForm.TraceTable;
             TraceTable.AutoGenerateColumns = false;
             TraceTable.SelectionChanged += EntityTable_SelectionChanged;
+            SceneForm.EditSelectAll.Click += EditSelectAll_Click;
+            SceneForm.EditInvertSelection.Click += EditInvertSelection_Click;
             SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
             SceneForm.ViewTraceTable.Click += ToggleEntityTable;
             SceneForm.PopupTraceTableMenu.Opening += PopupEntityTableMenu_Opening;
@@ -35,6 +37,7 @@
 
         #region Private Properties
 
+        private Scene Scene => SceneController.Scene;
         private readonly SceneController SceneController;
 
         private HostController _HostController;
@@ -82,7 +85,7 @@
             InvertSelection();
 
         private void EditSelectAll_Click(object sender, EventArgs e) =>
-            TraceTable.SelectAll();
+            SelectAll();
 
         private void HostFormClosing(object sender, FormClosingEventArgs e) =>
             TraceTableDocked = true;
@@ -119,12 +122,21 @@
         {
             foreach (DataGridViewRow row in TraceTable.Rows)
                 row.Selected = !row.Selected;
+
+            SceneController.PropertyGridController.SelectedObject = Scene;
         }
 
         private void ResizeRows()
         {
             foreach (DataGridViewRow row in TraceTable.Rows)
                 row.Height = 18;
+        }
+
+        private void SelectAll()
+        {
+            TraceTable.SelectAll();
+
+            SceneController.PropertyGridController.SelectedObjects = Scene._Traces.ToArray();
         }
 
         #endregion

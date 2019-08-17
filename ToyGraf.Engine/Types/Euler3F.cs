@@ -9,6 +9,18 @@
     {
         public Euler3F() : this(0, 0, 0) { }
 
+        public Euler3F(Euler3F p) : this(p.Pitch, p.Yaw, p.Roll) { }
+
+        public Euler3F(Euler3F p, string fieldName, float value) : this(p)
+        {
+            switch (fieldName)
+            {
+                case "Pitch": Pitch = value; break;
+                case "Yaw": Yaw = value; break;
+                case "Roll": Roll = value; break;
+            }
+        }
+
         public Euler3F(float pitch, float yaw, float roll)
         {
             Pitch = pitch;
