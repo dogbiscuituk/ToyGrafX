@@ -9,6 +9,18 @@
     {
         public Point3() : this(0, 0, 0) { }
 
+        public Point3(Point3 p) : this(p.X, p.Y, p.Z) { }
+
+        public Point3(Point3 p, string fieldName, int value) : this(p)
+        {
+            switch (fieldName)
+            {
+                case "X": X = value; break;
+                case "Y": Y = value; break;
+                case "Z": Z = value; break;
+            }
+        }
+
         public Point3(int x, int y, int z)
         {
             X = x;

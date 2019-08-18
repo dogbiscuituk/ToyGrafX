@@ -42,6 +42,8 @@
 
         public void Run(ICommand command, bool spoof = false)
         {
+            if (command == null)
+                return;
             if (LastSave > UndoStack.Count)
                 LastSave = -1;
             RedoStack.Clear();

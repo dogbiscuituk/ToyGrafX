@@ -1,3 +1,35 @@
+Scene properties:
+ \
+  Accumulator Colour Format
+  Colour Format
+  Camera Position
+  Camera Rotation°
+
+When selected, 
+ \
+  PropertyGrid.SelectedObject is a Scene;
+  PropertyGrid.SelectedObjects is an array of objects: {Scene}.
+
+Trace properties:
+ \
+  Location
+  Maximum
+  Minimum
+  Orientation°
+  Scale
+  Strip Count
+
+When selected with one trace, 
+ \
+  PropertyGrid.SelectedObject is a Trace;
+  PropertyGrid.SelectedObjects is an array of objects: {Trace}.
+
+When selected with 2+ traces, 
+ \
+  
+  
+
+
 ======================================================== PropertyPath[0], [1],...
 
 --------------------------------------------------------------------- Categorized

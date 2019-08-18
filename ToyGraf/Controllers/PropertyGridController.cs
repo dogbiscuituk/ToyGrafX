@@ -13,7 +13,6 @@
         internal PropertyGridController(SceneController sceneController)
         {
             SceneController = sceneController;
-            PropertyGrid = SceneForm.PropertyGrid;
             SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
             SceneForm.ViewPropertyGrid.Click += TogglePropertyGrid;
             SceneForm.PopupPropertyGridMenu.Opening += PopupPropertyGridMenu_Opening;
@@ -25,8 +24,7 @@
             PropertyGrid.PropertyValueChanged += PropertyGrid_PropertyValueChanged;
         }
 
-        private void PropertyGrid_PropertyValueChanged(object sender, PropertyValueChangedEventArgs e) =>
-            SceneController?.PropertyChanged(e);
+        internal PropertyGrid PropertyGrid => SceneForm.PropertyGrid;
 
         internal bool PropertyGridVisible
         {
@@ -69,7 +67,6 @@
         }
 
         private SceneForm SceneForm => SceneController.SceneForm;
-        private readonly PropertyGrid PropertyGrid;
 
         private bool PropertyGridDocked
         {
@@ -98,9 +95,6 @@
 
         #region Private Event Handlers
 
-        private void SceneController_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
-            PropertyChanged();
-
         private void HostFormClosing(object sender, FormClosingEventArgs e) =>
             PropertyGridDocked = true;
 
@@ -115,6 +109,12 @@
 
         private void PopupPropertyGridMenu_Opening(object sender, CancelEventArgs e) =>
             SceneForm.PopupPropertyGridFloat.Checked = !PropertyGridDocked;
+
+        private void PropertyGrid_PropertyValueChanged(object sender, PropertyValueChangedEventArgs e) =>
+            SceneController?.PropertyChanged(e);
+
+        private void SceneController_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
+            PropertyChanged();
 
         private void TogglePropertyGrid(object sender, EventArgs e)
         {

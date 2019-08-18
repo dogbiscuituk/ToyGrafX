@@ -35,7 +35,7 @@
 
         #region Internal Properties
 
-        public CommandProcessor CommandProcessor { get; private set; }
+        internal CommandProcessor CommandProcessor { get; private set; }
         internal readonly PropertyGridController PropertyGridController;
         internal Scene Scene;
         internal SceneForm SceneForm;
@@ -69,7 +69,6 @@
             }
         }
 
-
         internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
         internal void ModifiedChanged() => SceneForm.Text = JsonController.WindowCaption;
 
@@ -86,30 +85,21 @@
         /// the model.
         /// </summary>
         /// <param name="e">The EventArgs from the original event.</param>
-        internal void PropertyChanged(PropertyValueChangedEventArgs e)
+        internal bool PropertyChanged(PropertyValueChangedEventArgs e)
         {
             var item = e.ChangedItem;
             var label = item.Label;
             var parentItem = item.Parent;
-            var parentlabel = parentItem.Label;
-            switch (parentlabel)
-            {
-                case PropertyNames.AccumColourFormat:
-                    Spoof(new AccumColourFormatCommand(new ColourFormat(Scene.AccumColourFormat, label, (int)e.OldValue)));
-                    break;
-                case PropertyNames.ColourFormat:
-                    Spoof(new ColourFormatCommand(new ColourFormat(Scene.ColourFormat, label, (int)e.OldValue)));
-                    break;
-                case PropertyNames.CameraPosition:
-                    Spoof(new CameraPositionCommand(new Point3F(Scene.CameraPosition, label, (float)e.OldValue)));
-                    break;
-                case PropertyNames.CameraRotation:
-                    Spoof(new CameraRotationCommand(new Euler3F(Scene.CameraRotation, label, (float)e.OldValue)));
-                    break;
-            }
+            var parentLabel = parentItem.Label;
+            var value = e.OldValue;
+            var targets = PropertyGrid.SelectedObjects;
+            if (targets[0] is Scene)
+                Spoof(Spoof(parentLabel, label, value));
+            else
+                foreach (Trace trace in targets)
+                    Spoof(Spoof(trace, parentLabel, label, value));
+            return true;
         }
-
-        private void Spoof(ICommand command) => CommandProcessor.Run(command, true);
 
         internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
             $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
@@ -164,6 +154,7 @@
         private GLControl GLControl => SceneForm?.GLControl;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
+        private PropertyGrid PropertyGrid => PropertyGridController.PropertyGrid;
         private Timer Timer;
         private int UpdateCount;
         private bool Updating => UpdateCount > 0;
@@ -388,6 +379,45 @@
         private bool SaveFile() => JsonController.Save();
         private bool SaveFileAs() => JsonController.SaveAs();
         private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();
+
+        private void Spoof(ICommand command) => CommandProcessor.Run(command, true);
+
+        private ICommand Spoof(string property, string field, object value)
+        {
+            switch (property)
+            {
+                case PropertyNames.AccumColourFormat:
+                    return new AccumColourFormatCommand(new ColourFormat(Scene.AccumColourFormat, field, (int)value));
+                case PropertyNames.ColourFormat:
+                    return new ColourFormatCommand(new ColourFormat(Scene.ColourFormat, field, (int)value));
+                case PropertyNames.CameraPosition:
+                    return new CameraPositionCommand(new Point3F(Scene.CameraPosition, field, (float)value));
+                case PropertyNames.CameraRotation:
+                    return new CameraRotationCommand(new Euler3F(Scene.CameraRotation, field, (float)value));
+            }
+            return null;
+        }
+
+        private ICommand Spoof(Trace trace, string property, string field, object value)
+        {
+            var index = trace.Index;
+            switch (property)
+            {
+                case PropertyNames.Location:
+                    return new LocationCommand(index, new Point3F(trace.Location, field, (float)value));
+                case PropertyNames.Maximum:
+                    return new MaximumCommand(index, new Point3F(trace.Maximum, field, (float)value));
+                case PropertyNames.Minimum:
+                    return new MinimumCommand(index, new Point3F(trace.Minimum, field, (float)value));
+                case PropertyNames.Orientation:
+                    return new OrientationCommand(index, new Euler3F(trace.Orientation, field, (float)value));
+                case PropertyNames.Scale:
+                    return new ScaleCommand(index, new Point3F(trace.Scale, field, (float)value));
+                case PropertyNames.StripCount:
+                    return new StripCountCommand(index, new Point3(trace.StripCount, field, (int)value));
+            }
+            return null;
+        }
 
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
 
