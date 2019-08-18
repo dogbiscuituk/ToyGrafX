@@ -1,7 +1,9 @@
 ﻿namespace ToyGraf.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using System.Windows.Forms;
     using ToyGraf.Models;
     using ToyGraf.Views;
@@ -15,17 +17,28 @@
             SceneController = sceneController;
             TraceTable = SceneForm.TraceTable;
             TraceTable.AutoGenerateColumns = false;
-            TraceTable.SelectionChanged += EntityTable_SelectionChanged;
+            TraceTable.SelectionChanged += TraceTable_SelectionChanged;
             SceneForm.EditSelectAll.Click += EditSelectAll_Click;
             SceneForm.EditInvertSelection.Click += EditInvertSelection_Click;
             SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
-            SceneForm.ViewTraceTable.Click += ToggleEntityTable;
-            SceneForm.PopupTraceTableMenu.Opening += PopupEntityTableMenu_Opening;
-            SceneForm.PopupTraceTableFloat.Click += PopupEntityTableDock_Click;
-            SceneForm.PopupTraceTableHide.Click += PopupEntityTableHide_Click;
+            SceneForm.ViewTraceTable.Click += ToggleTraceTable;
+            SceneForm.PopupTraceTableMenu.Opening += PopupTraceTableMenu_Opening;
+            SceneForm.PopupTraceTableFloat.Click += PopupTraceTableDock_Click;
+            SceneForm.PopupTraceTableHide.Click += PopupTraceTableHide_Click;
+
+            RefreshDataSource();
         }
 
-        internal bool EntityTableVisible
+        private void RefreshDataSource()
+        {
+        }
+
+        internal IEnumerable<Trace> Selection => TraceTable.SelectedRows
+            .OfType<DataGridViewRow>()
+            .Select(p => p.DataBoundItem)
+            .Cast<Trace>();
+
+        internal bool TraceTableVisible
         {
             get => !SceneForm.SplitContainer1.Panel2Collapsed;
             set => SceneForm.SplitContainer1.Panel2Collapsed = !value;
@@ -62,7 +75,7 @@
                 if (TraceTableDocked != value)
                     if (TraceTableDocked)
                     {
-                        EntityTableVisible = false;
+                        TraceTableVisible = false;
                         HostController.HostFormClosing += HostFormClosing;
                         HostController.Show(SceneForm);
                         ResizeRows();
@@ -72,7 +85,7 @@
                         HostController.HostFormClosing -= HostFormClosing;
                         HostController.Close();
                         ResizeRows();
-                        EntityTableVisible = true;
+                        TraceTableVisible = true;
                     }
             }
         }
@@ -90,29 +103,29 @@
         private void HostFormClosing(object sender, FormClosingEventArgs e) =>
             TraceTableDocked = true;
 
-        private void PopupEntityTableDock_Click(object sender, System.EventArgs e) =>
+        private void PopupTraceTableDock_Click(object sender, System.EventArgs e) =>
             TraceTableDocked = !TraceTableDocked;
 
-        private void PopupEntityTableHide_Click(object sender, EventArgs e)
+        private void PopupTraceTableHide_Click(object sender, EventArgs e)
         {
             TraceTableDocked = true;
-            EntityTableVisible = false;
+            TraceTableVisible = false;
         }
 
-        private void PopupEntityTableMenu_Opening(object sender, CancelEventArgs e) =>
+        private void PopupTraceTableMenu_Opening(object sender, CancelEventArgs e) =>
             SceneForm.PopupTraceTableFloat.Checked = !TraceTableDocked;
 
-        private void ToggleEntityTable(object sender, EventArgs e)
+        private void ToggleTraceTable(object sender, EventArgs e)
         {
             TraceTableDocked = true;
-            EntityTableVisible = !EntityTableVisible;
+            TraceTableVisible = !TraceTableVisible;
         }
 
-        private void EntityTable_SelectionChanged(object sender, EventArgs e) =>
+        private void TraceTable_SelectionChanged(object sender, EventArgs e) =>
             SelectionChanged?.Invoke(sender, e);
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
-            SceneForm.ViewTraceTable.Checked = EntityTableVisible;
+            SceneForm.ViewTraceTable.Checked = TraceTableVisible;
 
         #endregion
 
@@ -120,10 +133,12 @@
 
         private void InvertSelection()
         {
+            RefreshDataSource();
+
             foreach (DataGridViewRow row in TraceTable.Rows)
                 row.Selected = !row.Selected;
 
-            SceneController.PropertyGridController.SelectedObject = Scene;
+            //SceneController.PropertyGridController.SelectedObject = Scene;
         }
 
         private void ResizeRows()
@@ -134,9 +149,11 @@
 
         private void SelectAll()
         {
+            RefreshDataSource();
+
             TraceTable.SelectAll();
 
-            SceneController.PropertyGridController.SelectedObjects = Scene._Traces.ToArray();
+            //SceneController.PropertyGridController.SelectedObjects = Scene._Traces.ToArray();
         }
 
         #endregion

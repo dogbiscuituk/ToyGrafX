@@ -21,7 +21,7 @@
         private readonly SceneController SceneController;
         private SceneForm Form => SceneController.SceneForm;
         private PropertyGridController PropertyGridController => SceneController.PropertyGridController;
-        private TraceTableController EntityTableController => SceneController.TraceTableController;
+        private TraceTableController TraceTableController => SceneController.TraceTableController;
 
         private FormState SavedFormState;
 
@@ -45,7 +45,7 @@
                 | (Form.Toolbar.Visible ? FormElements.Toolbar : 0)
                 | (Form.StatusBar.Visible ? FormElements.StatusBar : 0)
                 | (PropertyGridController.PropertyGridVisible ? FormElements.PropertyGrid : 0)
-                | (EntityTableController.EntityTableVisible ? FormElements.EntityTable : 0),
+                | (TraceTableController.TraceTableVisible ? FormElements.TraceTable : 0),
                 WindowState = Form.WindowState
             };
             set
@@ -56,7 +56,7 @@
                 Form.Toolbar.Visible = (elements & FormElements.Toolbar) != 0;
                 Form.StatusBar.Visible = (elements & FormElements.StatusBar) != 0;
                 PropertyGridController.PropertyGridVisible = (elements & FormElements.PropertyGrid) != 0;
-                EntityTableController.EntityTableVisible = (elements & FormElements.EntityTable) != 0;
+                TraceTableController.TraceTableVisible = (elements & FormElements.TraceTable) != 0;
                 Form.WindowState = value.WindowState;
             }
         }
@@ -103,7 +103,7 @@
             Toolbar = 0x02,
             StatusBar = 0x04,
             PropertyGrid = 0x08,
-            EntityTable = 0x10
+            TraceTable = 0x10
         }
 
         private struct FormState
