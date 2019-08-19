@@ -134,7 +134,11 @@
 
         private void HelpAbout_Click(object sender, System.EventArgs e) => HelpAbout();
 
-        private void HelpAbout() => new AboutController().ShowDialog(SceneForm);
+        private void HelpAbout()
+        {
+            new AboutController().ShowDialog(SceneForm);
+            CreateProgram();
+        }
 
         private void JsonController_FileLoaded(object sender, EventArgs e) => FileLoaded();
         private void JsonController_FilePathChanged(object sender, EventArgs e) => UpdateCaption();
@@ -469,7 +473,9 @@
         private int
             CurrencyCount;
 
-        private StringBuilder ShaderLog;
+        private StringBuilder
+            GpuCode,
+            GpuLog;
 
         #endregion
 
@@ -491,7 +497,8 @@
             if (!MakeCurrent(true))
                 return;
             Scene._GPUStatus = GPUStatus.OK;
-            ShaderLog = new StringBuilder();
+            GpuCode = new StringBuilder();
+            GpuLog = new StringBuilder();
             ProgramID = GL.CreateProgram();
             CreateShaders();
             Log("Linking program...");
@@ -500,8 +507,10 @@
             GL.ValidateProgram(ProgramID);
             Log(GL.GetProgramInfoLog(ProgramID));
             Log("Done.");
-            Scene._GPULog = ShaderLog.ToString().TrimEnd();
-            ShaderLog = null;
+            Scene._GPUCode = GpuCode.ToString().TrimEnd();
+            Scene._GPULog = GpuLog.ToString().TrimEnd();
+            GpuCode = null;
+            GpuLog = null;
             GetUniformLocations();
             DeleteShaders();
             MakeCurrent(false);
@@ -521,10 +530,10 @@
                         shader = new StringBuilder();
                         shader.AppendLine(Scene.GetScript(shaderType));
                     }
-                    shader.AppendLine($@"
-        case {traceIndex}:
+                    shader.AppendLine($@"  case {traceIndex}:
 {script}
-            break;");
+   break;
+");
                 }
             }
             if (shader == null)
@@ -533,13 +542,13 @@
                     Log("ERROR: Mandatory shader missing.");
                 return 0;
             }
-            shader.AppendLine(@"
-        default:
-            break;
-    }
+            shader.AppendLine(@"  default:
+   break;
+ }
 }");
             Log($"Compiling {shaderType.GetShaderName()}...");
             var shaderID = GL.CreateShader(shaderType);
+            GpuCode.Append(shader).AppendLine();
             GL.ShaderSource(shaderID, shader.ToString());
             GL.CompileShader(shaderID);
             GL.AttachShader(ProgramID, shaderID);
@@ -591,7 +600,7 @@
         {
             if (string.IsNullOrWhiteSpace(s))
                 return;
-            ShaderLog.AppendLine(s.Trim());
+            GpuLog.AppendLine(s.Trim());
             if (s.Contains("ERROR:"))
                 Scene._GPUStatus |= GPUStatus.Error;
             if (s.Contains("WARNING:"))
