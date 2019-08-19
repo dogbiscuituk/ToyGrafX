@@ -31,6 +31,9 @@
 
         private void RefreshDataSource()
         {
+            var traces = Scene._Traces;
+            TraceTable.DataSource = traces.Any() ? traces : null;
+            ResizeRows();
         }
 
         internal IEnumerable<Trace> Selection => TraceTable.SelectedRows

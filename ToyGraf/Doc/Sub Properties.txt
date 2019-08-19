@@ -26,6 +26,8 @@ When selected with one trace,
 
 When selected with 2+ traces, 
  \
+  PropertyGrid.SelectedObject is a Trace;
+  PropertyGrid.SelectedObjects is an array of objects: {Trace#1, Trace#2}.
   
   
 

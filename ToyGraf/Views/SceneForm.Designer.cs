@@ -42,6 +42,7 @@
             this.PopupTraceTableMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.PopupTraceTableFloat = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupTraceTableHide = new System.Windows.Forms.ToolStripMenuItem();
+            this.tracesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Toolbar = new ToyGraf.Controls.TgToolStrip();
             this.tbNew = new System.Windows.Forms.ToolStripSplitButton();
             this.tbNewEmptyScene = new System.Windows.Forms.ToolStripMenuItem();
@@ -94,14 +95,15 @@
             this.HelpOpenGLShadingLanguage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripSeparator();
             this.HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tracesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.sceneBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Visible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.shader1VertexDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.shader2TessControlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.shader3TessEvaluationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.shader4GeometryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.shader5FragmentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.shader6ComputeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sceneBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
@@ -118,9 +120,9 @@
             this.PopupPropertyGridMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TraceTable)).BeginInit();
             this.PopupTraceTableMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tracesBindingSource)).BeginInit();
             this.Toolbar.SuspendLayout();
             this.MainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tracesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sceneBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -130,7 +132,7 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(323, 307);
+            this.GLControl.Size = new System.Drawing.Size(321, 305);
             this.GLControl.TabIndex = 1;
             this.GLControl.VSync = false;
             // 
@@ -185,7 +187,7 @@
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.TraceTable);
             this.SplitContainer1.Size = new System.Drawing.Size(591, 395);
-            this.SplitContainer1.SplitterDistance = 307;
+            this.SplitContainer1.SplitterDistance = 305;
             this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
@@ -203,8 +205,8 @@
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(591, 307);
-            this.SplitContainer2.SplitterDistance = 323;
+            this.SplitContainer2.Size = new System.Drawing.Size(591, 305);
+            this.SplitContainer2.SplitterDistance = 321;
             this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
             // 
@@ -214,7 +216,7 @@
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(263, 307);
+            this.PropertyGrid.Size = new System.Drawing.Size(265, 305);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -250,6 +252,8 @@
             this.TraceTable.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.TraceTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TraceTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Description,
+            this.Visible,
             this.shader1VertexDataGridViewTextBoxColumn,
             this.shader2TessControlDataGridViewTextBoxColumn,
             this.shader3TessEvaluationDataGridViewTextBoxColumn,
@@ -257,15 +261,14 @@
             this.shader5FragmentDataGridViewTextBoxColumn,
             this.shader6ComputeDataGridViewTextBoxColumn});
             this.TraceTable.ContextMenuStrip = this.PopupTraceTableMenu;
-            this.TraceTable.DataMember = "Traces";
-            this.TraceTable.DataSource = this.sceneBindingSource;
+            this.TraceTable.DataSource = this.tracesBindingSource;
             this.TraceTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TraceTable.Location = new System.Drawing.Point(0, 0);
             this.TraceTable.Name = "TraceTable";
             this.TraceTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.TraceTable.RowHeadersVisible = false;
             this.TraceTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TraceTable.Size = new System.Drawing.Size(591, 83);
+            this.TraceTable.Size = new System.Drawing.Size(591, 85);
             this.TraceTable.TabIndex = 0;
             // 
             // PopupTraceTableMenu
@@ -287,6 +290,11 @@
             this.PopupTraceTableHide.Name = "PopupTraceTableHide";
             this.PopupTraceTableHide.Size = new System.Drawing.Size(100, 22);
             this.PopupTraceTableHide.Text = "&Hide";
+            // 
+            // tracesBindingSource
+            // 
+            this.tracesBindingSource.DataMember = "Traces";
+            this.tracesBindingSource.DataSource = this.sceneBindingSource;
             // 
             // Toolbar
             // 
@@ -744,10 +752,23 @@
             this.HelpAbout.Size = new System.Drawing.Size(229, 22);
             this.HelpAbout.Text = "&About";
             // 
-            // tracesBindingSource
+            // sceneBindingSource
             // 
-            this.tracesBindingSource.DataMember = "Traces";
-            this.tracesBindingSource.DataSource = this.sceneBindingSource;
+            this.sceneBindingSource.DataSource = typeof(ToyGraf.Models.Scene);
+            // 
+            // Description
+            // 
+            this.Description.DataPropertyName = "Description";
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            // 
+            // Visible
+            // 
+            this.Visible.DataPropertyName = "Visible";
+            this.Visible.HeaderText = "Visible?";
+            this.Visible.Name = "Visible";
+            this.Visible.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Visible.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // shader1VertexDataGridViewTextBoxColumn
             // 
@@ -785,10 +806,6 @@
             this.shader6ComputeDataGridViewTextBoxColumn.HeaderText = "Shader 6: Compute";
             this.shader6ComputeDataGridViewTextBoxColumn.Name = "shader6ComputeDataGridViewTextBoxColumn";
             // 
-            // sceneBindingSource
-            // 
-            this.sceneBindingSource.DataSource = typeof(ToyGraf.Models.Scene);
-            // 
             // SceneForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -820,11 +837,11 @@
             this.PopupPropertyGridMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TraceTable)).EndInit();
             this.PopupTraceTableMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tracesBindingSource)).EndInit();
             this.Toolbar.ResumeLayout(false);
             this.Toolbar.PerformLayout();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tracesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sceneBindingSource)).EndInit();
             this.ResumeLayout(false);
 
@@ -896,13 +913,15 @@
         internal System.Windows.Forms.ToolStripMenuItem SceneAddNewTrace;
         internal System.Windows.Forms.ToolStripMenuItem HelpOpenGLShadingLanguage;
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem12;
+        private System.Windows.Forms.BindingSource tracesBindingSource;
         private System.Windows.Forms.BindingSource sceneBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Description;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Visible;
         private System.Windows.Forms.DataGridViewTextBoxColumn shader1VertexDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn shader2TessControlDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn shader3TessEvaluationDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn shader4GeometryDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn shader5FragmentDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn shader6ComputeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource tracesBindingSource;
     }
 }
