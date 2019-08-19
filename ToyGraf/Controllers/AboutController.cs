@@ -36,10 +36,10 @@
 
         internal AboutDialog View
         {
-            get => _view;
+            get => _View;
             set
             {
-                _view = value;
+                _View = value;
                 View.NewtonsoftLinkLabel.LinkClicked += NewtonsoftLinkClick;
                 View.GplLinkLabel.LinkClicked += GplLinkClick;
             }
@@ -49,7 +49,7 @@
 
         #region Private Properties
 
-        private AboutDialog _view;
+        private AboutDialog _View;
 
         #endregion
 

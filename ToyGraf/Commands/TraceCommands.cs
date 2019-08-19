@@ -60,9 +60,9 @@
         { }
     }
 
-    internal class TransformationCommand : TracePropertyCommand<Matrix4>
+    internal class TransformCommand : TracePropertyCommand<Matrix4>
     {
-        internal TransformationCommand(int index, Matrix4 value) : base(index, PropertyNames.Transformation,
+        internal TransformCommand(int index, Matrix4 value) : base(index, PropertyNames.Transform,
             value, e => e.GetTransform(), (e, v) => e.SetTransform(v))
         { }
     }

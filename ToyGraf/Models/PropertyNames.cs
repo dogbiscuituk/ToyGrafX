@@ -37,7 +37,7 @@
             StripCount = "Strip Count",
             Title = "Title",
             Traces = "Traces",
-            Transformation = "Transformation",
+            Transform = "Transform",
             Visible = "Visible?",
             VSync = "VSync";
     }

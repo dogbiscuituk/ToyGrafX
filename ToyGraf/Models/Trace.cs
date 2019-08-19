@@ -121,12 +121,12 @@
 
         [Category(Categories.SystemRO)]
         [Description("The transformation matrix of the trace.")]
-        [DisplayName(PropertyNames.Transformation)]
+        [DisplayName(PropertyNames.Transform)]
         [JsonIgnore]
-        public Matrix4 Transformation
+        public Matrix4 Transform
         {
             get => GetTransform();
-            set => Run(new TransformationCommand(Index, value));
+            set => Run(new TransformCommand(Index, value));
         }
 
         #endregion

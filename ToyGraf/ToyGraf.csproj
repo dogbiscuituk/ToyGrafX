@@ -68,6 +68,7 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
+    <Compile Include="Controllers\ColumnsController.cs" />
     <Compile Include="Controllers\FullScreenController.cs" />
     <Compile Include="Controllers\HostController.cs" />
     <Compile Include="Controllers\JsonController.cs" />
@@ -91,6 +92,12 @@
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\SceneController.cs" />
+    <Compile Include="Views\ColumnsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ColumnsDialog.Designer.cs">
+      <DependentUpon>ColumnsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\HostForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +121,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Views\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ColumnsDialog.resx">
+      <DependentUpon>ColumnsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\HostForm.resx">
       <DependentUpon>HostForm.cs</DependentUpon>

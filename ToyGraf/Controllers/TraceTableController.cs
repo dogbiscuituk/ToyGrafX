@@ -25,6 +25,7 @@
             SceneForm.PopupTraceTableMenu.Opening += PopupTraceTableMenu_Opening;
             SceneForm.PopupTraceTableFloat.Click += PopupTraceTableDock_Click;
             SceneForm.PopupTraceTableHide.Click += PopupTraceTableHide_Click;
+            SceneForm.PopupTraceTableColumns.Click += PopupTraceTableColumns_Click;
 
             RefreshDataSource();
         }
@@ -40,6 +41,8 @@
             .OfType<DataGridViewRow>()
             .Select(p => p.DataBoundItem)
             .Cast<Trace>();
+
+        internal readonly DataGridView TraceTable;
 
         internal bool TraceTableVisible
         {
@@ -68,7 +71,6 @@
         }
 
         private SceneForm SceneForm => SceneController.SceneForm;
-        private readonly DataGridView TraceTable;
 
         private bool TraceTableDocked
         {
@@ -105,6 +107,9 @@
 
         private void HostFormClosing(object sender, FormClosingEventArgs e) =>
             TraceTableDocked = true;
+
+        private void PopupTraceTableColumns_Click(object sender, EventArgs e) =>
+            new ColumnsController(this).ShowDialog(SceneForm);
 
         private void PopupTraceTableDock_Click(object sender, System.EventArgs e) =>
             TraceTableDocked = !TraceTableDocked;
