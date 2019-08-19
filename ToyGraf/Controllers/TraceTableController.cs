@@ -121,7 +121,7 @@
         }
 
         private void PopupTraceTableMenu_Opening(object sender, CancelEventArgs e) =>
-            SceneForm.PopupTraceTableFloat.Checked = !TraceTableDocked;
+            SceneForm.PopupTraceTableFloat.Text = TraceTableDocked ? "&Undock" : "&Dock";
 
         private void ToggleTraceTable(object sender, EventArgs e)
         {

@@ -108,7 +108,7 @@
         }
 
         private void PopupPropertyGridMenu_Opening(object sender, CancelEventArgs e) =>
-            SceneForm.PopupPropertyGridFloat.Checked = !PropertyGridDocked;
+            SceneForm.PopupPropertyGridFloat.Text = PropertyGridDocked ? "&Undock" : "&Dock";
 
         private void PropertyGrid_PropertyValueChanged(object sender, PropertyValueChangedEventArgs e) =>
             SceneController?.PropertyChanged(e);
