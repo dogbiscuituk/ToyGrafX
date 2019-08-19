@@ -3,7 +3,6 @@
     using OpenTK;
     using ToyGraf.Engine.Types;
     using ToyGraf.Models;
-    using ToyGraf.Models.Enums;
 
     internal class DescriptionCommand : TracePropertyCommand<string>
     {
@@ -68,9 +67,9 @@
         { }
     }
 
-    internal class VisibleCommand : TracePropertyCommand<YN>
+    internal class VisibleCommand : TracePropertyCommand<bool>
     {
-        internal VisibleCommand(int index, YN value) : base(index, PropertyNames.Visible,
+        internal VisibleCommand(int index, bool value) : base(index, PropertyNames.Visible,
             value, t => t._Visible, (t, v) => t._Visible = v)
         { }
     }

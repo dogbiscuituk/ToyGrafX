@@ -43,6 +43,7 @@
             this.PopupTraceTableFloat = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupTraceTableHide = new System.Windows.Forms.ToolStripMenuItem();
             this.tracesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.sceneBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Toolbar = new ToyGraf.Controls.TgToolStrip();
             this.tbNew = new System.Windows.Forms.ToolStripSplitButton();
             this.tbNewEmptyScene = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,9 +96,9 @@
             this.HelpOpenGLShadingLanguage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripSeparator();
             this.HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.sceneBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Visible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.IsVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.shader1VertexDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.shader2TessControlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.shader3TessEvaluationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -121,9 +122,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.TraceTable)).BeginInit();
             this.PopupTraceTableMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tracesBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sceneBindingSource)).BeginInit();
             this.Toolbar.SuspendLayout();
             this.MainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // GLControl
@@ -132,7 +133,7 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(321, 305);
+            this.GLControl.Size = new System.Drawing.Size(320, 304);
             this.GLControl.TabIndex = 1;
             this.GLControl.VSync = false;
             // 
@@ -187,7 +188,7 @@
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.TraceTable);
             this.SplitContainer1.Size = new System.Drawing.Size(591, 395);
-            this.SplitContainer1.SplitterDistance = 305;
+            this.SplitContainer1.SplitterDistance = 304;
             this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
@@ -205,8 +206,8 @@
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(591, 305);
-            this.SplitContainer2.SplitterDistance = 321;
+            this.SplitContainer2.Size = new System.Drawing.Size(591, 304);
+            this.SplitContainer2.SplitterDistance = 320;
             this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
             // 
@@ -216,7 +217,7 @@
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(265, 305);
+            this.PropertyGrid.Size = new System.Drawing.Size(266, 304);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -253,7 +254,7 @@
             this.TraceTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TraceTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Description,
-            this.Visible,
+            this.IsVisible,
             this.shader1VertexDataGridViewTextBoxColumn,
             this.shader2TessControlDataGridViewTextBoxColumn,
             this.shader3TessEvaluationDataGridViewTextBoxColumn,
@@ -268,7 +269,7 @@
             this.TraceTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.TraceTable.RowHeadersVisible = false;
             this.TraceTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TraceTable.Size = new System.Drawing.Size(591, 85);
+            this.TraceTable.Size = new System.Drawing.Size(591, 86);
             this.TraceTable.TabIndex = 0;
             // 
             // PopupTraceTableMenu
@@ -293,8 +294,11 @@
             // 
             // tracesBindingSource
             // 
-            this.tracesBindingSource.DataMember = "Traces";
             this.tracesBindingSource.DataSource = this.sceneBindingSource;
+            // 
+            // sceneBindingSource
+            // 
+            this.sceneBindingSource.DataSource = typeof(ToyGraf.Models.Scene);
             // 
             // Toolbar
             // 
@@ -752,9 +756,13 @@
             this.HelpAbout.Size = new System.Drawing.Size(229, 22);
             this.HelpAbout.Text = "&About";
             // 
-            // sceneBindingSource
+            // dataGridViewCheckBoxColumn1
             // 
-            this.sceneBindingSource.DataSource = typeof(ToyGraf.Models.Scene);
+            this.dataGridViewCheckBoxColumn1.DataPropertyName = "Visible";
+            this.dataGridViewCheckBoxColumn1.HeaderText = "Visible?";
+            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+            this.dataGridViewCheckBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewCheckBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // Description
             // 
@@ -762,13 +770,13 @@
             this.Description.HeaderText = "Description";
             this.Description.Name = "Description";
             // 
-            // Visible
+            // IsVisible
             // 
-            this.Visible.DataPropertyName = "Visible";
-            this.Visible.HeaderText = "Visible?";
-            this.Visible.Name = "Visible";
-            this.Visible.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Visible.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.IsVisible.DataPropertyName = "Visible";
+            this.IsVisible.HeaderText = "Visible?";
+            this.IsVisible.Name = "IsVisible";
+            this.IsVisible.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.IsVisible.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // shader1VertexDataGridViewTextBoxColumn
             // 
@@ -838,11 +846,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.TraceTable)).EndInit();
             this.PopupTraceTableMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tracesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sceneBindingSource)).EndInit();
             this.Toolbar.ResumeLayout(false);
             this.Toolbar.PerformLayout();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -915,8 +923,9 @@
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem12;
         private System.Windows.Forms.BindingSource tracesBindingSource;
         private System.Windows.Forms.BindingSource sceneBindingSource;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Description;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Visible;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsVisible;
         private System.Windows.Forms.DataGridViewTextBoxColumn shader1VertexDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn shader2TessControlDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn shader3TessEvaluationDataGridViewTextBoxColumn;

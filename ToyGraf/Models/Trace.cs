@@ -9,7 +9,6 @@
     using ToyGraf.Commands;
     using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
-    using ToyGraf.Models.Enums;
 
     [DefaultProperty("Shader1Vertex")]
     public class Trace
@@ -114,7 +113,7 @@
         [Description("Take a wild guess.")]
         [DisplayName(PropertyNames.Visible)]
         [JsonIgnore]
-        public YN Visible { get => _Visible; set => Run(new VisibleCommand(Index, value)); }
+        public bool Visible { get => _Visible; set => Run(new VisibleCommand(Index, value)); }
 
         #endregion
 
@@ -298,7 +297,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
         [JsonProperty] internal string _Shader5Fragment;
         [JsonProperty] internal string _Shader6Compute;
         [JsonProperty] internal Point3 _StripCount;
-        [JsonProperty] internal YN _Visible;
+        [JsonProperty] internal bool _Visible;
 
         #endregion
 
@@ -350,8 +349,8 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             internal const Pattern
                 Pattern = Engine.Types.Pattern.TriangleStrip;
 
-            internal const YN
-                Visible = YN.Yes;
+            internal const bool
+                Visible = true;
 
             internal const int
                 Index = -1;
@@ -376,8 +375,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
                 OrientationString = "0, 0, 0",
                 PatternString = "TriangleStrip",
                 ScaleString = "1, 1, 1",
-                Shader1Vertex = @"
-z = sqrt(x * x + y * y);
+                Shader1Vertex = @"z = sqrt(x * x + y * y);
 z = cos(20 * z - 10 * t) * exp(-3 * z);
 r = (x + 1) / 2;
 g = (y + 1) / 2;
@@ -388,8 +386,7 @@ colour = vec3(r, g, b);",
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
-                Shader5Fragment = @"
-FragColor = vec4(colour, 0.1f);",
+                Shader5Fragment = @"FragColor = vec4(colour, 0.1f);",
                 Shader6Compute = "",
                 StripCountString = "0, 0, 0";
         }
