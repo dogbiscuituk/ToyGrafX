@@ -26,15 +26,7 @@
             SceneForm.PopupTraceTableFloat.Click += PopupTraceTableDock_Click;
             SceneForm.PopupTraceTableHide.Click += PopupTraceTableHide_Click;
             SceneForm.PopupTraceTableColumns.Click += PopupTraceTableColumns_Click;
-
-            RefreshDataSource();
-        }
-
-        private void RefreshDataSource()
-        {
-            var traces = Scene._Traces;
-            TraceTable.DataSource = traces.Any() ? traces : null;
-            ResizeRows();
+            Refresh();
         }
 
         internal IEnumerable<Trace> Selection => TraceTable.SelectedRows
@@ -50,7 +42,14 @@
             set => SceneForm.SplitContainer1.Panel2Collapsed = !value;
         }
 
-        internal event EventHandler SelectionChanged;
+        internal void Refresh()
+        {
+            var traces = Scene._Traces;
+            TraceTable.DataSource = traces.Any() ? traces : null;
+            SceneForm.tracesBindingSource.ResetBindings(false);
+            SceneForm.sceneBindingSource.ResetBindings(false);
+            TraceTable.Refresh();
+        }
 
         #endregion
 
@@ -83,17 +82,17 @@
                         TraceTableVisible = false;
                         HostController.HostFormClosing += HostFormClosing;
                         HostController.Show(SceneForm);
-                        ResizeRows();
                     }
                     else
                     {
                         HostController.HostFormClosing -= HostFormClosing;
                         HostController.Close();
-                        ResizeRows();
                         TraceTableVisible = true;
                     }
             }
         }
+
+        private bool Updating;
 
         #endregion
 
@@ -129,8 +128,7 @@
             TraceTableVisible = !TraceTableVisible;
         }
 
-        private void TraceTable_SelectionChanged(object sender, EventArgs e) =>
-            SelectionChanged?.Invoke(sender, e);
+        private void TraceTable_SelectionChanged(object sender, EventArgs e) => OnSelectionChanged();
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
             SceneForm.ViewTraceTable.Checked = TraceTableVisible;
@@ -141,28 +139,20 @@
 
         private void InvertSelection()
         {
-            RefreshDataSource();
-
+            Updating = true;
             foreach (DataGridViewRow row in TraceTable.Rows)
                 row.Selected = !row.Selected;
-
-            //SceneController.PropertyGridController.SelectedObject = Scene;
+            Updating = false;
+            OnSelectionChanged();
         }
 
-        private void ResizeRows()
+        private void OnSelectionChanged()
         {
-            foreach (DataGridViewRow row in TraceTable.Rows)
-                row.Height = 18;
+            if (!Updating)
+                SceneController.OnSelectionChanged();
         }
 
-        private void SelectAll()
-        {
-            RefreshDataSource();
-
-            TraceTable.SelectAll();
-
-            //SceneController.PropertyGridController.SelectedObjects = Scene._Traces.ToArray();
-        }
+        private void SelectAll() => TraceTable.SelectAll();
 
         #endregion
     }

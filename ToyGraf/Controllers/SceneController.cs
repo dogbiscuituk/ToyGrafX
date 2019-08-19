@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using System.Text;
     using System.Windows.Forms;
     using ToyGraf.Commands;
@@ -69,13 +70,22 @@
             }
         }
 
-        internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
-        internal void ModifiedChanged() => SceneForm.Text = JsonController.WindowCaption;
-
         internal static void InitTextureDialog(OpenFileDialog dialog)
         {
             dialog.Filter = Settings.Default.ImageFilter;
             dialog.Title = "Select Texture";
+        }
+
+        internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
+        internal void ModifiedChanged() => SceneForm.Text = JsonController.WindowCaption;
+
+        internal void OnSelectionChanged()
+        {
+            var selection = TraceTableController.Selection;
+            if (selection.Any())
+                PropertyGridController.SelectedObjects = selection.ToArray();
+            else
+                PropertyGridController.SelectedObject = Scene;
         }
 
         /// <summary>
@@ -366,6 +376,7 @@
                     break;
             }
             PropertyGridController.Refresh();
+            TraceTableController.Refresh();
         }
 
         private SceneController OpenFile(FilterIndex filterIndex = FilterIndex.File) =>
