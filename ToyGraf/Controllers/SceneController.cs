@@ -114,11 +114,7 @@
         internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
             $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
 
-        internal void Show()
-        {
-            SceneForm.Show();
-            CreateProgram();
-        }
+        internal void Show() => SceneForm.Show();
 
         #endregion
 
@@ -144,11 +140,7 @@
 
         private void HelpAbout_Click(object sender, System.EventArgs e) => HelpAbout();
 
-        private void HelpAbout()
-        {
-            new AboutController().ShowDialog(SceneForm);
-            CreateProgram();
-        }
+        private void HelpAbout() => new AboutController().ShowDialog(SceneForm);
 
         private void JsonController_FileLoaded(object sender, EventArgs e) => FileLoaded();
         private void JsonController_FilePathChanged(object sender, EventArgs e) => UpdateCaption();
@@ -192,7 +184,7 @@
             {
                 TimerStop();
                 Timer.Tick -= Timer_Tick;
-                DeleteProgram();
+                InvalidateProgram();
                 CommandProcessor.Clear();
                 ConnectControllers(false);
                 ConnectEventHandlers(false);
@@ -375,6 +367,18 @@
                     TimerInit();
                     break;
             }
+            switch (propertyName)
+            {
+                case PropertyNames.Shader1Vertex:
+                case PropertyNames.Shader2TessControl:
+                case PropertyNames.Shader3TessEvaluation:
+                case PropertyNames.Shader4Geometry:
+                case PropertyNames.Shader5Fragment:
+                case PropertyNames.Shader6Compute:
+                case PropertyNames.Traces:
+                    InvalidateProgram();
+                    break;
+            }
             PropertyGridController.Refresh();
             TraceTableController.Refresh();
         }
@@ -484,6 +488,12 @@
         private int
             CurrencyCount;
 
+        private bool
+            ProgramCompiled;
+
+        private bool
+            ProgramValid => ProgramCompiled && Scene._GPUStatus == GPUStatus.OK;
+
         private StringBuilder
             GpuCode,
             GpuLog;
@@ -500,31 +510,6 @@
         private void BindAttributes()
         {
             BindAttribute(0, "position");
-        }
-
-        private void CreateProgram()
-        {
-            DeleteProgram();
-            if (!MakeCurrent(true))
-                return;
-            Scene._GPUStatus = GPUStatus.OK;
-            GpuCode = new StringBuilder();
-            GpuLog = new StringBuilder();
-            ProgramID = GL.CreateProgram();
-            CreateShaders();
-            Log("Linking program...");
-            BindAttributes();
-            GL.LinkProgram(ProgramID);
-            GL.ValidateProgram(ProgramID);
-            Log(GL.GetProgramInfoLog(ProgramID));
-            Log("Done.");
-            Scene._GPUCode = GpuCode.ToString().TrimEnd();
-            Scene._GPULog = GpuLog.ToString().TrimEnd();
-            GpuCode = null;
-            GpuLog = null;
-            GetUniformLocations();
-            DeleteShaders();
-            MakeCurrent(false);
         }
 
         private int CreateShader(ShaderType shaderType, bool mandatory = false)
@@ -577,16 +562,6 @@
             ComputeShaderID = CreateShader(ShaderType.ComputeShader);
         }
 
-        private void DeleteProgram()
-        {
-            DeleteShaders();
-            if (ProgramID != 0)
-            {
-                GL.DeleteProgram(ProgramID);
-                ProgramID = 0;
-            }
-        }
-
         private void DeleteShader(ref int shaderID)
         {
             if (shaderID != 0)
@@ -607,6 +582,20 @@
             DeleteShader(ref ComputeShaderID);
         }
 
+        private void InvalidateProgram()
+        {
+            ProgramCompiled = false;
+            if (!MakeCurrent(true))
+                return;
+            DeleteShaders();
+            if (ProgramID != 0)
+            {
+                GL.DeleteProgram(ProgramID);
+                ProgramID = 0;
+            }
+            MakeCurrent(false);
+        }
+
         private void Log(string s)
         {
             if (string.IsNullOrWhiteSpace(s))
@@ -616,6 +605,30 @@
                 Scene._GPUStatus |= GPUStatus.Error;
             if (s.Contains("WARNING:"))
                 Scene._GPUStatus |= GPUStatus.Warning;
+        }
+
+        private void ValidateProgram()
+        {
+            if (ProgramCompiled)
+                return;
+            Scene._GPUStatus = GPUStatus.OK;
+            GpuCode = new StringBuilder();
+            GpuLog = new StringBuilder();
+            ProgramID = GL.CreateProgram();
+            CreateShaders();
+            Log("Linking program...");
+            BindAttributes();
+            GL.LinkProgram(ProgramID);
+            GL.ValidateProgram(ProgramID);
+            Log(GL.GetProgramInfoLog(ProgramID));
+            Log("Done.");
+            Scene._GPUCode = GpuCode.ToString().TrimEnd();
+            Scene._GPULog = GpuLog.ToString().TrimEnd();
+            GpuCode = null;
+            GpuLog = null;
+            GetUniformLocations();
+            DeleteShaders();
+            ProgramCompiled = true;
         }
 
         #endregion
@@ -758,25 +771,24 @@
             return true;
         }
 
-        private bool Render()
+        private void Render()
         {
-            var result = MakeCurrent(true);
-            if (result)
-            {
-                RenderFrame();
-                MakeCurrent(false);
-            }
-            return result;
-        }
-
-        private void RenderFrame()
-        {
+            if (!MakeCurrent(true))
+                return;
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.Texture2D);
             GL.ClearColor(Scene.BackgroundColour);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            ShaderStart();
+            ValidateProgram();
+            if (ProgramValid)
+                RenderFrame();
+            GLControl.SwapBuffers();
+            MakeCurrent(false);
+        }
 
+        private void RenderFrame()
+        {
+            ShaderStart();
             for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
             {
                 var trace = Scene._Traces[traceIndex];
@@ -788,9 +800,7 @@
                 GL.DisableVertexAttribArray(0);
                 GL.BindVertexArray(0);
             }
-
             ShaderStop();
-            GLControl.SwapBuffers();
         }
 
         private bool ShaderStart() => UseProgram(true);
