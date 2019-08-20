@@ -79,6 +79,37 @@
         internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
         internal void ModifiedChanged() => SceneForm.Text = JsonController.WindowCaption;
 
+        internal void OnPropertyChanged(string propertyName)
+        {
+            if (Updating)
+            {
+                if (!ChangedPropertyNames.Contains(propertyName))
+                    ChangedPropertyNames.Add(propertyName);
+                return;
+            }
+            System.Diagnostics.Debug.WriteLine($"SceneController.OnPropertyChanged({propertyName})");
+            switch (propertyName)
+            {
+                case DisplayNames.FPS:
+                    TimerInit();
+                    break;
+            }
+            switch (propertyName)
+            {
+                case DisplayNames.Shader1Vertex:
+                case DisplayNames.Shader2TessControl:
+                case DisplayNames.Shader3TessEvaluation:
+                case DisplayNames.Shader4Geometry:
+                case DisplayNames.Shader5Fragment:
+                case DisplayNames.Shader6Compute:
+                case DisplayNames.Traces:
+                    InvalidateProgram();
+                    break;
+            }
+            PropertyGridController.Refresh();
+            TraceTableController.Refresh();
+        }
+
         internal void OnSelectionChanged()
         {
             var selection = TraceTableController.Selection;
@@ -229,8 +260,6 @@
                 JsonController.FileReopen += JsonController_FileReopen;
                 JsonController.FileSaving += JsonController_FileSaving;
                 JsonController.FileSaved += JsonController_FileSaved;
-
-                Scene.PropertyChanged += Scene_PropertyChanged;
             }
             else
             {
@@ -267,8 +296,6 @@
                 JsonController.FileReopen -= JsonController_FileReopen;
                 JsonController.FileSaving -= JsonController_FileSaving;
                 JsonController.FileSaved -= JsonController_FileSaved;
-
-                Scene.PropertyChanged -= Scene_PropertyChanged;
             }
         }
 
@@ -352,37 +379,6 @@
                 sceneController.JsonController.FilePath = string.Empty;
         }
 
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (Updating)
-            {
-                if (!ChangedPropertyNames.Contains(propertyName))
-                    ChangedPropertyNames.Add(propertyName);
-                return;
-            }
-            System.Diagnostics.Debug.WriteLine($"{propertyName} changed");
-            switch (propertyName)
-            {
-                case PropertyNames.FPS:
-                    TimerInit();
-                    break;
-            }
-            switch (propertyName)
-            {
-                case PropertyNames.Shader1Vertex:
-                case PropertyNames.Shader2TessControl:
-                case PropertyNames.Shader3TessEvaluation:
-                case PropertyNames.Shader4Geometry:
-                case PropertyNames.Shader5Fragment:
-                case PropertyNames.Shader6Compute:
-                case PropertyNames.Traces:
-                    InvalidateProgram();
-                    break;
-            }
-            PropertyGridController.Refresh();
-            TraceTableController.Refresh();
-        }
-
         private SceneController OpenFile(FilterIndex filterIndex = FilterIndex.File) =>
             OpenFile(JsonController.SelectFilePath(filterIndex));
 
@@ -405,13 +401,13 @@
         {
             switch (property)
             {
-                case PropertyNames.AccumColourFormat:
+                case DisplayNames.AccumColourFormat:
                     return new AccumColourFormatCommand(new ColourFormat(Scene.AccumColourFormat, field, (int)value));
-                case PropertyNames.ColourFormat:
+                case DisplayNames.ColourFormat:
                     return new ColourFormatCommand(new ColourFormat(Scene.ColourFormat, field, (int)value));
-                case PropertyNames.CameraPosition:
+                case DisplayNames.CameraPosition:
                     return new CameraPositionCommand(new Point3F(Scene.CameraPosition, field, (float)value));
-                case PropertyNames.CameraRotation:
+                case DisplayNames.CameraRotation:
                     return new CameraRotationCommand(new Euler3F(Scene.CameraRotation, field, (float)value));
             }
             return null;
@@ -422,17 +418,17 @@
             var index = trace.Index;
             switch (property)
             {
-                case PropertyNames.Location:
+                case DisplayNames.Location:
                     return new LocationCommand(index, new Point3F(trace.Location, field, (float)value));
-                case PropertyNames.Maximum:
+                case DisplayNames.Maximum:
                     return new MaximumCommand(index, new Point3F(trace.Maximum, field, (float)value));
-                case PropertyNames.Minimum:
+                case DisplayNames.Minimum:
                     return new MinimumCommand(index, new Point3F(trace.Minimum, field, (float)value));
-                case PropertyNames.Orientation:
+                case DisplayNames.Orientation:
                     return new OrientationCommand(index, new Euler3F(trace.Orientation, field, (float)value));
-                case PropertyNames.Scale:
+                case DisplayNames.Scale:
                     return new ScaleCommand(index, new Point3F(trace.Scale, field, (float)value));
-                case PropertyNames.StripCount:
+                case DisplayNames.StripCount:
                     return new StripCountCommand(index, new Point3(trace.StripCount, field, (int)value));
             }
             return null;
@@ -584,6 +580,7 @@
 
         private void InvalidateProgram()
         {
+            System.Diagnostics.Debug.WriteLine("SceneController.InvalidateProgram();");
             ProgramCompiled = false;
             if (!MakeCurrent(true))
                 return;
@@ -611,6 +608,7 @@
         {
             if (ProgramCompiled)
                 return;
+            System.Diagnostics.Debug.WriteLine("SceneController.ValidateProgram();");
             Scene._GPUStatus = GPUStatus.OK;
             GpuCode = new StringBuilder();
             GpuLog = new StringBuilder();

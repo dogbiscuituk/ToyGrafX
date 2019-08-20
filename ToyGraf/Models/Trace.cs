@@ -85,22 +85,22 @@
 
         [Category(Categories.Placement)]
         [DefaultValue(typeof(Point3F), Defaults.LocationString)]
-        [Description(PropertyDescriptions.Location)]
-        [DisplayName(PropertyNames.Location)]
+        [Description(Descriptions.Location)]
+        [DisplayName(DisplayNames.Location)]
         [JsonIgnore]
         public Point3F Location { get => _Location; set => Run(new LocationCommand(Index, value)); }
 
         [Category(Categories.Placement)]
         [DefaultValue(typeof(Euler3F), Defaults.OrientationString)]
-        [Description(PropertyDescriptions.Orientation)]
-        [DisplayName(PropertyNames.Orientation)]
+        [Description(Descriptions.Orientation)]
+        [DisplayName(DisplayNames.Orientation)]
         [JsonIgnore]
         public Euler3F Orientation { get => _Orientation; set => Run(new OrientationCommand(Index, value)); }
 
         [Category(Categories.Placement)]
         [DefaultValue(typeof(Point3F), Defaults.ScaleString)]
-        [Description(PropertyDescriptions.Scale)]
-        [DisplayName(PropertyNames.Scale)]
+        [Description(Descriptions.Scale)]
+        [DisplayName(DisplayNames.Scale)]
         [JsonIgnore]
         public Point3F Scale
         {
@@ -110,8 +110,8 @@
 
         [Category(Categories.Placement)]
         [DefaultValue(Defaults.Visible)]
-        [Description(PropertyDescriptions.Visible)]
-        [DisplayName(PropertyNames.Visible)]
+        [Description(Descriptions.Visible)]
+        [DisplayName(DisplayNames.Visible)]
         [JsonIgnore]
         public bool Visible { get => _Visible; set => Run(new VisibleCommand(Index, value)); }
 
@@ -120,8 +120,8 @@
         #region Read Only / System
 
         [Category(Categories.SystemRO)]
-        [Description(PropertyDescriptions.Transform)]
-        [DisplayName(PropertyNames.Transform)]
+        [Description(Descriptions.Transform)]
+        [DisplayName(DisplayNames.Transform)]
         [JsonIgnore]
         public Matrix4 Transform
         {
@@ -135,8 +135,8 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader1Vertex)]
-        [Description(PropertyDescriptions.Shader1Vertex)]
-        [DisplayName(PropertyNames.Shader1Vertex)]
+        [Description(Descriptions.Shader1Vertex)]
+        [DisplayName(DisplayNames.Shader1Vertex)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader1Vertex
@@ -147,8 +147,8 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader2TessControl)]
-        [Description(PropertyDescriptions.Shader2TessControl)]
-        [DisplayName(PropertyNames.Shader2TessControl)]
+        [Description(Descriptions.Shader2TessControl)]
+        [DisplayName(DisplayNames.Shader2TessControl)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader2TessControl
@@ -159,8 +159,8 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader3TessEvaluation)]
-        [Description(PropertyDescriptions.Shader3TessEvaluation)]
-        [DisplayName(PropertyNames.Shader3TessEvaluation)]
+        [Description(Descriptions.Shader3TessEvaluation)]
+        [DisplayName(DisplayNames.Shader3TessEvaluation)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader3TessEvaluation
@@ -171,8 +171,8 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader4Geometry)]
-        [Description(PropertyDescriptions.Shader4Geometry)]
-        [DisplayName(PropertyNames.Shader4Geometry)]
+        [Description(Descriptions.Shader4Geometry)]
+        [DisplayName(DisplayNames.Shader4Geometry)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader4Geometry
@@ -183,8 +183,8 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader5Fragment)]
-        [Description(PropertyDescriptions.Shader5Fragment)]
-        [DisplayName(PropertyNames.Shader5Fragment)]
+        [Description(Descriptions.Shader5Fragment)]
+        [DisplayName(DisplayNames.Shader5Fragment)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader5Fragment
@@ -195,8 +195,8 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader6Compute)]
-        [Description(PropertyDescriptions.Shader6Compute)]
-        [DisplayName(PropertyNames.Shader6Compute)]
+        [Description(Descriptions.Shader6Compute)]
+        [DisplayName(DisplayNames.Shader6Compute)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader6Compute
@@ -211,36 +211,36 @@
 
         [Category(Categories.Trace)]
         [DefaultValue(Defaults.Description)]
-        [Description(PropertyDescriptions.Description)]
-        [DisplayName(PropertyNames.Description)]
+        [Description(Descriptions.Description)]
+        [DisplayName(DisplayNames.Description)]
         [JsonIgnore]
         public string Description { get => _Description; set => Run(new DescriptionCommand(Index, value)); }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Point3F), Defaults.MaximumString)]
-        [Description(PropertyDescriptions.Maximum)]
-        [DisplayName(PropertyNames.Maximum)]
+        [Description(Descriptions.Maximum)]
+        [DisplayName(DisplayNames.Maximum)]
         [JsonIgnore]
         public Point3F Maximum { get => _Maximum; set => Run(new MaximumCommand(Index, value)); }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Point3F), Defaults.MinimumString)]
-        [Description(PropertyDescriptions.Minimum)]
-        [DisplayName(PropertyNames.Minimum)]
+        [Description(Descriptions.Minimum)]
+        [DisplayName(DisplayNames.Minimum)]
         [JsonIgnore]
         public Point3F Minimum { get => _Minimum; set => Run(new MinimumCommand(Index, value)); }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Pattern), Defaults.PatternString)]
-        [Description(PropertyDescriptions.Pattern)]
-        [DisplayName(PropertyNames.Pattern)]
+        [Description(Descriptions.Pattern)]
+        [DisplayName(DisplayNames.Pattern)]
         [JsonIgnore]
         public Pattern Pattern { get => _Pattern; set => Run(new PatternCommand(Index, value)); }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Point3), Defaults.StripCountString)]
-        [Description(PropertyDescriptions.StripCount)]
-        [DisplayName(PropertyNames.StripCount)]
+        [Description(Descriptions.StripCount)]
+        [DisplayName(DisplayNames.StripCount)]
         [JsonIgnore]
         public Point3 StripCount { get => _StripCount; set => Run(new StripCountCommand(Index, value)); }
 

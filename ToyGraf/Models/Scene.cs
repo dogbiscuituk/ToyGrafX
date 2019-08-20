@@ -81,8 +81,6 @@
             ? _Title
             : "New scene";
 
-        internal event PropertyChangedEventHandler PropertyChanged;
-
         internal void Clear()
         {
             RestoreDefaults();
@@ -97,64 +95,64 @@
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(typeof(ColourFormat), Defaults.ColourFormatString)]
-        [Description(PropertyDescriptions.AccumColourFormat)]
-        [DisplayName(PropertyNames.AccumColourFormat)]
+        [Description(Descriptions.AccumColourFormat)]
+        [DisplayName(DisplayNames.AccumColourFormat)]
         [JsonIgnore]
         public ColourFormat AccumColourFormat { get => _AccumColourFormat; set => Run(new AccumColourFormatCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(typeof(Color), Defaults.BackgroundColourString)]
-        [Description(PropertyDescriptions.BackgroundColour)]
-        [DisplayName(PropertyNames.BackgroundColour)]
+        [Description(Descriptions.BackgroundColour)]
+        [DisplayName(DisplayNames.BackgroundColour)]
         [JsonIgnore]
         public Color BackgroundColour { get => _BackgroundColour; set => Run(new BackgroundColourCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(typeof(ColourFormat), Defaults.ColourFormatString)]
-        [Description(PropertyDescriptions.ColourFormat)]
-        [DisplayName(PropertyNames.ColourFormat)]
+        [Description(Descriptions.ColourFormat)]
+        [DisplayName(DisplayNames.ColourFormat)]
         [JsonIgnore]
         public ColourFormat ColourFormat { get => _ColourFormat; set => Run(new ColourFormatCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.Depth)]
-        [Description(PropertyDescriptions.Depth)]
-        [DisplayName(PropertyNames.Depth)]
+        [Description(Descriptions.Depth)]
+        [DisplayName(DisplayNames.Depth)]
         [JsonIgnore]
         public int Depth { get => _Depth; set => Run(new DepthCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.Stencil)]
-        [Description(PropertyDescriptions.Stencil)]
-        [DisplayName(PropertyNames.Stencil)]
+        [Description(Descriptions.Stencil)]
+        [DisplayName(DisplayNames.Stencil)]
         [JsonIgnore]
         public int Stencil { get => _Stencil; set => Run(new StencilCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.SampleCount)]
-        [Description(PropertyDescriptions.SampleCount)]
-        [DisplayName(PropertyNames.SampleCount)]
+        [Description(Descriptions.SampleCount)]
+        [DisplayName(DisplayNames.SampleCount)]
         [JsonIgnore]
         public int SampleCount { get => _SampleCount; set => Run(new SampleCountCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.Buffers)]
-        [Description(PropertyDescriptions.Buffers)]
-        [DisplayName(PropertyNames.Buffers)]
+        [Description(Descriptions.Buffers)]
+        [DisplayName(DisplayNames.Buffers)]
         [JsonIgnore]
         public int Buffers { get => _Buffers; set => Run(new BuffersCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.Stereo)]
-        [Description(PropertyDescriptions.Stereo)]
-        [DisplayName(PropertyNames.Stereo)]
+        [Description(Descriptions.Stereo)]
+        [DisplayName(DisplayNames.Stereo)]
         [JsonIgnore]
         public bool Stereo { get => _Stereo; set => Run(new StereoCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.VSync)]
-        [Description(PropertyDescriptions.VSync)]
-        [DisplayName(PropertyNames.VSync)]
+        [Description(Descriptions.VSync)]
+        [DisplayName(DisplayNames.VSync)]
         [JsonIgnore]
         public bool VSync { get => _VSync; set => Run(new VSyncCommand(value)); }
 
@@ -164,22 +162,22 @@
 
         [Category(Categories.Projection)]
         [DefaultValue(Defaults.FieldOfView)]
-        [Description(PropertyDescriptions.FieldOfView)]
-        [DisplayName(PropertyNames.FieldOfView)]
+        [Description(Descriptions.FieldOfView)]
+        [DisplayName(DisplayNames.FieldOfView)]
         [JsonIgnore]
         public float FieldOfView { get => _FieldOfView; set => Run(new FieldOfViewCommand(value)); }
 
         [Category(Categories.Projection)]
         [DefaultValue(Defaults.NearPlane)]
-        [Description(PropertyDescriptions.NearPlane)]
-        [DisplayName(PropertyNames.NearPlane)]
+        [Description(Descriptions.NearPlane)]
+        [DisplayName(DisplayNames.NearPlane)]
         [JsonIgnore]
         public float NearPlane { get => _NearPlane; set => Run(new NearPlaneCommand(value)); }
 
         [Category(Categories.Projection)]
         [DefaultValue(Defaults.FarPlane)]
-        [Description(PropertyDescriptions.FarPlane)]
-        [DisplayName(PropertyNames.FarPlane)]
+        [Description(Descriptions.FarPlane)]
+        [DisplayName(DisplayNames.FarPlane)]
         [JsonIgnore]
         public float FarPlane { get => _FarPlane; set => Run(new FarPlaneCommand(value)); }
 
@@ -188,8 +186,8 @@
         #region Read Only / System
 
         [Category(Categories.SystemRO)]
-        [Description(PropertyDescriptions.CameraView)]
-        [DisplayName(PropertyNames.CameraView)]
+        [Description(Descriptions.CameraView)]
+        [DisplayName(DisplayNames.CameraView)]
         [JsonIgnore]
         public Matrix4 CameraView
         {
@@ -199,30 +197,30 @@
 
         [Category(Categories.SystemRO)]
         [DefaultValue(Defaults.GPUCode)]
-        [Description(PropertyDescriptions.GPUCode)]
-        [DisplayName(PropertyNames.GPUCode)]
+        [Description(Descriptions.GPUCode)]
+        [DisplayName(DisplayNames.GPUCode)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string GPUCode => _GPUCode;
 
         [Category(Categories.SystemRO)]
         [DefaultValue(Defaults.GPULog)]
-        [Description(PropertyDescriptions.GPULog)]
-        [DisplayName(PropertyNames.GPULog)]
+        [Description(Descriptions.GPULog)]
+        [DisplayName(DisplayNames.GPULog)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string GPULog => _GPULog;
 
         [Category(Categories.SystemRO)]
         [DefaultValue(typeof(GPUStatus), Defaults.GPUStatusString)]
-        [Description(PropertyDescriptions.GPUStatus)]
-        [DisplayName(PropertyNames.GPUStatus)]
+        [Description(Descriptions.GPUStatus)]
+        [DisplayName(DisplayNames.GPUStatus)]
         [JsonIgnore]
         public GPUStatus GPUStatus => _GPUStatus;
 
         [Category(Categories.SystemRO)]
-        [Description(PropertyDescriptions.Projection)]
-        [DisplayName(PropertyNames.Projection)]
+        [Description(Descriptions.Projection)]
+        [DisplayName(DisplayNames.Projection)]
         [JsonIgnore]
         public Matrix4 Projection
         {
@@ -236,35 +234,35 @@
 
         [Category(Categories.Scene)]
         [DefaultValue(typeof(Point3F), Defaults.CameraPositionString)]
-        [Description(PropertyDescriptions.CameraPosition)]
-        [DisplayName(PropertyNames.CameraPosition)]
+        [Description(Descriptions.CameraPosition)]
+        [DisplayName(DisplayNames.CameraPosition)]
         [JsonIgnore]
         public Point3F CameraPosition { get => _CameraPosition; set => Run(new CameraPositionCommand(value)); }
 
         [Category(Categories.Scene)]
         [DefaultValue(typeof(Euler3F), Defaults.CameraRotationString)]
-        [Description(PropertyDescriptions.CameraRotation)]
-        [DisplayName(PropertyNames.CameraRotation)]
+        [Description(Descriptions.CameraRotation)]
+        [DisplayName(DisplayNames.CameraRotation)]
         [JsonIgnore]
         public Euler3F CameraRotation { get => _CameraRotation; set => Run(new CameraRotationCommand(value)); }
 
         [Category(Categories.Scene)]
         [DefaultValue(Defaults.FPS)]
-        [Description(PropertyDescriptions.FPS)]
-        [DisplayName(PropertyNames.FPS)]
+        [Description(Descriptions.FPS)]
+        [DisplayName(DisplayNames.FPS)]
         [JsonIgnore]
         public double FPS { get => _FPS; set => Run(new FpsCommand(value)); }
 
         [Category(Categories.Scene)]
         [DefaultValue(Defaults.Title)]
-        [Description(PropertyDescriptions.Title)]
-        [DisplayName(PropertyNames.Title)]
+        [Description(Descriptions.Title)]
+        [DisplayName(DisplayNames.Title)]
         [JsonIgnore]
         public string Title { get => _Title; set => Run(new TitleCommand(value)); }
 
         [Category(Categories.Scene)]
-        [Description(PropertyDescriptions.Traces)]
-        [DisplayName(PropertyNames.Traces)]
+        [Description(Descriptions.Traces)]
+        [DisplayName(DisplayNames.Traces)]
         [Editor(typeof(TgCollectionEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public List<Trace> Traces
@@ -279,8 +277,8 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader1Vertex)]
-        [Description(PropertyDescriptions.Shader1Vertex)]
-        [DisplayName(PropertyNames.Shader1Vertex)]
+        [Description(Descriptions.Shader1Vertex)]
+        [DisplayName(DisplayNames.Shader1Vertex)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader1Vertex
@@ -291,8 +289,8 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader2TessControl)]
-        [Description(PropertyDescriptions.Shader2TessControl)]
-        [DisplayName(PropertyNames.Shader2TessControl)]
+        [Description(Descriptions.Shader2TessControl)]
+        [DisplayName(DisplayNames.Shader2TessControl)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader2TessControl
@@ -303,8 +301,8 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader3TessEvaluation)]
-        [Description(PropertyDescriptions.Shader3TessEvaluation)]
-        [DisplayName(PropertyNames.Shader3TessEvaluation)]
+        [Description(Descriptions.Shader3TessEvaluation)]
+        [DisplayName(DisplayNames.Shader3TessEvaluation)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader3TessEvaluation
@@ -315,8 +313,8 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader4Geometry)]
-        [Description(PropertyDescriptions.Shader4Geometry)]
-        [DisplayName(PropertyNames.Shader4Geometry)]
+        [Description(Descriptions.Shader4Geometry)]
+        [DisplayName(DisplayNames.Shader4Geometry)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader4Geometry
@@ -327,8 +325,8 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader5Fragment)]
-        [Description(PropertyDescriptions.Shader5Fragment)]
-        [DisplayName(PropertyNames.Shader5Fragment)]
+        [Description(Descriptions.Shader5Fragment)]
+        [DisplayName(DisplayNames.Shader5Fragment)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader5Fragment
@@ -339,8 +337,8 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader6Compute)]
-        [Description(PropertyDescriptions.Shader6Compute)]
-        [DisplayName(PropertyNames.Shader6Compute)]
+        [Description(Descriptions.Shader6Compute)]
+        [DisplayName(DisplayNames.Shader6Compute)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader6Compute
@@ -404,15 +402,10 @@
 
         internal void InsertTrace(int index, Trace trace) => _Traces.Insert(index, trace);
 
-        internal Trace NewTrace()
-        {
-            var trace = new Trace(this);
-            //_Traces.Add(trace);
-            return trace;
-        }
+        internal Trace NewTrace() => new Trace(this);
 
         internal void OnPropertyChanged(string propertyName) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            SceneController?.OnPropertyChanged(propertyName);
 
         internal void RemoveTrace(int index)
         {

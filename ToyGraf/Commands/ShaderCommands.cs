@@ -1,6 +1,7 @@
 ﻿namespace ToyGraf.Commands
 {
     using OpenTK.Graphics.OpenGL;
+    using ToyGraf.Models;
 
     internal class SceneShaderCommand : ScenePropertyCommand<string>
     {
@@ -82,12 +83,12 @@
         {
             switch (shaderType)
             {
-                case ShaderType.ComputeShader: return "Compute Shader";
-                case ShaderType.FragmentShader: return "Fragment Shader";
-                case ShaderType.GeometryShader: return "Geometry Shader";
-                case ShaderType.TessControlShader: return "Tessellation Control Shader";
-                case ShaderType.TessEvaluationShader: return "Tessellation Evaluation Shader";
-                case ShaderType.VertexShader: return "Vertex Shader";
+                case ShaderType.ComputeShader: return DisplayNames.Shader6Compute;
+                case ShaderType.FragmentShader: return DisplayNames.Shader5Fragment;
+                case ShaderType.GeometryShader: return DisplayNames.Shader4Geometry;
+                case ShaderType.TessControlShader: return DisplayNames.Shader2TessControl;
+                case ShaderType.TessEvaluationShader: return DisplayNames.Shader3TessEvaluation;
+                case ShaderType.VertexShader: return DisplayNames.Shader1Vertex;
             }
             return string.Empty;
         }

@@ -1,6 +1,5 @@
 ﻿namespace ToyGraf.Controllers
 {
-    using System.Diagnostics;
     using System.Reflection;
     using System.Windows.Forms;
     using ToyGraf.Engine.Utility;

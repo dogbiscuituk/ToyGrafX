@@ -1,6 +1,6 @@
 ﻿namespace ToyGraf.Models
 {
-    public static class PropertyDescriptions
+    public static class Descriptions
     {
         public const string
             AccumColourFormat = "The number of bits per pixel in each accumulator colour channel.",

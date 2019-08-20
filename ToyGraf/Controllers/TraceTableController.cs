@@ -136,22 +136,22 @@
 
         private void InitColumns()
         {
-            SceneForm.colDescription.ToolTipText = PropertyDescriptions.Description;
-            SceneForm.colLocation.ToolTipText = PropertyDescriptions.Location;
-            SceneForm.colMaximum.ToolTipText = PropertyDescriptions.Maximum;
-            SceneForm.colMinimum.ToolTipText = PropertyDescriptions.Minimum;
-            SceneForm.colOrientation.ToolTipText = PropertyDescriptions.Orientation;
-            SceneForm.colPattern.ToolTipText = PropertyDescriptions.Pattern;
-            SceneForm.colScale.ToolTipText = PropertyDescriptions.Scale;
-            SceneForm.colShader1Vertex.ToolTipText = PropertyDescriptions.Shader1Vertex;
-            SceneForm.colShader2TessControl.ToolTipText = PropertyDescriptions.Shader2TessControl;
-            SceneForm.colShader3TessEvaluation.ToolTipText = PropertyDescriptions.Shader3TessEvaluation;
-            SceneForm.colShader4Geometry.ToolTipText = PropertyDescriptions.Shader4Geometry;
-            SceneForm.colShader5Fragment.ToolTipText = PropertyDescriptions.Shader5Fragment;
-            SceneForm.colShader6Compute.ToolTipText = PropertyDescriptions.Shader6Compute;
-            SceneForm.colStrip.ToolTipText = PropertyDescriptions.StripCount;
-            SceneForm.colTransform.ToolTipText = PropertyDescriptions.Transform;
-            SceneForm.colVisible.ToolTipText = PropertyDescriptions.Visible;
+            SceneForm.colDescription.ToolTipText = Descriptions.Description;
+            SceneForm.colLocation.ToolTipText = Descriptions.Location;
+            SceneForm.colMaximum.ToolTipText = Descriptions.Maximum;
+            SceneForm.colMinimum.ToolTipText = Descriptions.Minimum;
+            SceneForm.colOrientation.ToolTipText = Descriptions.Orientation;
+            SceneForm.colPattern.ToolTipText = Descriptions.Pattern;
+            SceneForm.colScale.ToolTipText = Descriptions.Scale;
+            SceneForm.colShader1Vertex.ToolTipText = Descriptions.Shader1Vertex;
+            SceneForm.colShader2TessControl.ToolTipText = Descriptions.Shader2TessControl;
+            SceneForm.colShader3TessEvaluation.ToolTipText = Descriptions.Shader3TessEvaluation;
+            SceneForm.colShader4Geometry.ToolTipText = Descriptions.Shader4Geometry;
+            SceneForm.colShader5Fragment.ToolTipText = Descriptions.Shader5Fragment;
+            SceneForm.colShader6Compute.ToolTipText = Descriptions.Shader6Compute;
+            SceneForm.colStrip.ToolTipText = Descriptions.StripCount;
+            SceneForm.colTransform.ToolTipText = Descriptions.Transform;
+            SceneForm.colVisible.ToolTipText = Descriptions.Visible;
         }
 
         private void InitSceneForm()

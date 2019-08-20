@@ -1,6 +1,6 @@
 ﻿namespace ToyGraf.Models
 {
-    public static class PropertyNames
+    public static class DisplayNames
     {
         public const string
             AccumColourFormat = "Accumulator Colour Format",

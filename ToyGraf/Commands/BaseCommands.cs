@@ -166,7 +166,10 @@
 
     internal class TracesCommand : CollectionCommand<Trace>
     {
-        internal TracesCommand(int index, bool add) : base(index, add) { PropertyName = "Trace"; }
+        internal TracesCommand(int index, bool add) : base(index, add)
+        {
+            PropertyName = DisplayNames.Traces;
+        }
 
         protected override string Target => Value.ToString();
 

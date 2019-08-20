@@ -7,49 +7,49 @@
 
     internal class BackgroundColourCommand : ScenePropertyCommand<Color>
     {
-        internal BackgroundColourCommand(Color value) : base(PropertyNames.BackgroundColour,
+        internal BackgroundColourCommand(Color value) : base(DisplayNames.BackgroundColour,
             value, r => r._BackgroundColour, (r, v) => r._BackgroundColour = v)
         { }
     }
 
     internal class CameraPositionCommand : ScenePropertyCommand<Point3F>
     {
-        internal CameraPositionCommand(Point3F value) : base(PropertyNames.CameraPosition,
+        internal CameraPositionCommand(Point3F value) : base(DisplayNames.CameraPosition,
             value, s => s._CameraPosition, (s, v) => s._CameraPosition = v)
         { }
     }
 
     internal class CameraRotationCommand : ScenePropertyCommand<Euler3F>
     {
-        internal CameraRotationCommand(Euler3F value) : base(PropertyNames.CameraRotation,
+        internal CameraRotationCommand(Euler3F value) : base(DisplayNames.CameraRotation,
             value, s => s._CameraRotation, (s, v) => s._CameraRotation = v)
         { }
     }
 
     internal class CameraViewCommand : ScenePropertyCommand<Matrix4>
     {
-        internal CameraViewCommand(Matrix4 value) : base(PropertyNames.CameraView,
+        internal CameraViewCommand(Matrix4 value) : base(DisplayNames.CameraView,
             value, s => s.GetCameraView(), (s, v) => s.SetCameraView(v))
         { }
     }
 
     internal class FpsCommand : ScenePropertyCommand<double>
     {
-        internal FpsCommand(double value) : base(PropertyNames.FPS,
+        internal FpsCommand(double value) : base(DisplayNames.FPS,
             value, s => s._FPS, (s, v) => s._FPS = v)
         { }
     }
 
     internal class ProjectionCommand : ScenePropertyCommand<Matrix4>
     {
-        internal ProjectionCommand(Matrix4 value) : base(PropertyNames.Projection,
+        internal ProjectionCommand(Matrix4 value) : base(DisplayNames.Projection,
             value, s => s.GetProjection(), (s, v) => s.SetProjection(v))
         { }
     }
 
     internal class TitleCommand : ScenePropertyCommand<string>
     {
-        internal TitleCommand(string value) : base(PropertyNames.Title,
+        internal TitleCommand(string value) : base(DisplayNames.Title,
             value, s => s._Title, (s, v) => s._Title = v)
         { }
     }
