@@ -80,6 +80,7 @@
     <Compile Include="Controllers\TraceTableController.cs" />
     <Compile Include="Models\Enums\FilterIndex.cs" />
     <Compile Include="Models\Extensions.cs" />
+    <Compile Include="Models\PropertyDescriptions.cs" />
     <Compile Include="Models\PropertyNames.cs" />
     <Compile Include="Models\Scene.cs" />
     <Compile Include="Models\Structs\Options.cs" />

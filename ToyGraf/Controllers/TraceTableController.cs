@@ -15,17 +15,7 @@
         internal TraceTableController(SceneController sceneController)
         {
             SceneController = sceneController;
-            TraceTable = SceneForm.TraceTable;
-            TraceTable.AutoGenerateColumns = false;
-            TraceTable.SelectionChanged += TraceTable_SelectionChanged;
-            SceneForm.EditSelectAll.Click += EditSelectAll_Click;
-            SceneForm.EditInvertSelection.Click += EditInvertSelection_Click;
-            SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
-            SceneForm.ViewTraceTable.Click += ToggleTraceTable;
-            SceneForm.PopupTraceTableMenu.Opening += PopupTraceTableMenu_Opening;
-            SceneForm.PopupTraceTableFloat.Click += PopupTraceTableDock_Click;
-            SceneForm.PopupTraceTableHide.Click += PopupTraceTableHide_Click;
-            SceneForm.PopupTraceTableColumns.Click += PopupTraceTableColumns_Click;
+            Init();
             Refresh();
         }
 
@@ -35,7 +25,7 @@
             .Where(p => p != null)
             .Cast<Trace>();
 
-        internal readonly DataGridView TraceTable;
+        internal DataGridView TraceTable => SceneForm.TraceTable;
 
         internal bool TraceTableVisible
         {
@@ -45,11 +35,10 @@
 
         internal void Refresh()
         {
+            TraceTable.DataSource = null;
             var traces = Scene._Traces;
-            TraceTable.DataSource = traces.Any() ? traces : null;
-            SceneForm.tracesBindingSource.ResetBindings(false);
-            SceneForm.sceneBindingSource.ResetBindings(false);
-            TraceTable.Refresh();
+            if (traces.Any())
+                TraceTable.DataSource = traces;
         }
 
         #endregion
@@ -137,6 +126,51 @@
         #endregion
 
         #region Private Methods
+
+        private void Init()
+        {
+            InitSceneForm();
+            InitTraceTable();
+            InitColumns();
+        }
+
+        private void InitColumns()
+        {
+            SceneForm.colDescription.ToolTipText = PropertyDescriptions.Description;
+            SceneForm.colLocation.ToolTipText = PropertyDescriptions.Location;
+            SceneForm.colMaximum.ToolTipText = PropertyDescriptions.Maximum;
+            SceneForm.colMinimum.ToolTipText = PropertyDescriptions.Minimum;
+            SceneForm.colOrientation.ToolTipText = PropertyDescriptions.Orientation;
+            SceneForm.colPattern.ToolTipText = PropertyDescriptions.Pattern;
+            SceneForm.colScale.ToolTipText = PropertyDescriptions.Scale;
+            SceneForm.colShader1Vertex.ToolTipText = PropertyDescriptions.Shader1Vertex;
+            SceneForm.colShader2TessControl.ToolTipText = PropertyDescriptions.Shader2TessControl;
+            SceneForm.colShader3TessEvaluation.ToolTipText = PropertyDescriptions.Shader3TessEvaluation;
+            SceneForm.colShader4Geometry.ToolTipText = PropertyDescriptions.Shader4Geometry;
+            SceneForm.colShader5Fragment.ToolTipText = PropertyDescriptions.Shader5Fragment;
+            SceneForm.colShader6Compute.ToolTipText = PropertyDescriptions.Shader6Compute;
+            SceneForm.colStrip.ToolTipText = PropertyDescriptions.StripCount;
+            SceneForm.colTransform.ToolTipText = PropertyDescriptions.Transform;
+            SceneForm.colVisible.ToolTipText = PropertyDescriptions.Visible;
+        }
+
+        private void InitSceneForm()
+        {
+            SceneForm.EditSelectAll.Click += EditSelectAll_Click;
+            SceneForm.EditInvertSelection.Click += EditInvertSelection_Click;
+            SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
+            SceneForm.ViewTraceTable.Click += ToggleTraceTable;
+            SceneForm.PopupTraceTableMenu.Opening += PopupTraceTableMenu_Opening;
+            SceneForm.PopupTraceTableFloat.Click += PopupTraceTableDock_Click;
+            SceneForm.PopupTraceTableHide.Click += PopupTraceTableHide_Click;
+            SceneForm.PopupTraceTableColumns.Click += PopupTraceTableColumns_Click;
+        }
+
+        private void InitTraceTable()
+        {
+            TraceTable.AutoGenerateColumns = false;
+            TraceTable.SelectionChanged += TraceTable_SelectionChanged;
+        }
 
         private void InvertSelection()
         {

@@ -85,21 +85,21 @@
 
         [Category(Categories.Placement)]
         [DefaultValue(typeof(Point3F), Defaults.LocationString)]
-        [Description("The location of the trace in world co-ordinates.")]
+        [Description(PropertyDescriptions.Location)]
         [DisplayName(PropertyNames.Location)]
         [JsonIgnore]
         public Point3F Location { get => _Location; set => Run(new LocationCommand(Index, value)); }
 
         [Category(Categories.Placement)]
         [DefaultValue(typeof(Euler3F), Defaults.OrientationString)]
-        [Description("The orientation of the trace in world co-ordinates (in degrees).")]
+        [Description(PropertyDescriptions.Orientation)]
         [DisplayName(PropertyNames.Orientation)]
         [JsonIgnore]
         public Euler3F Orientation { get => _Orientation; set => Run(new OrientationCommand(Index, value)); }
 
         [Category(Categories.Placement)]
         [DefaultValue(typeof(Point3F), Defaults.ScaleString)]
-        [Description("The relative size of the trace.")]
+        [Description(PropertyDescriptions.Scale)]
         [DisplayName(PropertyNames.Scale)]
         [JsonIgnore]
         public Point3F Scale
@@ -110,7 +110,7 @@
 
         [Category(Categories.Placement)]
         [DefaultValue(Defaults.Visible)]
-        [Description("Take a wild guess.")]
+        [Description(PropertyDescriptions.Visible)]
         [DisplayName(PropertyNames.Visible)]
         [JsonIgnore]
         public bool Visible { get => _Visible; set => Run(new VisibleCommand(Index, value)); }
@@ -120,7 +120,7 @@
         #region Read Only / System
 
         [Category(Categories.SystemRO)]
-        [Description("The transformation matrix of the trace.")]
+        [Description(PropertyDescriptions.Transform)]
         [DisplayName(PropertyNames.Transform)]
         [JsonIgnore]
         public Matrix4 Transform
@@ -135,11 +135,7 @@
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader1Vertex)]
-        [Description(@"The vertex processor is a programmable unit that operates on incoming vertices and their associated data. Compilation units written in the OpenGL Shading Language to run on this processor are called vertex shaders.
-When a set of vertex shaders are successfully compiled and linked, they result in a vertex shader executable that runs on the vertex processor.
-The vertex processor operates on one vertex at a time. It does not replace graphics operations that require knowledge of several vertices at a time.
-
-Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
+        [Description(PropertyDescriptions.Shader1Vertex)]
         [DisplayName(PropertyNames.Shader1Vertex)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
@@ -151,14 +147,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader2TessControl)]
-        [Description(@"The tessellation control processor is a programmable unit that operates on a patch of incoming vertices and their associated data, emitting a new output patch. Compilation units written in the OpenGL Shading Language to run on this processor are called tessellation control shaders.
-When a set of tessellation control shaders are successfully compiled and linked, they result in a tessellation control shader executable that runs on the tessellation control processor.
-The tessellation control shader is invoked for each vertex of the output patch. Each invocation can read the attributes of any vertex in the input or output patches, but can only write per-vertex attributes for the corresponding output patch vertex.
-The shader invocations collectively produce a set of per-patch attributes for the output patch. After all tessellation control shader invocations have completed, the output vertices and per-patch attributes are assembled to form a patch to be used by subsequent pipeline stages.
-Tessellation control shader invocations run mostly independently, with undefined relative execution order. However, the built-in function barrier() can be used to control execution order by synchronizing invocations, effectively dividing tessellation control shader execution into a set of phases.
-Tessellation control shaders will get undefined results if one invocation reads a per-vertex or per-patch attribute written by another invocation at any point during the same phase, or if two invocations attempt to write different values to the same per-patch output in a single phase.
-
-Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
+        [Description(PropertyDescriptions.Shader2TessControl)]
         [DisplayName(PropertyNames.Shader2TessControl)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
@@ -170,13 +159,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader3TessEvaluation)]
-        [Description(@"The tessellation evaluation processor is a programmable unit that evaluates the position and other attributes of a vertex generated by the tessellation primitive generator, using a patch of incoming vertices and their associated data.
-Compilation units written in the OpenGL Shading Language to run on this processor are called tessellation evaluation shaders.
-When a set of tessellation evaluation shaders are successfully compiled and linked, they result in a tessellation evaluation shader executable that runs on the tessellation evaluation processor.
-Each invocation of the tessellation evaluation executable computes the position and attributes of a single vertex generated by the tessellation primitive generator.
-The executable can read the attributes of any vertex in the input patch, plus the tessellation coordinate, which is the relative location of the vertex in the primitive being tessellated. The executable writes the position and other attributes of the vertex.
-
-Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
+        [Description(PropertyDescriptions.Shader3TessEvaluation)]
         [DisplayName(PropertyNames.Shader3TessEvaluation)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
@@ -188,13 +171,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader4Geometry)]
-        [Description(@"The geometry processor is a programmable unit that operates on data for incoming vertices for a primitive assembled after vertex processing and outputs a sequence of vertices forming output primitives.
-Compilation units written in the OpenGL Shading Language to run on this processor are called geometry shaders.
-When a set of geometry shaders are successfully compiled and linked, they result in a geometry shader executable that runs on the geometry processor.
-A single invocation of the geometry shader executable on the geometry processor will operate on a declared input primitive with a fixed number of vertices.
-This single invocation can emit a variable number of vertices that are assembled into primitives of a declared output primitive type and passed to subsequent pipeline stages.
-
-Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
+        [Description(PropertyDescriptions.Shader4Geometry)]
         [DisplayName(PropertyNames.Shader4Geometry)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
@@ -206,12 +183,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader5Fragment)]
-        [Description(@"The fragment processor is a programmable unit that operates on fragment values and their associated data. Compilation units written in the OpenGL Shading Language to run on this processor are called fragment shaders.
-When a set of fragment shaders are successfully compiled and linked, they result in a fragment shader executable that runs on the fragment processor.
-A fragment shader cannot change a fragment's (x, y) position. Access to neighboring fragments is not allowed.
-The values computed by the fragment shader are ultimately used to update framebuffer memory or texture memory, depending on the current OpenGL state and the OpenGL command that caused the fragments to be generated.
-
-Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
+        [Description(PropertyDescriptions.Shader5Fragment)]
         [DisplayName(PropertyNames.Shader5Fragment)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
@@ -223,14 +195,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         [Category(Categories.Shaders)]
         [DefaultValue(Defaults.Shader6Compute)]
-        [Description(@"The compute processor is a programmable unit that operates independently from the other shader processors. Compilation units written in the OpenGL Shading Language to run on this processor are called compute shaders.
-When a set of compute shaders are successfully compiled and linked, they result in a compute shader executable that runs on the compute processor.
-A compute shader has access to many of the same resources as fragment and other shader processors, including textures, buffers, image variables, and atomic counters. It does not have any predefined inputs nor any fixed-function outputs.
-It is not part of the graphics pipeline and its visible side effects are through changes to images, storage buffers, and atomic counters.
-A compute shader operates on a group of work items called a work group. A work group is a collection of shader invocations that execute the same code, potentially in parallel.
-An invocation within a work group may share data with other members of the same work group through shared variables and issue memory and control barriers to synchronize with other members of the same work group.
-
-Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 The Khronos Group Inc. All Rights Reserved. For more information, please refer to [Help|OpenGL® Shading Language].")]
+        [Description(PropertyDescriptions.Shader6Compute)]
         [DisplayName(PropertyNames.Shader6Compute)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
@@ -246,33 +211,35 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
 
         [Category(Categories.Trace)]
         [DefaultValue(Defaults.Description)]
-        [Description("A description for this trace.")]
+        [Description(PropertyDescriptions.Description)]
         [DisplayName(PropertyNames.Description)]
         [JsonIgnore]
         public string Description { get => _Description; set => Run(new DescriptionCommand(Index, value)); }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Point3F), Defaults.MaximumString)]
+        [Description(PropertyDescriptions.Maximum)]
         [DisplayName(PropertyNames.Maximum)]
         [JsonIgnore]
         public Point3F Maximum { get => _Maximum; set => Run(new MaximumCommand(Index, value)); }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Point3F), Defaults.MinimumString)]
+        [Description(PropertyDescriptions.Minimum)]
         [DisplayName(PropertyNames.Minimum)]
         [JsonIgnore]
         public Point3F Minimum { get => _Minimum; set => Run(new MinimumCommand(Index, value)); }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Pattern), Defaults.PatternString)]
-        [Description("The pattern applied to the grid of computed points.")]
+        [Description(PropertyDescriptions.Pattern)]
         [DisplayName(PropertyNames.Pattern)]
         [JsonIgnore]
         public Pattern Pattern { get => _Pattern; set => Run(new PatternCommand(Index, value)); }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Point3), Defaults.StripCountString)]
-        [Description("The number of discrete strips into which the trace is divided along each axis.")]
+        [Description(PropertyDescriptions.StripCount)]
         [DisplayName(PropertyNames.StripCount)]
         [JsonIgnore]
         public Point3 StripCount { get => _StripCount; set => Run(new StripCountCommand(Index, value)); }

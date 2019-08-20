@@ -15,6 +15,7 @@
             FarPlane = "Far Plane",
             FieldOfView = "Field of View° Y",
             FPS = "FPS",
+            GPUCode = "GPU Code",
             GPULog = "GPU Log",
             GPUStatus = "GPU Status",
             Location = "Location",
