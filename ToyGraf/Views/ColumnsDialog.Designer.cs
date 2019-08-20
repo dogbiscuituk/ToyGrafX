@@ -36,18 +36,20 @@
             // 
             // ColumnsListBox
             // 
+            this.ColumnsListBox.BackColor = System.Drawing.SystemColors.Control;
             this.ColumnsListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ColumnsListBox.CheckOnClick = true;
+            this.ColumnsListBox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.ColumnsListBox.FormattingEnabled = true;
             this.ColumnsListBox.Location = new System.Drawing.Point(12, 37);
             this.ColumnsListBox.Name = "ColumnsListBox";
-            this.ColumnsListBox.Size = new System.Drawing.Size(214, 288);
+            this.ColumnsListBox.Size = new System.Drawing.Size(216, 288);
             this.ColumnsListBox.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(139, 331);
+            this.btnCancel.Location = new System.Drawing.Point(141, 331);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(87, 27);
             this.btnCancel.TabIndex = 5;
@@ -57,7 +59,7 @@
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(46, 331);
+            this.btnOK.Location = new System.Drawing.Point(48, 331);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(87, 27);
             this.btnOK.TabIndex = 4;
@@ -67,7 +69,7 @@
             // cbAll
             // 
             this.cbAll.AutoSize = true;
-            this.cbAll.Location = new System.Drawing.Point(12, 12);
+            this.cbAll.Location = new System.Drawing.Point(13, 12);
             this.cbAll.Name = "cbAll";
             this.cbAll.Size = new System.Drawing.Size(40, 19);
             this.cbAll.TabIndex = 6;
@@ -80,7 +82,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(238, 368);
+            this.ClientSize = new System.Drawing.Size(240, 368);
             this.Controls.Add(this.cbAll);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -91,7 +93,7 @@
             this.MinimizeBox = false;
             this.Name = "ColumnsDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Select Visible Columns";
+            this.Text = "Select Columns";
             this.ResumeLayout(false);
             this.PerformLayout();
 

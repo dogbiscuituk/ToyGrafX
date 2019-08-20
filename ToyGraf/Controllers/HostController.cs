@@ -9,16 +9,11 @@
     {
         #region Internal Interface
 
-        internal HostController(string text, Control hostedControl,
-            FormBorderStyle formBorderStyle = FormBorderStyle.SizableToolWindow)
+        internal HostController(string text, Control hostedControl)
         {
             HostedControl = hostedControl;
             ParentControl = hostedControl.Parent;
-            HostForm = new HostForm
-            {
-                FormBorderStyle = formBorderStyle,
-                Text = text
-            };
+            HostForm = new HostForm { Text = text };
             HostForm.FormClosing += HostForm_FormClosing;
         }
 

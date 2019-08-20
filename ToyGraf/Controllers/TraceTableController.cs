@@ -32,6 +32,7 @@
         internal IEnumerable<Trace> Selection => TraceTable.SelectedRows
             .OfType<DataGridViewRow>()
             .Select(p => p.DataBoundItem)
+            .Where(p => p != null)
             .Cast<Trace>();
 
         internal readonly DataGridView TraceTable;

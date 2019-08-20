@@ -60,6 +60,7 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.PopupTraceTableColumns = new System.Windows.Forms.ToolStripMenuItem();
             this.tracesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.sceneBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Toolbar = new ToyGraf.Controls.TgToolStrip();
             this.tbNew = new System.Windows.Forms.ToolStripSplitButton();
             this.tbNewEmptyScene = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,23 +114,22 @@
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripSeparator();
             this.HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.visibleDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.locationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.maximumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.minimumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orientationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.patternDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.scaleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transformDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.maximumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.minimumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.patternDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stripCountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sceneBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.transformDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.visibleDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
@@ -147,9 +147,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.TraceTable)).BeginInit();
             this.PopupTraceTableMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tracesBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sceneBindingSource)).BeginInit();
             this.Toolbar.SuspendLayout();
             this.MainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // GLControl
@@ -158,7 +158,7 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(465, 409);
+            this.GLControl.Size = new System.Drawing.Size(461, 405);
             this.GLControl.TabIndex = 1;
             this.GLControl.VSync = false;
             // 
@@ -213,7 +213,7 @@
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.TraceTable);
             this.SplitContainer1.Size = new System.Drawing.Size(751, 515);
-            this.SplitContainer1.SplitterDistance = 409;
+            this.SplitContainer1.SplitterDistance = 405;
             this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
@@ -231,8 +231,8 @@
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(751, 409);
-            this.SplitContainer2.SplitterDistance = 465;
+            this.SplitContainer2.Size = new System.Drawing.Size(751, 405);
+            this.SplitContainer2.SplitterDistance = 461;
             this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
             // 
@@ -242,7 +242,7 @@
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(281, 409);
+            this.PropertyGrid.Size = new System.Drawing.Size(285, 405);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -283,22 +283,22 @@
             this.TraceTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.TraceTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TraceTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.visibleDataGridViewCheckBoxColumn,
             this.descriptionDataGridViewTextBoxColumn,
             this.locationDataGridViewTextBoxColumn,
+            this.maximumDataGridViewTextBoxColumn,
+            this.minimumDataGridViewTextBoxColumn,
             this.orientationDataGridViewTextBoxColumn,
+            this.patternDataGridViewTextBoxColumn,
             this.scaleDataGridViewTextBoxColumn,
-            this.transformDataGridViewTextBoxColumn,
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6,
-            this.maximumDataGridViewTextBoxColumn,
-            this.minimumDataGridViewTextBoxColumn,
-            this.patternDataGridViewTextBoxColumn,
-            this.stripCountDataGridViewTextBoxColumn});
+            this.stripCountDataGridViewTextBoxColumn,
+            this.transformDataGridViewTextBoxColumn,
+            this.visibleDataGridViewCheckBoxColumn});
             this.TraceTable.ContextMenuStrip = this.PopupTraceTableMenu;
             this.TraceTable.DataSource = this.tracesBindingSource;
             this.TraceTable.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -307,7 +307,7 @@
             this.TraceTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.TraceTable.RowHeadersWidth = 20;
             this.TraceTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TraceTable.Size = new System.Drawing.Size(751, 101);
+            this.TraceTable.Size = new System.Drawing.Size(751, 105);
             this.TraceTable.TabIndex = 0;
             // 
             // PopupTraceTableMenu
@@ -347,6 +347,10 @@
             // 
             this.tracesBindingSource.DataMember = "Traces";
             this.tracesBindingSource.DataSource = this.sceneBindingSource;
+            // 
+            // sceneBindingSource
+            // 
+            this.sceneBindingSource.DataSource = typeof(ToyGraf.Models.Scene);
             // 
             // Toolbar
             // 
@@ -496,6 +500,7 @@
             // MainMenu
             // 
             this.MainMenu.Dock = System.Windows.Forms.DockStyle.None;
+            this.MainMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileMenu,
             this.EditMenu,
@@ -506,7 +511,6 @@
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Size = new System.Drawing.Size(784, 24);
             this.MainMenu.TabIndex = 2;
-            this.MainMenu.Text = "menuStrip1";
             // 
             // FileMenu
             // 
@@ -812,13 +816,6 @@
             this.dataGridViewCheckBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewCheckBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
-            // visibleDataGridViewCheckBoxColumn
-            // 
-            this.visibleDataGridViewCheckBoxColumn.DataPropertyName = "Visible";
-            this.visibleDataGridViewCheckBoxColumn.HeaderText = "Visible?";
-            this.visibleDataGridViewCheckBoxColumn.Name = "visibleDataGridViewCheckBoxColumn";
-            this.visibleDataGridViewCheckBoxColumn.Width = 52;
-            // 
             // descriptionDataGridViewTextBoxColumn
             // 
             this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
@@ -837,97 +834,11 @@
             this.locationDataGridViewTextBoxColumn.Name = "locationDataGridViewTextBoxColumn";
             this.locationDataGridViewTextBoxColumn.Width = 78;
             // 
-            // orientationDataGridViewTextBoxColumn
-            // 
-            this.orientationDataGridViewTextBoxColumn.DataPropertyName = "Orientation";
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.orientationDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
-            this.orientationDataGridViewTextBoxColumn.HeaderText = "Orientation°";
-            this.orientationDataGridViewTextBoxColumn.Name = "orientationDataGridViewTextBoxColumn";
-            this.orientationDataGridViewTextBoxColumn.Width = 97;
-            // 
-            // scaleDataGridViewTextBoxColumn
-            // 
-            this.scaleDataGridViewTextBoxColumn.DataPropertyName = "Scale";
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.scaleDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
-            this.scaleDataGridViewTextBoxColumn.HeaderText = "Scale";
-            this.scaleDataGridViewTextBoxColumn.Name = "scaleDataGridViewTextBoxColumn";
-            this.scaleDataGridViewTextBoxColumn.Width = 59;
-            // 
-            // transformDataGridViewTextBoxColumn
-            // 
-            this.transformDataGridViewTextBoxColumn.DataPropertyName = "Transform";
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.transformDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
-            this.transformDataGridViewTextBoxColumn.HeaderText = "Transform";
-            this.transformDataGridViewTextBoxColumn.Name = "transformDataGridViewTextBoxColumn";
-            this.transformDataGridViewTextBoxColumn.ReadOnly = true;
-            this.transformDataGridViewTextBoxColumn.Width = 86;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "Shader1Vertex";
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle7;
-            this.dataGridViewTextBoxColumn1.HeaderText = "Vertex Shader";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 94;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "Shader2TessControl";
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Tessellation Control Shader";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Visible = false;
-            this.dataGridViewTextBoxColumn2.Width = 127;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Shader3TessEvaluation";
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Tessellation Evaluation Shader";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Visible = false;
-            this.dataGridViewTextBoxColumn3.Width = 141;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Shader4Geometry";
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle10;
-            this.dataGridViewTextBoxColumn4.HeaderText = "Geometry Shader";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Visible = false;
-            this.dataGridViewTextBoxColumn4.Width = 113;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Shader5Fragment";
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle11;
-            this.dataGridViewTextBoxColumn5.HeaderText = "Fragment Shader";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 112;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "Shader6Compute";
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle12;
-            this.dataGridViewTextBoxColumn6.HeaderText = "Compute Shader";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.Visible = false;
-            this.dataGridViewTextBoxColumn6.Width = 111;
-            // 
             // maximumDataGridViewTextBoxColumn
             // 
             this.maximumDataGridViewTextBoxColumn.DataPropertyName = "Maximum";
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.maximumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.maximumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
             this.maximumDataGridViewTextBoxColumn.HeaderText = "Maximum";
             this.maximumDataGridViewTextBoxColumn.Name = "maximumDataGridViewTextBoxColumn";
             this.maximumDataGridViewTextBoxColumn.Width = 86;
@@ -935,11 +846,20 @@
             // minimumDataGridViewTextBoxColumn
             // 
             this.minimumDataGridViewTextBoxColumn.DataPropertyName = "Minimum";
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.minimumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.minimumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
             this.minimumDataGridViewTextBoxColumn.HeaderText = "Minimum";
             this.minimumDataGridViewTextBoxColumn.Name = "minimumDataGridViewTextBoxColumn";
             this.minimumDataGridViewTextBoxColumn.Width = 85;
+            // 
+            // orientationDataGridViewTextBoxColumn
+            // 
+            this.orientationDataGridViewTextBoxColumn.DataPropertyName = "Orientation";
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.orientationDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.orientationDataGridViewTextBoxColumn.HeaderText = "Orientation°";
+            this.orientationDataGridViewTextBoxColumn.Name = "orientationDataGridViewTextBoxColumn";
+            this.orientationDataGridViewTextBoxColumn.Width = 97;
             // 
             // patternDataGridViewTextBoxColumn
             // 
@@ -948,18 +868,98 @@
             this.patternDataGridViewTextBoxColumn.Name = "patternDataGridViewTextBoxColumn";
             this.patternDataGridViewTextBoxColumn.Width = 70;
             // 
+            // scaleDataGridViewTextBoxColumn
+            // 
+            this.scaleDataGridViewTextBoxColumn.DataPropertyName = "Scale";
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.scaleDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            this.scaleDataGridViewTextBoxColumn.HeaderText = "Scale";
+            this.scaleDataGridViewTextBoxColumn.Name = "scaleDataGridViewTextBoxColumn";
+            this.scaleDataGridViewTextBoxColumn.Width = 59;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "Shader1Vertex";
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle8;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Shader 1: Vertex";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 114;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "Shader2TessControl";
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle9;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Shader 2: Tessellation Control";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Visible = false;
+            this.dataGridViewTextBoxColumn2.Width = 187;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "Shader3TessEvaluation";
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle10;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Shader 3: Tessellation Evaluation";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Visible = false;
+            this.dataGridViewTextBoxColumn3.Width = 202;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "Shader4Geometry";
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle11;
+            this.dataGridViewTextBoxColumn4.HeaderText = "Shader 4: Geometry";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.Visible = false;
+            this.dataGridViewTextBoxColumn4.Width = 135;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Shader5Fragment";
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle12;
+            this.dataGridViewTextBoxColumn5.HeaderText = "Shader 5: Fragment";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.Width = 123;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "Shader6Compute";
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle13;
+            this.dataGridViewTextBoxColumn6.HeaderText = "Shader 6: Compute";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.Visible = false;
+            this.dataGridViewTextBoxColumn6.Width = 122;
+            // 
             // stripCountDataGridViewTextBoxColumn
             // 
             this.stripCountDataGridViewTextBoxColumn.DataPropertyName = "StripCount";
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.stripCountDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle15;
-            this.stripCountDataGridViewTextBoxColumn.HeaderText = "# Strips";
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.stripCountDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle14;
+            this.stripCountDataGridViewTextBoxColumn.HeaderText = "Strip Count";
             this.stripCountDataGridViewTextBoxColumn.Name = "stripCountDataGridViewTextBoxColumn";
-            this.stripCountDataGridViewTextBoxColumn.Width = 66;
+            this.stripCountDataGridViewTextBoxColumn.Width = 85;
             // 
-            // sceneBindingSource
+            // transformDataGridViewTextBoxColumn
             // 
-            this.sceneBindingSource.DataSource = typeof(ToyGraf.Models.Scene);
+            this.transformDataGridViewTextBoxColumn.DataPropertyName = "Transform";
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.transformDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle15;
+            this.transformDataGridViewTextBoxColumn.HeaderText = "Transform";
+            this.transformDataGridViewTextBoxColumn.Name = "transformDataGridViewTextBoxColumn";
+            this.transformDataGridViewTextBoxColumn.ReadOnly = true;
+            this.transformDataGridViewTextBoxColumn.Width = 86;
+            // 
+            // visibleDataGridViewCheckBoxColumn
+            // 
+            this.visibleDataGridViewCheckBoxColumn.DataPropertyName = "Visible";
+            this.visibleDataGridViewCheckBoxColumn.HeaderText = "Visible";
+            this.visibleDataGridViewCheckBoxColumn.Name = "visibleDataGridViewCheckBoxColumn";
+            this.visibleDataGridViewCheckBoxColumn.Width = 47;
             // 
             // SceneForm
             // 
@@ -993,11 +993,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.TraceTable)).EndInit();
             this.PopupTraceTableMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tracesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sceneBindingSource)).EndInit();
             this.Toolbar.ResumeLayout(false);
             this.Toolbar.PerformLayout();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1073,21 +1073,21 @@
         internal System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         internal System.Windows.Forms.ToolStripMenuItem PopupTraceTableColumns;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn visibleDataGridViewCheckBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn locationDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn maximumDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn minimumDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn orientationDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn patternDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn scaleDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transformDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn maximumDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn minimumDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn patternDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn stripCountDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transformDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn visibleDataGridViewCheckBoxColumn;
     }
 }
