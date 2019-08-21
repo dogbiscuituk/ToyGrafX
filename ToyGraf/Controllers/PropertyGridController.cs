@@ -18,9 +18,13 @@
             SceneForm.PopupPropertyGridMenu.Opening += PopupPropertyGridMenu_Opening;
             SceneForm.PopupPropertyGridFloat.Click += PopupPropertyGridDock_Click;
             SceneForm.PopupPropertyGridHide.Click += PopupPropertyGridHide_Click;
+            SceneForm.PopupSubjectScene.Click += PopupSubject_Click;
+            SceneForm.PopupSubjectFocusedTrace.Click += PopupSubject_Click;
+            SceneForm.PopupSubjectSelectedTraces.Click += PopupSubject_Click;
+            SceneForm.PopupSubjectAllTraces.Click += PopupSubject_Click;
             var toolStrip = FindToolStrip(PropertyGrid);
             HidePropertyPagesButton(toolStrip);
-            AddTitleLabel(toolStrip);
+            AddToolstripItems(toolStrip);
             PropertyGrid.PropertyValueChanged += PropertyGrid_PropertyValueChanged;
         }
 
@@ -51,7 +55,21 @@
 
         #endregion
 
+        #region Private Classes
+
+        private enum Subject
+        {
+            Scene,
+            FocusedTrace,
+            SelectedTraces,
+            AllTraces
+        }
+
+        #endregion
+
         #region Private Properties
+
+        private ToolStripSplitButton SubjectButton;
 
         private readonly SceneController SceneController;
 
@@ -67,6 +85,17 @@
         }
 
         private SceneForm SceneForm => SceneController.SceneForm;
+
+        private Subject _SelectedSubject = Subject.Scene;
+        private Subject SelectedSubject
+        {
+            get => _SelectedSubject;
+            set
+            {
+                if (SelectedSubject != value)
+                    SelectSubject(value);
+            }
+        }
 
         private bool PropertyGridDocked
         {
@@ -89,8 +118,6 @@
             }
         }
 
-        private ToolStripLabel TitleLabel;
-
         #endregion
 
         #region Private Event Handlers
@@ -110,11 +137,15 @@
         private void PopupPropertyGridMenu_Opening(object sender, CancelEventArgs e) =>
             SceneForm.PopupPropertyGridFloat.Text = PropertyGridDocked ? "&Undock" : "&Dock";
 
+        private void PopupSubject_Click(object sender, System.EventArgs e) => SelectSubject((ToolStripItem)sender);
+
         private void PropertyGrid_PropertyValueChanged(object sender, PropertyValueChangedEventArgs e) =>
             SceneController?.PropertyChanged(e);
 
         private void SceneController_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
             PropertyChanged();
+
+        private void SubjectButton_ButtonClick(object sender, System.EventArgs e) => SelectNextSubject();
 
         private void TogglePropertyGrid(object sender, EventArgs e)
         {
@@ -129,14 +160,15 @@
 
         #region Private Methods
 
-        private void AddTitleLabel(ToolStrip toolStrip)
+        private void AddToolstripItems(ToolStrip toolStrip)
         {
-            TitleLabel = new ToolStripLabel
+            SubjectButton = new ToolStripSplitButton
             {
-                Alignment = ToolStripItemAlignment.Right,
-                Text = "Properties"
+                DropDown = SceneForm.PopupSubjectMenu
             };
-            toolStrip.Items.Add(TitleLabel);
+            SubjectButton.ButtonClick += SubjectButton_ButtonClick;
+            toolStrip.Items.Add(SubjectButton);
+            SelectSubject(Subject.Scene);
         }
 
         private static ToolStrip FindToolStrip(PropertyGrid propertyGrid) =>
@@ -149,6 +181,20 @@
         }
 
         private void PropertyChanged() => PropertyGrid.Refresh();
+
+        private void SelectNextSubject() =>
+            SelectedSubject = SelectedSubject == Subject.AllTraces
+            ? Subject.Scene
+            : SelectedSubject + 1;
+
+        private void SelectSubject(ToolStripItem item) =>
+            SelectedSubject = (Subject)SceneForm.PopupSubjectMenu.Items.IndexOf(item);
+
+        private void SelectSubject(Subject subject)
+        {
+            _SelectedSubject = subject;
+            SubjectButton.Text = SceneForm.PopupSubjectMenu.Items[(int)subject].Text;
+        }
 
         #endregion
     }
