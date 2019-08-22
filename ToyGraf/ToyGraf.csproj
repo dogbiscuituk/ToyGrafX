@@ -77,6 +77,7 @@
     <Compile Include="Controllers\MruController.cs" />
     <Compile Include="Controllers\OptionsController.cs" />
     <Compile Include="Controllers\PropertyGridController.cs" />
+    <Compile Include="Controllers\RenderController.cs" />
     <Compile Include="Controllers\SdiController.cs" />
     <Compile Include="Controllers\TraceTableController.cs" />
     <Compile Include="Models\Clock.cs" />
