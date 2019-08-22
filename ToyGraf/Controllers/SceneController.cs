@@ -79,45 +79,36 @@
         internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
         internal void ModifiedChanged() => SceneForm.Text = JsonController.WindowCaption;
 
-        internal void OnPropertyChanged(string propertyName)
+        internal void OnPropertyChanged(params string[] propertyNames)
         {
             if (Updating)
             {
-                if (!ChangedPropertyNames.Contains(propertyName))
-                    ChangedPropertyNames.Add(propertyName);
+                ChangedPropertyNames.AddRange(propertyNames.Where(p => !ChangedPropertyNames.Contains(p)));
                 return;
             }
-            System.Diagnostics.Debug.WriteLine($"SceneController.OnPropertyChanged({propertyName})");
-            switch (propertyName)
-            {
-                case DisplayNames.FPS:
-                    TimerInit();
-                    break;
-            }
-            switch (propertyName)
-            {
-                case DisplayNames.Shader1Vertex:
-                case DisplayNames.Shader2TessControl:
-                case DisplayNames.Shader3TessEvaluation:
-                case DisplayNames.Shader4Geometry:
-                case DisplayNames.Shader5Fragment:
-                case DisplayNames.Shader6Compute:
-                case DisplayNames.Traces:
-                    InvalidateProgram();
-                    break;
-            }
+            System.Diagnostics.Debug.WriteLine(
+                $"SceneController.OnPropertyChanged({propertyNames.Aggregate((s, t) => $"{s}, {t}")})");
+            foreach (var propertyName in propertyNames)
+                switch (propertyName)
+                {
+                    case DisplayNames.FPS:
+                        TimerInit();
+                        break;
+                    case DisplayNames.Shader1Vertex:
+                    case DisplayNames.Shader2TessControl:
+                    case DisplayNames.Shader3TessEvaluation:
+                    case DisplayNames.Shader4Geometry:
+                    case DisplayNames.Shader5Fragment:
+                    case DisplayNames.Shader6Compute:
+                    case DisplayNames.Traces:
+                        InvalidateProgram();
+                        break;
+                }
             PropertyGridController.Refresh();
             TraceTableController.Refresh();
         }
 
-        internal void OnSelectionChanged()
-        {
-            var selection = TraceTableController.Selection;
-            if (selection.Any())
-                PropertyGridController.SelectedObjects = selection.ToArray();
-            else
-                PropertyGridController.SelectedObject = Scene;
-        }
+        internal void OnSelectionChanged() => PropertyGridController.Refresh();
 
         /// <summary>
         /// When the PropertyGrid signals editing of a subproperty, it has already modified the
@@ -622,6 +613,10 @@
             Log("Done.");
             Scene._GPUCode = GpuCode.ToString().TrimEnd();
             Scene._GPULog = GpuLog.ToString().TrimEnd();
+            OnPropertyChanged(
+                DisplayNames.GPUCode,
+                DisplayNames.GPULog,
+                DisplayNames.GPUStatus);
             GpuCode = null;
             GpuLog = null;
             GetUniformLocations();

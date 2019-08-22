@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SceneForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -48,12 +47,6 @@
             this.GLControl = new OpenTK.GLControl();
             this.ToolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.StatusBar = new ToyGraf.Controls.TgStatusStrip();
-            this.Split = new System.Windows.Forms.ToolStripSplitButton();
-            this.PopupSubjectMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.PopupSubjectScene = new System.Windows.Forms.ToolStripMenuItem();
-            this.PopupSubjectFocusedTrace = new System.Windows.Forms.ToolStripMenuItem();
-            this.PopupSubjectSelectedTraces = new System.Windows.Forms.ToolStripMenuItem();
-            this.PopupSubjectAllTraces = new System.Windows.Forms.ToolStripMenuItem();
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
             this.SplitContainer2 = new System.Windows.Forms.SplitContainer();
             this.PropertyGrid = new System.Windows.Forms.PropertyGrid();
@@ -136,13 +129,15 @@
             this.HelpOpenGLShadingLanguage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripSeparator();
             this.HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.PopupSubjectMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.PopupSubjectScene = new System.Windows.Forms.ToolStripMenuItem();
+            this.PopupSubjectSelectedTraces = new System.Windows.Forms.ToolStripMenuItem();
+            this.PopupSubjectAllTraces = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
             this.ToolStripContainer.TopToolStripPanel.SuspendLayout();
             this.ToolStripContainer.SuspendLayout();
-            this.StatusBar.SuspendLayout();
-            this.PopupSubjectMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer1)).BeginInit();
             this.SplitContainer1.Panel1.SuspendLayout();
             this.SplitContainer1.Panel2.SuspendLayout();
@@ -158,6 +153,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SceneBindingSource)).BeginInit();
             this.Toolbar.SuspendLayout();
             this.MainMenu.SuspendLayout();
+            this.PopupSubjectMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // GLControl
@@ -166,7 +162,7 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(448, 392);
+            this.GLControl.Size = new System.Drawing.Size(444, 388);
             this.GLControl.TabIndex = 1;
             this.GLControl.VSync = false;
             // 
@@ -199,57 +195,11 @@
             // StatusBar
             // 
             this.StatusBar.Dock = System.Windows.Forms.DockStyle.None;
-            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Split});
             this.StatusBar.Location = new System.Drawing.Point(0, 0);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(784, 22);
             this.StatusBar.TabIndex = 2;
             this.StatusBar.Text = "statusStrip1";
-            // 
-            // Split
-            // 
-            this.Split.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.Split.DropDown = this.PopupSubjectMenu;
-            this.Split.Image = ((System.Drawing.Image)(resources.GetObject("Split.Image")));
-            this.Split.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Split.Name = "Split";
-            this.Split.Size = new System.Drawing.Size(54, 20);
-            this.Split.Text = "Scene";
-            // 
-            // PopupSubjectMenu
-            // 
-            this.PopupSubjectMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.PopupSubjectScene,
-            this.PopupSubjectFocusedTrace,
-            this.PopupSubjectSelectedTraces,
-            this.PopupSubjectAllTraces});
-            this.PopupSubjectMenu.Name = "PopupMenu";
-            this.PopupSubjectMenu.Size = new System.Drawing.Size(181, 114);
-            // 
-            // PopupSubjectScene
-            // 
-            this.PopupSubjectScene.Name = "PopupSubjectScene";
-            this.PopupSubjectScene.Size = new System.Drawing.Size(180, 22);
-            this.PopupSubjectScene.Text = "&Scene";
-            // 
-            // PopupSubjectFocusedTrace
-            // 
-            this.PopupSubjectFocusedTrace.Name = "PopupSubjectFocusedTrace";
-            this.PopupSubjectFocusedTrace.Size = new System.Drawing.Size(180, 22);
-            this.PopupSubjectFocusedTrace.Text = "&Focused Trace";
-            // 
-            // PopupSubjectSelectedTraces
-            // 
-            this.PopupSubjectSelectedTraces.Name = "PopupSubjectSelectedTraces";
-            this.PopupSubjectSelectedTraces.Size = new System.Drawing.Size(180, 22);
-            this.PopupSubjectSelectedTraces.Text = "Selected &Trace(s)";
-            // 
-            // PopupSubjectAllTraces
-            // 
-            this.PopupSubjectAllTraces.Name = "PopupSubjectAllTraces";
-            this.PopupSubjectAllTraces.Size = new System.Drawing.Size(180, 22);
-            this.PopupSubjectAllTraces.Text = "&All Traces";
             // 
             // SplitContainer1
             // 
@@ -267,7 +217,7 @@
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.TraceTable);
             this.SplitContainer1.Size = new System.Drawing.Size(751, 515);
-            this.SplitContainer1.SplitterDistance = 392;
+            this.SplitContainer1.SplitterDistance = 388;
             this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
@@ -285,8 +235,8 @@
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(751, 392);
-            this.SplitContainer2.SplitterDistance = 448;
+            this.SplitContainer2.Size = new System.Drawing.Size(751, 388);
+            this.SplitContainer2.SplitterDistance = 444;
             this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
             // 
@@ -296,7 +246,7 @@
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(298, 392);
+            this.PropertyGrid.Size = new System.Drawing.Size(302, 388);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -361,7 +311,7 @@
             this.TraceTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.TraceTable.RowHeadersWidth = 20;
             this.TraceTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TraceTable.Size = new System.Drawing.Size(751, 118);
+            this.TraceTable.Size = new System.Drawing.Size(751, 122);
             this.TraceTable.TabIndex = 0;
             // 
             // colDescription
@@ -837,7 +787,7 @@
             this.EditUndo.Name = "EditUndo";
             this.EditUndo.ShortcutKeyDisplayString = "^Z";
             this.EditUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.EditUndo.Size = new System.Drawing.Size(155, 22);
+            this.EditUndo.Size = new System.Drawing.Size(180, 22);
             this.EditUndo.Text = "&Undo";
             // 
             // EditRedo
@@ -848,13 +798,13 @@
             this.EditRedo.Name = "EditRedo";
             this.EditRedo.ShortcutKeyDisplayString = "^Y";
             this.EditRedo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.EditRedo.Size = new System.Drawing.Size(155, 22);
+            this.EditRedo.Size = new System.Drawing.Size(180, 22);
             this.EditRedo.Text = "&Redo";
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(152, 6);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(177, 6);
             // 
             // EditCut
             // 
@@ -864,7 +814,7 @@
             this.EditCut.Name = "EditCut";
             this.EditCut.ShortcutKeyDisplayString = "^X";
             this.EditCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.EditCut.Size = new System.Drawing.Size(155, 22);
+            this.EditCut.Size = new System.Drawing.Size(180, 22);
             this.EditCut.Text = "Cu&t";
             // 
             // EditCopy
@@ -875,7 +825,7 @@
             this.EditCopy.Name = "EditCopy";
             this.EditCopy.ShortcutKeyDisplayString = "^C";
             this.EditCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.EditCopy.Size = new System.Drawing.Size(155, 22);
+            this.EditCopy.Size = new System.Drawing.Size(180, 22);
             this.EditCopy.Text = "&Copy";
             // 
             // EditPaste
@@ -886,7 +836,7 @@
             this.EditPaste.Name = "EditPaste";
             this.EditPaste.ShortcutKeyDisplayString = "^V";
             this.EditPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.EditPaste.Size = new System.Drawing.Size(155, 22);
+            this.EditPaste.Size = new System.Drawing.Size(180, 22);
             this.EditPaste.Text = "&Paste";
             // 
             // EditDelete
@@ -895,35 +845,37 @@
             this.EditDelete.Image = global::ToyGraf.Properties.Resources.Delete;
             this.EditDelete.ImageTransparentColor = System.Drawing.Color.White;
             this.EditDelete.Name = "EditDelete";
-            this.EditDelete.Size = new System.Drawing.Size(155, 22);
+            this.EditDelete.Size = new System.Drawing.Size(180, 22);
             this.EditDelete.Text = "&Delete";
             // 
             // toolStripMenuItem9
             // 
             this.toolStripMenuItem9.Name = "toolStripMenuItem9";
-            this.toolStripMenuItem9.Size = new System.Drawing.Size(152, 6);
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(177, 6);
             // 
             // EditSelectAll
             // 
             this.EditSelectAll.Name = "EditSelectAll";
-            this.EditSelectAll.Size = new System.Drawing.Size(155, 22);
+            this.EditSelectAll.ShortcutKeyDisplayString = "^A";
+            this.EditSelectAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.EditSelectAll.Size = new System.Drawing.Size(180, 22);
             this.EditSelectAll.Text = "Select &All";
             // 
             // EditInvertSelection
             // 
             this.EditInvertSelection.Name = "EditInvertSelection";
-            this.EditInvertSelection.Size = new System.Drawing.Size(155, 22);
+            this.EditInvertSelection.Size = new System.Drawing.Size(180, 22);
             this.EditInvertSelection.Text = "&Invert Selection";
             // 
             // toolStripMenuItem10
             // 
             this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(152, 6);
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(177, 6);
             // 
             // EditOptions
             // 
             this.EditOptions.Name = "EditOptions";
-            this.EditOptions.Size = new System.Drawing.Size(155, 22);
+            this.EditOptions.Size = new System.Drawing.Size(180, 22);
             this.EditOptions.Text = "&Options...";
             // 
             // SceneMenu
@@ -1007,6 +959,33 @@
             this.HelpAbout.Size = new System.Drawing.Size(229, 22);
             this.HelpAbout.Text = "&About";
             // 
+            // PopupSubjectMenu
+            // 
+            this.PopupSubjectMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.PopupSubjectScene,
+            this.PopupSubjectSelectedTraces,
+            this.PopupSubjectAllTraces});
+            this.PopupSubjectMenu.Name = "PopupMenu";
+            this.PopupSubjectMenu.Size = new System.Drawing.Size(155, 70);
+            // 
+            // PopupSubjectScene
+            // 
+            this.PopupSubjectScene.Name = "PopupSubjectScene";
+            this.PopupSubjectScene.Size = new System.Drawing.Size(154, 22);
+            this.PopupSubjectScene.Text = "&Scene";
+            // 
+            // PopupSubjectSelectedTraces
+            // 
+            this.PopupSubjectSelectedTraces.Name = "PopupSubjectSelectedTraces";
+            this.PopupSubjectSelectedTraces.Size = new System.Drawing.Size(154, 22);
+            this.PopupSubjectSelectedTraces.Text = "Selected &Traces";
+            // 
+            // PopupSubjectAllTraces
+            // 
+            this.PopupSubjectAllTraces.Name = "PopupSubjectAllTraces";
+            this.PopupSubjectAllTraces.Size = new System.Drawing.Size(154, 22);
+            this.PopupSubjectAllTraces.Text = "&All Traces";
+            // 
             // SceneForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1027,9 +1006,6 @@
             this.ToolStripContainer.TopToolStripPanel.PerformLayout();
             this.ToolStripContainer.ResumeLayout(false);
             this.ToolStripContainer.PerformLayout();
-            this.StatusBar.ResumeLayout(false);
-            this.StatusBar.PerformLayout();
-            this.PopupSubjectMenu.ResumeLayout(false);
             this.SplitContainer1.Panel1.ResumeLayout(false);
             this.SplitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer1)).EndInit();
@@ -1047,6 +1023,7 @@
             this.Toolbar.PerformLayout();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
+            this.PopupSubjectMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1139,9 +1116,7 @@
         internal System.Windows.Forms.DataGridViewCheckBoxColumn colVisible;
         internal System.Windows.Forms.ToolStripMenuItem PopupSubjectScene;
         internal System.Windows.Forms.ToolStripMenuItem PopupSubjectSelectedTraces;
-        internal System.Windows.Forms.ToolStripSplitButton Split;
-        internal System.Windows.Forms.ToolStripMenuItem PopupSubjectFocusedTrace;
-        internal System.Windows.Forms.ToolStripMenuItem PopupSubjectAllTraces;
         internal System.Windows.Forms.ContextMenuStrip PopupSubjectMenu;
+        internal System.Windows.Forms.ToolStripMenuItem PopupSubjectAllTraces;
     }
 }

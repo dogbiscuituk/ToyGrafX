@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Linq;
     using System.Windows.Forms;
+    using ToyGraf.Models;
     using ToyGraf.Views;
 
     internal class PropertyGridController
@@ -19,7 +20,6 @@
             SceneForm.PopupPropertyGridFloat.Click += PopupPropertyGridDock_Click;
             SceneForm.PopupPropertyGridHide.Click += PopupPropertyGridHide_Click;
             SceneForm.PopupSubjectScene.Click += PopupSubject_Click;
-            SceneForm.PopupSubjectFocusedTrace.Click += PopupSubject_Click;
             SceneForm.PopupSubjectSelectedTraces.Click += PopupSubject_Click;
             SceneForm.PopupSubjectAllTraces.Click += PopupSubject_Click;
             var toolStrip = FindToolStrip(PropertyGrid);
@@ -51,7 +51,11 @@
         internal static void HidePropertyPagesButton(PropertyGrid propertyGrid) =>
             HidePropertyPagesButton(FindToolStrip(propertyGrid));
 
-        internal void Refresh() => PropertyGrid.Refresh();
+        internal void Refresh()
+        {
+            RefreshDataSource();
+            PropertyGrid.Refresh();
+        }
 
         #endregion
 
@@ -60,7 +64,6 @@
         private enum Subject
         {
             Scene,
-            FocusedTrace,
             SelectedTraces,
             AllTraces
         }
@@ -68,10 +71,6 @@
         #endregion
 
         #region Private Properties
-
-        private ToolStripSplitButton SubjectButton;
-
-        private readonly SceneController SceneController;
 
         private HostController _HostController;
         private HostController HostController
@@ -81,19 +80,6 @@
                 if (_HostController == null)
                     _HostController = new HostController("Property Grid", PropertyGrid);
                 return _HostController;
-            }
-        }
-
-        private SceneForm SceneForm => SceneController.SceneForm;
-
-        private Subject _SelectedSubject = Subject.Scene;
-        private Subject SelectedSubject
-        {
-            get => _SelectedSubject;
-            set
-            {
-                if (SelectedSubject != value)
-                    SelectSubject(value);
             }
         }
 
@@ -117,6 +103,25 @@
                     }
             }
         }
+
+        private Scene Scene => SceneController.Scene;
+        private readonly SceneController SceneController;
+
+        private SceneForm SceneForm => SceneController.SceneForm;
+
+        private Subject _SelectedSubject = Subject.Scene;
+        private Subject SelectedSubject
+        {
+            get => _SelectedSubject;
+            set
+            {
+                if (SelectedSubject != value)
+                    SelectSubject(value);
+            }
+        }
+
+        private ToolStripSplitButton SubjectButton;
+        private TraceTableController TraceTableController => SceneController.TraceTableController;
 
         #endregion
 
@@ -182,6 +187,22 @@
 
         private void PropertyChanged() => PropertyGrid.Refresh();
 
+        private void RefreshDataSource()
+        {
+            switch (SelectedSubject)
+            {
+                case Subject.Scene:
+                    SelectedObject = Scene;
+                    break;
+                case Subject.SelectedTraces:
+                    SelectedObjects = TraceTableController.Selection.ToArray();
+                    break;
+                case Subject.AllTraces:
+                    SelectedObjects = Scene.Traces.ToArray();
+                    break;
+            }
+        }
+
         private void SelectNextSubject() =>
             SelectedSubject = SelectedSubject == Subject.AllTraces
             ? Subject.Scene
@@ -194,6 +215,7 @@
         {
             _SelectedSubject = subject;
             SubjectButton.Text = SceneForm.PopupSubjectMenu.Items[(int)subject].Text;
+            RefreshDataSource();
         }
 
         #endregion
