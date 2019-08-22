@@ -210,7 +210,7 @@
         }
 
         [JsonProperty]
-        public List<Trace> _Traces { get; set; }
+        public List<Trace> _Traces { get; private set; }
 
         #endregion
 

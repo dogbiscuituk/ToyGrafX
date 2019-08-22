@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Linq;
     using System.Windows.Forms;
+    using ToyGraf.Controls;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
@@ -46,7 +47,7 @@
 
         #region Internal Properties
 
-        internal PropertyGrid PropertyGrid => SceneForm.PropertyGrid;
+        internal TgPropertyGrid PropertyGrid => SceneForm.PropertyGrid;
 
         internal bool PropertyGridVisible
         {

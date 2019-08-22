@@ -124,11 +124,11 @@
             var parentItem = item.Parent;
             var parentLabel = parentItem.Label;
             var value = e.OldValue;
-            var targets = PropertyGrid.SelectedObjects;
-            if (targets[0] is Scene)
+            var scene = PropertyGrid.SelectedObject;
+            if (scene != null)
                 Spoof(Spoof(parentLabel, label, value));
             else
-                foreach (Trace trace in targets)
+                foreach (Trace trace in PropertyGrid.SelectedObjects)
                     Spoof(Spoof(trace, parentLabel, label, value));
             return true;
         }
