@@ -494,7 +494,7 @@
             // 
             // TracesBindingSource
             // 
-            this.TracesBindingSource.DataMember = "Traces";
+            this.TracesBindingSource.DataMember = "_Traces";
             this.TracesBindingSource.DataSource = this.SceneBindingSource;
             // 
             // SceneBindingSource

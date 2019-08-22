@@ -19,77 +19,15 @@
     [DefaultProperty("Traces")]
     public class Scene
     {
-        #region Public Interface
+        #region Constructors
 
         public Scene() => RestoreDefaults();
 
         internal Scene(SceneController sceneController) : this() => SceneController = sceneController;
 
-        internal Matrix4 GetCameraView() => Maths.CreateCameraView(CameraPosition, CameraRotation);
-        internal Matrix4 GetProjection() => Maths.CreatePerspectiveProjection(FieldOfView, AspectRatio, NearPlane, FarPlane);
-
-        public string GetScript(ShaderType shaderType)
-        {
-            switch (shaderType)
-            {
-                case ShaderType.VertexShader:
-                    return _Shader1Vertex;
-                case ShaderType.TessControlShader:
-                    return _Shader2TessControl;
-                case ShaderType.TessEvaluationShader:
-                    return _Shader3TessEvaluation;
-                case ShaderType.GeometryShader:
-                    return _Shader4Geometry;
-                case ShaderType.FragmentShader:
-                    return _Shader5Fragment;
-                case ShaderType.ComputeShader:
-                    return _Shader6Compute;
-            }
-            return string.Empty;
-        }
-
-        public void SetScript(ShaderType shaderType, string script)
-        {
-            switch (shaderType)
-            {
-                case ShaderType.VertexShader:
-                    _Shader1Vertex = script;
-                    break;
-                case ShaderType.TessControlShader:
-                    _Shader2TessControl = script;
-                    break;
-                case ShaderType.TessEvaluationShader:
-                    _Shader3TessEvaluation = script;
-                    break;
-                case ShaderType.GeometryShader:
-                    _Shader4Geometry = script;
-                    break;
-                case ShaderType.FragmentShader:
-                    _Shader5Fragment = script;
-                    break;
-                case ShaderType.ComputeShader:
-                    _Shader6Compute = script;
-                    break;
-            }
-        }
-
-        internal void SetCameraView(Matrix4 cameraView) { }
-        internal void SetProjection(Matrix4 projection) { }
-
-        public override string ToString() =>
-            !string.IsNullOrWhiteSpace(Title)
-            ? _Title
-            : "New scene";
-
-        internal void Clear()
-        {
-            RestoreDefaults();
-            OnPropertyChanged(string.Empty);
-        }
-
         #endregion
 
-        #region Browsable Properties
+        #region Public Properties
 
         #region Graphics Mode
 
@@ -271,6 +209,9 @@
             set => _Traces = value;
         }
 
+        [JsonProperty]
+        public List<Trace> _Traces { get; set; }
+
         #endregion
 
         #region Shaders
@@ -351,7 +292,20 @@
 
         #endregion
 
-        #region Persistent Fields
+        #region Public Methods
+
+        public override string ToString() =>
+            !string.IsNullOrWhiteSpace(Title)
+            ? _Title
+            : "New scene";
+
+        #endregion
+
+        #region Internal Properties
+
+        internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
+        internal bool IsModified => CommandProcessor?.IsModified ?? false;
+        internal SceneController SceneController;
 
         [JsonProperty] internal ColourFormat _AccumColourFormat;
         [JsonProperty] internal Color _BackgroundColour;
@@ -377,16 +331,7 @@
         [JsonProperty] internal int _Stencil;
         [JsonProperty] internal bool _Stereo;
         [JsonProperty] internal string _Title;
-        [JsonProperty] internal List<Trace> _Traces = new List<Trace>();
         [JsonProperty] internal bool _VSync;
-
-        #endregion
-
-        #region Internal Properties
-
-        internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
-        internal bool IsModified => CommandProcessor?.IsModified ?? false;
-        internal SceneController SceneController;
 
         #endregion
 
@@ -398,6 +343,35 @@
         {
             foreach (var trace in _Traces)
                 trace.Init(this);
+        }
+
+        internal void Clear()
+        {
+            RestoreDefaults();
+            OnPropertyChanged(string.Empty);
+        }
+
+        internal Matrix4 GetCameraView() => Maths.CreateCameraView(CameraPosition, CameraRotation);
+        internal Matrix4 GetProjection() => Maths.CreatePerspectiveProjection(FieldOfView, AspectRatio, NearPlane, FarPlane);
+
+        internal string GetScript(ShaderType shaderType)
+        {
+            switch (shaderType)
+            {
+                case ShaderType.VertexShader:
+                    return _Shader1Vertex;
+                case ShaderType.TessControlShader:
+                    return _Shader2TessControl;
+                case ShaderType.TessEvaluationShader:
+                    return _Shader3TessEvaluation;
+                case ShaderType.GeometryShader:
+                    return _Shader4Geometry;
+                case ShaderType.FragmentShader:
+                    return _Shader5Fragment;
+                case ShaderType.ComputeShader:
+                    return _Shader6Compute;
+            }
+            return string.Empty;
         }
 
         internal void InsertTrace(int index, Trace trace) => _Traces.Insert(index, trace);
@@ -412,6 +386,34 @@
             if (index >= 0 && index < _Traces.Count)
                 _Traces.RemoveAt(index);
         }
+
+        internal void SetScript(ShaderType shaderType, string script)
+        {
+            switch (shaderType)
+            {
+                case ShaderType.VertexShader:
+                    _Shader1Vertex = script;
+                    break;
+                case ShaderType.TessControlShader:
+                    _Shader2TessControl = script;
+                    break;
+                case ShaderType.TessEvaluationShader:
+                    _Shader3TessEvaluation = script;
+                    break;
+                case ShaderType.GeometryShader:
+                    _Shader4Geometry = script;
+                    break;
+                case ShaderType.FragmentShader:
+                    _Shader5Fragment = script;
+                    break;
+                case ShaderType.ComputeShader:
+                    _Shader6Compute = script;
+                    break;
+            }
+        }
+
+        internal void SetCameraView(Matrix4 cameraView) { }
+        internal void SetProjection(Matrix4 projection) { }
 
         #endregion
 

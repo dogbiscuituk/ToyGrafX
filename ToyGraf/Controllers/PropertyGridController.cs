@@ -9,7 +9,7 @@
 
     internal class PropertyGridController
     {
-        #region Internal Interface
+        #region Constructors
 
         internal PropertyGridController(SceneController sceneController)
         {
@@ -19,6 +19,7 @@
             SceneForm.PopupPropertyGridMenu.Opening += PopupPropertyGridMenu_Opening;
             SceneForm.PopupPropertyGridFloat.Click += PopupPropertyGridDock_Click;
             SceneForm.PopupPropertyGridHide.Click += PopupPropertyGridHide_Click;
+            SceneForm.PopupSubjectMenu.Opening += PopupSubjectMenu_Opening;
             SceneForm.PopupSubjectScene.Click += PopupSubject_Click;
             SceneForm.PopupSubjectSelectedTraces.Click += PopupSubject_Click;
             SceneForm.PopupSubjectAllTraces.Click += PopupSubject_Click;
@@ -27,6 +28,23 @@
             AddToolstripItems(toolStrip);
             PropertyGrid.PropertyValueChanged += PropertyGrid_PropertyValueChanged;
         }
+
+        #endregion
+
+        #region Internal Methods
+
+        internal static void HidePropertyPagesButton(PropertyGrid propertyGrid) =>
+            HidePropertyPagesButton(FindToolStrip(propertyGrid));
+
+        internal void Refresh()
+        {
+            RefreshDataSource();
+            PropertyGrid.Refresh();
+        }
+
+        #endregion
+
+        #region Internal Properties
 
         internal PropertyGrid PropertyGrid => SceneForm.PropertyGrid;
 
@@ -46,15 +64,6 @@
         {
             get => PropertyGrid.SelectedObjects;
             set => PropertyGrid.SelectedObjects = value;
-        }
-
-        internal static void HidePropertyPagesButton(PropertyGrid propertyGrid) =>
-            HidePropertyPagesButton(FindToolStrip(propertyGrid));
-
-        internal void Refresh()
-        {
-            RefreshDataSource();
-            PropertyGrid.Refresh();
         }
 
         #endregion
@@ -141,6 +150,13 @@
 
         private void PopupPropertyGridMenu_Opening(object sender, CancelEventArgs e) =>
             SceneForm.PopupPropertyGridFloat.Text = PropertyGridDocked ? "&Undock" : "&Dock";
+
+        private void PopupSubjectMenu_Opening(object sender, CancelEventArgs e)
+        {
+            var items = ((ToolStrip)sender).Items;
+            for (int index = 0; index < items.Count; index++)
+                ((ToolStripMenuItem)items[index]).Checked = index == (int)SelectedSubject;
+        }
 
         private void PopupSubject_Click(object sender, System.EventArgs e) => SelectSubject((ToolStripItem)sender);
 
