@@ -1,43 +1,26 @@
 ﻿namespace ToyGraf.Models
 {
     using System;
-    using System.ComponentModel;
     using System.Linq;
-    using System.Timers;
+    using System.Windows.Forms;
 
     public class Clock
     {
+        #region Constructor
+
         public Clock()
         {
-            Timer = new Timer
-            {
-                AutoReset = true,
-                Interval = 100,
-                Enabled = false
-            };
-            Timer.Elapsed += Timer_Elapsed;
+            Timer = new Timer { Enabled = false };
+            Timer.Tick += Timer_Tick;
         }
-
-        #region Fields
-
-        private bool _running;
-        private DateTime _startedAt;
-        private TimeSpan _realTimeElapsed, _virtualTimeElapsed;
-        private int _suspendCount;
-        private Timer Timer;
-        private double _virtualTimeFactor = 1;
-
-        public double NextInterval = 100;
-        private double[] Ticks = new double[64];
-        private int TickCount, TickIndex;
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         public bool Running
         {
-            get => _running;
+            get => _Running;
             set
             {
                 if (Running != value)
@@ -46,14 +29,14 @@
                     if (Running)
                     {
                         Timer.Enabled = false;
-                        var elapsed = now - _startedAt;
-                        _realTimeElapsed += elapsed;
-                        _virtualTimeElapsed += GetVirtualIncrement(now);
+                        var elapsed = now - _StartedAt;
+                        _RealTimeElapsed += elapsed;
+                        _VirtualTimeElapsed += GetVirtualIncrement(now);
                     }
-                    _running = value;
+                    _Running = value;
                     if (Running)
                     {
-                        _startedAt = now;
+                        _StartedAt = now;
                         Timer.Enabled = true;
                     }
                 }
@@ -62,39 +45,31 @@
 
         public double RealSecondsElapsed => RealTimeElapsed.TotalSeconds;
         public double VirtualSecondsElapsed => VirtualTimeElapsed.TotalSeconds;
-        public double FramesPerSecond;
-        public const int LimitFactor = 32;
 
-        public ISynchronizeInvoke Sync
-        {
-            get => Timer.SynchronizingObject;
-            set => Timer.SynchronizingObject = value;
-        }
-
-        public double Interval
+        public int Interval_ms
         {
             get => Timer.Interval;
             set => Timer.Interval = value;
         }
 
         public TimeSpan RealTimeElapsed => Running
-            ? _realTimeElapsed + (DateTime.Now - _startedAt)
-            : _realTimeElapsed;
+            ? _RealTimeElapsed + (DateTime.Now - _StartedAt)
+            : _RealTimeElapsed;
 
         public TimeSpan VirtualTimeElapsed => Running
-            ? _virtualTimeElapsed + GetVirtualIncrement(DateTime.Now)
-            : _virtualTimeElapsed;
+            ? _VirtualTimeElapsed + GetVirtualIncrement(DateTime.Now)
+            : _VirtualTimeElapsed;
 
         public double VirtualTimeFactor
         {
-            get => _virtualTimeFactor;
+            get => _VirtualTimeFactor;
             set
             {
                 if (VirtualTimeFactor != value)
                 {
                     var running = Running;
                     Stop();
-                    _virtualTimeFactor = value;
+                    _VirtualTimeFactor = value;
                     if (running)
                         Start();
                 }
@@ -103,60 +78,75 @@
 
         #endregion
 
-        #region Methods
+        #region Public Events
+
+        public event EventHandler<EventArgs> Tick;
+
+        #endregion
+
+        #region Public Methods
+
+        public void Accelerate() => VirtualTimeFactor = +Scale(+VirtualTimeFactor);
+        public void Decelerate() => VirtualTimeFactor = -Scale(-VirtualTimeFactor);
 
         public void Reset()
         {
             Running = false;
-            _realTimeElapsed = TimeSpan.Zero;
-            _virtualTimeElapsed = TimeSpan.Zero;
-            _virtualTimeFactor = 1;
-            TickCount = 0;
-            TickIndex = 0;
-            Array.ForEach(Ticks, p => p = 0);
+            _RealTimeElapsed = TimeSpan.Zero;
+            _VirtualTimeElapsed = TimeSpan.Zero;
+            _VirtualTimeFactor = 1;
         }
 
         public void Resume()
         {
-            if (_suspendCount > 0 && --_suspendCount == 0)
+            if (_SuspendCount > 0 && --_SuspendCount == 0)
                 Running = true;
         }
 
         public void Start()
         {
-            _suspendCount = 0;
+            _SuspendCount = 0;
             Running = true;
         }
 
         public void Stop()
         {
-            _suspendCount = 0;
+            _SuspendCount = 0;
             Running = false;
         }
 
         public void Suspend()
         {
-            _suspendCount++;
+            _SuspendCount++;
             Running = false;
         }
 
-        public void UpdateFPS()
-        {
-            Ticks[TickIndex = (TickIndex + 1) % Ticks.Length] = RealSecondsElapsed;
-            if (TickCount < Ticks.Length - 1) TickCount++;
-            var fps = 0.0;
-            if (TickCount > 1)
-            {
-                var ticks = Ticks.Take(TickCount);
-                fps = TickCount / (ticks.Max() - ticks.Min());
-            }
-            FramesPerSecond = fps;
-        }
+        #endregion
 
-        public void Accelerate() => VirtualTimeFactor = +Adjust(+VirtualTimeFactor);
-        public void Decelerate() => VirtualTimeFactor = -Adjust(-VirtualTimeFactor);
+        #region Private Fields
 
-        private static double Adjust(double factor)
+        private const int LimitFactor = 32;
+        private bool _Running;
+        private DateTime _StartedAt;
+        private TimeSpan _RealTimeElapsed, _VirtualTimeElapsed;
+        private int _SuspendCount;
+        private Timer Timer;
+        private double _VirtualTimeFactor = 1;
+
+        #endregion
+
+        #region Private Event Handlers
+
+        private void Timer_Tick(object sender, EventArgs e) => Tick?.Invoke(this, EventArgs.Empty);
+
+        #endregion
+
+        #region Private Methods
+
+        private TimeSpan GetVirtualIncrement(DateTime now) =>
+            TimeSpan.FromSeconds((now - _StartedAt).TotalSeconds * VirtualTimeFactor);
+
+        private static double Scale(double factor)
         {
             switch (factor)
             {
@@ -172,21 +162,6 @@
                     return LimitFactor;
             }
         }
-
-        private TimeSpan GetVirtualIncrement(DateTime now) =>
-            TimeSpan.FromSeconds((now - _startedAt).TotalSeconds * VirtualTimeFactor);
-
-        #endregion
-
-        #region Events
-
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            Tick?.Invoke(this, EventArgs.Empty);
-            Interval = NextInterval;
-        }
-
-        public event EventHandler<EventArgs> Tick;
 
         #endregion
     }

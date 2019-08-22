@@ -6,7 +6,7 @@
 
     internal class ClockController
     {
-        #region Internal Interface
+        #region Constructor
 
         internal ClockController(SceneController sceneController)
         {
@@ -23,14 +23,18 @@
             SceneForm.tbForward.Click += TimeForward_Click;
             SceneForm.TimeAccelerate.Click += TimeAccelerate_Click;
             SceneForm.tbAccelerate.Click += TimeAccelerate_Click;
-            Clock = new Clock { Sync = SceneForm };
+            Clock = new Clock();
             Clock.Tick += Clock_Tick;
             UpdateTimeControls();
         }
 
+        #endregion
+
+        #region Internal Properties
+
         internal Clock Clock;
-        internal double VirtualSecondsElapsed => Clock.VirtualSecondsElapsed;
         internal bool ClockRunning => Clock.Running;
+        internal double VirtualSecondsElapsed => Clock.VirtualSecondsElapsed;
 
         internal double VirtualTimeFactor
         {
@@ -38,10 +42,12 @@
             set => Clock.VirtualTimeFactor = value;
         }
 
+        #endregion
+
+        #region Internal Methods
+
         internal void UpdateTimeControls()
         {
-            if (ClockRunning)
-                ClockStop();
             SceneForm.TimeAccelerate.Enabled = SceneForm.tbAccelerate.Enabled = CanAccelerate;
             SceneForm.TimeDecelerate.Enabled = SceneForm.tbDecelerate.Enabled = CanDecelerate;
             SceneForm.TimeForward.Enabled = SceneForm.tbForward.Enabled = CanStart;
@@ -55,9 +61,6 @@
 
         #region Private Properties
 
-        private SceneController SceneController;
-        private SceneForm SceneForm => SceneController.SceneForm;
-
         private bool CanAccelerate => VirtualTimeFactor < +32;
         private bool CanDecelerate => VirtualTimeFactor > -32;
         private bool CanPause => Clock.Running;
@@ -65,69 +68,67 @@
         private bool CanStart => !Clock.Running || VirtualTimeFactor < 0;
         private bool CanStop => Clock.Running;
 
+        private SceneController SceneController;
+        private SceneForm SceneForm => SceneController.SceneForm;
+
         #endregion
 
         #region Private Event Handlers
 
         private void Clock_Tick(object sender, EventArgs e) => UpdateTimeDisplay();
-        private void TimeDecelerate_Click(object sender, EventArgs e) => ClockDecelerate();
-        private void TimeReverse_Click(object sender, EventArgs e) => ClockReverse();
-        private void TimeStop_Click(object sender, EventArgs e) => ClockStop();
-        private void TimePause_Click(object sender, EventArgs e) => ClockPause();
-        private void TimeForward_Click(object sender, EventArgs e) => ClockForward();
-        private void TimeAccelerate_Click(object sender, EventArgs e) => ClockAccelerate();
+        private void TimeDecelerate_Click(object sender, EventArgs e) => Decelerate();
+        private void TimeReverse_Click(object sender, EventArgs e) => Reverse();
+        private void TimeStop_Click(object sender, EventArgs e) => Stop();
+        private void TimePause_Click(object sender, EventArgs e) => Pause();
+        private void TimeForward_Click(object sender, EventArgs e) => Forward();
+        private void TimeAccelerate_Click(object sender, EventArgs e) => Accelerate();
 
         #endregion
 
         #region Private Methods
 
-        private void ClockAccelerate()
+        private void Accelerate()
         {
             Clock.Accelerate();
             UpdateTimeControls();
         }
 
-        private void ClockDecelerate()
+        private void Decelerate()
         {
             Clock.Decelerate();
             UpdateTimeControls();
         }
 
-        private void ClockForward()
+        private void Forward()
         {
             VirtualTimeFactor = Math.Abs(VirtualTimeFactor);
-            ClockStart();
+            Start();
             UpdateTimeControls();
         }
 
-        private void ClockPause()
+        private void Pause()
         {
             Clock.Stop();
             UpdateTimeControls();
         }
 
-        private void ClockReverse()
+        private void Reverse()
         {
             VirtualTimeFactor = -Math.Abs(VirtualTimeFactor);
-            ClockStart();
+            Start();
             UpdateTimeControls();
         }
 
-        private void ClockStart() => Clock.Start();
+        private void Start() => Clock.Start();
 
-        private void ClockStop()
+        private void Stop()
         {
             Clock.Reset();
             UpdateTimeDisplay();
             UpdateTimeControls();
         }
 
-        private void UpdateTimeDisplay()
-        {
-            Clock.UpdateFPS();
-            SceneForm.Tlabel.Text = string.Format("t={0:f1}", VirtualSecondsElapsed);
-            SceneForm.FPSlabel.Text = string.Format("fps={0:f1}", Clock.FramesPerSecond);
-        }
+        private void UpdateTimeDisplay() => SceneForm.Tlabel.Text = string.Format("t={0:f1}", VirtualSecondsElapsed);
 
         private void UpdateTimeFactor()
         {

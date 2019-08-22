@@ -24,6 +24,7 @@
         {
             SceneForm = new SceneForm();
             Scene = new Scene(this);
+            ClockController = new ClockController(this);
             CommandProcessor = new CommandProcessor(this);
             FullScreenController = new FullScreenController(this);
             JsonController = new JsonController(this);
@@ -92,7 +93,7 @@
                 switch (propertyName)
                 {
                     case DisplayNames.FPS:
-                        TimerInit();
+                        ClockInit();
                         break;
                     case DisplayNames.Shader1Vertex:
                     case DisplayNames.Shader2TessControl:
@@ -142,48 +143,45 @@
 
         #region Private Event Handlers
 
-        private void SceneForm_FormClosed(object sender, FormClosedEventArgs e) => FormClosed();
-        private void SceneForm_FormClosing(object sender, FormClosingEventArgs e) => e.Cancel = !FormClosing(e.CloseReason);
-
+        private void Clock_Tick(object sender, EventArgs e) { Render(); }
+        private void EditOptions_Click(object sender, EventArgs e) => EditOptions();
+        private void FileClose_Click(object sender, System.EventArgs e) => SceneForm.Close();
+        private void FileExit_Click(object sender, System.EventArgs e) => AppController.Close();
         private void FileNewEmptyScene_Click(object sender, System.EventArgs e) => NewEmptyScene();
         private void FileNewFromTemplate_Click(object sender, System.EventArgs e) => NewFromTemplate();
         private void FileOpen_Click(object sender, System.EventArgs e) => OpenFile();
         private void FileSave_Click(object sender, System.EventArgs e) => SaveFile();
         private void FileSaveAs_Click(object sender, System.EventArgs e) => SaveFileAs();
-        private void FileClose_Click(object sender, System.EventArgs e) => SceneForm.Close();
-        private void FileExit_Click(object sender, System.EventArgs e) => AppController.Close();
-        private void EditOptions_Click(object sender, EventArgs e) => EditOptions();
-
-        private void TbOpen_DropDownOpening(object sender, EventArgs e) => SceneForm.FileReopen.CloneTo(SceneForm.tbOpen);
-        private void TbSave_Click(object sender, EventArgs e) => SaveOrSaveAs();
-
-        private void HelpTheOpenGLShadingLanguage_Click(object sender, EventArgs e) =>
-            ShowOpenGLSLBook(SceneForm.PropertyGrid);
-
+        private void GLControl_ClientSizeChanged(object sender, EventArgs e) => Resize();
+        private void GLControl_Load(object sender, EventArgs e) { }
+        private void GLControl_Paint(object sender, PaintEventArgs e) => Render();
+        private void GLControl_Resize(object sender, EventArgs e) { }
         private void HelpAbout_Click(object sender, System.EventArgs e) => HelpAbout();
-
-        private void HelpAbout() => new AboutController().ShowDialog(SceneForm);
-
+        private void HelpTheOpenGLShadingLanguage_Click(object sender, EventArgs e) => ShowOpenGLSLBook(SceneForm.PropertyGrid);
         private void JsonController_FileLoaded(object sender, EventArgs e) => FileLoaded();
         private void JsonController_FilePathChanged(object sender, EventArgs e) => UpdateCaption();
         private void JsonController_FilePathRequest(object sender, SdiController.FilePathEventArgs e) => FilePathRequest(e);
         private void JsonController_FileReopen(object sender, SdiController.FilePathEventArgs e) => OpenFile(e.FilePath);
         private void JsonController_FileSaved(object sender, EventArgs e) => FileSaved();
         private void JsonController_FileSaving(object sender, CancelEventArgs e) => e.Cancel = false;
-
+        private void SceneForm_FormClosed(object sender, FormClosedEventArgs e) => FormClosed();
+        private void SceneForm_FormClosing(object sender, FormClosingEventArgs e) => e.Cancel = !FormClosing(e.CloseReason);
         private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
+        private void TbOpen_DropDownOpening(object sender, EventArgs e) => SceneForm.FileReopen.CloneTo(SceneForm.tbOpen);
+        private void TbSave_Click(object sender, EventArgs e) => SaveOrSaveAs();
 
         #endregion
 
         #region Private Properties
 
         private readonly List<string> ChangedPropertyNames = new List<string>();
+        private Clock Clock => ClockController.Clock;
+        private ClockController ClockController;
         private readonly FullScreenController FullScreenController;
         private GLControl GLControl => SceneForm?.GLControl;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
         private PropertyGrid PropertyGrid => PropertyGridController.PropertyGrid;
-        private Timer Timer;
         private int UpdateCount;
         private bool Updating => UpdateCount > 0;
 
@@ -198,14 +196,13 @@
                 ConnectEventHandlers(true);
                 ConnectControllers(true);
                 CommandProcessor.Clear();
-                Timer = new Timer();
-                Timer.Tick += Timer_Tick;
-                TimerStart();
+                Clock.Tick += Clock_Tick;
+                ClockStartup();
             }
             else
             {
-                TimerStop();
-                Timer.Tick -= Timer_Tick;
+                ClockShutdown();
+                Clock.Tick -= Clock_Tick;
                 InvalidateProgram();
                 CommandProcessor.Clear();
                 ConnectControllers(false);
@@ -357,6 +354,8 @@
             return this;
         }
 
+        private void HelpAbout() => new AboutController().ShowDialog(SceneForm);
+
         private void NewEmptyScene()
         {
             GetNewSceneController();
@@ -380,6 +379,12 @@
             var sceneController = GetNewSceneController();
             sceneController?.LoadFromFile(filePath);
             return sceneController;
+        }
+
+        private void Resize()
+        {
+            OnPropertyChanged("DisplaySize");
+            InitViewport();
         }
 
         private bool SaveFile() => JsonController.Save();
@@ -426,31 +431,6 @@
         }
 
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
-
-        #endregion
-
-        #region Render Event Handlers
-
-        private void GLControl_ClientSizeChanged(object sender, EventArgs e)
-        {
-            OnPropertyChanged("DisplaySize");
-            InitViewport();
-        }
-
-        private void GLControl_Paint(object sender, PaintEventArgs e)
-        {
-            Render();
-        }
-
-        private void GLControl_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void GLControl_Resize(object sender, EventArgs e)
-        {
-        }
-
-        private void Timer_Tick(object sender, EventArgs e) { Render(); }
 
         #endregion
 
@@ -814,9 +794,16 @@
 
         #region Timer
 
-        private void TimerInit() => Timer.Interval = GetFrameMilliseconds();
-        private void TimerStart() { TimerInit(); Timer.Start(); }
-        private void TimerStop() => Timer.Stop();
+        private void ClockInit() => Clock.Interval_ms = GetFrameMilliseconds();
+
+        private void ClockStartup()
+        {
+            ClockInit();
+            Clock.Start();
+            ClockController.UpdateTimeControls();
+        }
+
+        private void ClockShutdown() => Clock.Stop();
 
         #endregion
 
