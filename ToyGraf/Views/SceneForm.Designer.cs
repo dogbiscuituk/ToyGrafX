@@ -29,24 +29,30 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
             this.GLControl = new OpenTK.GLControl();
             this.ToolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.StatusBar = new ToyGraf.Controls.TgStatusStrip();
+            this.tbDecelerate = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tbReverse = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tbStop = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tbPause = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tbForward = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tbAccelerate = new System.Windows.Forms.ToolStripDropDownButton();
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
             this.SplitContainer2 = new System.Windows.Forms.SplitContainer();
             this.PropertyGrid = new ToyGraf.Controls.TgPropertyGrid();
@@ -133,11 +139,22 @@
             this.PopupSubjectScene = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupSubjectSelectedTraces = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupSubjectAllTraces = new System.Windows.Forms.ToolStripMenuItem();
+            this.TimeMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.TimeDecelerate = new System.Windows.Forms.ToolStripMenuItem();
+            this.TimeReverse = new System.Windows.Forms.ToolStripMenuItem();
+            this.TimeStop = new System.Windows.Forms.ToolStripMenuItem();
+            this.TimePause = new System.Windows.Forms.ToolStripMenuItem();
+            this.TimeForward = new System.Windows.Forms.ToolStripMenuItem();
+            this.TimeAccelerate = new System.Windows.Forms.ToolStripMenuItem();
+            this.SpeedLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.Tlabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.FPSlabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
             this.ToolStripContainer.TopToolStripPanel.SuspendLayout();
             this.ToolStripContainer.SuspendLayout();
+            this.StatusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer1)).BeginInit();
             this.SplitContainer1.Panel1.SuspendLayout();
             this.SplitContainer1.Panel2.SuspendLayout();
@@ -162,7 +179,7 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(442, 386);
+            this.GLControl.Size = new System.Drawing.Size(440, 384);
             this.GLControl.TabIndex = 1;
             this.GLControl.VSync = false;
             // 
@@ -195,11 +212,81 @@
             // StatusBar
             // 
             this.StatusBar.Dock = System.Windows.Forms.DockStyle.None;
+            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tbDecelerate,
+            this.tbReverse,
+            this.tbStop,
+            this.tbPause,
+            this.tbForward,
+            this.tbAccelerate,
+            this.SpeedLabel,
+            this.Tlabel,
+            this.FPSlabel});
             this.StatusBar.Location = new System.Drawing.Point(0, 0);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(784, 22);
             this.StatusBar.TabIndex = 2;
             this.StatusBar.Text = "statusStrip1";
+            // 
+            // tbDecelerate
+            // 
+            this.tbDecelerate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbDecelerate.Image = global::ToyGraf.Properties.Resources.RewindHS;
+            this.tbDecelerate.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbDecelerate.Name = "tbDecelerate";
+            this.tbDecelerate.ShowDropDownArrow = false;
+            this.tbDecelerate.Size = new System.Drawing.Size(20, 20);
+            this.tbDecelerate.ToolTipText = "Decelerate";
+            // 
+            // tbReverse
+            // 
+            this.tbReverse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbReverse.Image = global::ToyGraf.Properties.Resources.BackHS;
+            this.tbReverse.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbReverse.Name = "tbReverse";
+            this.tbReverse.ShowDropDownArrow = false;
+            this.tbReverse.Size = new System.Drawing.Size(20, 20);
+            this.tbReverse.ToolTipText = "Reverse";
+            // 
+            // tbStop
+            // 
+            this.tbStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbStop.Image = global::ToyGraf.Properties.Resources.StopHS;
+            this.tbStop.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbStop.Name = "tbStop";
+            this.tbStop.ShowDropDownArrow = false;
+            this.tbStop.Size = new System.Drawing.Size(20, 20);
+            this.tbStop.ToolTipText = "Stop";
+            // 
+            // tbPause
+            // 
+            this.tbPause.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbPause.Image = global::ToyGraf.Properties.Resources.PauseHS;
+            this.tbPause.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbPause.Name = "tbPause";
+            this.tbPause.ShowDropDownArrow = false;
+            this.tbPause.Size = new System.Drawing.Size(20, 20);
+            this.tbPause.ToolTipText = "Pause";
+            // 
+            // tbForward
+            // 
+            this.tbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbForward.Image = global::ToyGraf.Properties.Resources.PlayHS;
+            this.tbForward.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbForward.Name = "tbForward";
+            this.tbForward.ShowDropDownArrow = false;
+            this.tbForward.Size = new System.Drawing.Size(20, 20);
+            this.tbForward.ToolTipText = "Forward";
+            // 
+            // tbAccelerate
+            // 
+            this.tbAccelerate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbAccelerate.Image = global::ToyGraf.Properties.Resources.FFwdHS;
+            this.tbAccelerate.ImageTransparentColor = System.Drawing.Color.White;
+            this.tbAccelerate.Name = "tbAccelerate";
+            this.tbAccelerate.ShowDropDownArrow = false;
+            this.tbAccelerate.Size = new System.Drawing.Size(20, 20);
+            this.tbAccelerate.ToolTipText = "Accelerate";
             // 
             // SplitContainer1
             // 
@@ -217,7 +304,7 @@
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.TraceTable);
             this.SplitContainer1.Size = new System.Drawing.Size(751, 515);
-            this.SplitContainer1.SplitterDistance = 386;
+            this.SplitContainer1.SplitterDistance = 384;
             this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
@@ -235,8 +322,8 @@
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(751, 386);
-            this.SplitContainer2.SplitterDistance = 442;
+            this.SplitContainer2.Size = new System.Drawing.Size(751, 384);
+            this.SplitContainer2.SplitterDistance = 440;
             this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
             // 
@@ -250,7 +337,7 @@
         "_Traces"};
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(304, 386);
+            this.PropertyGrid.Size = new System.Drawing.Size(306, 384);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -281,14 +368,14 @@
             this.TraceTable.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.TraceTable.BackgroundColor = System.Drawing.SystemColors.Window;
             this.TraceTable.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.TraceTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.TraceTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.TraceTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TraceTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colDescription,
@@ -315,14 +402,14 @@
             this.TraceTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.TraceTable.RowHeadersWidth = 20;
             this.TraceTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TraceTable.Size = new System.Drawing.Size(751, 124);
+            this.TraceTable.Size = new System.Drawing.Size(751, 126);
             this.TraceTable.TabIndex = 0;
             // 
             // colDescription
             // 
             this.colDescription.DataPropertyName = "Description";
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colDescription.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDescription.DefaultCellStyle = dataGridViewCellStyle17;
             this.colDescription.HeaderText = "Description";
             this.colDescription.Name = "colDescription";
             this.colDescription.Width = 92;
@@ -330,8 +417,8 @@
             // colLocation
             // 
             this.colLocation.DataPropertyName = "Location";
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colLocation.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colLocation.DefaultCellStyle = dataGridViewCellStyle18;
             this.colLocation.HeaderText = "Location";
             this.colLocation.Name = "colLocation";
             this.colLocation.Width = 78;
@@ -339,8 +426,8 @@
             // colMaximum
             // 
             this.colMaximum.DataPropertyName = "Maximum";
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colMaximum.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colMaximum.DefaultCellStyle = dataGridViewCellStyle19;
             this.colMaximum.HeaderText = "Maximum";
             this.colMaximum.Name = "colMaximum";
             this.colMaximum.Width = 86;
@@ -348,8 +435,8 @@
             // colMinimum
             // 
             this.colMinimum.DataPropertyName = "Minimum";
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colMinimum.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colMinimum.DefaultCellStyle = dataGridViewCellStyle20;
             this.colMinimum.HeaderText = "Minimum";
             this.colMinimum.Name = "colMinimum";
             this.colMinimum.Width = 85;
@@ -357,8 +444,8 @@
             // colOrientation
             // 
             this.colOrientation.DataPropertyName = "Orientation";
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colOrientation.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colOrientation.DefaultCellStyle = dataGridViewCellStyle21;
             this.colOrientation.HeaderText = "Orientation°";
             this.colOrientation.Name = "colOrientation";
             this.colOrientation.Width = 97;
@@ -373,8 +460,8 @@
             // colScale
             // 
             this.colScale.DataPropertyName = "Scale";
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colScale.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colScale.DefaultCellStyle = dataGridViewCellStyle22;
             this.colScale.HeaderText = "Scale";
             this.colScale.Name = "colScale";
             this.colScale.Width = 59;
@@ -382,8 +469,8 @@
             // colShader1Vertex
             // 
             this.colShader1Vertex.DataPropertyName = "Shader1Vertex";
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShader1Vertex.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShader1Vertex.DefaultCellStyle = dataGridViewCellStyle23;
             this.colShader1Vertex.HeaderText = "Shader 1: Vertex";
             this.colShader1Vertex.Name = "colShader1Vertex";
             this.colShader1Vertex.Width = 77;
@@ -391,8 +478,8 @@
             // colShader2TessControl
             // 
             this.colShader2TessControl.DataPropertyName = "Shader2TessControl";
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShader2TessControl.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShader2TessControl.DefaultCellStyle = dataGridViewCellStyle24;
             this.colShader2TessControl.HeaderText = "Shader 2: Tessellation Control";
             this.colShader2TessControl.Name = "colShader2TessControl";
             this.colShader2TessControl.Visible = false;
@@ -401,8 +488,8 @@
             // colShader3TessEvaluation
             // 
             this.colShader3TessEvaluation.DataPropertyName = "Shader3TessEvaluation";
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShader3TessEvaluation.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShader3TessEvaluation.DefaultCellStyle = dataGridViewCellStyle25;
             this.colShader3TessEvaluation.HeaderText = "Shader 3: Tessellation Evaluation";
             this.colShader3TessEvaluation.Name = "colShader3TessEvaluation";
             this.colShader3TessEvaluation.Visible = false;
@@ -411,8 +498,8 @@
             // colShader4Geometry
             // 
             this.colShader4Geometry.DataPropertyName = "Shader4Geometry";
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShader4Geometry.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShader4Geometry.DefaultCellStyle = dataGridViewCellStyle26;
             this.colShader4Geometry.HeaderText = "Shader 4: Geometry";
             this.colShader4Geometry.Name = "colShader4Geometry";
             this.colShader4Geometry.Visible = false;
@@ -421,8 +508,8 @@
             // colShader5Fragment
             // 
             this.colShader5Fragment.DataPropertyName = "Shader5Fragment";
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShader5Fragment.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShader5Fragment.DefaultCellStyle = dataGridViewCellStyle27;
             this.colShader5Fragment.HeaderText = "Shader 5: Fragment";
             this.colShader5Fragment.Name = "colShader5Fragment";
             this.colShader5Fragment.Width = 123;
@@ -430,8 +517,8 @@
             // colShader6Compute
             // 
             this.colShader6Compute.DataPropertyName = "Shader6Compute";
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShader6Compute.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShader6Compute.DefaultCellStyle = dataGridViewCellStyle28;
             this.colShader6Compute.HeaderText = "Shader 6: Compute";
             this.colShader6Compute.Name = "colShader6Compute";
             this.colShader6Compute.Visible = false;
@@ -440,8 +527,8 @@
             // colStrip
             // 
             this.colStrip.DataPropertyName = "StripCount";
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colStrip.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colStrip.DefaultCellStyle = dataGridViewCellStyle29;
             this.colStrip.HeaderText = "Strip Count";
             this.colStrip.Name = "colStrip";
             this.colStrip.Width = 85;
@@ -449,8 +536,8 @@
             // colTransform
             // 
             this.colTransform.DataPropertyName = "Transform";
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colTransform.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colTransform.DefaultCellStyle = dataGridViewCellStyle30;
             this.colTransform.HeaderText = "Transform";
             this.colTransform.Name = "colTransform";
             this.colTransform.ReadOnly = true;
@@ -659,6 +746,7 @@
             this.EditMenu,
             this.SceneMenu,
             this.ViewMenu,
+            this.TimeMenu,
             this.HelpMenu});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
@@ -990,6 +1078,90 @@
             this.PopupSubjectAllTraces.Size = new System.Drawing.Size(154, 22);
             this.PopupSubjectAllTraces.Text = "&All Traces";
             // 
+            // TimeMenu
+            // 
+            this.TimeMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.TimeMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TimeDecelerate,
+            this.TimeReverse,
+            this.TimeStop,
+            this.TimePause,
+            this.TimeForward,
+            this.TimeAccelerate});
+            this.TimeMenu.Name = "TimeMenu";
+            this.TimeMenu.Size = new System.Drawing.Size(46, 20);
+            this.TimeMenu.Text = "&Time";
+            // 
+            // TimeDecelerate
+            // 
+            this.TimeDecelerate.Image = global::ToyGraf.Properties.Resources.RewindHS;
+            this.TimeDecelerate.ImageTransparentColor = System.Drawing.Color.White;
+            this.TimeDecelerate.Name = "TimeDecelerate";
+            this.TimeDecelerate.Size = new System.Drawing.Size(180, 22);
+            this.TimeDecelerate.Text = "&Decelerate";
+            // 
+            // TimeReverse
+            // 
+            this.TimeReverse.Image = global::ToyGraf.Properties.Resources.BackHS;
+            this.TimeReverse.ImageTransparentColor = System.Drawing.Color.White;
+            this.TimeReverse.Name = "TimeReverse";
+            this.TimeReverse.Size = new System.Drawing.Size(180, 22);
+            this.TimeReverse.Text = "&Reverse";
+            // 
+            // TimeStop
+            // 
+            this.TimeStop.Image = global::ToyGraf.Properties.Resources.StopHS;
+            this.TimeStop.ImageTransparentColor = System.Drawing.Color.White;
+            this.TimeStop.Name = "TimeStop";
+            this.TimeStop.Size = new System.Drawing.Size(180, 22);
+            this.TimeStop.Text = "&Stop";
+            // 
+            // TimePause
+            // 
+            this.TimePause.Image = global::ToyGraf.Properties.Resources.PauseHS;
+            this.TimePause.ImageTransparentColor = System.Drawing.Color.White;
+            this.TimePause.Name = "TimePause";
+            this.TimePause.Size = new System.Drawing.Size(180, 22);
+            this.TimePause.Text = "&Pause";
+            // 
+            // TimeForward
+            // 
+            this.TimeForward.Image = global::ToyGraf.Properties.Resources.PlayHS;
+            this.TimeForward.Name = "TimeForward";
+            this.TimeForward.Size = new System.Drawing.Size(180, 22);
+            this.TimeForward.Text = "&Forward";
+            // 
+            // TimeAccelerate
+            // 
+            this.TimeAccelerate.Image = global::ToyGraf.Properties.Resources.FFwdHS;
+            this.TimeAccelerate.ImageTransparentColor = System.Drawing.Color.White;
+            this.TimeAccelerate.Name = "TimeAccelerate";
+            this.TimeAccelerate.Size = new System.Drawing.Size(180, 22);
+            this.TimeAccelerate.Text = "&Accelerate";
+            // 
+            // SpeedLabel
+            // 
+            this.SpeedLabel.AutoSize = false;
+            this.SpeedLabel.Name = "SpeedLabel";
+            this.SpeedLabel.Size = new System.Drawing.Size(64, 17);
+            this.SpeedLabel.Text = "time × 1";
+            // 
+            // Tlabel
+            // 
+            this.Tlabel.AutoSize = false;
+            this.Tlabel.Name = "Tlabel";
+            this.Tlabel.Size = new System.Drawing.Size(64, 17);
+            this.Tlabel.Text = "t=0.0";
+            this.Tlabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // FPSlabel
+            // 
+            this.FPSlabel.AutoSize = false;
+            this.FPSlabel.Name = "FPSlabel";
+            this.FPSlabel.Size = new System.Drawing.Size(64, 17);
+            this.FPSlabel.Text = "fps=0.0";
+            this.FPSlabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // SceneForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1010,6 +1182,8 @@
             this.ToolStripContainer.TopToolStripPanel.PerformLayout();
             this.ToolStripContainer.ResumeLayout(false);
             this.ToolStripContainer.PerformLayout();
+            this.StatusBar.ResumeLayout(false);
+            this.StatusBar.PerformLayout();
             this.SplitContainer1.Panel1.ResumeLayout(false);
             this.SplitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer1)).EndInit();
@@ -1122,5 +1296,21 @@
         internal System.Windows.Forms.ToolStripMenuItem PopupSubjectSelectedTraces;
         internal System.Windows.Forms.ContextMenuStrip PopupSubjectMenu;
         internal System.Windows.Forms.ToolStripMenuItem PopupSubjectAllTraces;
+        internal System.Windows.Forms.ToolStripDropDownButton tbDecelerate;
+        internal System.Windows.Forms.ToolStripDropDownButton tbReverse;
+        internal System.Windows.Forms.ToolStripDropDownButton tbStop;
+        internal System.Windows.Forms.ToolStripDropDownButton tbPause;
+        internal System.Windows.Forms.ToolStripDropDownButton tbForward;
+        internal System.Windows.Forms.ToolStripDropDownButton tbAccelerate;
+        internal System.Windows.Forms.ToolStripMenuItem TimeMenu;
+        internal System.Windows.Forms.ToolStripMenuItem TimeDecelerate;
+        internal System.Windows.Forms.ToolStripMenuItem TimeReverse;
+        internal System.Windows.Forms.ToolStripMenuItem TimeStop;
+        internal System.Windows.Forms.ToolStripMenuItem TimePause;
+        internal System.Windows.Forms.ToolStripMenuItem TimeForward;
+        internal System.Windows.Forms.ToolStripMenuItem TimeAccelerate;
+        internal System.Windows.Forms.ToolStripStatusLabel SpeedLabel;
+        internal System.Windows.Forms.ToolStripStatusLabel Tlabel;
+        internal System.Windows.Forms.ToolStripStatusLabel FPSlabel;
     }
 }
