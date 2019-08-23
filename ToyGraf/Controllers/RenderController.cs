@@ -103,7 +103,7 @@
             GL.BindVertexArray(trace.VaoID = CreateVao());
             trace.IndexVboID = BindIndicesBuffer(indices);
             trace.VertexVboID = StoreDataInAttributeList(0, coords);
-            trace.VaoVertexCount = coords.Length / 3;
+            trace.VaoVertexCount = indices.Length;
         }
 
         #endregion
