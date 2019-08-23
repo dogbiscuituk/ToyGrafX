@@ -1,8 +1,7 @@
-﻿using System;
-using ToyGraf.Engine.Types;
-
-namespace ToyGraf.Engine.Utility
+﻿namespace ToyGraf.Engine.Utility
 {
+    using ToyGraf.Engine.Types;
+
     public static class Grids
     {
         /// <summary>

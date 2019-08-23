@@ -1,4 +1,4 @@
-﻿namespace ToyGraf.Engine
+﻿namespace ToyGraf.Engine.Utility
 {
     using OpenTK.Graphics.OpenGL;
     using System.Collections.Generic;

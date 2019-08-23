@@ -46,11 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OpenGLProperties.cs" />
-    <Compile Include="Controllers\Camera.cs" />
-    <Compile Include="Controllers\Renderer.cs" />
-    <Compile Include="Entities\IEntity.cs" />
-    <Compile Include="ShiftKeys.cs" />
+    <Compile Include="Utility\OpenGLProperties.cs" />
+    <Compile Include="Types\Camera.cs" />
     <Compile Include="TypeConverters\Euler3FTypeConverter.cs" />
     <Compile Include="TypeConverters\Point3TypeConverter.cs" />
     <Compile Include="Types\ColourFormat.cs" />
@@ -64,9 +61,7 @@
     <Compile Include="Utility\Functions.cs" />
     <Compile Include="Utility\Grids.cs" />
     <Compile Include="Utility\Maths.cs" />
-    <Compile Include="Entities\Prototype.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Shader.cs" />
     <Compile Include="Utility\Processes.cs" />
     <Compile Include="Utility\Strings.cs" />
   </ItemGroup>
