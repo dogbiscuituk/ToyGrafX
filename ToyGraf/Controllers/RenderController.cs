@@ -13,10 +13,8 @@
     {
         #region Constructor
 
-        internal RenderController(SceneController sceneController)
-        {
+        internal RenderController(SceneController sceneController) =>
             SceneController = sceneController;
-        }
 
         #endregion
 
@@ -27,7 +25,9 @@
             var result = MakeCurrent(true);
             if (result)
             {
+                UnloadTraces();
                 GL.Viewport(GLControl.Size);
+                ReloadTraces();
                 MakeCurrent(false);
             }
             return result;
@@ -56,6 +56,18 @@
             DeleteVao(ref trace.VaoID);
         }
 
+        internal bool Reload()
+        {
+            var result = MakeCurrent(true);
+            if (result)
+            {
+                UnloadTraces();
+                ReloadTraces();
+                MakeCurrent(false);
+            }
+            return result;
+        }
+
         internal void Render()
         {
             if (!MakeCurrent(true))
@@ -71,6 +83,17 @@
             MakeCurrent(false);
         }
 
+        internal bool Unload()
+        {
+            var result = MakeCurrent(true);
+            if (result)
+            {
+                UnloadTraces();
+                MakeCurrent(false);
+            }
+            return result;
+        }
+
         private void ValidateVao(Trace trace)
         {
             if (trace.VaoID != 0)
@@ -80,13 +103,15 @@
             GL.BindVertexArray(trace.VaoID = CreateVao());
             trace.IndexVboID = BindIndicesBuffer(indices);
             trace.VertexVboID = StoreDataInAttributeList(0, coords);
-            trace.VaoVertexCount = indices.Length;
+            trace.VaoVertexCount = coords.Length / 3;
         }
 
         #endregion
 
         #region Private Properties
 
+        private Clock Clock => ClockController.Clock;
+        private ClockController ClockController => SceneController.ClockController;
         private GLControl GLControl => SceneForm.GLControl;
         private Scene Scene => SceneController.Scene;
         private SceneController SceneController;
@@ -123,7 +148,7 @@
 
         #endregion
 
-        #region Renderer Methods
+        #region Private Methods
 
         #region Create / Delete Shaders
 
@@ -288,18 +313,6 @@
             }
         }
 
-        private bool Reload()
-        {
-            var result = MakeCurrent(true);
-            if (result)
-            {
-                UnloadTraces();
-                ReloadTraces();
-                MakeCurrent(false);
-            }
-            return result;
-        }
-
         private void ReloadTraces()
         {
             ShaderStart();
@@ -326,17 +339,6 @@
         }
 
         private void UnbindVao() => GL.BindVertexArray(0);
-
-        private bool Unload()
-        {
-            var result = MakeCurrent(true);
-            if (result)
-            {
-                UnloadTraces();
-                MakeCurrent(false);
-            }
-            return result;
-        }
 
         private void UnloadTraces()
         {
@@ -370,6 +372,7 @@
         private void RenderFrame()
         {
             ShaderStart();
+            LoadTimeValue();
             for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
             {
                 var trace = Scene._Traces[traceIndex];
@@ -428,7 +431,7 @@
         private static void LoadVector(int location, Vector3 value) => GL.Uniform3(location, value);
 
         private void LoadProjection() => LoadMatrix(Loc_Projection, Scene.GetProjection());
-        private void LoadTimeValue() => LoadFloat(Loc_TimeValue, 0f);
+        private void LoadTimeValue() => LoadFloat(Loc_TimeValue, (float)Clock.VirtualSecondsElapsed);
         private void LoadTraceIndex(int traceIndex) => LoadInt(Loc_TraceIndex, traceIndex);
         private void LoadTransform(Trace trace) => LoadMatrix(Loc_Transform, trace.GetTransform());
         private void LoadCameraView() => LoadMatrix(Loc_CameraView, Scene.GetCameraView());

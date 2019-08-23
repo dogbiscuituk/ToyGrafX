@@ -1,12 +1,10 @@
 ﻿namespace ToyGraf.Controllers
 {
     using OpenTK;
-    using OpenTK.Graphics.OpenGL;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
-    using System.Text;
     using System.Windows.Forms;
     using ToyGraf.Commands;
     using ToyGraf.Engine.Types;
@@ -38,6 +36,7 @@
 
         #region Internal Properties
 
+        internal ClockController ClockController;
         internal CommandProcessor CommandProcessor { get; private set; }
         internal readonly PropertyGridController PropertyGridController;
         internal Scene Scene;
@@ -53,10 +52,12 @@
             if (connect)
             {
                 PropertyGridController.SelectedObject = Scene;
+                RenderController.Reload();
             }
             else
             {
                 PropertyGridController.SelectedObject = null;
+                RenderController.Unload();
             }
         }
 
@@ -161,7 +162,6 @@
         private readonly List<string> ChangedPropertyNames = new List<string>();
         private object ChangedSubject;
         private Clock Clock => ClockController.Clock;
-        private ClockController ClockController;
         private readonly FullScreenController FullScreenController;
         private GLControl GLControl => SceneForm?.GLControl;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
@@ -411,12 +411,7 @@
             return sceneController;
         }
 
-        private void Resize()
-        {
-            OnPropertyChanged("DisplaySize");
-            RenderController.InitViewport();
-        }
-
+        private void Resize() => RenderController.InitViewport();
         private bool SaveFile() => JsonController.Save();
         private bool SaveFileAs() => JsonController.SaveAs();
         private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();

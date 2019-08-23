@@ -68,6 +68,10 @@
         private bool CanStart => !Clock.Running || VirtualTimeFactor < 0;
         private bool CanStop => Clock.Running;
 
+        private string
+            LastTime,
+            LastSpeed;
+
         private SceneController SceneController;
         private SceneForm SceneForm => SceneController.SceneForm;
 
@@ -128,7 +132,12 @@
             UpdateTimeControls();
         }
 
-        private void UpdateTimeDisplay() => SceneForm.Tlabel.Text = string.Format("t={0:f1}", VirtualSecondsElapsed);
+        private void UpdateTimeDisplay()
+        {
+            var time = string.Format("t={0:f1}", VirtualSecondsElapsed);
+            if (LastTime != time)
+                LastTime = SceneForm.Tlabel.Text = time;
+        }
 
         private void UpdateTimeFactor()
         {
@@ -143,7 +152,8 @@
                     factor = 1 / factor;
                 speed = divide ? $"time ÷ {factor}" : $"time × {factor}";
             }
-            SceneForm.SpeedLabel.Text = speed;
+            if (LastSpeed != speed)
+                LastSpeed = SceneForm.SpeedLabel.Text = speed;
         }
 
         #endregion
