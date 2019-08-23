@@ -114,7 +114,7 @@
         private ClockController ClockController => SceneController.ClockController;
         private GLControl GLControl => SceneForm.GLControl;
         private Scene Scene => SceneController.Scene;
-        private SceneController SceneController;
+        private readonly SceneController SceneController;
         private SceneForm SceneForm => SceneController.SceneForm;
 
         private int

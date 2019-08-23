@@ -1,7 +1,6 @@
 ﻿namespace ToyGraf.Models
 {
     using System;
-    using System.Linq;
     using System.Windows.Forms;
 
     public class Clock
@@ -130,7 +129,7 @@
         private DateTime _StartedAt;
         private TimeSpan _RealTimeElapsed, _VirtualTimeElapsed;
         private int _SuspendCount;
-        private Timer Timer;
+        private readonly Timer Timer;
         private double _VirtualTimeFactor = 1;
 
         #endregion

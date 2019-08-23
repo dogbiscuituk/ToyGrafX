@@ -1,6 +1,5 @@
 ﻿namespace ToyGraf.Engine.Types
 {
-    using System;
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
 

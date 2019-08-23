@@ -167,7 +167,7 @@
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
         private PropertyGrid PropertyGrid => PropertyGridController.PropertyGrid;
-        private RenderController RenderController;
+        private readonly RenderController RenderController;
         private int UpdateCount;
         private bool Updating => UpdateCount > 0;
 

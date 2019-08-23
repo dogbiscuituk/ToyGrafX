@@ -32,7 +32,7 @@
         public void CreatePerspectiveProjection()
         {
             var expected = new Matrix4(0.8033332f, 0, 0, 0, 0, 1.428148f, 0, 0, 0, 0, -1.002002f, -1, 0, 0, -2.002002f, 0);
-            var actual = Maths.CreatePerspectiveProjection(fovy: 70, aspect: 1920f / 1080f,  zNear: 1, zFar: 1000);
+            var actual = Maths.CreatePerspectiveProjection(fovy: 70, aspect: 1920f / 1080f, zNear: 1, zFar: 1000);
             Assert.AreEqual(expected, actual);
         }
 
@@ -232,8 +232,8 @@
             CompareMatrices(expected, actual);
         }
 
-        private static Point3F Unity = new Point3F(1, 1, 1);
-        private static Euler3F
+        private static readonly Point3F Unity = new Point3F(1, 1, 1);
+        private static readonly Euler3F
             RotateX = new Euler3F(90, 0, 0),
             RotateY = new Euler3F(0, 90, 0),
             RotateZ = new Euler3F(0, 0, 90),

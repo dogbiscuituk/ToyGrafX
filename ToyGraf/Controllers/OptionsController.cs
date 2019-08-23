@@ -30,7 +30,7 @@
 
         #region Private Properties
 
-        private SceneController SceneController;
+        private readonly SceneController SceneController;
         private OptionsDialog OptionsDialog;
         private Options Options
         {

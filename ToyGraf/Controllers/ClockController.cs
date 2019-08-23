@@ -72,7 +72,7 @@
             LastTime,
             LastSpeed;
 
-        private SceneController SceneController;
+        private readonly SceneController SceneController;
         private SceneForm SceneForm => SceneController.SceneForm;
 
         #endregion

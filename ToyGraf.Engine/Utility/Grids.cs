@@ -41,7 +41,7 @@
                     var y = cy == 0 ? 0 : 2f * j / cy - 1;
                     for (int k = 0; k <= cz; k++)
                     {
-                        var z = cz == 0 ? 0: 2f * k / cz - 1;
+                        var z = cz == 0 ? 0 : 2f * k / cz - 1;
                         result[p++] = x;
                         result[p++] = y;
                         result[p++] = z;
