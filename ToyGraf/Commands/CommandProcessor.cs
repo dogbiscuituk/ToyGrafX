@@ -40,14 +40,14 @@
         internal void DeleteTrace(int index) => Run(new TraceDeleteCommand(index));
         internal void InsertTrace(int index) => Run(new TraceInsertCommand(index));
 
-        public void Run(ICommand command, bool spoof = false)
+        public bool Run(ICommand command, bool spoof = false)
         {
             if (command == null)
-                return;
+                return false;
             if (LastSave > UndoStack.Count)
                 LastSave = -1;
             RedoStack.Clear();
-            Redo(command, spoof);
+            return Redo(command, spoof);
         }
 
         public void Save()

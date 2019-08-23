@@ -235,16 +235,37 @@
         [Description(Descriptions.Pattern)]
         [DisplayName(DisplayNames.Pattern)]
         [JsonIgnore]
-        public Pattern Pattern { get => _Pattern; set => Run(new PatternCommand(Index, value)); }
+        public Pattern Pattern
+        {
+            get => _Pattern;
+            set
+            {
+                if (Run(new PatternCommand(Index, value)))
+                    InvalidateVao();
+            }
+        }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Point3), Defaults.StripCountString)]
         [Description(Descriptions.StripCount)]
         [DisplayName(DisplayNames.StripCount)]
         [JsonIgnore]
-        public Point3 StripCount { get => _StripCount; set => Run(new StripCountCommand(Index, value)); }
+        public Point3 StripCount
+        {
+            get => _StripCount;
+            set
+            {
+                if (Run(new StripCountCommand(Index, value)))
+                    InvalidateVao();
+            }
+        }
 
         #endregion
+
+        private void InvalidateVao()
+        {
+
+        }
 
         #endregion
 
@@ -278,7 +299,11 @@
 
         internal Scene Scene;
 
-        internal int VaoID, VertexVboID, IndexVboID;
+        internal int
+            VaoID,
+            VaoVertexCount,
+            VertexVboID,
+            IndexVboID;
 
         #endregion
 
@@ -388,13 +413,8 @@
             _Visible = Defaults.Visible;
         }
 
-        private void Run(ITracePropertyCommand command)
-        {
-            if (CommandProcessor != null)
-                CommandProcessor.Run(command);
-            else
-                command.RunOn(this);
-        }
+        private bool Run(ITracePropertyCommand command) =>
+            CommandProcessor != null ? CommandProcessor.Run(command) : command.RunOn(this);
 
         internal void SetLocation(Vector3 location) => Location = location.ToPoint3F();
         internal void SetOrientation(Vector3 orientation) => Orientation = orientation.ToEuler3F();

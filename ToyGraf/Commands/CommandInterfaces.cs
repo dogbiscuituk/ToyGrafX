@@ -21,12 +21,12 @@
 
     internal interface IScenePropertyCommand : ICommand
     {
-        void RunOn(Scene scene);
+        bool RunOn(Scene scene);
     }
 
     internal interface ITracePropertyCommand : ICommand
     {
-        void RunOn(Trace trace);
+        bool RunOn(Trace trace);
     }
 
     internal interface ITracesCommand : ICollectionCommand

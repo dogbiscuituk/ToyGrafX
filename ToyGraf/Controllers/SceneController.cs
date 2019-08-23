@@ -81,33 +81,16 @@
         internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
         internal void ModifiedChanged() => SceneForm.Text = JsonController.WindowCaption;
 
-        internal void OnPropertyChanged(params string[] propertyNames)
+        internal void OnPropertyChanged(Scene scene, params string[] propertyNames)
         {
-            if (Updating)
-            {
-                ChangedPropertyNames.AddRange(propertyNames.Where(p => !ChangedPropertyNames.Contains(p)));
-                return;
-            }
-            System.Diagnostics.Debug.WriteLine(
-                $"SceneController.OnPropertyChanged({propertyNames.Aggregate((s, t) => $"{s}, {t}")})");
-            foreach (var propertyName in propertyNames)
-                switch (propertyName)
-                {
-                    case DisplayNames.FPS:
-                        ClockInit();
-                        break;
-                    case DisplayNames.Shader1Vertex:
-                    case DisplayNames.Shader2TessControl:
-                    case DisplayNames.Shader3TessEvaluation:
-                    case DisplayNames.Shader4Geometry:
-                    case DisplayNames.Shader5Fragment:
-                    case DisplayNames.Shader6Compute:
-                    case DisplayNames.Traces:
-                        RenderController.InvalidateProgram();
-                        break;
-                }
-            PropertyGridController.Refresh();
-            TraceTableController.Refresh();
+            ChangedSubject = scene;
+            OnPropertyChanged(propertyNames);
+        }
+
+        internal void OnPropertyChanged(Trace trace, params string[] propertyNames)
+        {
+            ChangedSubject = trace;
+            OnPropertyChanged(propertyNames);
         }
 
         internal void OnSelectionChanged() => PropertyGridController.Refresh();
@@ -176,6 +159,7 @@
         #region Private Properties
 
         private readonly List<string> ChangedPropertyNames = new List<string>();
+        private object ChangedSubject;
         private Clock Clock => ClockController.Clock;
         private ClockController ClockController;
         private readonly FullScreenController FullScreenController;
@@ -380,6 +364,39 @@
             var sceneController = OpenFile(FilterIndex.Template);
             if (sceneController != null)
                 sceneController.JsonController.FilePath = string.Empty;
+        }
+
+        private void OnPropertyChanged(params string[] propertyNames)
+        {
+            if (Updating)
+            {
+                ChangedPropertyNames.AddRange(propertyNames.Where(p => !ChangedPropertyNames.Contains(p)));
+                return;
+            }
+            System.Diagnostics.Debug.WriteLine(
+                $"SceneController.OnPropertyChanged({propertyNames.Aggregate((s, t) => $"{s}, {t}")})");
+            foreach (var propertyName in propertyNames)
+                switch (propertyName)
+                {
+                    case DisplayNames.FPS:
+                        ClockInit();
+                        break;
+                    case DisplayNames.Shader1Vertex:
+                    case DisplayNames.Shader2TessControl:
+                    case DisplayNames.Shader3TessEvaluation:
+                    case DisplayNames.Shader4Geometry:
+                    case DisplayNames.Shader5Fragment:
+                    case DisplayNames.Shader6Compute:
+                    case DisplayNames.Traces:
+                        RenderController.InvalidateProgram();
+                        break;
+                    case DisplayNames.Pattern:
+                    case DisplayNames.StripCount:
+                        RenderController.InvalidateVao((Trace)ChangedSubject);
+                        break;
+                }
+            PropertyGridController.Refresh();
+            TraceTableController.Refresh();
         }
 
         private SceneController OpenFile(FilterIndex filterIndex = FilterIndex.File) =>

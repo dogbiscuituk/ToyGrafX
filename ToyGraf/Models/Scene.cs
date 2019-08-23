@@ -348,7 +348,7 @@
         internal void Clear()
         {
             RestoreDefaults();
-            OnPropertyChanged(string.Empty);
+            OnPropertyChanged(this, string.Empty);
         }
 
         internal Matrix4 GetCameraView() => Maths.CreateCameraView(CameraPosition, CameraRotation);
@@ -378,8 +378,11 @@
 
         internal Trace NewTrace() => new Trace(this);
 
-        internal void OnPropertyChanged(string propertyName) =>
-            SceneController?.OnPropertyChanged(propertyName);
+        internal void OnPropertyChanged(Scene scene, string propertyName) =>
+            SceneController?.OnPropertyChanged(scene, propertyName);
+
+        internal void OnPropertyChanged(Trace trace, string propertyName) =>
+            SceneController?.OnPropertyChanged(trace, propertyName);
 
         internal void RemoveTrace(int index)
         {

@@ -48,6 +48,14 @@
             MakeCurrent(false);
         }
 
+        internal void InvalidateVao(Trace trace)
+        {
+            DeleteVbo(ref trace.VertexVboID);
+            trace.VaoVertexCount = 0;
+            DeleteVbo(ref trace.IndexVboID);
+            DeleteVao(ref trace.VaoID);
+        }
+
         internal void Render()
         {
             if (!MakeCurrent(true))
@@ -61,6 +69,18 @@
                 RenderFrame();
             GLControl.SwapBuffers();
             MakeCurrent(false);
+        }
+
+        private void ValidateVao(Trace trace)
+        {
+            if (trace.VaoID != 0)
+                return;
+            var coords = Grids.GetGrid(trace.StripCount);
+            var indices = Grids.GetIndices(trace.StripCount, trace.Pattern);
+            GL.BindVertexArray(trace.VaoID = CreateVao());
+            trace.VaoVertexCount = indices.Length;
+            trace.IndexVboID = BindIndicesBuffer(indices);
+            trace.VertexVboID = StoreDataInAttributeList(0, coords);
         }
 
         #endregion
@@ -215,6 +235,7 @@
             Scene._GPUCode = GpuCode.ToString().TrimEnd();
             Scene._GPULog = GpuLog.ToString().TrimEnd();
             SceneController.OnPropertyChanged(
+                Scene,
                 DisplayNames.GPUCode,
                 DisplayNames.GPULog,
                 DisplayNames.GPUStatus);
@@ -287,11 +308,8 @@
             for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
             {
                 var trace = Scene._Traces[traceIndex];
-                var coords = Grids.GetGrid(trace.StripCount);
-                var indices = Grids.GetIndices(trace.StripCount, trace.Pattern);
-                GL.BindVertexArray(trace.VaoID = CreateVao());
-                trace.IndexVboID = BindIndicesBuffer(indices);
-                trace.VertexVboID = StoreDataInAttributeList(0, coords);
+                ValidateVao(trace);
+
                 UnbindVao();
             }
             ShaderStop();
@@ -322,13 +340,8 @@
 
         private void UnloadTraces()
         {
-            for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
-            {
-                var trace = Scene._Traces[traceIndex];
-                DeleteVbo(ref trace.VertexVboID);
-                DeleteVbo(ref trace.IndexVboID);
-                DeleteVao(ref trace.VaoID);
-            }
+            foreach (var trace in Scene._Traces)
+                InvalidateVao(trace);
         }
 
         #endregion
@@ -360,10 +373,18 @@
             for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
             {
                 var trace = Scene._Traces[traceIndex];
+
                 LoadTraceIndex(traceIndex);
                 LoadTransform(trace);
+                ValidateVao(trace);
                 GL.BindVertexArray(trace.VaoID);
                 GL.EnableVertexAttribArray(0);
+
+                GL.DrawElements(PrimitiveType.TriangleStrip, trace.VaoVertexCount, DrawElementsType.UnsignedInt, 0);
+
+                //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
+                //GL.DrawElements(BeginMode.Triangles, prototype.VertexCount, DrawElementsType.UnsignedInt, 0);
+
 
                 GL.DisableVertexAttribArray(0);
                 GL.BindVertexArray(0);
