@@ -50,8 +50,8 @@
 
         internal void InvalidateVao(Trace trace)
         {
-            DeleteVbo(ref trace.VertexVboID);
             trace.VaoVertexCount = 0;
+            DeleteVbo(ref trace.VertexVboID);
             DeleteVbo(ref trace.IndexVboID);
             DeleteVao(ref trace.VaoID);
         }
@@ -78,9 +78,9 @@
             var coords = Grids.GetGrid(trace.StripCount);
             var indices = Grids.GetIndices(trace.StripCount, trace.Pattern);
             GL.BindVertexArray(trace.VaoID = CreateVao());
-            trace.VaoVertexCount = indices.Length;
             trace.IndexVboID = BindIndicesBuffer(indices);
             trace.VertexVboID = StoreDataInAttributeList(0, coords);
+            trace.VaoVertexCount = indices.Length;
         }
 
         #endregion
