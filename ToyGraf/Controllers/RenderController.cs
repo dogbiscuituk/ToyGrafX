@@ -50,10 +50,10 @@
 
         internal void InvalidateVao(Trace trace)
         {
-            trace.VaoVertexCount = 0;
-            DeleteVbo(ref trace.VertexVboID);
-            DeleteVbo(ref trace.IndexVboID);
-            DeleteVao(ref trace.VaoID);
+            trace._VaoVertexCount = 0;
+            DeleteVbo(ref trace._VboVertexID);
+            DeleteVbo(ref trace._VboIndexID);
+            DeleteVao(ref trace._VaoID);
         }
 
         internal bool Reload()
@@ -96,14 +96,14 @@
 
         private void ValidateVao(Trace trace)
         {
-            if (trace.VaoID != 0)
+            if (trace._VaoID != 0)
                 return;
             var coords = Grids.GetGrid(trace.StripCount);
             var indices = Grids.GetIndices(trace.StripCount, trace.Pattern);
-            GL.BindVertexArray(trace.VaoID = CreateVao());
-            trace.IndexVboID = BindIndicesBuffer(indices);
-            trace.VertexVboID = StoreDataInAttributeList(0, coords);
-            trace.VaoVertexCount = indices.Length;
+            GL.BindVertexArray(trace._VaoID = CreateVao());
+            trace._VboIndexID = BindIndicesBuffer(indices);
+            trace._VboVertexID = StoreDataInAttributeList(0, coords);
+            trace._VaoVertexCount = indices.Length;
         }
 
         #endregion
@@ -380,10 +380,10 @@
                 LoadTraceIndex(traceIndex);
                 LoadTransform(trace);
                 ValidateVao(trace);
-                GL.BindVertexArray(trace.VaoID);
+                GL.BindVertexArray(trace._VaoID);
                 GL.EnableVertexAttribArray(0);
 
-                GL.DrawElements(PrimitiveType.TriangleStrip, trace.VaoVertexCount, DrawElementsType.UnsignedInt, 0);
+                GL.DrawElements(PrimitiveType.TriangleStrip, trace._VaoVertexCount, DrawElementsType.UnsignedInt, 0);
 
                 //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
                 //GL.DrawElements(BeginMode.Triangles, prototype.VertexCount, DrawElementsType.UnsignedInt, 0);

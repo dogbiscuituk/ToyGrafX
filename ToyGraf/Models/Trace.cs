@@ -129,6 +129,30 @@
             set => Run(new TransformCommand(Index, value));
         }
 
+        [Category(Categories.SystemRO)]
+        [Description(Descriptions.VaoID)]
+        [DisplayName(DisplayNames.VaoID)]
+        [JsonIgnore]
+        public int VaoID => _VaoID;
+
+        [Category(Categories.SystemRO)]
+        [Description(Descriptions.VaoVertexCount)]
+        [DisplayName(DisplayNames.VaoVertexCount)]
+        [JsonIgnore]
+        public int VaoVertexCount => _VaoVertexCount;
+
+        [Category(Categories.SystemRO)]
+        [Description(Descriptions.VboIndexID)]
+        [DisplayName(DisplayNames.VboIndexID)]
+        [JsonIgnore]
+        public int VaoIndexID => _VboIndexID;
+
+        [Category(Categories.SystemRO)]
+        [Description(Descriptions.VboVertexID)]
+        [DisplayName(DisplayNames.VboVertexID)]
+        [JsonIgnore]
+        public int VaoVertexID => _VboVertexID;
+
         #endregion
 
         #region Shaders
@@ -300,10 +324,10 @@
         internal Scene Scene;
 
         internal int
-            VaoID,
-            VaoVertexCount,
-            VertexVboID,
-            IndexVboID;
+            _VaoID,
+            _VaoVertexCount,
+            _VboVertexID,
+            _VboIndexID;
 
         #endregion
 

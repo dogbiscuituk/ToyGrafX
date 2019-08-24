@@ -317,9 +317,6 @@
         [JsonProperty] internal float _FarPlane;
         [JsonProperty] internal float _FieldOfView;
         [JsonProperty] internal double _FPS;
-        [JsonProperty] internal string _GPUCode;
-        [JsonProperty] internal string _GPULog;
-        [JsonProperty] internal GPUStatus _GPUStatus;
         [JsonProperty] internal float _NearPlane;
         [JsonProperty] internal int _SampleCount;
         [JsonProperty] internal string _Shader1Vertex;
@@ -332,6 +329,10 @@
         [JsonProperty] internal bool _Stereo;
         [JsonProperty] internal string _Title;
         [JsonProperty] internal bool _VSync;
+
+        internal string _GPUCode;
+        internal string _GPULog;
+        internal GPUStatus _GPUStatus;
 
         #endregion
 

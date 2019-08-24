@@ -74,6 +74,10 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             Title = "A title for this scene.",
             Traces = "A list of the traces in this scene.",
             Transform = "The transformation matrix of the trace.",
+            VaoID = "The integer ID of the Vertex Array",
+            VaoVertexCount = "The number of vertices in the Vertex Array.",
+            VboIndexID = "The integer ID of the Index Buffer",
+            VboVertexID = "The integer ID of the Vertex Buffer",
             Visible = "Take a wild guess.",
             VSync = "Indicates whether GLControl updates are synced to the monitor's refresh rate.";
     }

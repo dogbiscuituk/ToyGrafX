@@ -39,6 +39,10 @@
             Title = "Title",
             Traces = "Traces",
             Transform = "Transform",
+            VaoID = "VAO",
+            VaoVertexCount = "VAO Vertex Count",
+            VboIndexID = "VBO_Index",
+            VboVertexID = "VBO_Vertex",
             Visible = "Visible?",
             VSync = "VSync";
     }
