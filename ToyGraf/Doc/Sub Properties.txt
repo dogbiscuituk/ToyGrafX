@@ -1,3 +1,26 @@
+Which properties are invalidated by changes in which other propertoies?
+
+CameraView
+ \
+  CameraPosition
+  CameraRotation
+
+Projection
+ \
+  AspectRatio
+  FarPlane
+  FieldOfView
+  NearPlane
+
+Transform
+ \
+  Location
+  Orientation
+  Scale
+
+
+
+
 Scene properties:
  \
   Accumulator Colour Format
@@ -79,4 +102,99 @@ Z			Camera Position			New scene
 Pitch			Camera Rotation°		New scene
 Yaw			Camera Rotation°		New scene
 Roll			Camera Rotation°		New scene
+
+
+
+
+
+
+
+        private void ReloadTraces()
+        {
+            ShaderStart();
+            LoadProjection();
+            LoadCameraView();
+            for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
+            {
+                var trace = Scene._Traces[traceIndex];
+                ValidateVao(trace);
+
+                UnbindVao();
+            }
+            ShaderStop();
+        }
+
+        internal void Render()
+        {
+            if (!MakeCurrent(true))
+                return;
+            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.Texture2D);
+            GL.ClearColor(Scene.BackgroundColour);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            ValidateCameraView();
+            ValidateProjection();
+            ValidateProgram();
+            if (ProgramValid)
+                RenderFrame();
+            GLControl.SwapBuffers();
+            MakeCurrent(false);
+        }
+
+        private void RenderFrame()
+        {
+            ShaderStart();
+            LoadTimeValue();
+            for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
+            {
+                var trace = Scene._Traces[traceIndex];
+
+                LoadTraceIndex(traceIndex);
+                LoadTransform(trace);
+                ValidateVao(trace);
+                GL.BindVertexArray(trace._VaoID);
+                GL.EnableVertexAttribArray(0);
+
+                GL.DrawElements(PrimitiveType.TriangleStrip, trace._VaoVertexCount, DrawElementsType.UnsignedInt, 0);
+
+                //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
+                //GL.DrawElements(BeginMode.Triangles, prototype.VertexCount, DrawElementsType.UnsignedInt, 0);
+
+
+                GL.DisableVertexAttribArray(0);
+                GL.BindVertexArray(0);
+                UnbindVao();
+            }
+            ShaderStop();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

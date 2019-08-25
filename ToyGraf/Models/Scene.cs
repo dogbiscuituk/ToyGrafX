@@ -16,7 +16,6 @@
     using ToyGraf.Engine.Utility;
     using ToyGraf.Views;
 
-    [DefaultProperty("Traces")]
     public class Scene
     {
         #region Constructors
@@ -438,7 +437,7 @@
         {
             internal const string
                 BackgroundColourString = "White",
-                CameraPositionString = "0, 0, 0",
+                CameraPositionString = "0, 0, 2",
                 CameraRotationString = "0, 0, 0",
                 ColourFormatString = "0, 0, 0, 0",
                 GPUCode = "",
@@ -521,7 +520,7 @@ void main()
                 CameraRotation = new Euler3F();
 
             internal static Point3F
-                CameraPosition = new Point3F();
+                CameraPosition = new Point3F(0, 0, 2);
 
             internal static List<Trace>
                 Traces => new List<Trace>();

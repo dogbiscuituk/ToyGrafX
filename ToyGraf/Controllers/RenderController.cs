@@ -20,22 +20,20 @@
 
         #region Internal Methods
 
-        internal bool InitViewport()
+        internal void InitViewport()
         {
-            var result = MakeCurrent(true);
-            if (result)
+            InvalidateProjection();
+            if (MakeCurrent(true))
             {
-                UnloadTraces();
                 GL.Viewport(GLControl.Size);
-                ReloadTraces();
                 MakeCurrent(false);
             }
-            return result;
         }
+
+        internal void InvalidateCameraView() => CameraViewValid = false;
 
         internal void InvalidateProgram()
         {
-            System.Diagnostics.Debug.WriteLine("SceneController.InvalidateProgram();");
             ProgramCompiled = false;
             if (!MakeCurrent(true))
                 return;
@@ -48,24 +46,14 @@
             MakeCurrent(false);
         }
 
+        internal void InvalidateProjection() => ProjectionValid = false;
+
         internal void InvalidateVao(Trace trace)
         {
             trace._VaoVertexCount = 0;
             DeleteVbo(ref trace._VboVertexID);
             DeleteVbo(ref trace._VboIndexID);
             DeleteVao(ref trace._VaoID);
-        }
-
-        internal bool Reload()
-        {
-            var result = MakeCurrent(true);
-            if (result)
-            {
-                UnloadTraces();
-                ReloadTraces();
-                MakeCurrent(false);
-            }
-            return result;
         }
 
         internal void Render()
@@ -76,9 +64,31 @@
             GL.Enable(EnableCap.Texture2D);
             GL.ClearColor(Scene.BackgroundColour);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            ShaderStart();
             ValidateProgram();
             if (ProgramValid)
-                RenderFrame();
+            {
+                ValidateProjection();
+                ValidateCameraView();
+                LoadTimeValue();
+                for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
+                {
+                    var trace = Scene._Traces[traceIndex];
+                    if (!trace.Visible)
+                        continue;
+                    LoadTraceIndex(traceIndex);
+                    LoadTransform(trace);
+                    ValidateVao(trace);
+                    GL.BindVertexArray(trace._VaoID);
+                    GL.EnableVertexAttribArray(0);
+                    //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
+                    GL.DrawElements(PrimitiveType.TriangleStrip, trace._VaoVertexCount, DrawElementsType.UnsignedInt, 0);
+                    GL.DisableVertexAttribArray(0);
+                    GL.BindVertexArray(0);
+                    UnbindVao();
+                }
+            }
+            ShaderStop();
             GLControl.SwapBuffers();
             MakeCurrent(false);
         }
@@ -137,7 +147,9 @@
             CurrencyCount;
 
         private bool
-            ProgramCompiled;
+            CameraViewValid,
+            ProgramCompiled,
+            ProjectionValid;
 
         private bool
             ProgramValid => ProgramCompiled && Scene._GPUStatus == GPUStatus.OK;
@@ -241,6 +253,15 @@
                 Scene._GPUStatus |= GPUStatus.Warning;
         }
 
+        private void ValidateCameraView()
+        {
+            if (!CameraViewValid)
+            {
+                LoadCameraView();
+                CameraViewValid = true;
+            }
+        }
+
         private void ValidateProgram()
         {
             if (ProgramCompiled)
@@ -269,6 +290,15 @@
             GetUniformLocations();
             DeleteShaders();
             ProgramCompiled = true;
+        }
+
+        private void ValidateProjection()
+        {
+            if (!ProjectionValid)
+            {
+                LoadProjection();
+                ProjectionValid = true;
+            }
         }
 
         #endregion
@@ -313,21 +343,6 @@
             }
         }
 
-        private void ReloadTraces()
-        {
-            ShaderStart();
-            LoadProjection();
-            LoadCameraView();
-            for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
-            {
-                var trace = Scene._Traces[traceIndex];
-                ValidateVao(trace);
-
-                UnbindVao();
-            }
-            ShaderStop();
-        }
-
         private int StoreDataInAttributeList(int attributeNumber, float[] data)
         {
             var vboID = CreateVbo();
@@ -367,32 +382,6 @@
                     GLControl.Context.MakeCurrent(null);
             }
             return true;
-        }
-
-        private void RenderFrame()
-        {
-            ShaderStart();
-            LoadTimeValue();
-            for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
-            {
-                var trace = Scene._Traces[traceIndex];
-
-                LoadTraceIndex(traceIndex);
-                LoadTransform(trace);
-                ValidateVao(trace);
-                GL.BindVertexArray(trace._VaoID);
-                GL.EnableVertexAttribArray(0);
-
-                GL.DrawElements(PrimitiveType.TriangleStrip, trace._VaoVertexCount, DrawElementsType.UnsignedInt, 0);
-
-                //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
-                //GL.DrawElements(BeginMode.Triangles, prototype.VertexCount, DrawElementsType.UnsignedInt, 0);
-
-
-                GL.DisableVertexAttribArray(0);
-                GL.BindVertexArray(0);
-            }
-            ShaderStop();
         }
 
         private bool ShaderStart() => UseProgram(true);

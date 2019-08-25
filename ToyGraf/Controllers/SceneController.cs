@@ -52,7 +52,6 @@
             if (connect)
             {
                 PropertyGridController.SelectedObject = Scene;
-                RenderController.Reload();
             }
             else
             {
@@ -381,6 +380,10 @@
                     case DisplayNames.FPS:
                         ClockInit();
                         break;
+                    case DisplayNames.CameraPosition:
+                    case DisplayNames.CameraRotation:
+                        RenderController.InvalidateCameraView();
+                        break;
                     case DisplayNames.Shader1Vertex:
                     case DisplayNames.Shader2TessControl:
                     case DisplayNames.Shader3TessEvaluation:
@@ -389,6 +392,11 @@
                     case DisplayNames.Shader6Compute:
                     case DisplayNames.Traces:
                         RenderController.InvalidateProgram();
+                        break;
+                    case DisplayNames.FarPlane:
+                    case DisplayNames.FieldOfView:
+                    case DisplayNames.NearPlane:
+                        RenderController.InvalidateProjection();
                         break;
                     case DisplayNames.Pattern:
                     case DisplayNames.StripCount:

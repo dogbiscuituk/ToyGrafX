@@ -10,7 +10,6 @@
     using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
 
-    [DefaultProperty("Shader1Vertex")]
     public class Trace
     {
         #region Public Interface
@@ -375,7 +374,7 @@
                 Orientation = new Euler3F();
 
             internal static Point3
-                StripCount = new Point3();
+                StripCount = new Point3(100, 100, 0);
 
             internal static Point3F
                 Location = new Point3F(),
@@ -403,7 +402,7 @@
                 Shader4Geometry = "",
                 Shader5Fragment = @"   FragColor = vec4(colour, 0.1f);",
                 Shader6Compute = "",
-                StripCountString = "0, 0, 0";
+                StripCountString = "100, 100, 0";
         }
 
         #endregion
