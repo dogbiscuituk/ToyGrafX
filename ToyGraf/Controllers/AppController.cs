@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Windows.Forms;
-    using ToyGraf.Engine.Utility;
     using ToyGraf.Models.Enums;
     using ToyGraf.Models.Structs;
     using ToyGraf.Properties;
@@ -12,6 +11,8 @@
 
     internal static class AppController
     {
+        #region Static Constructor
+
         static AppController()
         {
             CollectionController.Start();
@@ -21,39 +22,7 @@
             AddNewSceneController();
         }
 
-        internal static SceneController AddNewSceneController()
-        {
-            var sceneController = new SceneController();
-            SceneControllers.Add(sceneController);
-            sceneController.Show();
-            return sceneController;
-        }
-
-        internal static void Close()
-        {
-            CollectionController.Stop();
-            Application.Exit();
-        }
-
-        internal static string GetDefaultFolder(FilterIndex filterIndex)
-        {
-            switch (filterIndex)
-            {
-                case FilterIndex.File:
-                    return Options.FilesFolderPath;
-                case FilterIndex.Template:
-                    return Options.TemplatesFolderPath;
-                default:
-                    return string.Empty;
-            }
-        }
-
-        internal static void Remove(SceneController sceneController)
-        {
-            SceneControllers.Remove(sceneController);
-            if (SceneControllers.Count == 0)
-                Close();
-        }
+        #endregion
 
         #region Internal Properties
 
@@ -64,16 +33,6 @@
                 if (_AboutDialog == null)
                     _AboutDialog = new AboutController().View;
                 return _AboutDialog;
-            }
-        }
-
-        internal static OpenGLProperties OpenGLProperties
-        {
-            get
-            {
-                if (_OpenGLProperties == null)
-                    _OpenGLProperties = new OpenGLProperties();
-                return _OpenGLProperties;
             }
         }
 
@@ -107,12 +66,49 @@
 
         #endregion
 
+        #region Internal Methods
+
+        internal static SceneController AddNewSceneController()
+        {
+            var sceneController = new SceneController();
+            SceneControllers.Add(sceneController);
+            sceneController.Show();
+            return sceneController;
+        }
+
+        internal static void Close()
+        {
+            CollectionController.Stop();
+            Application.Exit();
+        }
+
+        internal static string GetDefaultFolder(FilterIndex filterIndex)
+        {
+            switch (filterIndex)
+            {
+                case FilterIndex.File:
+                    return Options.FilesFolderPath;
+                case FilterIndex.Template:
+                    return Options.TemplatesFolderPath;
+                default:
+                    return string.Empty;
+            }
+        }
+            
+        internal static void Remove(SceneController sceneController)
+        {
+            SceneControllers.Remove(sceneController);
+            if (SceneControllers.Count == 0)
+                Close();
+        }
+
+        #endregion
+
         #region Private Properties
 
         private static AboutDialog _AboutDialog;
         private static readonly string DefaultFilesFolderPath =
             $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\{Application.ProductName}";
-        private static OpenGLProperties _OpenGLProperties;
         private static Settings Settings => Settings.Default;
         private static Timer Timer;
 

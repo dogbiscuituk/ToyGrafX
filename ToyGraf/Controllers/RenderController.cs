@@ -2,6 +2,7 @@
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
+    using System;
     using System.Text;
     using ToyGraf.Commands;
     using ToyGraf.Engine.Types;
@@ -18,7 +19,43 @@
 
         #endregion
 
+        #region Internal Properties
+
+        internal GLInfo GLInfo
+        {
+            get
+            {
+                if (_GLInfo == null && MakeCurrent(true))
+                {
+                    var info = new GLInfo();
+                    MakeCurrent(false);
+                    lock (GLInfoSyncRoot)
+                        _GLInfo = info;
+                }
+                return _GLInfo;
+            }
+        }
+
+        internal static GLInfo _GLInfo;
+        private static object GLInfoSyncRoot = new object();
+
+        #endregion
+
         #region Internal Methods
+
+        internal GLInfo GetGLInfo()
+        {
+            if (MakeCurrent(true))
+                try
+                {
+                    return new GLInfo();
+                }
+                finally
+                {
+                    MakeCurrent(false);
+                }
+            return null;
+        }
 
         internal void InitViewport()
         {

@@ -39,6 +39,7 @@
         internal ClockController ClockController;
         internal CommandProcessor CommandProcessor { get; private set; }
         internal readonly PropertyGridController PropertyGridController;
+        internal readonly RenderController RenderController;
         internal Scene Scene;
         internal SceneForm SceneForm;
         internal readonly TraceTableController TraceTableController;
@@ -166,7 +167,6 @@
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
         private PropertyGrid PropertyGrid => PropertyGridController.PropertyGrid;
-        private readonly RenderController RenderController;
         private int UpdateCount;
         private bool Updating => UpdateCount > 0;
 

@@ -133,6 +133,12 @@
         }
 
         [Category(Categories.SystemRO)]
+        [Description(Descriptions.GLInfo)]
+        [DisplayName(DisplayNames.GLInfo)]
+        [JsonIgnore]
+        public GLInfo GLInfo => RenderController._GLInfo ?? RenderController?.GLInfo;
+
+        [Category(Categories.SystemRO)]
         [DefaultValue(Defaults.GPUCode)]
         [Description(Descriptions.GPUCode)]
         [DisplayName(DisplayNames.GPUCode)]
@@ -306,6 +312,10 @@
         internal bool IsModified => CommandProcessor?.IsModified ?? false;
         internal SceneController SceneController;
 
+        internal string _GPUCode;
+        internal string _GPULog;
+        internal GPUStatus _GPUStatus;
+
         [JsonProperty] internal ColourFormat _AccumColourFormat;
         [JsonProperty] internal Color _BackgroundColour;
         [JsonProperty] internal int _Buffers;
@@ -328,10 +338,6 @@
         [JsonProperty] internal bool _Stereo;
         [JsonProperty] internal string _Title;
         [JsonProperty] internal bool _VSync;
-
-        internal string _GPUCode;
-        internal string _GPULog;
-        internal GPUStatus _GPUStatus;
 
         #endregion
 
@@ -375,7 +381,6 @@
         }
 
         internal void InsertTrace(int index, Trace trace) => _Traces.Insert(index, trace);
-
         internal Trace NewTrace() => new Trace(this);
 
         internal void OnPropertyChanged(Scene scene, string propertyName) =>
@@ -546,6 +551,7 @@ void main()
         }
 
         private GLControl GLControl => SceneForm?.GLControl;
+        private RenderController RenderController => SceneController.RenderController;
         private SceneForm SceneForm => SceneController?.SceneForm;
 
         #endregion

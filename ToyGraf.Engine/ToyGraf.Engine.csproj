@@ -61,7 +61,6 @@
     <Compile Include="Utility\Functions.cs" />
     <Compile Include="Utility\Grids.cs" />
     <Compile Include="Utility\Maths.cs" />
-    <Compile Include="Utility\OpenGLProperties.cs" />
     <Compile Include="Utility\Processes.cs" />
     <Compile Include="Utility\Strings.cs" />
   </ItemGroup>
