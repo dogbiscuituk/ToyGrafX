@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Windows.Forms;
     using ToyGraf.Commands;
+    using ToyGraf.Engine;
     using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
@@ -380,8 +381,7 @@
                     case DisplayNames.FPS:
                         ClockInit();
                         break;
-                    case DisplayNames.CameraPosition:
-                    case DisplayNames.CameraRotation:
+                    case DisplayNames.Camera:
                         RenderController.InvalidateCameraView();
                         break;
                     case DisplayNames.Shader1Vertex:
@@ -432,12 +432,10 @@
             {
                 case DisplayNames.AccumColourFormat:
                     return new AccumColourFormatCommand(new ColourFormat(Scene.AccumColourFormat, field, (int)value));
+                case DisplayNames.Camera:
+                    return new CameraCommand(new Camera(Scene.Camera, field, (float)value));
                 case DisplayNames.ColourFormat:
                     return new ColourFormatCommand(new ColourFormat(Scene.ColourFormat, field, (int)value));
-                case DisplayNames.CameraPosition:
-                    return new CameraPositionCommand(new Point3F(Scene.CameraPosition, field, (float)value));
-                case DisplayNames.CameraRotation:
-                    return new CameraRotationCommand(new Euler3F(Scene.CameraRotation, field, (float)value));
             }
             return null;
         }

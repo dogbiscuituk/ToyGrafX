@@ -183,7 +183,7 @@
         public void CreateCameraViewPosition()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 3, 5, 1);
-            var actual = Maths.CreateCameraView(new Camera { Position = new Vector3(-2, -3, -5) });
+            var actual = Maths.CreateCameraView(new Camera { Position = new Point3F(-2, -3, -5) });
             Assert.AreEqual(expected, actual);
         }
 
@@ -194,7 +194,7 @@
         public void CreateCameraViewPitch()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateCameraView(new Camera { Pitch = 90 });
+            var actual = Maths.CreateCameraView(new Camera { Rotation = new Euler3F(pitch: 90, yaw: 0, roll: 0) });
             CompareMatrices(expected, actual);
         }
 
@@ -205,7 +205,7 @@
         public void CreateCameraViewYaw()
         {
             var expected = new Matrix4(0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateCameraView(new Camera { Yaw = 90 });
+            var actual = Maths.CreateCameraView(new Camera { Rotation = new Euler3F(pitch: 0, yaw: 90, roll: 0) });
             CompareMatrices(expected, actual);
         }
 
@@ -216,7 +216,7 @@
         public void CreateCameraViewRoll()
         {
             var expected = new Matrix4(0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateCameraView(new Camera { Roll = 90 });
+            var actual = Maths.CreateCameraView(new Camera { Rotation = new Euler3F(pitch: 0, yaw: 0, roll: 90) });
             CompareMatrices(expected, actual);
         }
 
@@ -228,7 +228,10 @@
         {
             var expected = new Matrix4(0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 13, -11, -7, 1);
             var actual = Maths.CreateCameraView(new Camera
-            { Position = new Vector3(7, 11, 13), Pitch = 90, Yaw = -90, Roll = 90 });
+            {
+                Position = new Point3F(7, 11, 13),
+                Rotation = new Euler3F(90, -90, 90)
+            });
             CompareMatrices(expected, actual);
         }
 

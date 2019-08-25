@@ -2,6 +2,7 @@
 {
     using OpenTK;
     using System.Drawing;
+    using ToyGraf.Engine;
     using ToyGraf.Engine.Types;
     using ToyGraf.Models;
 
@@ -12,17 +13,10 @@
         { }
     }
 
-    internal class CameraPositionCommand : ScenePropertyCommand<Point3F>
+    internal class CameraCommand : ScenePropertyCommand<Camera>
     {
-        internal CameraPositionCommand(Point3F value) : base(DisplayNames.CameraPosition,
-            value, s => s._CameraPosition, (s, v) => s._CameraPosition = v)
-        { }
-    }
-
-    internal class CameraRotationCommand : ScenePropertyCommand<Euler3F>
-    {
-        internal CameraRotationCommand(Euler3F value) : base(DisplayNames.CameraRotation,
-            value, s => s._CameraRotation, (s, v) => s._CameraRotation = v)
+        internal CameraCommand(Camera value) : base(DisplayNames.Camera,
+            value, s => s._Camera, (s, v) => s._Camera = v)
         { }
     }
 

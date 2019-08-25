@@ -12,6 +12,8 @@
     using ToyGraf.Commands;
     using ToyGraf.Controllers;
     using ToyGraf.Controls;
+    using ToyGraf.Engine;
+    using ToyGraf.Engine.TypeConverters;
     using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Views;
@@ -176,18 +178,12 @@
         #region Scene
 
         [Category(Categories.Scene)]
-        [DefaultValue(typeof(Point3F), Defaults.CameraPositionString)]
-        [Description(Descriptions.CameraPosition)]
-        [DisplayName(DisplayNames.CameraPosition)]
+        [DefaultValue(typeof(Point3F), Defaults.CameraString)]
+        [Description(Descriptions.Camera)]
+        [DisplayName(DisplayNames.Camera)]
         [JsonIgnore]
-        public Point3F CameraPosition { get => _CameraPosition; set => Run(new CameraPositionCommand(value)); }
-
-        [Category(Categories.Scene)]
-        [DefaultValue(typeof(Euler3F), Defaults.CameraRotationString)]
-        [Description(Descriptions.CameraRotation)]
-        [DisplayName(DisplayNames.CameraRotation)]
-        [JsonIgnore]
-        public Euler3F CameraRotation { get => _CameraRotation; set => Run(new CameraRotationCommand(value)); }
+        [TypeConverter(typeof(CameraTypeConverter))]
+        public Camera Camera { get => _Camera; set => Run(new CameraCommand(value)); }
 
         [Category(Categories.Scene)]
         [DefaultValue(Defaults.FPS)]
@@ -319,8 +315,7 @@
         [JsonProperty] internal ColourFormat _AccumColourFormat;
         [JsonProperty] internal Color _BackgroundColour;
         [JsonProperty] internal int _Buffers;
-        [JsonProperty] internal Point3F _CameraPosition;
-        [JsonProperty] internal Euler3F _CameraRotation;
+        [JsonProperty] internal Camera _Camera;
         [JsonProperty] internal ColourFormat _ColourFormat;
         [JsonProperty] internal int _Depth;
         [JsonProperty] internal float _FarPlane;
@@ -357,7 +352,7 @@
             OnPropertyChanged(this, string.Empty);
         }
 
-        internal Matrix4 GetCameraView() => Maths.CreateCameraView(CameraPosition, CameraRotation);
+        internal Matrix4 GetCameraView() => Maths.CreateCameraView(Camera);
         internal Matrix4 GetProjection() => Maths.CreatePerspectiveProjection(FieldOfView, AspectRatio, NearPlane, FarPlane);
 
         internal string GetScript(ShaderType shaderType)
@@ -442,8 +437,7 @@
         {
             internal const string
                 BackgroundColourString = "White",
-                CameraPositionString = "0, 0, 2",
-                CameraRotationString = "0, 0, 0",
+                CameraString = "0, 0, 2, 0, 0, 0",
                 ColourFormatString = "0, 0, 0, 0",
                 GPUCode = "",
                 GPULog = "",
@@ -514,18 +508,15 @@ void main()
             internal GPUStatus
                 GPUStatus = GPUStatus.OK;
 
+            internal static Camera
+                Camera = new Camera(0, 0, -2, 0, 0, 0);
+
             internal static Color
                 BackgroundColour = Color.White;
 
             internal static ColourFormat
                 ColourFormat = new ColourFormat(8),
                 AccumColourFormat = new ColourFormat();
-
-            internal static Euler3F
-                CameraRotation = new Euler3F();
-
-            internal static Point3F
-                CameraPosition = new Point3F(0, 0, 2);
 
             internal static List<Trace>
                 Traces => new List<Trace>();
@@ -563,8 +554,7 @@ void main()
             _AccumColourFormat = Defaults.AccumColourFormat;
             _BackgroundColour = Defaults.BackgroundColour;
             _Buffers = Defaults.Buffers;
-            _CameraPosition = Defaults.CameraPosition;
-            _CameraRotation = Defaults.CameraRotation;
+            _Camera = Defaults.Camera;
             _ColourFormat = Defaults.ColourFormat;
             _Depth = Defaults.Depth;
             _FarPlane = Defaults.FarPlane;

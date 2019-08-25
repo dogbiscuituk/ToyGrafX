@@ -1,41 +1,72 @@
 ﻿namespace ToyGraf.Engine
 {
-    using OpenTK;
+    using System.ComponentModel;
+    using ToyGraf.Engine.TypeConverters;
+    using ToyGraf.Engine.Types;
 
     public class Camera
     {
-        public Vector3 Position
+        #region Constructors
+
+        public Camera() : this(new Point3F(), new Euler3F()) { }
+
+        public Camera(Camera camera) : this(camera.Position, camera.Rotation) { }
+
+        public Camera(Point3F position, Euler3F rotation)
         {
-            get => new Vector3(X, Y, Z);
-            set { X = value.X; Y = value.Y; Z = value.Z; }
+            Position = position;
+            Rotation = rotation;
         }
 
-        public Vector3 Rotation
+        public Camera(Camera camera, string fieldName, float value) : this(camera)
         {
-            get => new Vector3(Pitch, Yaw, Roll);
-            set { Pitch = value.X; Yaw = value.Y; Roll = value.Z; }
+            switch (fieldName)
+            {
+                case "X":
+                    Position.X = value;
+                    break;
+                case "Y":
+                    Position.Y = value;
+                    break;
+                case "Z":
+                    Position.Z = value;
+                    break;
+                case "Pitch":
+                    Rotation.Pitch = value;
+                    break;
+                case "Yaw":
+                    Rotation.Yaw = value;
+                    break;
+                case "Roll":
+                    Rotation.Roll = value;
+                    break;
+            }
         }
 
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
+        public Camera(float x, float y, float z, float pitch, float yaw, float roll) :
+            this(new Point3F(x, y, z), new Euler3F(pitch, yaw, roll))
+        { }
 
-        public float Pitch
-        {
-            get => _Pitch;
-            set => _Pitch = value % 360.0f;
-        }
+        #endregion
 
-        public float Yaw
-        {
-            get => _Yaw;
-            set => _Yaw = value % 360.0f;
-        }
+        #region Public Properties
 
-        public float Roll
+        [Description(Descriptions.Position)]
+        [TypeConverter(typeof(Point3FTypeConverter))]
+        public Point3F Position { get; set; } = new Point3F();
+
+        [Description(Descriptions.Rotation)]
+        [TypeConverter(typeof(Euler3FTypeConverter))]
+        public Euler3F Rotation { get; set; } = new Euler3F();
+
+        #endregion
+
+        #region Public Methods
+
+        public void Fix()
         {
-            get => _Roll;
-            set => _Roll = value % 360.0f;
+            HomePosition = Position;
+            HomeRotation = Rotation;
         }
 
         public void Reset()
@@ -44,18 +75,25 @@
             Rotation = HomeRotation;
         }
 
-        public void Fix()
+        public override string ToString() => $"{Position}, {Rotation}";
+
+        #endregion
+
+        #region Private Classes
+
+        private class Descriptions
         {
-            HomePosition = Position;
-            HomeRotation = Rotation;
+            internal const string
+                Position = "The vector representing the Camera's position.",
+                Rotation = "The rotation representing the Camera's orientation.";
         }
+
+        #endregion
 
         #region Private Properties
 
-        private float _Pitch, _Yaw, _Roll;
-
-        private Vector3 HomePosition = Vector3.Zero;
-        private Vector3 HomeRotation = Vector3.Zero;
+        private Point3F HomePosition;
+        private Euler3F HomeRotation;
 
         #endregion
     }

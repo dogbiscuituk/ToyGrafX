@@ -6,7 +6,7 @@
     public static class Maths
     {
         public static Matrix4 CreateCameraView(Camera camera) =>
-            CreateCameraView(camera.Position.ToPoint3F(), camera.Rotation.ToEuler3F());
+            CreateCameraView(camera.Position, camera.Rotation);
 
         public static Matrix4 CreateCameraView(Point3F position, Euler3F rotation) =>
             Matrix4.CreateTranslation(-position.ToVector3()) *

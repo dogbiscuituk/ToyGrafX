@@ -6,6 +6,8 @@
     [TypeConverter(typeof(ColourFormatTypeConverter))]
     public class ColourFormat
     {
+        #region Constructors
+
         public ColourFormat() : this(0) { }
 
         public ColourFormat(int bpp) : this(bpp, bpp, bpp, bpp) { }
@@ -34,10 +36,29 @@
             Alpha = alpha;
         }
 
-        [DefaultValue(0)] public int Red { get; set; }
-        [DefaultValue(0)] public int Green { get; set; }
-        [DefaultValue(0)] public int Blue { get; set; }
-        [DefaultValue(0)] public int Alpha { get; set; }
+        #endregion
+
+        #region Public Properties
+
+        [DefaultValue(0)]
+        [Description(Descriptions.Red)]
+        public int Red { get; set; }
+
+        [DefaultValue(0)]
+        [Description(Descriptions.Green)]
+        public int Green { get; set; }
+
+        [DefaultValue(0)]
+        [Description(Descriptions.Blue)]
+        public int Blue { get; set; }
+
+        [DefaultValue(0)]
+        [Description(Descriptions.Alpha)]
+        public int Alpha { get; set; }
+
+        #endregion
+
+        #region Public Methods
 
         public override bool Equals(object obj) => obj is ColourFormat f &&
             f.Red == Red && f.Green == Green && f.Blue == Blue && f.Alpha == Alpha;
@@ -49,5 +70,20 @@
             var t = s.Split(',');
             return new ColourFormat(int.Parse(t[0]), int.Parse(t[1]), int.Parse(t[2]), int.Parse(t[3]));
         }
+
+        #endregion
+
+        #region Private Classes
+
+        private class Descriptions
+        {
+            public const string
+                Red = "The Red component of the colour format.",
+                Green = "The Green component of the colour format.",
+                Blue = "The Blue component of the colour format.",
+                Alpha = "The Alpha component of the colour format.";
+        }
+
+        #endregion
     }
 }
