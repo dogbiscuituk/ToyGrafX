@@ -13,8 +13,8 @@
         {
             ProjectionType = projection.ProjectionType;
             FieldOfView = projection.FieldOfView;
-            FrustrumMin = projection.FrustrumMin;
-            FrustrumMax = projection.FrustrumMax;
+            FrustrumMin = new Point3F(projection.FrustrumMin);
+            FrustrumMax = new Point3F(projection.FrustrumMax);
         }
 
         public Projection(float width, float height, float near, float far)

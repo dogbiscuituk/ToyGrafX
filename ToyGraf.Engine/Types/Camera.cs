@@ -14,8 +14,8 @@
 
         public Camera(Point3F position, Euler3F rotation)
         {
-            Position = position;
-            Rotation = rotation;
+            Position = new Point3F(position);
+            Rotation = new Euler3F(rotation);
         }
 
         public Camera(Camera camera, string field, object value) : this(camera)
