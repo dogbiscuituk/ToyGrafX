@@ -4,6 +4,7 @@
     using ToyGraf.Engine.TypeConverters;
     using ToyGraf.Engine.Types;
 
+    [TypeConverter(typeof(CameraTypeConverter))]
     public class Camera
     {
         #region Constructors
@@ -60,13 +61,13 @@
 
         #region Public Properties
 
-        [DisplayName(DisplayNames.Position)]
         [Description(Descriptions.Position)]
+        [DisplayName(DisplayNames.Position)]
         [TypeConverter(typeof(Point3FTypeConverter))]
         public Point3F Position { get; set; } = new Point3F();
 
-        [DisplayName(DisplayNames.Rotation)]
         [Description(Descriptions.Rotation)]
+        [DisplayName(DisplayNames.Rotation)]
         [TypeConverter(typeof(Euler3FTypeConverter))]
         public Euler3F Rotation { get; set; } = new Euler3F();
 
@@ -87,6 +88,14 @@
         }
 
         public override string ToString() => $"{Position}, {Rotation}";
+
+        public static Camera Parse(string s)
+        {
+            var t = s.Split(',');
+            return new Camera(
+                new Point3F(float.Parse(t[0]), float.Parse(t[1]), float.Parse(t[2])),
+                new Euler3F(float.Parse(t[3]), float.Parse(t[4]), float.Parse(t[5])));
+        }
 
         #endregion
 

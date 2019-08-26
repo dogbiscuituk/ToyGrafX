@@ -114,6 +114,8 @@
                 field = field == null ? property : $"{property}.{field}";
                 property = item.Label;
             }
+            if (field == null) // Not a nested property.
+                return false;
             var value = e.OldValue;
             var scene = PropertyGrid.SelectedObject;
             if (scene != null)

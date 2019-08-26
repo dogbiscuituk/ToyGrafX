@@ -1,21 +1,25 @@
 ﻿namespace ToyGraf.Engine.Types
 {
+    using System;
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
-    using ToyGraf.Engine.Utility;
 
     [TypeConverter(typeof(ProjectionTypeConverter))]
     public class Projection
     {
         #region Constructors
 
-        public Projection(Projection projection)
+        public Projection(ProjectionType projectionType, float fieldOfView, Point3F frustrumMin, Point3F frustrumMax)
         {
-            ProjectionType = projection.ProjectionType;
-            FieldOfView = projection.FieldOfView;
-            FrustrumMin = new Point3F(projection.FrustrumMin);
-            FrustrumMax = new Point3F(projection.FrustrumMax);
+            ProjectionType = projectionType;
+            FieldOfView = fieldOfView;
+            FrustrumMin = new Point3F(frustrumMin);
+            FrustrumMax = new Point3F(frustrumMax);
         }
+
+        public Projection(Projection projection) :
+            this(projection.ProjectionType, projection.FieldOfView, projection.FrustrumMin, projection.FrustrumMax)
+        { }
 
         public Projection(float width, float height, float near, float far)
         {
@@ -120,7 +124,6 @@
         [DisplayName(DisplayNames.ProjectionType)]
         public ProjectionType ProjectionType { get; set; }
 
-        [Browsable(false)] public string AspectRatio => GetAspectRatio();
         [Browsable(false)] public float Bottom { get => FrustrumMin.Y; set => FrustrumMin.Y = value; }
         [Browsable(false)] public float Depth { get => Far - Near; set { Far = Near + value; } }
         [Browsable(false)] public float Far { get => FrustrumMax.Z; set => FrustrumMax.Z = value; }
@@ -135,20 +138,16 @@
 
         #region Public Methods
 
-        public override string ToString()
+        public override string ToString() => $"{ProjectionType}, {FieldOfView}, {FrustrumMin}, {FrustrumMax}";
+
+        public static Projection Parse(string s)
         {
-            switch (ProjectionType)
-            {
-                case ProjectionType.Orthographic:
-                    return $"Orthographic, Width: {Width}, Height: {Height}, Near: {Near}, Far: {Far}";
-                case ProjectionType.OrthographicOffset:
-                    return $"Orthographic, Left: {Left}, Right: {Right}, Bottom: {Bottom}, Top: {Top}, Near: {Near}, Far: {Far}";
-                case ProjectionType.Perspective:
-                    return $"Perspective, {FieldOfView}°, {AspectRatio}, Near: {Near}, Far: {Far}";
-                case ProjectionType.PerspectiveOffset:
-                    return $"Perspective, Left: {Left}, Right: {Right}, Bottom: {Bottom}, Top: {Top}, Near: {Near}, Far: {Far}";
-            }
-            return $"{ProjectionType}, Min: {FrustrumMin}, Max: {FrustrumMax}";
+            var t = s.Split(',');
+            return new Projection(
+                (ProjectionType)Enum.Parse(typeof(ProjectionType), t[0]),
+                float.Parse(t[1]),
+                new Point3F(float.Parse(t[2]), float.Parse(t[3]), float.Parse(t[4])),
+                new Point3F(float.Parse(t[5]), float.Parse(t[6]), float.Parse(t[7])));
         }
 
         #endregion
@@ -171,19 +170,6 @@
                 FrustrumMax = "Frustrum Max",
                 FrustrumMin = "Frustrum Min",
                 ProjectionType = "Projection Type";
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private string GetAspectRatio()
-        {
-            int w = (int)Width, h = (int)Height;
-            if (w != Width || h != Height)
-                return $"{w / h}";
-            var gcd = Maths.GCD(w, h);
-            return $"{w / gcd}:{h / gcd}";
         }
 
         #endregion

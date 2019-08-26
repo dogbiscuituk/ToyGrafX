@@ -164,14 +164,12 @@
         [Description(Descriptions.Camera)]
         [DisplayName(DisplayNames.Camera)]
         [JsonIgnore]
-        [TypeConverter(typeof(CameraTypeConverter))]
         public Camera Camera { get => _Camera; set => Run(new CameraCommand(value)); }
 
         [Category(Categories.Scene)]
         [Description(Descriptions.Projection)]
         [DisplayName(DisplayNames.Projection)]
         [JsonIgnore]
-        [TypeConverter(typeof(ProjectionTypeConverter))]
         public Projection Projection { get => _Projection; set => Run(new ProjectionCommand(value)); }
 
         [Category(Categories.Scene)]
@@ -333,7 +331,7 @@
         }
 
         internal Matrix4 GetCameraView() => Maths.CreateCameraView(Camera);
-        internal Matrix4 GetProjection() => Maths.CreateProjection(Projection);
+        internal Matrix4 GetProjection() => Maths.CreateProjection(Projection, GLControl.ClientSize);
 
         internal string GetScript(ShaderType shaderType)
         {

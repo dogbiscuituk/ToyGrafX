@@ -83,12 +83,12 @@
         {
             switch (shaderType)
             {
-                case ShaderType.ComputeShader: return DisplayNames.Shader6Compute;
-                case ShaderType.FragmentShader: return DisplayNames.Shader5Fragment;
-                case ShaderType.GeometryShader: return DisplayNames.Shader4Geometry;
+                case ShaderType.VertexShader: return DisplayNames.Shader1Vertex;
                 case ShaderType.TessControlShader: return DisplayNames.Shader2TessControl;
                 case ShaderType.TessEvaluationShader: return DisplayNames.Shader3TessEvaluation;
-                case ShaderType.VertexShader: return DisplayNames.Shader1Vertex;
+                case ShaderType.GeometryShader: return DisplayNames.Shader4Geometry;
+                case ShaderType.FragmentShader: return DisplayNames.Shader5Fragment;
+                case ShaderType.ComputeShader: return DisplayNames.Shader6Compute;
             }
             return string.Empty;
         }

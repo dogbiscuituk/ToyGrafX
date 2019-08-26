@@ -2,6 +2,7 @@
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using OpenTK;
+    using System.Drawing;
     using ToyGraf.Engine;
     using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;

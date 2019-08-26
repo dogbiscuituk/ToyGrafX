@@ -35,14 +35,17 @@
 
         [DefaultValue(0f)]
         [Description(Descriptions.Pitch)]
+        [DisplayName(DisplayNames.Pitch)]
         public float Pitch { get; set; }
 
         [DefaultValue(0f)]
         [Description(Descriptions.Yaw)]
+        [DisplayName(DisplayNames.Yaw)]
         public float Yaw { get; set; }
 
         [DefaultValue(0f)]
         [Description(Descriptions.Roll)]
+        [DisplayName(DisplayNames.Roll)]
         public float Roll { get; set; }
 
         public static Euler3F Zero = new Euler3F();

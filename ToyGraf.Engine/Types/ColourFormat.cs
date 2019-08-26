@@ -42,18 +42,22 @@
 
         [DefaultValue(0)]
         [Description(Descriptions.Red)]
+        [DisplayName(DisplayNames.Red)]
         public int Red { get; set; }
 
         [DefaultValue(0)]
         [Description(Descriptions.Green)]
+        [DisplayName(DisplayNames.Green)]
         public int Green { get; set; }
 
         [DefaultValue(0)]
         [Description(Descriptions.Blue)]
+        [DisplayName(DisplayNames.Blue)]
         public int Blue { get; set; }
 
         [DefaultValue(0)]
         [Description(Descriptions.Alpha)]
+        [DisplayName(DisplayNames.Alpha)]
         public int Alpha { get; set; }
 
         #endregion

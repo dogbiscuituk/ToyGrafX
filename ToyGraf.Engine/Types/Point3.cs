@@ -35,14 +35,17 @@
 
         [DefaultValue(0)]
         [Description(Descriptions.X)]
+        [DisplayName(DisplayNames.X)]
         public int X { get; set; }
 
         [DefaultValue(0)]
         [Description(Descriptions.Y)]
+        [DisplayName(DisplayNames.Y)]
         public int Y { get; set; }
 
         [DefaultValue(0)]
         [Description(Descriptions.Z)]
+        [DisplayName(DisplayNames.Z)]
         public int Z { get; set; }
 
         #endregion

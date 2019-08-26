@@ -35,14 +35,17 @@
 
         [DefaultValue(0f)]
         [Description(Descriptions.X)]
+        [DisplayName(DisplayNames.X)]
         public float X { get; set; }
 
         [DefaultValue(0f)]
         [Description(Descriptions.Y)]
+        [DisplayName(DisplayNames.Y)]
         public float Y { get; set; }
 
         [DefaultValue(0f)]
         [Description(Descriptions.Z)]
+        [DisplayName(DisplayNames.Z)]
         public float Z { get; set; }
 
         public static Point3F Zero = new Point3F();

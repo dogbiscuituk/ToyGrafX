@@ -232,7 +232,7 @@
             if (shader == null)
             {
                 if (mandatory)
-                    Log("ERROR: Mandatory shader missing.");
+                    Log($"ERROR: Missing {shaderType.GetShaderName()}.");
                 return 0;
             }
             shader.AppendLine(@"  default:

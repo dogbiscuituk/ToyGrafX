@@ -1,6 +1,7 @@
 ﻿namespace ToyGraf.Engine.Utility
 {
     using OpenTK;
+    using System.Drawing;
     using ToyGraf.Engine.Types;
 
     public static class Maths
@@ -14,7 +15,9 @@
             Matrix4.CreateRotationY(MathHelper.DegreesToRadians(rotation.Yaw)) *
             Matrix4.CreateRotationX(MathHelper.DegreesToRadians(rotation.Pitch));
 
-        public static Matrix4 CreateProjection(Projection p)
+        public static Matrix4 CreateProjection(Projection p) => CreateProjection(p, new Size(16, 9));
+
+        public static Matrix4 CreateProjection(Projection p, Size s)
         {
             switch (p.ProjectionType)
             {
@@ -23,7 +26,7 @@
                 case ProjectionType.OrthographicOffset:
                     return Matrix4.CreateOrthographicOffCenter(p.Left, p.Right, p.Bottom, p.Top, p.Near, p.Far);
                 case ProjectionType.Perspective:
-                    return Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(p.FieldOfView), p.Width / p.Height, p.Near, p.Far);
+                    return Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(p.FieldOfView), s.Width / s.Height, p.Near, p.Far);
                 case ProjectionType.PerspectiveOffset:
                     return Matrix4.CreatePerspectiveOffCenter(p.Left, p.Right, p.Bottom, p.Top, p.Near, p.Far);
             }
