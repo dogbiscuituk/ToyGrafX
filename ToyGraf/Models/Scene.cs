@@ -47,6 +47,13 @@
         public Color BackgroundColour { get => _BackgroundColour; set => Run(new BackgroundColourCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
+        [DefaultValue(Defaults.Buffers)]
+        [Description(Descriptions.Buffers)]
+        [DisplayName(DisplayNames.Buffers)]
+        [JsonIgnore]
+        public int Buffers { get => _Buffers; set => Run(new BuffersCommand(value)); }
+
+        [Category(Categories.GraphicsMode)]
         [DefaultValue(typeof(ColourFormat), Defaults.ColourFormatString)]
         [Description(Descriptions.ColourFormat)]
         [DisplayName(DisplayNames.ColourFormat)]
@@ -61,11 +68,11 @@
         public int Depth { get => _Depth; set => Run(new DepthCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
-        [DefaultValue(Defaults.Stencil)]
-        [Description(Descriptions.Stencil)]
-        [DisplayName(DisplayNames.Stencil)]
+        [DefaultValue(Defaults.FPS)]
+        [Description(Descriptions.FPS)]
+        [DisplayName(DisplayNames.FPS)]
         [JsonIgnore]
-        public int Stencil { get => _Stencil; set => Run(new StencilCommand(value)); }
+        public double FPS { get => _FPS; set => Run(new FpsCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.SampleCount)]
@@ -75,11 +82,11 @@
         public int SampleCount { get => _SampleCount; set => Run(new SampleCountCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
-        [DefaultValue(Defaults.Buffers)]
-        [Description(Descriptions.Buffers)]
-        [DisplayName(DisplayNames.Buffers)]
+        [DefaultValue(Defaults.Stencil)]
+        [Description(Descriptions.Stencil)]
+        [DisplayName(DisplayNames.Stencil)]
         [JsonIgnore]
-        public int Buffers { get => _Buffers; set => Run(new BuffersCommand(value)); }
+        public int Stencil { get => _Stencil; set => Run(new StencilCommand(value)); }
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(Defaults.Stereo)]
@@ -94,31 +101,6 @@
         [DisplayName(DisplayNames.VSync)]
         [JsonIgnore]
         public bool VSync { get => _VSync; set => Run(new VSyncCommand(value)); }
-
-        #endregion
-
-        #region Projection
-
-        [Category(Categories.Projection)]
-        [DefaultValue(Defaults.FieldOfView)]
-        [Description(Descriptions.FieldOfView)]
-        [DisplayName(DisplayNames.FieldOfView)]
-        [JsonIgnore]
-        public float FieldOfView { get => _FieldOfView; set => Run(new FieldOfViewCommand(value)); }
-
-        [Category(Categories.Projection)]
-        [DefaultValue(Defaults.NearPlane)]
-        [Description(Descriptions.NearPlane)]
-        [DisplayName(DisplayNames.NearPlane)]
-        [JsonIgnore]
-        public float NearPlane { get => _NearPlane; set => Run(new NearPlaneCommand(value)); }
-
-        [Category(Categories.Projection)]
-        [DefaultValue(Defaults.FarPlane)]
-        [Description(Descriptions.FarPlane)]
-        [DisplayName(DisplayNames.FarPlane)]
-        [JsonIgnore]
-        public float FarPlane { get => _FarPlane; set => Run(new FarPlaneCommand(value)); }
 
         #endregion
 
@@ -164,13 +146,13 @@
         public GPUStatus GPUStatus => _GPUStatus;
 
         [Category(Categories.SystemRO)]
-        [Description(Descriptions.Projection)]
-        [DisplayName(DisplayNames.Projection)]
+        [Description(Descriptions.ProjectionMatrix)]
+        [DisplayName(DisplayNames.ProjectionMatrix)]
         [JsonIgnore]
-        public Matrix4 Projection
+        public Matrix4 ProjectionMatrix
         {
             get => GetProjection();
-            set => Run(new ProjectionCommand(value));
+            set => Run(new ProjectionMatrixCommand(value));
         }
 
         #endregion
@@ -186,11 +168,11 @@
         public Camera Camera { get => _Camera; set => Run(new CameraCommand(value)); }
 
         [Category(Categories.Scene)]
-        [DefaultValue(Defaults.FPS)]
-        [Description(Descriptions.FPS)]
-        [DisplayName(DisplayNames.FPS)]
+        [Description(Descriptions.Projection)]
+        [DisplayName(DisplayNames.Projection)]
         [JsonIgnore]
-        public double FPS { get => _FPS; set => Run(new FpsCommand(value)); }
+        [TypeConverter(typeof(ProjectionTypeConverter))]
+        public Projection Projection { get => _Projection; set => Run(new ProjectionCommand(value)); }
 
         [Category(Categories.Scene)]
         [DefaultValue(Defaults.Title)]
@@ -318,10 +300,8 @@
         [JsonProperty] internal Camera _Camera;
         [JsonProperty] internal ColourFormat _ColourFormat;
         [JsonProperty] internal int _Depth;
-        [JsonProperty] internal float _FarPlane;
-        [JsonProperty] internal float _FieldOfView;
         [JsonProperty] internal double _FPS;
-        [JsonProperty] internal float _NearPlane;
+        [JsonProperty] internal Projection _Projection;
         [JsonProperty] internal int _SampleCount;
         [JsonProperty] internal string _Shader1Vertex;
         [JsonProperty] internal string _Shader2TessControl;
@@ -353,7 +333,7 @@
         }
 
         internal Matrix4 GetCameraView() => Maths.CreateCameraView(Camera);
-        internal Matrix4 GetProjection() => Maths.CreatePerspectiveProjection(FieldOfView, AspectRatio, NearPlane, FarPlane);
+        internal Matrix4 GetProjection() => Maths.CreateProjection(Projection);
 
         internal string GetScript(ShaderType shaderType)
         {
@@ -424,13 +404,15 @@
 
         private class Categories
         {
+            /// <summary>
+            /// All categories must end with a trailing space. This is required to prevent their
+            /// being incorporated into property paths when parsing PropertyGrid events.
+            /// </summary>
             internal const string
-                Camera = "Camera",
-                GraphicsMode = "Graphics Mode",
-                Projection = "Projection",
-                Scene = "Scene",
-                Shaders = "Shader Templates",
-                SystemRO = "Read Only / System";
+                GraphicsMode = "Graphics Mode ",
+                Scene = "Scene ",
+                Shaders = "Shader Templates ",
+                SystemRO = "Read Only / System ";
         }
 
         private class Defaults
@@ -497,11 +479,6 @@ void main()
                 SampleCount = 0,
                 Stencil = 8;
 
-            internal const float
-                FieldOfView = 75,
-                NearPlane = 0.1f,
-                FarPlane = 1000;
-
             internal const double
                 FPS = 60;
 
@@ -517,6 +494,9 @@ void main()
             internal static ColourFormat
                 ColourFormat = new ColourFormat(8),
                 AccumColourFormat = new ColourFormat();
+
+            internal static Projection
+                Projection = new Projection(75, 16, 9, 0.1f, 1000);
 
             internal static List<Trace>
                 Traces => new List<Trace>();
@@ -537,7 +517,7 @@ void main()
                     if (w > 0 && h > 0)
                         return w / h;
                 }
-                return 1920f / 1080f;
+                return 16 / 9f;
             }
         }
 
@@ -557,12 +537,10 @@ void main()
             _Camera = Defaults.Camera;
             _ColourFormat = Defaults.ColourFormat;
             _Depth = Defaults.Depth;
-            _FarPlane = Defaults.FarPlane;
-            _FieldOfView = Defaults.FieldOfView;
             _FPS = Defaults.FPS;
             _GPUCode = Defaults.GPUCode;
             _GPULog = Defaults.GPULog;
-            _NearPlane = Defaults.NearPlane;
+            _Projection = Defaults.Projection;
             _SampleCount = Defaults.SampleCount;
             _Shader1Vertex = Defaults.Shader1Vertex;
             _Shader2TessControl = Defaults.Shader2TessControl;

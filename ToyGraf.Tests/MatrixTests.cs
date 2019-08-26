@@ -16,7 +16,8 @@
         public void CreateOrthographicProjection()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -0.002002002f, 0, 0, 0, -1.002002f, 1);
-            var actual = Maths.CreateOrthographicProjection(width: 2, height: 2, zNear: 1, zFar: 1000);
+            var projection = new Projection(width: 2, height: 2, near: 1, far: 1000);
+            var actual = Maths.CreateProjection(projection);
             Assert.AreEqual(expected, actual);
         }
 
@@ -24,7 +25,8 @@
         public void CreateOrthographicProjectionEccentric()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -0.002002002f, 0, 0, 0, -1.002002f, 1);
-            var actual = Maths.CreateOrthographicProjection(left: -1, right: +1, bottom: -1, top: +1, zNear: 1, zFar: 1000);
+            var projection = new Projection(ProjectionType.OrthographicOffset, left: -1, right: +1, bottom: -1, top: +1, near: 1, far: 1000);
+            var actual = Maths.CreateProjection(projection);
             Assert.AreEqual(expected, actual);
         }
 
@@ -32,7 +34,8 @@
         public void CreatePerspectiveProjection()
         {
             var expected = new Matrix4(0.8033332f, 0, 0, 0, 0, 1.428148f, 0, 0, 0, 0, -1.002002f, -1, 0, 0, -2.002002f, 0);
-            var actual = Maths.CreatePerspectiveProjection(fovy: 70, aspect: 1920f / 1080f, zNear: 1, zFar: 1000);
+            var projection = new Projection(fieldOfView: 70, width: 16, height: 9, near: 1, far: 1000);
+            var actual = Maths.CreateProjection(projection);
             Assert.AreEqual(expected, actual);
         }
 
@@ -40,7 +43,8 @@
         public void CreatePerspectiveProjectionEccentric()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.002002f, -1, 0, 0, -2.002002f, 0);
-            var actual = Maths.CreatePerspectiveProjection(left: -1, right: +1, bottom: -1, top: +1, zNear: 1, zFar: 1000);
+            var projection = new Projection(ProjectionType.PerspectiveOffset, left: -1, right: +1, bottom: -1, top: +1, near: 1, far: 1000);
+            var actual = Maths.CreateProjection(projection);
             Assert.AreEqual(expected, actual);
         }
 

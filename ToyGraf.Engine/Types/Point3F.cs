@@ -16,9 +16,9 @@
         {
             switch (fieldName)
             {
-                case "X": X = value; break;
-                case "Y": Y = value; break;
-                case "Z": Z = value; break;
+                case DisplayNames.X: X = value; break;
+                case DisplayNames.Y: Y = value; break;
+                case DisplayNames.Z: Z = value; break;
             }
         }
 
@@ -63,14 +63,22 @@
 
         #endregion
 
-        #region Private Classes
+        #region Internal Classes
 
-        private class Descriptions
+        internal static class Descriptions
         {
             public const string
                 X = "The X component of the vector.",
                 Y = "The Y component of the vector.",
                 Z = "The Z component of the vector.";
+        }
+
+        internal static class DisplayNames
+        {
+            public const string
+                X = "X",
+                Y = "Y",
+                Z = "Z";
         }
 
         #endregion

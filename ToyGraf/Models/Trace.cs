@@ -352,11 +352,15 @@
 
         private class Categories
         {
+            /// <summary>
+            /// All categories must end with a trailing space. This is required to prevent their
+            /// being incorporated into property paths when parsing PropertyGrid events.
+            /// </summary>
             internal const string
-                Placement = "Placement",
-                Shaders = "Shader Code",
-                SystemRO = "Read Only / System",
-                Trace = "Trace";
+                Placement = "Placement ",
+                Shaders = "Shader Code ",
+                SystemRO = "Read Only / System ",
+                Trace = "Trace ";
         }
 
         private class Defaults

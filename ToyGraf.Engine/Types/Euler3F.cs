@@ -16,9 +16,9 @@
         {
             switch (fieldName)
             {
-                case "Pitch": Pitch = value; break;
-                case "Yaw": Yaw = value; break;
-                case "Roll": Roll = value; break;
+                case DisplayNames.Pitch: Pitch = value; break;
+                case DisplayNames.Yaw: Yaw = value; break;
+                case DisplayNames.Roll: Roll = value; break;
             }
         }
 
@@ -64,14 +64,22 @@
 
         #endregion
 
-        #region Private Classes
+        #region Internal Classes
 
-        private class Descriptions
+        internal static class Descriptions
         {
-            public const string
+            internal const string
                 Pitch = "The component of rotation about the X axis.",
                 Roll = "The component of rotation about the Z axis.",
                 Yaw = "The component of rotation about the Y axis.";
+        }
+
+        internal static class DisplayNames
+        {
+            internal const string
+                Pitch = "Pitch°",
+                Roll = "Roll°",
+                Yaw = "Yaw°";
         }
 
         #endregion

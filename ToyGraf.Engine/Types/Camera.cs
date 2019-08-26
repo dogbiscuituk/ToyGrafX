@@ -18,27 +18,36 @@
             Rotation = rotation;
         }
 
-        public Camera(Camera camera, string fieldName, float value) : this(camera)
+        public Camera(Camera camera, string field, object value) : this(camera)
         {
-            switch (fieldName)
+            switch (field)
             {
-                case "X":
-                    Position.X = value;
+                case DisplayNames.Position:
+                    Position = (Point3F)value;
+                    return;
+                case DisplayNames.Rotation:
+                    Rotation = (Euler3F)value;
+                    return;
+            }
+            var v = (float)value;
+            var fields = field.Split('.');
+            switch (fields[0])
+            {
+                case DisplayNames.Position:
+                    switch (fields[1])
+                    {
+                        case Point3F.DisplayNames.X: Position.X = v; break;
+                        case Point3F.DisplayNames.Y: Position.Y = v; break;
+                        case Point3F.DisplayNames.Z: Position.Z = v; break;
+                    }
                     break;
-                case "Y":
-                    Position.Y = value;
-                    break;
-                case "Z":
-                    Position.Z = value;
-                    break;
-                case "Pitch":
-                    Rotation.Pitch = value;
-                    break;
-                case "Yaw":
-                    Rotation.Yaw = value;
-                    break;
-                case "Roll":
-                    Rotation.Roll = value;
+                case DisplayNames.Rotation:
+                    switch (fields[1])
+                    {
+                        case Euler3F.DisplayNames.Pitch: Rotation.Pitch = v; break;
+                        case Euler3F.DisplayNames.Yaw: Rotation.Yaw = v; break;
+                        case Euler3F.DisplayNames.Roll: Rotation.Roll = v; break;
+                    }
                     break;
             }
         }
@@ -51,10 +60,12 @@
 
         #region Public Properties
 
+        [DisplayName(DisplayNames.Position)]
         [Description(Descriptions.Position)]
         [TypeConverter(typeof(Point3FTypeConverter))]
         public Point3F Position { get; set; } = new Point3F();
 
+        [DisplayName(DisplayNames.Rotation)]
         [Description(Descriptions.Rotation)]
         [TypeConverter(typeof(Euler3FTypeConverter))]
         public Euler3F Rotation { get; set; } = new Euler3F();
@@ -79,13 +90,20 @@
 
         #endregion
 
-        #region Private Classes
+        #region Internal Classes
 
-        private class Descriptions
+        internal static class Descriptions
         {
             internal const string
                 Position = "The vector representing the Camera's position.",
                 Rotation = "The rotation representing the Camera's orientation.";
+        }
+
+        internal static class DisplayNames
+        {
+            internal const string
+                Position = "Position",
+                Rotation = "Rotation°";
         }
 
         #endregion

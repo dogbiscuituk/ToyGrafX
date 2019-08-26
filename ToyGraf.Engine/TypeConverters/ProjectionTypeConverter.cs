@@ -9,7 +9,7 @@
         public override PropertyDescriptorCollection GetProperties(
             ITypeDescriptorContext context, object value, Attribute[] attributes) =>
             TypeDescriptor.GetProperties(typeof(Projection), attributes)
-                .Sort(new string[] { "FieldOfView", "NearPlane", "FarPlane" });
+                .Sort(new string[] { "ProjectionType", "FieldOfView", "FrustrumMin", "FrustrumMax" });
 
         public override bool GetPropertiesSupported(ITypeDescriptorContext context) => true;
     }

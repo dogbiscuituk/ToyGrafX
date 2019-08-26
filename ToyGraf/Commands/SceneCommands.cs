@@ -34,9 +34,16 @@
         { }
     }
 
-    internal class ProjectionCommand : ScenePropertyCommand<Matrix4>
+    internal class ProjectionCommand : ScenePropertyCommand<Projection>
     {
-        internal ProjectionCommand(Matrix4 value) : base(DisplayNames.Projection,
+        internal ProjectionCommand(Projection value) : base(DisplayNames.Projection,
+            value, s => s._Projection, (s, v) => s._Projection = v)
+        { }
+    }
+
+    internal class ProjectionMatrixCommand : ScenePropertyCommand<Matrix4>
+    {
+        internal ProjectionMatrixCommand(Matrix4 value) : base(DisplayNames.ProjectionMatrix,
             value, s => s.GetProjection(), (s, v) => s.SetProjection(v))
         { }
     }

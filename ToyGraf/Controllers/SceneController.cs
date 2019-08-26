@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
+    using System.Text;
     using System.Windows.Forms;
     using ToyGraf.Commands;
     using ToyGraf.Engine;
@@ -106,17 +107,21 @@
         /// <param name="e">The EventArgs from the original event.</param>
         internal bool PropertyChanged(PropertyValueChangedEventArgs e)
         {
-            var item = e.ChangedItem;
-            var label = item.Label;
-            var parentItem = item.Parent;
-            var parentLabel = parentItem.Label;
+            string property = null, field = null;
+            for (var item = e.ChangedItem; item.Parent != null; item = item.Parent)
+            {
+                if (item.Label.EndsWith(" "))
+                    break;
+                field = field == null ? property : $"{property}.{field}";
+                property = item.Label;
+            }
             var value = e.OldValue;
             var scene = PropertyGrid.SelectedObject;
             if (scene != null)
-                Spoof(Spoof(parentLabel, label, value));
+                Spoof(Spoof(property, field, value));
             else
                 foreach (Trace trace in PropertyGrid.SelectedObjects)
-                    Spoof(Spoof(trace, parentLabel, label, value));
+                    Spoof(Spoof(trace, property, field, value));
             return true;
         }
 
@@ -393,9 +398,7 @@
                     case DisplayNames.Traces:
                         RenderController.InvalidateProgram();
                         break;
-                    case DisplayNames.FarPlane:
-                    case DisplayNames.FieldOfView:
-                    case DisplayNames.NearPlane:
+                    case DisplayNames.Projection:
                         RenderController.InvalidateProjection();
                         break;
                     case DisplayNames.Pattern:
@@ -433,9 +436,11 @@
                 case DisplayNames.AccumColourFormat:
                     return new AccumColourFormatCommand(new ColourFormat(Scene.AccumColourFormat, field, (int)value));
                 case DisplayNames.Camera:
-                    return new CameraCommand(new Camera(Scene.Camera, field, (float)value));
+                    return new CameraCommand(new Camera(Scene.Camera, field, value));
                 case DisplayNames.ColourFormat:
                     return new ColourFormatCommand(new ColourFormat(Scene.ColourFormat, field, (int)value));
+                case DisplayNames.Projection:
+                    return new ProjectionCommand(new Projection(Scene.Projection, field, value));
             }
             return null;
         }

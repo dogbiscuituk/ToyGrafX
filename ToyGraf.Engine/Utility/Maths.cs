@@ -14,21 +14,21 @@
             Matrix4.CreateRotationY(MathHelper.DegreesToRadians(rotation.Yaw)) *
             Matrix4.CreateRotationX(MathHelper.DegreesToRadians(rotation.Pitch));
 
-        public static Matrix4 CreateOrthographicProjection(
-            float width, float height, float zNear, float zFar) =>
-            Matrix4.CreateOrthographic(width, height, zNear, zFar);
-
-        public static Matrix4 CreateOrthographicProjection(
-            float left, float right, float bottom, float top, float zNear, float zFar) =>
-            Matrix4.CreateOrthographicOffCenter(left, right, bottom, top, zNear, zFar);
-
-        public static Matrix4 CreatePerspectiveProjection(
-            float fovy, float aspect, float zNear, float zFar) =>
-            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(fovy), aspect, zNear, zFar);
-
-        public static Matrix4 CreatePerspectiveProjection(
-            float left, float right, float bottom, float top, float zNear, float zFar) =>
-            Matrix4.CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar);
+        public static Matrix4 CreateProjection(Projection p)
+        {
+            switch (p.ProjectionType)
+            {
+                case ProjectionType.Orthographic:
+                    return Matrix4.CreateOrthographic(p.Width, p.Height, p.Near, p.Far);
+                case ProjectionType.OrthographicOffset:
+                    return Matrix4.CreateOrthographicOffCenter(p.Left, p.Right, p.Bottom, p.Top, p.Near, p.Far);
+                case ProjectionType.Perspective:
+                    return Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(p.FieldOfView), p.Width / p.Height, p.Near, p.Far);
+                case ProjectionType.PerspectiveOffset:
+                    return Matrix4.CreatePerspectiveOffCenter(p.Left, p.Right, p.Bottom, p.Top, p.Near, p.Far);
+            }
+            return Matrix4.Identity;
+        }
 
         public static Matrix4 CreateTransformation(
             Point3F location, Euler3F orientation, Point3F scale) =>
@@ -37,6 +37,8 @@
             Matrix4.CreateRotationY(MathHelper.DegreesToRadians(orientation.Yaw)) *
             Matrix4.CreateRotationX(MathHelper.DegreesToRadians(orientation.Pitch)) *
             Matrix4.CreateTranslation(location.ToVector3());
+
+        public static int GCD(int a, int b) => b == 0 ? a : GCD(b, a % b);
 
         public static Euler3F ToEuler3F(this Vector3 v) => new Euler3F(v.X, v.Y, v.Z);
         public static Euler3F ToEuler3F(this Quaternion v) => new Euler3F(v.X, v.Y, v.Z);

@@ -21,10 +21,10 @@
         {
             switch (fieldName)
             {
-                case "Red": Red = value; break;
-                case "Blue": Blue = value; break;
-                case "Green": Green = value; break;
-                case "Alpha": Alpha = value; break;
+                case DisplayNames.Red: Red = value; break;
+                case DisplayNames.Green: Green = value; break;
+                case DisplayNames.Blue: Blue = value; break;
+                case DisplayNames.Alpha: Alpha = value; break;
             }
         }
 
@@ -73,15 +73,24 @@
 
         #endregion
 
-        #region Private Classes
+        #region Internal Classes
 
-        private class Descriptions
+        internal static class Descriptions
         {
-            public const string
+            internal const string
                 Red = "The Red component of the colour format.",
                 Green = "The Green component of the colour format.",
                 Blue = "The Blue component of the colour format.",
                 Alpha = "The Alpha component of the colour format.";
+        }
+
+        internal static class DisplayNames
+        {
+            internal const string
+                Red = "Red",
+                Green = "Green",
+                Blue = "Blue",
+                Alpha = "Alpha";
         }
 
         #endregion
