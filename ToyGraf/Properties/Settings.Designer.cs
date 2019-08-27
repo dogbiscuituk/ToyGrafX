@@ -84,5 +84,17 @@ namespace ToyGraf.Properties {
                 this["TemplatesFolderPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DeveloperView {
+            get {
+                return ((bool)(this["DeveloperView"]));
+            }
+            set {
+                this["DeveloperView"] = value;
+            }
+        }
     }
 }

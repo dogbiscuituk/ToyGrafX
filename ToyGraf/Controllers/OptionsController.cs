@@ -71,6 +71,7 @@
             OpenInNewWindow = OptionsDialog.rbWindowNew.Checked,
             FilesFolderPath = OptionsDialog.edFilesFolder.Text,
             TemplatesFolderPath = OptionsDialog.edTemplatesFolder.Text,
+            ShowSystemRO = OptionsDialog.cbShowSystemRO.Checked
         };
 
         private void SetOptions(Options options)
@@ -79,6 +80,7 @@
             OptionsDialog.rbWindowReuse.Checked = !options.OpenInNewWindow;
             OptionsDialog.edFilesFolder.Text = options.FilesFolderPath;
             OptionsDialog.edTemplatesFolder.Text = options.TemplatesFolderPath;
+            OptionsDialog.cbShowSystemRO.Checked = options.ShowSystemRO;
         }
 
         #endregion

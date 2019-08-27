@@ -40,17 +40,20 @@
             this.edTemplatesFolder = new System.Windows.Forms.TextBox();
             this.edFilesFolder = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cbShowSystemRO = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.rbWindowReuse);
             this.groupBox1.Controls.Add(this.rbWindowNew);
-            this.groupBox1.Location = new System.Drawing.Point(14, 14);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(436, 73);
+            this.groupBox1.Size = new System.Drawing.Size(441, 76);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "When creating a new scene, or reopening an existing one:";
@@ -78,7 +81,7 @@
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(273, 186);
+            this.btnOK.Location = new System.Drawing.Point(273, 244);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(87, 27);
             this.btnOK.TabIndex = 2;
@@ -88,7 +91,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(366, 186);
+            this.btnCancel.Location = new System.Drawing.Point(366, 244);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(87, 27);
             this.btnCancel.TabIndex = 3;
@@ -103,9 +106,9 @@
             this.groupBox3.Controls.Add(this.edTemplatesFolder);
             this.groupBox3.Controls.Add(this.edFilesFolder);
             this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Location = new System.Drawing.Point(14, 93);
+            this.groupBox3.Location = new System.Drawing.Point(12, 94);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(436, 87);
+            this.groupBox3.Size = new System.Drawing.Size(441, 87);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Default folders";
@@ -168,13 +171,34 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Scene &Files:";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.cbShowSystemRO);
+            this.groupBox2.Location = new System.Drawing.Point(12, 187);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(441, 51);
+            this.groupBox2.TabIndex = 5;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Developer View";
+            // 
+            // cbShowSystemRO
+            // 
+            this.cbShowSystemRO.AutoSize = true;
+            this.cbShowSystemRO.Location = new System.Drawing.Point(8, 22);
+            this.cbShowSystemRO.Name = "cbShowSystemRO";
+            this.cbShowSystemRO.Size = new System.Drawing.Size(220, 19);
+            this.cbShowSystemRO.TabIndex = 1;
+            this.cbShowSystemRO.Text = "&Show Read Only / System properties.";
+            this.cbShowSystemRO.UseVisualStyleBackColor = true;
+            // 
             // OptionsDialog
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(465, 223);
+            this.ClientSize = new System.Drawing.Size(465, 282);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -190,6 +214,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -208,5 +234,7 @@
         internal System.Windows.Forms.TextBox edTemplatesFolder;
         internal System.Windows.Forms.TextBox edFilesFolder;
         internal System.Windows.Forms.Label label1;
+        internal System.Windows.Forms.GroupBox groupBox2;
+        internal System.Windows.Forms.CheckBox cbShowSystemRO;
     }
 }

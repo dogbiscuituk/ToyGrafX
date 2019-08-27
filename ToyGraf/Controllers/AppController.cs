@@ -45,6 +45,7 @@
                     OpenInNewWindow = Settings.Options_OpenInNewWindow,
                     FilesFolderPath = Settings.FilesFolderPath,
                     TemplatesFolderPath = Settings.TemplatesFolderPath,
+                    ShowSystemRO = Settings.DeveloperView
                 };
                 if (string.IsNullOrWhiteSpace(options.FilesFolderPath))
                     options.FilesFolderPath = DefaultFilesFolderPath;
@@ -57,6 +58,7 @@
                 Settings.Options_OpenInNewWindow = value.OpenInNewWindow;
                 Settings.FilesFolderPath = value.FilesFolderPath;
                 Settings.TemplatesFolderPath = value.TemplatesFolderPath;
+                Settings.DeveloperView = value.ShowSystemRO;
                 Settings.Save();
                 ApplyOptions();
             }
@@ -72,6 +74,7 @@
         {
             var sceneController = new SceneController();
             SceneControllers.Add(sceneController);
+            ApplyOptions(sceneController);
             sceneController.Show();
             return sceneController;
         }
@@ -134,7 +137,12 @@
                 Directory.CreateDirectory(Options.FilesFolderPath);
             if (!Directory.Exists(Options.TemplatesFolderPath))
                 Directory.CreateDirectory(Options.TemplatesFolderPath);
+            foreach (var sceneController in SceneControllers)
+                ApplyOptions(sceneController);
         }
+
+        private static void ApplyOptions(SceneController sceneController) =>
+            sceneController.SetDeveloperView(Options.ShowSystemRO);
 
         #endregion
     }

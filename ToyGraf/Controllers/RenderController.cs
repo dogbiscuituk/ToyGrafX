@@ -119,9 +119,9 @@
                 ValidateProjection();
                 ValidateCameraView();
                 LoadTimeValue();
-                for (int traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
+                for (int traceIndex = 0; traceIndex < Scene.Traces.Count; traceIndex++)
                 {
-                    var trace = Scene._Traces[traceIndex];
+                    var trace = Scene.Traces[traceIndex];
                     if (!trace.Visible)
                         continue;
                     LoadTraceIndex(traceIndex);
@@ -224,9 +224,9 @@
         private int CreateShader(ShaderType shaderType, bool mandatory = false)
         {
             StringBuilder shader = null;
-            for (var traceIndex = 0; traceIndex < Scene._Traces.Count; traceIndex++)
+            for (var traceIndex = 0; traceIndex < Scene.Traces.Count; traceIndex++)
             {
-                var trace = Scene._Traces[traceIndex];
+                var trace = Scene.Traces[traceIndex];
                 var script = trace.GetScript(shaderType);
                 if (!string.IsNullOrWhiteSpace(script))
                 {
@@ -408,7 +408,7 @@
 
         private void UnloadTraces()
         {
-            foreach (var trace in Scene._Traces)
+            foreach (var trace in Scene.Traces)
                 InvalidateTrace(trace);
         }
 

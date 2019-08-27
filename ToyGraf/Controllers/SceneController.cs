@@ -25,7 +25,7 @@
             Scene = new Scene(this);
             ClockController = new ClockController(this);
             CommandProcessor = new CommandProcessor(this);
-            FullScreenController = new FullScreenController(this);
+            new FullScreenController(this);
             JsonController = new JsonController(this);
             PropertyGridController = new PropertyGridController(this);
             RenderController = new RenderController(this);
@@ -49,6 +49,8 @@
 
         #region Internal Methods
 
+        internal void BeginUpdate() => ++UpdateCount;
+
         private void ConnectControllers(bool connect)
         {
             if (connect)
@@ -61,8 +63,6 @@
                 RenderController.Unload();
             }
         }
-
-        internal void BeginUpdate() => ++UpdateCount;
 
         internal void EndUpdate()
         {
@@ -126,6 +126,9 @@
             return true;
         }
 
+        internal void SetDeveloperView(bool developerView) =>
+            PropertyGridController.SetDeveloperView(developerView);
+
         internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
             $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
 
@@ -169,7 +172,6 @@
         private readonly List<string> ChangedPropertyNames = new List<string>();
         private object ChangedSubject;
         private Clock Clock => ClockController.Clock;
-        private readonly FullScreenController FullScreenController;
         private GLControl GLControl => SceneForm?.GLControl;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
@@ -310,7 +312,7 @@
             EndUpdate();
         }
 
-        private bool FormClosing(CloseReason closeReason) => JsonController.SaveIfModified();
+        private bool FormClosing(CloseReason _) => JsonController.SaveIfModified();
 
         private void FormClosed() => ConnectAll(false);
 
@@ -385,7 +387,7 @@
                     case DisplayNames.Shader4Geometry:
                     case DisplayNames.Shader5Fragment:
                     case DisplayNames.Shader6Compute:
-                    case DisplayNames.Traces:
+                    case DisplayNames.TraceList:
                         RenderController.InvalidateProgram();
                         break;
                     case DisplayNames.Projection:

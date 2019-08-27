@@ -1,8 +1,8 @@
 ﻿namespace ToyGraf.Models
 {
-    public static class Descriptions
+    internal static class Descriptions
     {
-        public const string
+        internal const string
             AccumColourFormat = "The number of bits per pixel in each accumulator colour channel.",
             BackgroundColour = "The colour of the background.",
             Buffers = "The number of buffers associated with this display mode.",
@@ -83,7 +83,7 @@ Source: The OpenGL® Shading Language, Version 4.60.7. Copyright © 2008-2018 Th
             Stereo = "Indicates whether this display mode is stereoscopic 3D.",
             StripCount = "The number of discrete strips into which the trace is divided along each axis.",
             Title = "A title for this scene.",
-            Traces = "A list of the traces in this scene.",
+            TraceList = "A list of the traces in this scene.",
             Transform = "The transformation matrix of the trace.",
             VaoID = "The integer ID of the Vertex Array",
             VaoVertexCount = "The number of vertices in the Vertex Array.",

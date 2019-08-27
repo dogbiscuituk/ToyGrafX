@@ -157,7 +157,7 @@
 
         #region Shaders
 
-        [Category(Categories.Shaders)]
+        [Category(Categories.ShaderCode)]
         [DefaultValue(Defaults.Shader1Vertex)]
         [Description(Descriptions.Shader1Vertex)]
         [DisplayName(DisplayNames.Shader1Vertex)]
@@ -169,7 +169,7 @@
             set => Run(new TraceVertexShaderCommand(Index, value));
         }
 
-        [Category(Categories.Shaders)]
+        [Category(Categories.ShaderCode)]
         [DefaultValue(Defaults.Shader2TessControl)]
         [Description(Descriptions.Shader2TessControl)]
         [DisplayName(DisplayNames.Shader2TessControl)]
@@ -181,7 +181,7 @@
             set => Run(new TraceTessControlShaderCommand(Index, value));
         }
 
-        [Category(Categories.Shaders)]
+        [Category(Categories.ShaderCode)]
         [DefaultValue(Defaults.Shader3TessEvaluation)]
         [Description(Descriptions.Shader3TessEvaluation)]
         [DisplayName(DisplayNames.Shader3TessEvaluation)]
@@ -193,7 +193,7 @@
             set => Run(new TraceTessEvaluationShaderCommand(Index, value));
         }
 
-        [Category(Categories.Shaders)]
+        [Category(Categories.ShaderCode)]
         [DefaultValue(Defaults.Shader4Geometry)]
         [Description(Descriptions.Shader4Geometry)]
         [DisplayName(DisplayNames.Shader4Geometry)]
@@ -205,7 +205,7 @@
             set => Run(new TraceGeometryShaderCommand(Index, value));
         }
 
-        [Category(Categories.Shaders)]
+        [Category(Categories.ShaderCode)]
         [DefaultValue(Defaults.Shader5Fragment)]
         [Description(Descriptions.Shader5Fragment)]
         [DisplayName(DisplayNames.Shader5Fragment)]
@@ -217,7 +217,7 @@
             set => Run(new TraceFragmentShaderCommand(Index, value));
         }
 
-        [Category(Categories.Shaders)]
+        [Category(Categories.ShaderCode)]
         [DefaultValue(Defaults.Shader6Compute)]
         [Description(Descriptions.Shader6Compute)]
         [DisplayName(DisplayNames.Shader6Compute)]
@@ -314,7 +314,7 @@
 
         internal int Index
         {
-            get => Scene?._Traces.IndexOf(this) ?? _Index;
+            get => Scene?.Traces.IndexOf(this) ?? _Index;
             set => _Index = value;
         }
 
@@ -347,19 +347,6 @@
         #endregion
 
         #region Private Classes
-
-        private class Categories
-        {
-            /// <summary>
-            /// All categories must end with a trailing space. This is required to prevent their
-            /// being incorporated into property paths when parsing PropertyGrid events.
-            /// </summary>
-            internal const string
-                Placement = "Placement ",
-                Shaders = "Shader Code ",
-                SystemRO = "Read Only / System ",
-                Trace = "Trace ";
-        }
 
         private class Defaults
         {

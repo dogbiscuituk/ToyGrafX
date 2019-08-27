@@ -1,8 +1,8 @@
 ﻿namespace ToyGraf.Models
 {
-    public static class DisplayNames
+    internal static class DisplayNames
     {
-        public const string
+        internal const string
             AccumColourFormat = "Accumulator Colour Format",
             BackgroundColour = "Background Colour",
             Buffers = "Buffers",
@@ -42,7 +42,7 @@
             Stereo = "Stereo",
             StripCount = "Strip Count",
             Title = "Title",
-            Traces = "Traces",
+            TraceList = "Traces",
             Transform = "Transform",
             VaoID = "VAO",
             VaoVertexCount = "VAO Vertex Count",

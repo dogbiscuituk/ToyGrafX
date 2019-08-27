@@ -32,19 +32,6 @@
 
         #endregion
 
-        #region Internal Methods
-
-        internal static void HidePropertyPagesButton(PropertyGrid propertyGrid) =>
-            HidePropertyPagesButton(FindToolStrip(propertyGrid));
-
-        internal void Refresh()
-        {
-            RefreshDataSource();
-            PropertyGrid.Refresh();
-        }
-
-        #endregion
-
         #region Internal Properties
 
         internal TgPropertyGrid PropertyGrid => SceneForm.PropertyGrid;
@@ -65,6 +52,26 @@
         {
             get => PropertyGrid.SelectedObjects;
             set => PropertyGrid.SelectedObjects = value;
+        }
+
+        #endregion
+
+        #region Internal Methods
+
+        internal static void HidePropertyPagesButton(PropertyGrid propertyGrid) =>
+            HidePropertyPagesButton(FindToolStrip(propertyGrid));
+
+        internal void Refresh()
+        {
+            RefreshDataSource();
+            PropertyGrid.Refresh();
+        }
+
+        internal void SetDeveloperView(bool developerView)
+        {
+            PropertyGrid.HiddenAttributes = developerView
+                ? null
+                : new AttributeCollection(new CategoryAttribute(Categories.SystemRO));
         }
 
         #endregion
@@ -215,7 +222,7 @@
                     SelectedObjects = TraceTableController.Selection.ToArray();
                     break;
                 case Subject.AllTraces:
-                    SelectedObjects = Scene.Traces.ToArray();
+                    SelectedObjects = Scene.TraceList.ToArray();
                     break;
             }
         }

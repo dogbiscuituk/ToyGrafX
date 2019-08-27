@@ -36,7 +36,7 @@
         internal void Refresh()
         {
             TraceTable.DataSource = null;
-            var traces = Scene._Traces;
+            var traces = Scene.Traces;
             if (traces.Any())
                 TraceTable.DataSource = traces;
         }

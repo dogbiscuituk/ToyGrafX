@@ -7,11 +7,11 @@
     /// <summary>
     /// An object wrapper class for controlling property visibilities in a TgPropertyGrid.
     /// </summary>
-    internal class TgObject : ICustomTypeDescriptor
+    internal class TgWrap : ICustomTypeDescriptor
     {
         #region Constructor
 
-        internal TgObject(object obj) => Object = obj;
+        internal TgWrap(object obj) => Object = obj;
 
         #endregion
 

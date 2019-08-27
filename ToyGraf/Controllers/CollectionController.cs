@@ -31,7 +31,7 @@
         private static CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         private static Scene Scene => CommandProcessor?.Scene;
         private static SceneController SceneController;
-        private static List<Trace> _Traces => Scene?._Traces;
+        private static List<Trace> Traces => Scene?.Traces;
 
         #endregion
 
@@ -98,7 +98,7 @@
         {
             BeginUpdate();
             // First step: remove any deleted Traces.
-            for (int index = _Traces.Count - 1; index >= 0; index--)
+            for (int index = Traces.Count - 1; index >= 0; index--)
                 if (traces.FirstOrDefault(p => p.Index == index) == null)
                     CommandProcessor.DeleteTrace(index);
             // Second step: insert/append any new Traces.
@@ -106,7 +106,7 @@
                 CommandProcessor.AppendTrace();
             // Third & final step: update all Trace properties.
             for (int index = 0; index < traces.Count; index++)
-                traces[index].CopyTo(_Traces[index]);
+                traces[index].CopyTo(Traces[index]);
             EndUpdate();
         }
 

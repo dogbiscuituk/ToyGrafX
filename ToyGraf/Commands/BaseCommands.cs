@@ -118,7 +118,7 @@
         }
 
         protected override string Target => "Trace";
-        protected override Trace GetItem(Scene scene) => scene._Traces[Index];
+        protected override Trace GetItem(Scene scene) => scene.Traces[Index];
         protected override void PropertyChanged(Scene scene, string propertyName) =>
             scene.OnPropertyChanged(GetItem(scene), propertyName);
     }
@@ -185,14 +185,14 @@
     {
         internal TracesCommand(int index, bool add) : base(index, add)
         {
-            PropertyName = DisplayNames.Traces;
+            PropertyName = DisplayNames.TraceList;
         }
 
         protected override string Target => Value.ToString();
 
         protected override void AddItem(Scene scene) => scene.AddTrace(Value);
-        protected override Trace GetItem(Scene scene) => scene._Traces[Index];
-        protected override int GetItemsCount(Scene scene) => scene._Traces.Count;
+        protected override Trace GetItem(Scene scene) => scene.Traces[Index];
+        protected override int GetItemsCount(Scene scene) => scene.Traces.Count;
         protected override Trace GetNewItem(Scene scene) => scene.NewTrace();
         protected override void InsertItem(Scene scene) => scene.InsertTrace(Index, Value);
         protected override void PropertyChanged(Scene scene, string propertyName) => scene.OnPropertyChanged(scene, propertyName);

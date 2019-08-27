@@ -342,12 +342,11 @@
             // 
             // PropertyGrid
             // 
-            this.PropertyGrid.BrowsableProperties = null;
+            this.PropertyGrid.VisibleProperties = null;
             this.PropertyGrid.ContextMenuStrip = this.PopupPropertyGridMenu;
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.HiddenAttributes = null;
-            this.PropertyGrid.HiddenProperties = new string[] {
-        "_Traces"};
+            this.PropertyGrid.HiddenProperties = new string[] { "Traces" };
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
             this.PropertyGrid.Size = new System.Drawing.Size(307, 383);
@@ -598,7 +597,7 @@
             // 
             // TracesBindingSource
             // 
-            this.TracesBindingSource.DataMember = "_Traces";
+            this.TracesBindingSource.DataMember = "Traces";
             this.TracesBindingSource.DataSource = this.SceneBindingSource;
             // 
             // SceneBindingSource

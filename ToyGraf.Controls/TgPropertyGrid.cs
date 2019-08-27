@@ -13,59 +13,33 @@
         public TgPropertyGrid()
         {
             InitializeComponent();
-            base.SelectedObject = Object;
+            base.SelectedObject = Wrap;
         }
 
         #endregion
 
         #region Private Fields
 
-        private AttributeCollection _BrowsableAttributes, _HiddenAttributes;
-        private string[] _BrowsableProperties, _HiddenProperties;
-        private TgObject Object;
-        private readonly List<PropertyDescriptor> PropertyDescriptors = new List<PropertyDescriptor>();
+        private AttributeCollection _HiddenAttrs, _VisibleAttrs;
+        private string[] _HiddenProps, _VisibleProps;
+        private readonly List<PropertyDescriptor> Props = new List<PropertyDescriptor>();
+        private TgWrap Wrap;
+        private IEnumerable<TgWrap> Wraps;
 
         #endregion
 
         #region Public Properties
 
-        public new AttributeCollection BrowsableAttributes
-        {
-            get => _BrowsableAttributes;
-            set
-            {
-                if (_BrowsableAttributes != value)
-                {
-                    _HiddenAttributes = null;
-                    _BrowsableAttributes = value;
-                    UpdateProps();
-                }
-            }
-        }
-
-        public string[] BrowsableProperties
-        {
-            get => _BrowsableProperties;
-            set
-            {
-                if (_BrowsableProperties != value)
-                {
-                    _BrowsableProperties = value;
-                    //m_HiddenProperties = null;
-                    UpdateProps();
-                }
-            }
-        }
-
+        [Browsable(false)]
         public AttributeCollection HiddenAttributes
         {
-            get => _HiddenAttributes;
+            get => _HiddenAttrs;
             set
             {
-                if (_HiddenAttributes != value)
+                if (_HiddenAttrs != value)
                 {
-                    _HiddenAttributes = value;
-                    _BrowsableAttributes = null;
+                    _HiddenAttrs = value;
+                    _VisibleAttrs = null;
                     UpdateProps();
                 }
             }
@@ -73,13 +47,12 @@
 
         public string[] HiddenProperties
         {
-            get => _HiddenProperties;
+            get => _HiddenProps;
             set
             {
-                if (_HiddenProperties != value)
+                if (_HiddenProps != value)
                 {
-                    //m_BrowsableProperties = null;
-                    _HiddenProperties = value;
+                    _HiddenProps = value;
                     UpdateProps();
                 }
             }
@@ -87,23 +60,78 @@
 
         public new object SelectedObject
         {
-            get => Object != null ? ((TgObject)base.SelectedObject).Object : null;
+            get => Wrap?.Object;
             set
             {
-                if (Object == null)
+                if (value == null)
                 {
-                    Object = new TgObject(value);
+                    Wrap = null;
+                    base.SelectedObject = null;
+                    return;
+                }
+                SelectedObjects = null;
+                if (Wrap == null)
+                {
+                    Wrap = new TgWrap(value);
                     UpdateProps();
                 }
-                else if (Object.Object != value)
+                else if (Wrap.Object != value)
                 {
-                    bool change = value?.GetType() != Object.Object.GetType();
-                    Object.Object = value;
+                    bool change = value?.GetType() != Wrap.Object.GetType();
+                    Wrap.Object = value;
                     if (change)
                         UpdateProps();
                 }
-                Object.PropertyDescriptors = PropertyDescriptors;
-                base.SelectedObject = Object.Object != null ? Object : null;
+                Wrap.PropertyDescriptors = Props;
+                base.SelectedObject = Wrap.Object != null ? Wrap : null;
+            }
+        }
+
+        public new object[] SelectedObjects
+        {
+            get => Wraps?.Select(w => w.Object)?.ToArray();
+            set
+            {
+                if (value == null)
+                {
+                    Wraps = null;
+                    base.SelectedObjects = null;
+                    return;
+                }
+                SelectedObject = null;
+                Wraps = value.Select(o => new TgWrap(o)).ToList();
+                UpdateProps();
+                foreach (var wrap in Wraps)
+                    wrap.PropertyDescriptors = Props;
+                base.SelectedObjects = Wraps.Select(w => w.Object).ToArray();
+            }
+        }
+
+        [Browsable(false)]
+        public AttributeCollection VisibleAttributes
+        {
+            get => _VisibleAttrs;
+            set
+            {
+                if (_VisibleAttrs != value)
+                {
+                    _HiddenAttrs = null;
+                    _VisibleAttrs = value;
+                    UpdateProps();
+                }
+            }
+        }
+
+        public string[] VisibleProperties
+        {
+            get => _VisibleProps;
+            set
+            {
+                if (_VisibleProps != value)
+                {
+                    _VisibleProps = value;
+                    UpdateProps();
+                }
             }
         }
 
@@ -111,72 +139,65 @@
 
         #region Private Methods
 
-        private void HideAttr(Attribute attribute)
+        private void HideAttr(TgWrap wrap, Attribute attr)
         {
-            var props = TypeDescriptor.GetProperties(Object.Object, new Attribute[] { attribute });
-            if (props == null || props.Count == 0)
-                throw new ArgumentException("Attribute not found", attribute.ToString());
-            foreach (PropertyDescriptor prop in props)
-                HideProp(prop);
+            var props = TypeDescriptor.GetProperties(wrap.Object, new Attribute[] { attr });
+            if (props != null && props.Count > 0)
+                foreach (PropertyDescriptor prop in props)
+                    HideProp(prop);
         }
 
         private void HideProp(PropertyDescriptor prop)
         {
-            if (PropertyDescriptors.Contains(prop))
-                PropertyDescriptors.Remove(prop);
+            if (Props.Contains(prop))
+                Props.Remove(prop);
         }
 
-        private void ShowAttr(Attribute attribute)
+        private void ShowAttr(TgWrap wrap, Attribute attr)
         {
-            var props = TypeDescriptor.GetProperties(Object.Object, new Attribute[] { attribute });
-            if (props == null || props.Count == 0)
-                throw new ArgumentException("Attribute not found", attribute.ToString());
-            foreach (PropertyDescriptor prop in props)
-                ShowProp(prop);
+            var props = TypeDescriptor.GetProperties(wrap.Object, new Attribute[] { attr });
+            if (props != null && props.Count > 0)
+                foreach (PropertyDescriptor prop in props)
+                    ShowProp(prop);
         }
 
         private void ShowProp(PropertyDescriptor prop)
         {
-            if (!PropertyDescriptors.Contains(prop))
-                PropertyDescriptors.Add(prop);
+            if (!Props.Contains(prop))
+                Props.Add(prop);
         }
 
         private void UpdateProps()
         {
-            if (Object == null)
+            if (Wrap != null)
+                UpdateProps(Wrap);
+            else if (Wraps != null && Wraps.Any())
+                UpdateProps(Wraps.First());
+        }
+
+        private void UpdateProps(TgWrap wrap)
+        {
+            if (wrap?.Object == null)
                 return;
-            PropertyDescriptors.Clear();
-            if (_BrowsableAttributes != null && _BrowsableAttributes.Count > 0)
-                foreach (Attribute attr in _BrowsableAttributes)
-                    ShowAttr(attr);
+            Props.Clear();
+            if (_VisibleAttrs != null)
+                foreach (Attribute attr in _VisibleAttrs)
+                    ShowAttr(wrap, attr);
             else
             {
-                PropertyDescriptors.AddRange(TypeDescriptor.GetProperties(Object.Object).OfType<PropertyDescriptor>());
-                if (_HiddenAttributes != null)
-                    foreach (Attribute attr in _HiddenAttributes)
-                        HideAttr(attr);
+                Props.AddRange(TypeDescriptor.GetProperties(wrap.Object).Cast<PropertyDescriptor>());
+                if (_HiddenAttrs != null)
+                    foreach (Attribute attr in _HiddenAttrs)
+                        HideAttr(wrap, attr);
             }
-            var props = TypeDescriptor.GetProperties(Object.Object);
-            if (_HiddenProperties != null && _HiddenProperties.Length > 0)
-                foreach (string name in _HiddenProperties)
-                    try
-                    {
-                        HideProp(props[name]);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new ArgumentException(ex.Message);
-                    }
-            if (_BrowsableProperties != null && _BrowsableProperties.Length > 0)
-                foreach (string name in _BrowsableProperties)
-                    try
-                    {
-                        ShowProp(props[name]);
-                    }
-                    catch (Exception)
-                    {
-                        throw new ArgumentException("Property not found", name);
-                    }
+            var props = TypeDescriptor.GetProperties(wrap.Object);
+            if (_HiddenProps != null)
+                foreach (string name in _HiddenProps)
+                    HideProp(props[name]);
+            if (_VisibleProps != null)
+                foreach (string name in _VisibleProps)
+                    ShowProp(props[name]);
+            Refresh();
         }
 
         #endregion

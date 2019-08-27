@@ -13,7 +13,6 @@
     using ToyGraf.Controllers;
     using ToyGraf.Controls;
     using ToyGraf.Engine;
-    using ToyGraf.Engine.TypeConverters;
     using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Views;
@@ -180,24 +179,25 @@
         public string Title { get => _Title; set => Run(new TitleCommand(value)); }
 
         [Category(Categories.Scene)]
-        [Description(Descriptions.Traces)]
-        [DisplayName(DisplayNames.Traces)]
+        [Description(Descriptions.TraceList)]
+        [DisplayName(DisplayNames.TraceList)]
         [Editor(typeof(TgCollectionEditor), typeof(UITypeEditor))]
         [JsonIgnore]
-        public List<Trace> Traces
+        public List<Trace> TraceList
         {
-            get => _Traces.Select(t => t.Clone()).ToList();
-            set => _Traces = value;
+            get => Traces.Select(t => t.Clone()).ToList();
+            set => Traces = value;
         }
 
+        // Used as a DataSource.DataMember, so public visibility required.
         [JsonProperty]
-        public List<Trace> _Traces { get; private set; }
+        public List<Trace> Traces { get; private set; }
 
         #endregion
 
         #region Shaders
 
-        [Category(Categories.Shaders)]
+        [Category(Categories.ShaderTemplates)]
         [DefaultValue(Defaults.Shader1Vertex)]
         [Description(Descriptions.Shader1Vertex)]
         [DisplayName(DisplayNames.Shader1Vertex)]
@@ -209,7 +209,7 @@
             set => Run(new SceneVertexShaderCommand(value));
         }
 
-        [Category(Categories.Shaders)]
+        [Category(Categories.ShaderTemplates)]
         [DefaultValue(Defaults.Shader2TessControl)]
         [Description(Descriptions.Shader2TessControl)]
         [DisplayName(DisplayNames.Shader2TessControl)]
@@ -221,7 +221,7 @@
             set => Run(new SceneTessControlShaderCommand(value));
         }
 
-        [Category(Categories.Shaders)]
+        [Category(Categories.ShaderTemplates)]
         [DefaultValue(Defaults.Shader3TessEvaluation)]
         [Description(Descriptions.Shader3TessEvaluation)]
         [DisplayName(DisplayNames.Shader3TessEvaluation)]
@@ -233,7 +233,7 @@
             set => Run(new SceneTessEvaluationShaderCommand(value));
         }
 
-        [Category(Categories.Shaders)]
+        [Category(Categories.ShaderTemplates)]
         [DefaultValue(Defaults.Shader4Geometry)]
         [Description(Descriptions.Shader4Geometry)]
         [DisplayName(DisplayNames.Shader4Geometry)]
@@ -245,7 +245,7 @@
             set => Run(new SceneGeometryShaderCommand(value));
         }
 
-        [Category(Categories.Shaders)]
+        [Category(Categories.ShaderTemplates)]
         [DefaultValue(Defaults.Shader5Fragment)]
         [Description(Descriptions.Shader5Fragment)]
         [DisplayName(DisplayNames.Shader5Fragment)]
@@ -257,7 +257,7 @@
             set => Run(new SceneFragmentShaderCommand(value));
         }
 
-        [Category(Categories.Shaders)]
+        [Category(Categories.ShaderTemplates)]
         [DefaultValue(Defaults.Shader6Compute)]
         [Description(Descriptions.Shader6Compute)]
         [DisplayName(DisplayNames.Shader6Compute)]
@@ -316,11 +316,11 @@
 
         #region Internal Methods
 
-        internal void AddTrace(Trace trace) => _Traces.Add(trace);
+        internal void AddTrace(Trace trace) => Traces.Add(trace);
 
         internal void AttachTraces()
         {
-            foreach (var trace in _Traces)
+            foreach (var trace in Traces)
                 trace.Init(this);
         }
 
@@ -353,7 +353,7 @@
             return string.Empty;
         }
 
-        internal void InsertTrace(int index, Trace trace) => _Traces.Insert(index, trace);
+        internal void InsertTrace(int index, Trace trace) => Traces.Insert(index, trace);
         internal Trace NewTrace() => new Trace(this);
 
         internal void OnPropertyChanged(Scene scene, string propertyName) =>
@@ -364,8 +364,8 @@
 
         internal void RemoveTrace(int index)
         {
-            if (index >= 0 && index < _Traces.Count)
-                _Traces.RemoveAt(index);
+            if (index >= 0 && index < Traces.Count)
+                Traces.RemoveAt(index);
         }
 
         internal void SetScript(ShaderType shaderType, string script)
@@ -393,25 +393,12 @@
             }
         }
 
-        internal void SetCameraView(Matrix4 cameraView) { }
-        internal void SetProjection(Matrix4 projection) { }
+        internal void SetCameraView(Matrix4 _) { }
+        internal void SetProjection(Matrix4 _) { }
 
         #endregion
 
         #region Private Classes
-
-        private class Categories
-        {
-            /// <summary>
-            /// All categories must end with a trailing space. This is required to prevent their
-            /// being incorporated into property paths when parsing PropertyGrid events.
-            /// </summary>
-            internal const string
-                GraphicsMode = "Graphics Mode ",
-                Scene = "Scene ",
-                Shaders = "Shader Templates ",
-                SystemRO = "Read Only / System ";
-        }
 
         private class Defaults
         {
@@ -504,21 +491,6 @@ void main()
 
         #region Private Properties
 
-        private float AspectRatio
-        {
-            get
-            {
-                var glControl = GLControl;
-                if (glControl != null)
-                {
-                    float w = glControl.Width, h = glControl.Height;
-                    if (w > 0 && h > 0)
-                        return w / h;
-                }
-                return 16 / 9f;
-            }
-        }
-
         private GLControl GLControl => SceneForm?.GLControl;
         private RenderController RenderController => SceneController.RenderController;
         private SceneForm SceneForm => SceneController?.SceneForm;
@@ -549,7 +521,7 @@ void main()
             _Stencil = Defaults.Stencil;
             _Stereo = Defaults.Stereo;
             _Title = Defaults.Title;
-            _Traces = Defaults.Traces;
+            Traces = Defaults.Traces;
             _VSync = Defaults.VSync;
         }
 
