@@ -97,7 +97,7 @@
                     return string.Empty;
             }
         }
-            
+
         internal static void Remove(SceneController sceneController)
         {
             SceneControllers.Remove(sceneController);

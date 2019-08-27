@@ -409,7 +409,7 @@
                 GPUCode = "",
                 GPULog = "",
                 GPUStatusString = "OK",
-                Shader1Vertex = @"// Vertex Shader
+                Shader1Vertex = @"/* Vertex Shader */
 
 #version 330 core
 
@@ -438,7 +438,7 @@ void main()
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
-                Shader5Fragment = @"// Fragment Shader
+                Shader5Fragment = @"/* Fragment Shader */
 
 #version 330 core
 

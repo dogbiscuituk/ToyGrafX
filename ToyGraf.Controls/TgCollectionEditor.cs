@@ -5,7 +5,6 @@
     using System.ComponentModel.Design;
     using System.Windows.Forms;
     using ToyGraf.Controls.Events;
-    using ToyGraf.Engine.Utility;
 
     public class TgCollectionEditor : CollectionEditor
     {

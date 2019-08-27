@@ -2,7 +2,6 @@
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
-    using System;
     using System.Text;
     using ToyGraf.Commands;
     using ToyGraf.Engine.Types;
@@ -37,7 +36,7 @@
         }
 
         internal static GLInfo _GLInfo;
-        private static object GLInfoSyncRoot = new object();
+        private static readonly object GLInfoSyncRoot = new object();
 
         #endregion
 

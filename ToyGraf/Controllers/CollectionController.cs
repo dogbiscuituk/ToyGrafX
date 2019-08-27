@@ -9,7 +9,6 @@
     using ToyGraf.Commands;
     using ToyGraf.Controls;
     using ToyGraf.Controls.Events;
-    using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
