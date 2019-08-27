@@ -1,12 +1,12 @@
-﻿namespace ToyGraf.Models
+﻿namespace ToyGraf.Engine.Utility
 {
-    internal static class Categories
+    public static class Categories
     {
         /// <summary>
         /// All categories must end with a trailing space. This is required to prevent their
         /// being incorporated into property paths when parsing PropertyGrid events.
         /// </summary>
-        internal const string
+        public const string
             GraphicsMode = "Graphics Mode ",
             Placement = "Placement ",
             Scene = "Scene ",

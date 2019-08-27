@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Windows.Forms;
     using ToyGraf.Commands;
+    using ToyGraf.Controls;
     using ToyGraf.Engine;
     using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
@@ -117,11 +118,11 @@
             if (field == null) // Not a nested property.
                 return false;
             var value = e.OldValue;
-            var scene = PropertyGrid.SelectedObject;
+            var scene = PropertyGridAdapter.SelectedObject;
             if (scene != null)
                 Spoof(Spoof(property, field, value));
             else
-                foreach (Trace trace in PropertyGrid.SelectedObjects)
+                foreach (Trace trace in PropertyGridAdapter.SelectedObjects)
                     Spoof(Spoof(trace, property, field, value));
             return true;
         }
@@ -175,7 +176,7 @@
         private GLControl GLControl => SceneForm?.GLControl;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
-        private PropertyGrid PropertyGrid => PropertyGridController.PropertyGrid;
+        private TgPropertyGridAdapter PropertyGridAdapter => PropertyGridController.PropertyGridAdapter;
         private int UpdateCount;
         private bool Updating => UpdateCount > 0;
 

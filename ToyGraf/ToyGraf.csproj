@@ -79,7 +79,6 @@
     <Compile Include="Controllers\RenderController.cs" />
     <Compile Include="Controllers\SdiController.cs" />
     <Compile Include="Controllers\TraceTableController.cs" />
-    <Compile Include="Models\Categories.cs" />
     <Compile Include="Models\Clock.cs" />
     <Compile Include="Models\Enums\FilterIndex.cs" />
     <Compile Include="Models\Extensions.cs" />

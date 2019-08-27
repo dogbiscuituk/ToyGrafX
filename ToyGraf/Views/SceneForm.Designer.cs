@@ -57,7 +57,7 @@
             this.Tlabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
             this.SplitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.PropertyGrid = new ToyGraf.Controls.TgPropertyGrid();
+            this.PropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.PopupPropertyGridMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.PopupPropertyGridFloat = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupPropertyGridHide = new System.Windows.Forms.ToolStripMenuItem();
@@ -341,11 +341,8 @@
             // 
             // PropertyGrid
             // 
-            this.PropertyGrid.VisibleProperties = null;
             this.PropertyGrid.ContextMenuStrip = this.PopupPropertyGridMenu;
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PropertyGrid.HiddenAttributes = null;
-            this.PropertyGrid.HiddenProperties = new string[] { "Traces" };
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
             this.PropertyGrid.Size = new System.Drawing.Size(307, 383);
@@ -1216,7 +1213,7 @@
         internal System.Windows.Forms.ContextMenuStrip PopupTraceTableMenu;
         internal System.Windows.Forms.ToolStripMenuItem PopupTraceTableFloat;
         internal System.Windows.Forms.ToolStripMenuItem PopupTraceTableHide;
-        internal ToyGraf.Controls.TgPropertyGrid PropertyGrid;
+        internal System.Windows.Forms.PropertyGrid PropertyGrid;
         internal System.Windows.Forms.DataGridView TraceTable;
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         internal System.Windows.Forms.ToolStripMenuItem ViewPropertyGrid;

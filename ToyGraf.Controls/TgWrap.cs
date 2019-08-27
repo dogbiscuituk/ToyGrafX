@@ -5,7 +5,7 @@
     using System.ComponentModel;
 
     /// <summary>
-    /// An object wrapper class for controlling property visibilities in a TgPropertyGrid.
+    /// An object wrapper to control property visibility in TgPropertyGridAdapter.
     /// </summary>
     internal class TgWrap : ICustomTypeDescriptor
     {

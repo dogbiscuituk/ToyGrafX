@@ -6,14 +6,11 @@
     using System.Linq;
     using System.Windows.Forms;
 
-    public partial class TgPropertyGrid : PropertyGrid
+    public class TgPropertyGridAdapter
     {
         #region Constructor
 
-        public TgPropertyGrid()
-        {
-            InitializeComponent();
-        }
+        public TgPropertyGridAdapter(PropertyGrid propertyGrid) { PropertyGrid = propertyGrid; }
 
         #endregion
 
@@ -29,7 +26,6 @@
 
         #region Public Properties
 
-        [Browsable(false)]
         public AttributeCollection HiddenAttributes
         {
             get => _HiddenAttrs;
@@ -57,7 +53,9 @@
             }
         }
 
-        public new object SelectedObject
+        public PropertyGrid PropertyGrid { get; set; }
+
+        public object SelectedObject
         {
             get => Wrap?.Object;
             set
@@ -65,7 +63,7 @@
                 if (value == null)
                 {
                     Wrap = null;
-                    base.SelectedObject = null;
+                    PropertyGrid.SelectedObject = null;
                     return;
                 }
                 SelectedObjects = null;
@@ -82,11 +80,11 @@
                         UpdateProps();
                 }
                 Wrap.PropertyDescriptors = Props;
-                base.SelectedObject = Wrap.Object != null ? Wrap : null;
+                PropertyGrid.SelectedObject = Wrap.Object != null ? Wrap : null;
             }
         }
 
-        public new object[] SelectedObjects
+        public object[] SelectedObjects
         {
             get => Wraps?.Select(w => w.Object)?.ToArray();
             set
@@ -94,7 +92,7 @@
                 if (value == null)
                 {
                     Wraps = null;
-                    base.SelectedObjects = null;
+                    PropertyGrid.SelectedObjects = null;
                     return;
                 }
                 SelectedObject = null;
@@ -102,11 +100,10 @@
                 UpdateProps();
                 foreach (var wrap in Wraps)
                     wrap.PropertyDescriptors = Props;
-                base.SelectedObjects = Wraps.ToArray();
+                PropertyGrid.SelectedObjects = Wraps.ToArray();
             }
         }
 
-        [Browsable(false)]
         public AttributeCollection VisibleAttributes
         {
             get => _VisibleAttrs;
@@ -196,9 +193,10 @@
             if (_VisibleProps != null)
                 foreach (string name in _VisibleProps)
                     ShowProp(props[name]);
-            Refresh();
+            PropertyGrid.Refresh();
         }
 
         #endregion
+
     }
 }

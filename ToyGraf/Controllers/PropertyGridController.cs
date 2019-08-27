@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Windows.Forms;
     using ToyGraf.Controls;
+    using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
@@ -15,6 +16,10 @@
         internal PropertyGridController(SceneController sceneController)
         {
             SceneController = sceneController;
+            PropertyGridAdapter = new TgPropertyGridAdapter(PropertyGrid)
+            {
+                HiddenProperties = new[] { "Traces" }
+            };
             SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
             SceneForm.ViewPropertyGrid.Click += TogglePropertyGrid;
             SceneForm.PopupPropertyGridMenu.Opening += PopupPropertyGridMenu_Opening;
@@ -34,7 +39,7 @@
 
         #region Internal Properties
 
-        internal TgPropertyGrid PropertyGrid => SceneForm.PropertyGrid;
+        internal TgPropertyGridAdapter PropertyGridAdapter;
 
         internal bool PropertyGridVisible
         {
@@ -44,14 +49,14 @@
 
         internal object SelectedObject
         {
-            get => PropertyGrid.SelectedObject;
-            set => PropertyGrid.SelectedObject = value;
+            get => PropertyGridAdapter.SelectedObject;
+            set => PropertyGridAdapter.SelectedObject = value;
         }
 
         internal object[] SelectedObjects
         {
-            get => PropertyGrid.SelectedObjects;
-            set => PropertyGrid.SelectedObjects = value;
+            get => PropertyGridAdapter.SelectedObjects;
+            set => PropertyGridAdapter.SelectedObjects = value;
         }
 
         #endregion
@@ -69,7 +74,7 @@
 
         internal void SetDeveloperView(bool developerView)
         {
-            PropertyGrid.HiddenAttributes = developerView
+            PropertyGridAdapter.HiddenAttributes = developerView
                 ? null
                 : new AttributeCollection(new CategoryAttribute(Categories.SystemRO));
         }
@@ -99,6 +104,8 @@
                 return _HostController;
             }
         }
+
+        private PropertyGrid PropertyGrid => SceneForm.PropertyGrid;
 
         private bool PropertyGridDocked
         {

@@ -62,6 +62,7 @@
     <Compile Include="Types\Point3F.cs" />
     <Compile Include="Types\Projection.cs" />
     <Compile Include="Types\ProjectionType.cs" />
+    <Compile Include="Utility\Categories.cs" />
     <Compile Include="Utility\Functions.cs" />
     <Compile Include="Utility\Grids.cs" />
     <Compile Include="Utility\Maths.cs" />

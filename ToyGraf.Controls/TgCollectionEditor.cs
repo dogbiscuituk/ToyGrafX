@@ -5,6 +5,7 @@
     using System.ComponentModel.Design;
     using System.Windows.Forms;
     using ToyGraf.Controls.Events;
+    using ToyGraf.Engine.Utility;
 
     public class TgCollectionEditor : CollectionEditor
     {
@@ -42,6 +43,9 @@
         #region Private Properties
 
         private DialogResult DialogResult;
+        private PropertyGrid PropertyGrid => PropertyGridAdapter.PropertyGrid;
+        private TgPropertyGridAdapter PropertyGridAdapter;
+        private bool Updating;
 
         #endregion
 
@@ -54,6 +58,16 @@
             CollectionFormClosing?.Invoke(sender, e);
             if (!e.Cancel)
                 DetachEventHandlers(form);
+        }
+
+        private void PropertyGrid_SelectedObjectsChanged(object sender, EventArgs e)
+        {
+            if (!Updating)
+            {
+                Updating = true;
+                PropertyGridAdapter.SelectedObjects = PropertyGrid.SelectedObjects;
+                Updating = false;
+            }
         }
 
         #endregion
@@ -72,24 +86,27 @@
             form.Enter += CollectionFormLeave;
             form.Load += CollectionFormLoad;
             form.Shown += CollectionFormShown;
+            PropertyGrid.SelectedObjectsChanged += PropertyGrid_SelectedObjectsChanged;
         }
 
         protected override CollectionForm CreateCollectionForm()
         {
             var form = base.CreateCollectionForm();
-            AttachEventHandlers(form);
             if (form.Controls[0] is TableLayoutPanel panel)
             {
                 if (panel.Controls[4] is ListBox listBox)
-                {
                     listBox.DrawMode = DrawMode.Normal;
-                }
                 if (panel.Controls[5] is PropertyGrid propertyGrid)
                 {
                     CollectionFormGridInit?.Invoke(this, new PropertyGridInitEventArgs(propertyGrid));
                     propertyGrid.PropertyValueChanged += CollectionItemPropertyValueChanged;
+                    PropertyGridAdapter = new TgPropertyGridAdapter(propertyGrid)
+                    {
+                        HiddenAttributes = new AttributeCollection(new CategoryAttribute(Categories.SystemRO))
+                    };
                 }
             }
+            AttachEventHandlers(form);
             return form;
         }
 
@@ -105,6 +122,7 @@
             form.Enter -= CollectionFormLeave;
             form.Load -= CollectionFormLoad;
             form.Shown -= CollectionFormShown;
+            PropertyGrid.SelectedObjectsChanged -= PropertyGrid_SelectedObjectsChanged;
         }
 
         #endregion
