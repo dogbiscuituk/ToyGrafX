@@ -471,7 +471,7 @@ void main()
                 GPUStatus = GPUStatus.OK;
 
             internal static Camera
-                Camera = new Camera(0, 0, -2, 0, 0, 0);
+                Camera = new Camera(0, 0, 2, 0, 0, 0);
 
             internal static Color
                 BackgroundColour = Color.White;

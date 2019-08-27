@@ -26,7 +26,7 @@
                 case ProjectionType.OrthographicOffset:
                     return Matrix4.CreateOrthographicOffCenter(p.Left, p.Right, p.Bottom, p.Top, p.Near, p.Far);
                 case ProjectionType.Perspective:
-                    return Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(p.FieldOfView), s.Width / s.Height, p.Near, p.Far);
+                    return Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(p.FieldOfView), (float)s.Width / s.Height, p.Near, p.Far);
                 case ProjectionType.PerspectiveOffset:
                     return Matrix4.CreatePerspectiveOffCenter(p.Left, p.Right, p.Bottom, p.Top, p.Near, p.Far);
             }

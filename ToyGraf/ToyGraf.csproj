@@ -423,5 +423,10 @@
   <ItemGroup>
     <None Include="Doc\UI Updates.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Doc\Rendering Debug.txt" />
+    <None Include="Doc\Sub Properties.txt" />
+    <None Include="Doc\The Naming Of Parts.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

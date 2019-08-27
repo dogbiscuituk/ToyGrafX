@@ -111,7 +111,7 @@
             GL.Enable(EnableCap.Texture2D);
             GL.ClearColor(Scene.BackgroundColour);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            ShaderStart();
+            GL.UseProgram(ProgramID); // Start Shader
             ValidateProgram();
             if (ProgramValid)
             {
@@ -135,7 +135,7 @@
                     UnbindVao();
                 }
             }
-            ShaderStop();
+            GL.UseProgram(0); // Stop Shader
             GLControl.SwapBuffers();
             MakeCurrent(false);
         }
@@ -434,20 +434,6 @@
             return true;
         }
 
-        private bool ShaderStart() => UseProgram(true);
-        private bool ShaderStop() => UseProgram(false);
-
-        private bool UseProgram(bool use)
-        {
-            var result = MakeCurrent(true);
-            if (result)
-            {
-                GL.UseProgram(use ? ProgramID : 0);
-                MakeCurrent(false);
-            }
-            return result;
-        }
-
         #endregion
 
         #region Uniforms
@@ -478,6 +464,5 @@
         #endregion
 
         #endregion
-
     }
 }
