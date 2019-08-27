@@ -150,7 +150,6 @@
             SceneForm.colShader5Fragment.ToolTipText = Descriptions.Shader5Fragment;
             SceneForm.colShader6Compute.ToolTipText = Descriptions.Shader6Compute;
             SceneForm.colStrip.ToolTipText = Descriptions.StripCount;
-            SceneForm.colTransform.ToolTipText = Descriptions.Transform;
             SceneForm.colVisible.ToolTipText = Descriptions.Visible;
         }
 

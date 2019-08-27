@@ -13,7 +13,6 @@
         public TgPropertyGrid()
         {
             InitializeComponent();
-            base.SelectedObject = Wrap;
         }
 
         #endregion
@@ -24,7 +23,7 @@
         private string[] _HiddenProps, _VisibleProps;
         private readonly List<PropertyDescriptor> Props = new List<PropertyDescriptor>();
         private TgWrap Wrap;
-        private IEnumerable<TgWrap> Wraps;
+        private List<TgWrap> Wraps;
 
         #endregion
 
@@ -103,7 +102,7 @@
                 UpdateProps();
                 foreach (var wrap in Wraps)
                     wrap.PropertyDescriptors = Props;
-                base.SelectedObjects = Wraps.Select(w => w.Object).ToArray();
+                base.SelectedObjects = Wraps.ToArray();
             }
         }
 

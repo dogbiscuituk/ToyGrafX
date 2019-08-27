@@ -76,7 +76,6 @@
             this.colShader5Fragment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShader6Compute = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStrip = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTransform = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.PopupTraceTableMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.PopupTraceTableFloat = new System.Windows.Forms.ToolStripMenuItem();
@@ -404,7 +403,6 @@
             this.colShader5Fragment,
             this.colShader6Compute,
             this.colStrip,
-            this.colTransform,
             this.colVisible});
             this.TraceTable.ContextMenuStrip = this.PopupTraceTableMenu;
             this.TraceTable.DataSource = this.TracesBindingSource;
@@ -544,16 +542,6 @@
             this.colStrip.HeaderText = "Strip Count";
             this.colStrip.Name = "colStrip";
             this.colStrip.Width = 85;
-            // 
-            // colTransform
-            // 
-            this.colTransform.DataPropertyName = "Transform";
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colTransform.DefaultCellStyle = dataGridViewCellStyle15;
-            this.colTransform.HeaderText = "Transform";
-            this.colTransform.Name = "colTransform";
-            this.colTransform.ReadOnly = true;
-            this.colTransform.Width = 86;
             // 
             // colVisible
             // 
@@ -1279,7 +1267,6 @@
         internal System.Windows.Forms.DataGridViewTextBoxColumn colShader5Fragment;
         internal System.Windows.Forms.DataGridViewTextBoxColumn colShader6Compute;
         internal System.Windows.Forms.DataGridViewTextBoxColumn colStrip;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn colTransform;
         internal System.Windows.Forms.DataGridViewCheckBoxColumn colVisible;
         internal System.Windows.Forms.ToolStripMenuItem PopupSubjectScene;
         internal System.Windows.Forms.ToolStripMenuItem PopupSubjectSelectedTraces;
