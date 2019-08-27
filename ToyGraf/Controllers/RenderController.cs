@@ -59,18 +59,24 @@
 
         internal void InitViewport()
         {
-            InvalidateProjection();
             if (MakeCurrent(true))
             {
+                "RenderController.InitViewport();".Spit();
                 GL.Viewport(GLControl.Size);
                 MakeCurrent(false);
             }
+            InvalidateProjection();
         }
 
-        internal void InvalidateCameraView() => CameraViewValid = false;
+        internal void InvalidateCameraView()
+        {
+            "RenderController.InvalidateCameraView();".Spit();
+            CameraViewValid = false;
+        }
 
         internal void InvalidateProgram()
         {
+            "RenderController.InvalidateProgram();".Spit();
             ProgramCompiled = false;
             if (!MakeCurrent(true))
                 return;
@@ -83,10 +89,15 @@
             MakeCurrent(false);
         }
 
-        internal void InvalidateProjection() => ProjectionValid = false;
-
-        internal void InvalidateVao(Trace trace)
+        internal void InvalidateProjection()
         {
+            "RenderController.InvalidateProjection();".Spit();
+            ProjectionValid = false;
+        }
+
+        internal void InvalidateTrace(Trace trace)
+        {
+            $"RenderController.InvalidateTrace({trace});".Spit();
             trace._VaoVertexCount = 0;
             DeleteVbo(ref trace._VboVertexID);
             DeleteVbo(ref trace._VboIndexID);
@@ -115,7 +126,7 @@
                         continue;
                     LoadTraceIndex(traceIndex);
                     LoadTransform(trace);
-                    ValidateVao(trace);
+                    ValidateTrace(trace);
                     GL.BindVertexArray(trace._VaoID);
                     GL.EnableVertexAttribArray(0);
                     //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
@@ -141,10 +152,11 @@
             return result;
         }
 
-        private void ValidateVao(Trace trace)
+        private void ValidateTrace(Trace trace)
         {
             if (trace._VaoID != 0)
                 return;
+            $"RenderController.ValidateTrace({trace});".Spit();
             var coords = Grids.GetGrid(trace.StripCount);
             var indices = Grids.GetIndices(trace.StripCount, trace.Pattern);
             GL.BindVertexArray(trace._VaoID = CreateVao());
@@ -294,6 +306,7 @@
         {
             if (!CameraViewValid)
             {
+                "RenderController.ValidateCameraView();".Spit();
                 LoadCameraView();
                 CameraViewValid = true;
             }
@@ -303,7 +316,7 @@
         {
             if (ProgramCompiled)
                 return;
-            System.Diagnostics.Debug.WriteLine("SceneController.ValidateProgram();");
+            "RenderController.ValidateProgram();".Spit();
             Scene._GPUStatus = GPUStatus.OK;
             GpuCode = new StringBuilder();
             GpuLog = new StringBuilder();
@@ -333,6 +346,7 @@
         {
             if (!ProjectionValid)
             {
+                "RenderController.ValidateProjection();".Spit();
                 LoadProjection();
                 ProjectionValid = true;
             }
@@ -395,7 +409,7 @@
         private void UnloadTraces()
         {
             foreach (var trace in Scene._Traces)
-                InvalidateVao(trace);
+                InvalidateTrace(trace);
         }
 
         #endregion

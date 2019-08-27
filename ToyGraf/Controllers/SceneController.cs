@@ -156,9 +156,9 @@
         private void JsonController_FileReopen(object sender, SdiController.FilePathEventArgs e) => OpenFile(e.FilePath);
         private void JsonController_FileSaved(object sender, EventArgs e) => FileSaved();
         private void JsonController_FileSaving(object sender, CancelEventArgs e) => e.Cancel = false;
+        private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
         private void SceneForm_FormClosed(object sender, FormClosedEventArgs e) => FormClosed();
         private void SceneForm_FormClosing(object sender, FormClosingEventArgs e) => e.Cancel = !FormClosing(e.CloseReason);
-        private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
         private void TbOpen_DropDownOpening(object sender, EventArgs e) => SceneForm.FileReopen.CloneTo(SceneForm.tbOpen);
         private void TbSave_Click(object sender, EventArgs e) => SaveOrSaveAs();
 
@@ -220,7 +220,6 @@
             {
                 SceneForm.FormClosed += SceneForm_FormClosed;
                 SceneForm.FormClosing += SceneForm_FormClosing;
-
                 SceneForm.FileNewEmptyScene.Click += FileNewEmptyScene_Click;
                 SceneForm.FileNewFromTemplate.Click += FileNewFromTemplate_Click;
                 SceneForm.FileOpen.Click += FileOpen_Click;
@@ -229,22 +228,18 @@
                 SceneForm.FileClose.Click += FileClose_Click;
                 SceneForm.FileExit.Click += FileExit_Click;
                 SceneForm.EditOptions.Click += EditOptions_Click;
-
                 SceneForm.tbNew.ButtonClick += FileNewEmptyScene_Click;
                 SceneForm.tbNewEmptyScene.Click += FileNewEmptyScene_Click;
                 SceneForm.tbNewFromTemplate.Click += FileNewFromTemplate_Click;
                 SceneForm.tbOpen.ButtonClick += FileOpen_Click;
                 SceneForm.tbOpen.DropDownOpening += TbOpen_DropDownOpening;
                 SceneForm.tbSave.Click += TbSave_Click;
-
                 SceneForm.HelpOpenGLShadingLanguage.Click += HelpTheOpenGLShadingLanguage_Click;
                 SceneForm.HelpAbout.Click += HelpAbout_Click;
-
                 GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
                 GLControl.Load += GLControl_Load;
                 GLControl.Paint += GLControl_Paint;
                 GLControl.Resize += GLControl_Resize;
-
                 JsonController.FileLoaded += JsonController_FileLoaded;
                 JsonController.FilePathChanged += JsonController_FilePathChanged;
                 JsonController.FilePathRequest += JsonController_FilePathRequest;
@@ -256,7 +251,6 @@
             {
                 SceneForm.FormClosed -= SceneForm_FormClosed;
                 SceneForm.FormClosing -= SceneForm_FormClosing;
-
                 SceneForm.FileNewEmptyScene.Click -= FileNewEmptyScene_Click;
                 SceneForm.FileNewFromTemplate.Click -= FileNewFromTemplate_Click;
                 SceneForm.FileOpen.Click -= FileOpen_Click;
@@ -265,22 +259,18 @@
                 SceneForm.FileClose.Click -= FileClose_Click;
                 SceneForm.FileExit.Click -= FileExit_Click;
                 SceneForm.EditOptions.Click -= EditOptions_Click;
-
                 SceneForm.tbNew.ButtonClick -= FileNewEmptyScene_Click;
                 SceneForm.tbNewEmptyScene.Click -= FileNewEmptyScene_Click;
                 SceneForm.tbNewFromTemplate.Click -= FileNewFromTemplate_Click;
                 SceneForm.tbOpen.ButtonClick -= FileOpen_Click;
                 SceneForm.tbOpen.DropDownOpening -= TbOpen_DropDownOpening;
                 SceneForm.tbSave.Click -= TbSave_Click;
-
                 SceneForm.HelpOpenGLShadingLanguage.Click -= HelpTheOpenGLShadingLanguage_Click;
                 SceneForm.HelpAbout.Click -= HelpAbout_Click;
-
                 GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
                 GLControl.Load -= GLControl_Load;
                 GLControl.Paint -= GLControl_Paint;
                 GLControl.Resize -= GLControl_Resize;
-
                 JsonController.FileLoaded -= JsonController_FileLoaded;
                 JsonController.FilePathChanged -= JsonController_FilePathChanged;
                 JsonController.FilePathRequest -= JsonController_FilePathRequest;
@@ -379,8 +369,7 @@
                 ChangedPropertyNames.AddRange(propertyNames.Where(p => !ChangedPropertyNames.Contains(p)));
                 return;
             }
-            System.Diagnostics.Debug.WriteLine(
-                $"SceneController.OnPropertyChanged({propertyNames.Aggregate((s, t) => $"{s}, {t}")})");
+            $"SceneController.OnPropertyChanged({propertyNames.Aggregate((s, t) => $"'{s}', '{t}'")})".Spit();
             foreach (var propertyName in propertyNames)
                 switch (propertyName)
                 {
@@ -404,7 +393,7 @@
                         break;
                     case DisplayNames.Pattern:
                     case DisplayNames.StripCount:
-                        RenderController.InvalidateVao((Trace)ChangedSubject);
+                        RenderController.InvalidateTrace((Trace)ChangedSubject);
                         break;
                 }
             PropertyGridController.Refresh();

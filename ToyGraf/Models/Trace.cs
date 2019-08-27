@@ -7,6 +7,7 @@
     using System.ComponentModel.Design;
     using System.Drawing.Design;
     using ToyGraf.Commands;
+    using ToyGraf.Controllers;
     using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
 
@@ -264,7 +265,7 @@
             set
             {
                 if (Run(new PatternCommand(Index, value)))
-                    InvalidateVao();
+                    Invalidate();
             }
         }
 
@@ -279,16 +280,13 @@
             set
             {
                 if (Run(new StripCountCommand(Index, value)))
-                    InvalidateVao();
+                    Invalidate();
             }
         }
 
         #endregion
 
-        private void InvalidateVao()
-        {
-
-        }
+        private void Invalidate() => RenderController?.InvalidateTrace(this);
 
         #endregion
 
@@ -415,6 +413,8 @@
 
         private CommandProcessor CommandProcessor => Scene?.CommandProcessor;
         private int _Index;
+        private RenderController RenderController => SceneController?.RenderController;
+        private SceneController SceneController => Scene?.SceneController;
 
         #endregion
 
