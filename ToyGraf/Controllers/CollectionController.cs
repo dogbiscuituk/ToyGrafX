@@ -9,6 +9,7 @@
     using ToyGraf.Commands;
     using ToyGraf.Controls;
     using ToyGraf.Controls.Events;
+    using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
@@ -59,6 +60,7 @@
             var propertyGrid = FindPropertyGrid(sender);
             PropertyGridController.HidePropertyPagesButton(propertyGrid);
             propertyGrid.HelpVisible = true;
+            PropertyGridController.InitShowSystemRO((TgPropertyGridAdapter)propertyGrid.Tag);
         }
 
         private static void TgCollectionEditor_CollectionFormHelpButtonClicked(object sender, CancelEventArgs e) =>

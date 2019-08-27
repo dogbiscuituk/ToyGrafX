@@ -50,6 +50,8 @@
 
         #region Internal Methods
 
+        internal void ApplyOptions() => PropertyGridController.ApplyOptions();
+
         internal void BeginUpdate() => ++UpdateCount;
 
         private void ConnectControllers(bool connect)
@@ -127,13 +129,10 @@
             return true;
         }
 
-        internal void SetDeveloperView(bool developerView) =>
-            PropertyGridController.SetDeveloperView(developerView);
+        internal void Show() => SceneForm.Show();
 
         internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
             $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
-
-        internal void Show() => SceneForm.Show();
 
         #endregion
 

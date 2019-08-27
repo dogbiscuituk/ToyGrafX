@@ -63,20 +63,19 @@
 
         #region Internal Methods
 
+        internal void ApplyOptions() => InitShowSystemRO(PropertyGridAdapter);
+
         internal static void HidePropertyPagesButton(PropertyGrid propertyGrid) =>
             HidePropertyPagesButton(FindToolStrip(propertyGrid));
+
+        internal static void InitShowSystemRO(TgPropertyGridAdapter propertyGridAdapter) =>
+            propertyGridAdapter.HiddenAttributes = AppController.Options.ShowSystemRO
+                ? null : new AttributeCollection(new CategoryAttribute(Categories.SystemRO));
 
         internal void Refresh()
         {
             RefreshDataSource();
             PropertyGrid.Refresh();
-        }
-
-        internal void SetDeveloperView(bool developerView)
-        {
-            PropertyGridAdapter.HiddenAttributes = developerView
-                ? null
-                : new AttributeCollection(new CategoryAttribute(Categories.SystemRO));
         }
 
         #endregion

@@ -145,13 +145,13 @@
         [Description(Descriptions.VboIndexID)]
         [DisplayName(DisplayNames.VboIndexID)]
         [JsonIgnore]
-        public int VaoIndexID => _VboIndexID;
+        public int VboIndexID => _VboIndexID;
 
         [Category(Categories.SystemRO)]
         [Description(Descriptions.VboVertexID)]
         [DisplayName(DisplayNames.VboVertexID)]
         [JsonIgnore]
-        public int VaoVertexID => _VboVertexID;
+        public int VboVertexID => _VboVertexID;
 
         #endregion
 

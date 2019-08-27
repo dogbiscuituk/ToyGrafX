@@ -46,8 +46,8 @@
             Transform = "Transform",
             VaoID = "VAO",
             VaoVertexCount = "VAO Vertex Count",
-            VboIndexID = "VBO_Index",
-            VboVertexID = "VBO_Vertex",
+            VboIndexID = "VBO Index Buffer",
+            VboVertexID = "VBO Vertex Buffer",
             Visible = "Visible?",
             VSync = "VSync";
     }

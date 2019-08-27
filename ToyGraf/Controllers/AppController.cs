@@ -142,7 +142,7 @@
         }
 
         private static void ApplyOptions(SceneController sceneController) =>
-            sceneController.SetDeveloperView(Options.ShowSystemRO);
+            sceneController.ApplyOptions();
 
         #endregion
     }
