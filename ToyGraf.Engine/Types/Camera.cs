@@ -104,8 +104,8 @@
         internal static class Descriptions
         {
             internal const string
-                Position = "The vector representing the Camera's position.",
-                Rotation = "The rotation representing the Camera's orientation.";
+                Position = "A vector representing the Camera's position.",
+                Rotation = "A rotation representing the Camera's orientation.";
         }
 
         internal static class DisplayNames

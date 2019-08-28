@@ -158,8 +158,8 @@
         {
             internal const string
                 FieldOfView = "Field of View (total yaw, in degrees)",
-                FrustrumMax = "The coordinates of the far top right corner of the frustrum.",
-                FrustrumMin = "The coordinates of the near bottom left corner of the frustrum.",
+                FrustrumMax = "A vector representing the far top right corner of the frustrum.",
+                FrustrumMin = "A vector representing the near bottom left corner of the frustrum.",
                 ProjectionType = "The type of projection to use.";
         }
 

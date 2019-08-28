@@ -49,11 +49,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\CollectionEditedEventArgs.cs" />
+    <Compile Include="TgFlagsCheckedListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TgFlagsCheckedListBox.Designer.cs">
+      <DependentUpon>TgFlagsCheckedListBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TgFlagsCheckedListBoxItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Events\PropertyGridInitEventArgs.cs" />
     <Compile Include="TgCollectionEditor.cs" />
     <Compile Include="TgControls.cs" />
     <Compile Include="TgFileNameEditor.cs" />
+    <Compile Include="TgFlagsEnumEditor.cs" />
     <Compile Include="TgMenuStrip.cs">
       <SubType>Component</SubType>
     </Compile>

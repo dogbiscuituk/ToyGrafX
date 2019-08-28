@@ -13,69 +13,10 @@
 
     public class Trace
     {
-        #region Public Interface
+        #region Constructors
 
         public Trace() => RestoreDefaults();
         public Trace(Scene scene) : this() => Init(scene);
-
-        public Trace Clone()
-        {
-            var trace = new Trace();
-            trace.CopyFrom(this);
-            return trace;
-        }
-
-        public string GetScript(ShaderType shaderType)
-        {
-            switch (shaderType)
-            {
-                case ShaderType.VertexShader:
-                    return _Shader1Vertex;
-                case ShaderType.TessControlShader:
-                    return _Shader2TessControl;
-                case ShaderType.TessEvaluationShader:
-                    return _Shader3TessEvaluation;
-                case ShaderType.GeometryShader:
-                    return _Shader4Geometry;
-                case ShaderType.FragmentShader:
-                    return _Shader5Fragment;
-                case ShaderType.ComputeShader:
-                    return _Shader6Compute;
-            }
-            return string.Empty;
-        }
-
-        public void SetScript(ShaderType shaderType, string script)
-        {
-            switch (shaderType)
-            {
-                case ShaderType.VertexShader:
-                    _Shader1Vertex = script;
-                    break;
-                case ShaderType.TessControlShader:
-                    _Shader2TessControl = script;
-                    break;
-                case ShaderType.TessEvaluationShader:
-                    _Shader3TessEvaluation = script;
-                    break;
-                case ShaderType.GeometryShader:
-                    _Shader4Geometry = script;
-                    break;
-                case ShaderType.FragmentShader:
-                    _Shader5Fragment = script;
-                    break;
-                case ShaderType.ComputeShader:
-                    _Shader6Compute = script;
-                    break;
-            }
-        }
-
-        public override string ToString() =>
-            !string.IsNullOrWhiteSpace(Description)
-            ? _Description
-            : Index >= 0
-            ? $"Trace #{Index + 1}"
-            : "New trace";
 
         #endregion
 
@@ -290,6 +231,17 @@
 
         #endregion
 
+        #region Public Methods
+
+        public override string ToString() =>
+            !string.IsNullOrWhiteSpace(Description)
+            ? _Description
+            : Index >= 0
+            ? $"Trace #{Index + 1}"
+            : "New trace";
+
+        #endregion
+
         #region Persistent Fields
 
         [JsonProperty] internal string _Description;
@@ -330,11 +282,63 @@
 
         #region Internal Methods
 
+        internal Trace Clone()
+        {
+            var trace = new Trace();
+            trace.CopyFrom(this);
+            return trace;
+        }
+
+        internal string GetScript(ShaderType shaderType)
+        {
+            switch (shaderType)
+            {
+                case ShaderType.VertexShader:
+                    return _Shader1Vertex;
+                case ShaderType.TessControlShader:
+                    return _Shader2TessControl;
+                case ShaderType.TessEvaluationShader:
+                    return _Shader3TessEvaluation;
+                case ShaderType.GeometryShader:
+                    return _Shader4Geometry;
+                case ShaderType.FragmentShader:
+                    return _Shader5Fragment;
+                case ShaderType.ComputeShader:
+                    return _Shader6Compute;
+            }
+            return string.Empty;
+        }
+
         internal Matrix4 GetTransform() => Maths.CreateTransformation(Location, Orientation, Scale);
 
         internal void Init(Scene scene)
         {
             Scene = scene;
+        }
+
+        internal void SetScript(ShaderType shaderType, string script)
+        {
+            switch (shaderType)
+            {
+                case ShaderType.VertexShader:
+                    _Shader1Vertex = script;
+                    break;
+                case ShaderType.TessControlShader:
+                    _Shader2TessControl = script;
+                    break;
+                case ShaderType.TessEvaluationShader:
+                    _Shader3TessEvaluation = script;
+                    break;
+                case ShaderType.GeometryShader:
+                    _Shader4Geometry = script;
+                    break;
+                case ShaderType.FragmentShader:
+                    _Shader5Fragment = script;
+                    break;
+                case ShaderType.ComputeShader:
+                    _Shader6Compute = script;
+                    break;
+            }
         }
 
         internal void SetTransform(Matrix4 transform)
