@@ -50,6 +50,13 @@
 
         #endregion
 
+        #region Public Operators
+
+        public static bool operator ==(Point3 p, Point3 q) => p is null ? q is null : p.Equals(q);
+        public static bool operator !=(Point3 p, Point3 q) => !(p == q);
+
+        #endregion
+
         #region Public Methods
 
         public override bool Equals(object obj) => obj is Point3 p && p.X == X && p.Y == Y && p.Z == Z;

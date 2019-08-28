@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel;
     using System.Globalization;
+    using ToyGraf.Engine.Types;
 
     public class CameraTypeConverter : TypeConverter
     {

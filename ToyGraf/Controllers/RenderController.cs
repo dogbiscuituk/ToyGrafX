@@ -115,8 +115,8 @@
             ValidateProgram();
             if (ProgramValid)
             {
-                ValidateProjection();
                 ValidateCameraView();
+                ValidateProjection();
                 LoadTimeValue();
                 for (int traceIndex = 0; traceIndex < Scene.Traces.Count; traceIndex++)
                 {

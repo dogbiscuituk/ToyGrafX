@@ -52,6 +52,13 @@
 
         #endregion
 
+        #region Public Operators
+
+        public static bool operator ==(Euler3F p, Euler3F q) => p is null ? q is null : p.Equals(q);
+        public static bool operator !=(Euler3F p, Euler3F q) => !(p == q);
+
+        #endregion
+
         #region Public Methods
 
         public override bool Equals(object obj) => obj is Euler3F p &&

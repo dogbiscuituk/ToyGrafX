@@ -1,8 +1,7 @@
-﻿namespace ToyGraf.Engine
+﻿namespace ToyGraf.Engine.Types
 {
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
-    using ToyGraf.Engine.Types;
 
     [TypeConverter(typeof(CameraTypeConverter))]
     public class Camera
@@ -73,12 +72,32 @@
 
         #endregion
 
+        #region Public Operators
+
+        public static bool operator ==(Camera p, Camera q) => p is null ? q is null : p.Equals(q);
+        public static bool operator !=(Camera p, Camera q) => !(p == q);
+
+        #endregion
+
         #region Public Methods
+
+        public override bool Equals(object obj) =>
+            obj is Camera c && c.Position == Position && c.Rotation == Rotation;
 
         public void Fix()
         {
             HomePosition = Position;
             HomeRotation = Rotation;
+        }
+
+        public override int GetHashCode() => Position.GetHashCode() ^ Rotation.GetHashCode();
+
+        public static Camera Parse(string s)
+        {
+            var t = s.Split(',');
+            return new Camera(
+                new Point3F(float.Parse(t[0]), float.Parse(t[1]), float.Parse(t[2])),
+                new Euler3F(float.Parse(t[3]), float.Parse(t[4]), float.Parse(t[5])));
         }
 
         public void Reset()
@@ -88,14 +107,6 @@
         }
 
         public override string ToString() => $"{Position}, {Rotation}";
-
-        public static Camera Parse(string s)
-        {
-            var t = s.Split(',');
-            return new Camera(
-                new Point3F(float.Parse(t[0]), float.Parse(t[1]), float.Parse(t[2])),
-                new Euler3F(float.Parse(t[3]), float.Parse(t[4]), float.Parse(t[5])));
-        }
 
         #endregion
 

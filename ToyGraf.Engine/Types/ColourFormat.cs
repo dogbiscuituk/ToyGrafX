@@ -62,6 +62,13 @@
 
         #endregion
 
+        #region Public Operators
+
+        public static bool operator ==(ColourFormat p, ColourFormat q) => p is null ? q is null : p.Equals(q);
+        public static bool operator !=(ColourFormat p, ColourFormat q) => !(p == q);
+
+        #endregion
+
         #region Public Methods
 
         public override bool Equals(object obj) => obj is ColourFormat f &&

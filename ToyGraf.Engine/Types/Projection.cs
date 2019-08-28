@@ -136,9 +136,23 @@
 
         #endregion
 
+        #region Public Operators
+
+        public static bool operator ==(Projection p, Projection q) => p is null ? q is null : p.Equals(q);
+        public static bool operator !=(Projection p, Projection q) => !(p == q);
+
+        #endregion
+
         #region Public Methods
 
-        public override string ToString() => $"{ProjectionType}, {FieldOfView}, {FrustrumMin}, {FrustrumMax}";
+        public override bool Equals(object obj) => obj is Projection p
+            && p.ProjectionType == ProjectionType
+            && p.FieldOfView == FieldOfView
+            && p.FrustrumMin == FrustrumMin
+            && p.FrustrumMax == FrustrumMax;
+
+        public override int GetHashCode() =>
+            (int)ProjectionType ^ FieldOfView.GetHashCode() ^ FrustrumMin.GetHashCode() ^ FrustrumMax.GetHashCode();
 
         public static Projection Parse(string s)
         {
@@ -149,6 +163,8 @@
                 new Point3F(float.Parse(t[2]), float.Parse(t[3]), float.Parse(t[4])),
                 new Point3F(float.Parse(t[5]), float.Parse(t[6]), float.Parse(t[7])));
         }
+
+        public override string ToString() => $"{ProjectionType}, {FieldOfView}, {FrustrumMin}, {FrustrumMax}";
 
         #endregion
 
