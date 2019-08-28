@@ -400,6 +400,7 @@
                 }
             PropertyGridController.Refresh();
             TraceTableController.Refresh();
+            GLControl.Invalidate();
         }
 
         private SceneController OpenFile(FilterIndex filterIndex = FilterIndex.File) =>
