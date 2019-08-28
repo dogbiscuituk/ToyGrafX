@@ -278,6 +278,8 @@
             _VboVertexID,
             _VboIndexID;
 
+        internal bool _VaoValid;
+
         #endregion
 
         #region Internal Methods

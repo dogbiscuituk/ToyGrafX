@@ -230,6 +230,7 @@
                 SceneForm.FileClose.Click += FileClose_Click;
                 SceneForm.FileExit.Click += FileExit_Click;
                 SceneForm.EditOptions.Click += EditOptions_Click;
+                SceneForm.EditRefresh.Click += (sender, e) => RenderController.Refresh();
                 SceneForm.tbNew.ButtonClick += FileNewEmptyScene_Click;
                 SceneForm.tbNewEmptyScene.Click += FileNewEmptyScene_Click;
                 SceneForm.tbNewFromTemplate.Click += FileNewFromTemplate_Click;
@@ -371,7 +372,7 @@
                 ChangedPropertyNames.AddRange(propertyNames.Where(p => !ChangedPropertyNames.Contains(p)));
                 return;
             }
-            $"SceneController.OnPropertyChanged({propertyNames.Aggregate((s, t) => $"'{s}', '{t}'")})".Spit();
+            $"Property Changed: {propertyNames.Aggregate((s, t) => $"{s}, {t}")}.".Spit();
             foreach (var propertyName in propertyNames)
                 switch (propertyName)
                 {
@@ -415,7 +416,7 @@
             return sceneController;
         }
 
-        private void Resize() => RenderController.InitViewport();
+        private void Resize() => RenderController.InvalidateProjection();
         private bool SaveFile() => JsonController.Save();
         private bool SaveFileAs() => JsonController.SaveAs();
         private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();
