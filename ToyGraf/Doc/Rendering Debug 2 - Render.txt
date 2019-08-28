@@ -1,0 +1,36 @@
+internal void Render()
+{
+    if (!MakeCurrent(true))
+        return;
+    GL.Enable(EnableCap.DepthTest);
+    GL.Enable(EnableCap.Texture2D);
+    GL.ClearColor(Scene.BackgroundColour);
+    GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+    GL.UseProgram(ProgramID); // Start Shader
+    ValidateProgram();
+    if (ProgramValid)
+    {
+        ValidateCameraView();
+        ValidateProjection();
+        LoadTimeValue();
+        for (int traceIndex = 0; traceIndex < Scene.Traces.Count; traceIndex++)
+        {
+            var trace = Scene.Traces[traceIndex];
+            if (!trace.Visible)
+                continue;
+            LoadTraceIndex(traceIndex);
+            LoadTransform(trace);
+            ValidateTrace(trace);
+            GL.BindVertexArray(trace._VaoID);
+            GL.EnableVertexAttribArray(0);
+            GL.DrawElements(PrimitiveType.TriangleStrip, trace._VaoVertexCount,
+                DrawElementsType.UnsignedInt, 0);
+            GL.DisableVertexAttribArray(0);
+            GL.BindVertexArray(0);
+            UnbindVao();
+        }
+    }
+    GL.UseProgram(0); // Stop Shader
+    GLControl.SwapBuffers();
+    MakeCurrent(false);
+}

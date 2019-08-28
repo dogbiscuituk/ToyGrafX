@@ -1,0 +1,46 @@
+internal void InvalidateCameraView()
+{
+    "Invalidate Camera View".Spit();
+    CameraViewValid = false;
+}
+
+internal void InvalidateProgram()
+{
+    "Invalidate Program".Spit();
+    ProgramCompiled = false;
+    if (!MakeCurrent(true))
+        return;
+    DeleteShaders();
+    if (ProgramID != 0)
+    {
+        GL.DeleteProgram(ProgramID);
+        ProgramID = 0;
+    }
+    MakeCurrent(false);
+}
+
+internal void InvalidateProjection()
+{
+    "Invalidate Projection".Spit();
+    ProjectionValid = false;
+}
+
+internal void InvalidateTrace(Trace trace)
+{
+    $"Invalidate Trace '{trace}'".Spit();
+    trace._VaoValid = false;
+    if (MakeCurrent(true))
+    {
+        DeleteTraceVao(trace);
+        MakeCurrent(false);
+    }
+}
+
+internal void Refresh()
+{
+    InvalidateCameraView();
+    InvalidateProgram();
+    InvalidateProjection();
+    foreach (var trace in Scene.Traces)
+        InvalidateTrace(trace);
+}

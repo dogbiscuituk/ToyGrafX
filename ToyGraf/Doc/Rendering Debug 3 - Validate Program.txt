@@ -1,0 +1,29 @@
+private void ValidateProgram()
+{
+    if (ProgramCompiled)
+        return;
+    "Validate Program".Spit();
+    Scene._GPUStatus = GPUStatus.OK;
+    GpuCode = new StringBuilder();
+    GpuLog = new StringBuilder();
+    ProgramID = GL.CreateProgram();
+    CreateShaders();
+    Log("Linking program...");
+    BindAttributes();
+    GL.LinkProgram(ProgramID);
+    GL.ValidateProgram(ProgramID);
+    Log(GL.GetProgramInfoLog(ProgramID));
+    Log("Done.");
+    Scene._GPUCode = GpuCode.ToString().TrimEnd();
+    Scene._GPULog = GpuLog.ToString().TrimEnd();
+    SceneController.OnPropertyChanged(
+        Scene,
+        DisplayNames.GPUCode,
+        DisplayNames.GPULog,
+        DisplayNames.GPUStatus);
+    GpuCode = null;
+    GpuLog = null;
+    GetUniformLocations();
+    DeleteShaders();
+    ProgramCompiled = true;
+}

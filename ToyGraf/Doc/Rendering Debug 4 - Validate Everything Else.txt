@@ -1,0 +1,33 @@
+private void ValidateCameraView()
+{
+    if (CameraViewValid)
+        return;
+    "Validate Camera View".Spit();
+    LoadCameraView();
+    CameraViewValid = true;
+}
+
+private void ValidateProjection()
+{
+    if (ProjectionValid)
+        return;
+    "Validate Projection".Spit();
+    GL.Viewport(GLControl.Size);
+    LoadProjection();
+    ProjectionValid = true;
+}
+
+private void ValidateTrace(Trace trace)
+{
+    if (trace._VaoValid)
+        return;
+    $"Validate Trace '{trace}'".Spit();
+    var coords = Grids.GetGrid(trace.StripCount);
+    var indices = Grids.GetIndices(trace.StripCount, trace.Pattern);
+    DeleteTraceVao(trace);
+    GL.BindVertexArray(trace._VaoID = CreateVao());
+    trace._VboIndexID = BindIndicesBuffer(indices);
+    trace._VboVertexID = StoreDataInAttributeList(0, coords);
+    trace._VaoVertexCount = indices.Length;
+    trace._VaoValid = true;
+}
