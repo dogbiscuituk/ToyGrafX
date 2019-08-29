@@ -7,7 +7,7 @@
     /// Test the equality operators on the simple support types.
     /// </summary>
     [TestClass]
-    public class StructTests
+    public class OperatorTests
     {
         #region Public Test Methods
 
