@@ -132,7 +132,6 @@
                     GL.DrawElements(PrimitiveType.TriangleStrip, trace._VaoVertexCount, DrawElementsType.UnsignedInt, 0);
                     GL.DisableVertexAttribArray(0);
                     GL.BindVertexArray(0);
-                    UnbindVao();
                 }
             }
             GL.UseProgram(0); // Stop Shader
@@ -411,8 +410,6 @@
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             return vboID;
         }
-
-        private void UnbindVao() => GL.BindVertexArray(0);
 
         private void UnloadTraces()
         {
