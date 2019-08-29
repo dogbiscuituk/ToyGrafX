@@ -1,7 +1,10 @@
 ﻿namespace ToyGraf.Models
 {
     using OpenTK.Graphics.OpenGL;
+    using System;
     using System.ComponentModel;
+    using System.Drawing.Design;
+    using System.Linq;
 
     [TypeConverter(typeof(GLInfoTypeConverter))]
     public class GLInfo
@@ -25,10 +28,6 @@
             Shader = shader;
             Vendor = vendor;
             Renderer = renderer;
-            var count = GL.GetInteger(GetPName.NumExtensions);
-            Extensions = new string[count];
-            for (var index = 0; index < count; index++)
-                Extensions[index] = GL.GetString(StringNameIndexed.Extensions, index);
         }
 
         #endregion
@@ -58,10 +57,6 @@
         [Description(Descriptions.GLInfo_Renderer)]
         [DisplayName(DisplayNames.GLInfo_Renderer)]
         public string Renderer { get; }
-
-        [Description(Descriptions.GLInfo_Extensions)]
-        [DisplayName(DisplayNames.GLInfo_Extensions)]
-        public string[] Extensions { get; }
 
         #endregion
 
