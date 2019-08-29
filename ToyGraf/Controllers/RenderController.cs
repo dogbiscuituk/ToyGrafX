@@ -111,10 +111,10 @@
             GL.Enable(EnableCap.Texture2D);
             GL.ClearColor(Scene.BackgroundColour);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            GL.UseProgram(ProgramID); // Start Shader
             ValidateProgram();
             if (ProgramValid)
             {
+                GL.UseProgram(ProgramID); // Start Shader
                 ValidateCameraView();
                 ValidateProjection();
                 LoadTimeValue();
@@ -133,8 +133,8 @@
                     GL.DisableVertexAttribArray(0);
                     GL.BindVertexArray(0);
                 }
+                GL.UseProgram(0); // Stop Shader
             }
-            GL.UseProgram(0); // Stop Shader
             GLControl.SwapBuffers();
             MakeCurrent(false);
         }
@@ -455,11 +455,11 @@
             Loc_Transform = GetUniformLocation("transform");
         }
 
-        private static void LoadBoolean(int location, bool value) => GL.Uniform1(location, value ? 1f : 0f);
+        //private static void LoadBoolean(int location, bool value) => GL.Uniform1(location, value ? 1f : 0f);
         private static void LoadFloat(int location, float value) => GL.Uniform1(location, value);
         private static void LoadInt(int location, int value) => GL.Uniform1(location, value);
         private static void LoadMatrix(int location, Matrix4 value) => GL.UniformMatrix4(location, false, ref value);
-        private static void LoadVector(int location, Vector3 value) => GL.Uniform3(location, value);
+        //private static void LoadVector(int location, Vector3 value) => GL.Uniform3(location, value);
 
         private void LoadProjection() => LoadMatrix(Loc_Projection, Scene.GetProjection());
         private void LoadTimeValue() => LoadFloat(Loc_TimeValue, (float)Clock.VirtualSecondsElapsed);

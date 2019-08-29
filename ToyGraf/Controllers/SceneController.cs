@@ -8,7 +8,6 @@
     using System.Windows.Forms;
     using ToyGraf.Commands;
     using ToyGraf.Controls;
-    using ToyGraf.Engine;
     using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
     using ToyGraf.Models;
