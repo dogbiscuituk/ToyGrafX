@@ -7,10 +7,10 @@
     public class GridTests
     {
         /// <summary>
-        /// The "empty" grid actually contains one point: the origin.
+        /// Check that the "empty" grid actually contains one point, namely the origin.
         /// </summary>
         [TestMethod]
-        public void GetGrid()
+        public void CheckGrid()
         {
             var expected = new float[] { 0, 0, 0 };
             var actual = Grids.GetGrid();
@@ -18,10 +18,10 @@
         }
 
         /// <summary>
-        /// Get the 3D coordinates of the points dividing the x axis into 8 equal line segments.
+        /// Check the 3D coordinates of the 9 points dividing the x axis into 8 equal line segments.
         /// </summary>
         [TestMethod]
-        public void GetGridX()
+        public void CheckGridX()
         {
             var expected = new[]
             {
@@ -40,10 +40,10 @@
         }
 
         /// <summary>
-        /// Get the 3D coordinates of the points dividing the y axis into 8 equal line segments.
+        /// Check the 3D coordinates of the 9 points dividing the y axis into 8 equal line segments.
         /// </summary>
         [TestMethod]
-        public void GetGridY()
+        public void CheckGridY()
         {
             var expected = new[]
             {
@@ -62,10 +62,10 @@
         }
 
         /// <summary>
-        /// Get the 3D coordinates of the points dividing the z axis into 8 equal line segments.
+        /// Check the 3D coordinates of the 9 points dividing the z axis into 8 equal line segments.
         /// </summary>
         [TestMethod]
-        public void GetGridZ()
+        public void CheckGridZ()
         {
             var expected = new[]
             {
@@ -84,10 +84,10 @@
         }
 
         /// <summary>
-        /// Get the 3D coordinates of the points dividing the xy plane into an 8x8 grid.
+        /// Check the 3D coordinates of the 81 (9*9) points dividing the xy plane into an 8x8 grid.
         /// </summary>
         [TestMethod]
-        public void GetGridXY()
+        public void CheckGridXY()
         {
             var expected = new[]
             {
@@ -115,10 +115,10 @@
         }
 
         /// <summary>
-        /// Get the 3D coordinates of the points dividing the xz plane into an 8x8 grid.
+        /// Check the 3D coordinates of the 81 (9*9) points dividing the xz plane into an 8x8 grid.
         /// </summary>
         [TestMethod]
-        public void GetGridXZ()
+        public void CheckGridXZ()
         {
             var expected = new[]
             {
@@ -146,10 +146,10 @@
         }
 
         /// <summary>
-        /// Get the 3D coordinates of the points dividing the yz plane into an 8x8 grid.
+        /// Check the 3D coordinates of the 81 (9*9) points dividing the yz plane into an 8x8 grid.
         /// </summary>
         [TestMethod]
-        public void GetGridYZ()
+        public void CheckGridYZ()
         {
             var expected = new[]
             {
@@ -177,10 +177,10 @@
         }
 
         /// <summary>
-        /// Get the 3D coordinates of the points dividing the xyz space into a 4x4x4 lattice.
+        /// Check the 3D coordinates of the 125 (5*5*5) points dividing the xyz space into a 4x4x4 lattice.
         /// </summary>
         [TestMethod]
-        public void GetGridXYZ()
+        public void CheckGridXYZ()
         {
             var expected = new[]
             {
@@ -215,10 +215,10 @@
         }
 
         /// <summary>
-        /// Get the 3D coordinates of the points dividing the xyz space into a 1x4x2 lattice.
+        /// Check the 3D coordinates of the 30 (2*5*3) points dividing the xyz space into a 1x4x2 lattice.
         /// </summary>
         [TestMethod]
-        public void GetGridXYZ2()
+        public void CheckGridXYZ2()
         {
             var expected = new[]
             {
@@ -232,8 +232,11 @@
             CollectionAssert.AreEqual(expected, actual);
         }
 
+        /// <summary>
+        /// Check the 384 (6*8*8) vertex indices needed to cover with triangles, a plane partitioned by an 8x8 grid.
+        /// </summary>
         [TestMethod]
-        public void GetTriangleIndices()
+        public void CheckTriangleIndices()
         {
             var expected = new int[]
             {
@@ -258,8 +261,11 @@
             CollectionAssert.AreEqual(expected, actual);
         }
 
+        /// <summary>
+        /// Check the 137 (1+8*(1+8*2)) vertex indices needed to cover with a single triangle strip, a plane partitioned by an 8x8 grid.
+        /// </summary>
         [TestMethod]
-        public void GetTriangleStripIndices()
+        public void CheckTriangleStripIndices()
         {
             var expected = new int[]
             {

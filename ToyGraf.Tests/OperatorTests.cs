@@ -11,6 +11,96 @@
     {
         #region Public Test Methods
 
+        /// <summary>
+        /// Check that the Camera copy constructor yields a result equal to the original,
+        /// but having a different reference.
+        /// </summary>
+        [TestMethod]
+        public void CopyCamera()
+        {
+            var p = new Camera(1, 2, 3, 4, 5, 6);
+            var q = new Camera(p);
+            Assert.IsTrue(p.Equals(q));
+            Assert.IsTrue(p == q);
+            Assert.IsFalse(p != q);
+            Assert.IsFalse(ReferenceEquals(p, q));
+        }
+
+        /// <summary>
+        /// Check that the ColourFormat copy constructor yields a result equal to the original,
+        /// but having a different reference.
+        /// </summary>
+        [TestMethod]
+        public void CopyColourFormat()
+        {
+            var p = new ColourFormat(1, 2, 3, 4);
+            var q = new ColourFormat(p);
+            Assert.IsTrue(p.Equals(q));
+            Assert.IsTrue(p == q);
+            Assert.IsFalse(p != q);
+            Assert.IsFalse(ReferenceEquals(p, q));
+        }
+
+        /// <summary>
+        /// Check that the Euler3F copy constructor yields a result equal to the original,
+        /// but having a different reference.
+        /// </summary>
+        [TestMethod]
+        public void CopyEuler3F()
+        {
+            var p = new Euler3F(1, 2, 3);
+            var q = new Euler3F(p);
+            Assert.IsTrue(p.Equals(q));
+            Assert.IsTrue(p == q);
+            Assert.IsFalse(p != q);
+            Assert.IsFalse(ReferenceEquals(p, q));
+        }
+
+        /// <summary>
+        /// Check that the Point3 copy constructor yields a result equal to the original,
+        /// but having a different reference.
+        /// </summary>
+        [TestMethod]
+        public void CopyPoint3()
+        {
+            var p = new Point3(1, 2, 3);
+            var q = new Point3(p);
+            Assert.IsTrue(p.Equals(q));
+            Assert.IsTrue(p == q);
+            Assert.IsFalse(p != q);
+            Assert.IsFalse(ReferenceEquals(p, q));
+        }
+
+        /// <summary>
+        /// Check that the Point3F copy constructor yields a result equal to the original,
+        /// but having a different reference.
+        /// </summary>
+        [TestMethod]
+        public void CopyPoint3F()
+        {
+            var p = new Point3F(1, 2, 3);
+            var q = new Point3F(p);
+            Assert.IsTrue(p.Equals(q));
+            Assert.IsTrue(p == q);
+            Assert.IsFalse(p != q);
+            Assert.IsFalse(ReferenceEquals(p, q));
+        }
+
+        /// <summary>
+        /// Check that the Projection copy constructor yields a result equal to the original,
+        /// but having a different reference.
+        /// </summary>
+        [TestMethod]
+        public void CopyProjection()
+        {
+            var p = Projection.Parse("0, 1, 2, 3, 4, 5, 6, 7, 8");
+            var q = new Projection(p);
+            Assert.IsTrue(p.Equals(q));
+            Assert.IsTrue(p == q);
+            Assert.IsFalse(p != q);
+            Assert.IsFalse(ReferenceEquals(p, q));
+        }
+
         [TestMethod]
         public void EqualCamera()
         {

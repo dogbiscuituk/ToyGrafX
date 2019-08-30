@@ -136,7 +136,7 @@
         /// <param name="cx">The number of steps along the x axis.</param>
         /// <param name="cy">The number of steps along the y axis.</param>
         /// <returns>
-        /// A total of cx(2cy+1)+1 ints, ranging from 0 to 3(cx+1)(cy+1)-1 inclusive. These are the
+        /// A total of 1+cx*(1+cy*2) ints ranging from 0 to 3(cx+1)(cy+1)-1 inclusive, which are the
         /// required vertex indices. Note that these must be multiplied by 3 to index the float data
         /// returned by GetVertexCoords, as every such vertex is postprocessed to add a z coordinate
         /// of zero, and so eventually comprises 3 floats in total.
