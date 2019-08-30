@@ -1,0 +1,26 @@
+Action - Expected Result - Actual Result
+---------------------------------------------
+Add Trace - Trace appears (moving) - Nothing
+Resize Control - ??? - Nothing
+Edit Camera - ??? - Trace appears (moving)
+---------------------------------------------
+Add Trace - Trace appears (moving) - Nothing
+Edit Camera - ??? - Nothing
+Resize Control - ??? - Trace appears (moving)
+---------------------------------------------
+Add Trace - Trace appears (moving) - Nothing
+Resize Control - ??? - 	Nothing
+Edit Projection - ??? - Nothing
+Edit Shader - ??? - Nothing
+Edit #Strips - ??? - Nothing
+Edit Location - ??? - Nothing
+Edit Orientation - ??? - Nothing
+Edit Scale - ??? - Nothing
+Edit Camera - ??? - Nothing
+Resize Control - ??? - Trace appears (moving)
+---------------------------------------------
+
+HINT
+ \
+  Resize Control calls InvalidateProjection.
+  Edit Camera calls InvalidateCameraView.
