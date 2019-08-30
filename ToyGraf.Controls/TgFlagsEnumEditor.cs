@@ -43,7 +43,7 @@
 
         #region Private Properties
 
-        private TgFlagsCheckedListBox FlagsCheckedListBox;
+        private readonly TgFlagsCheckedListBox FlagsCheckedListBox;
 
         #endregion
     }

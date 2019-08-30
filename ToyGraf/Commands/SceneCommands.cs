@@ -2,7 +2,6 @@
 {
     using OpenTK;
     using System.Drawing;
-    using ToyGraf.Engine;
     using ToyGraf.Engine.Types;
     using ToyGraf.Models;
 

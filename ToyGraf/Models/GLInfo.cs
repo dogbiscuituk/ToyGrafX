@@ -1,10 +1,7 @@
 ﻿namespace ToyGraf.Models
 {
     using OpenTK.Graphics.OpenGL;
-    using System;
     using System.ComponentModel;
-    using System.Drawing.Design;
-    using System.Linq;
 
     [TypeConverter(typeof(GLInfoTypeConverter))]
     public class GLInfo

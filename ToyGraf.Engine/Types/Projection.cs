@@ -173,10 +173,17 @@
         internal static class Descriptions
         {
             internal const string
-                FieldOfView = "Field of View (total yaw, in degrees)",
-                FrustrumMax = "A vector representing the far top right corner of the frustrum.",
-                FrustrumMin = "A vector representing the near bottom left corner of the frustrum.",
-                ProjectionType = "The type of projection to use.";
+                FieldOfView = @"Field of View (total yaw, in degrees). Used only in the Perspective projection type. 
+This value is combined with the current display aspect ratio, and the Near and Far planes (Z components of the Frustrum Min/Max), to generate the projection frustrum.",
+                FrustrumMax = @"A vector representing the far top right corner of the projection frustrum. 
+The X and Y components are used in all projection types except Perspective. The Z component is used in all projection types, and always represents the Far plane.",
+                FrustrumMin = @"A vector representing the near bottom left corner of the projection frustrum. 
+The X and Y components are used in all projection types except Perspective. The Z component is used in all projection types, and always represents the Near plane.",
+                ProjectionType = @"The type of projection frustrum in use. The way this is constructed, and its final shape, depend on the Projection Type as follows:
+* Orthographic: the cuboidal frustrum width and height are derived from the X and Y differences respectively between Frustrum Min/Max. As always, the Z components determine the Near and Far planes. 
+* Orthographic Offset: the Frustrum Min/Max alone determine the extents of the frustrum, which is cuboidal. 
+* Perspective: the Field of View (total yaw, in degrees) is combined with the current display aspect ratio, and the Near and Far planes (Z components of the Frustrum Min/Max). 
+* Perspective Offset: the Frustrum Min/Max alone determine the extents of the frustrum.";
         }
 
         internal static class DisplayNames
