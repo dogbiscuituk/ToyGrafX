@@ -87,6 +87,7 @@
     <Compile Include="Controllers\RenderController.cs" />
     <Compile Include="Controllers\SdiController.cs" />
     <Compile Include="Controllers\TraceTableController.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\Clock.cs" />
     <Compile Include="Models\Enums\FilterIndex.cs" />
     <Compile Include="Models\Extensions.cs" />
