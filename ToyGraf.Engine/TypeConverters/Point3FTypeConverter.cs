@@ -10,12 +10,8 @@
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) =>
             sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
 
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            if (value is string s)
-                return Point3F.Parse(s);
-            return base.ConvertFrom(context, culture, value);
-        }
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) =>
+            value is string s ? Point3F.Parse(s) : base.ConvertFrom(context, culture, value);
 
         public override PropertyDescriptorCollection GetProperties(
             ITypeDescriptorContext context, object value, Attribute[] attributes) =>
