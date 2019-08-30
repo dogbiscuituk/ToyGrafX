@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controllers
+﻿// <copyright file="RenderController.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controllers
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
@@ -11,14 +15,8 @@
 
     public class RenderController
     {
-        #region Constructor
-
         internal RenderController(SceneController sceneController) =>
             SceneController = sceneController;
-
-        #endregion
-
-        #region Internal Properties
 
         internal GLInfo GLInfo
         {
@@ -37,10 +35,6 @@
 
         internal static GLInfo _GLInfo;
         private static readonly object GLInfoSyncRoot = new object();
-
-        #endregion
-
-        #region Internal Methods
 
         internal GLInfo GetGLInfo()
         {
@@ -150,10 +144,6 @@
             return result;
         }
 
-        #endregion
-
-        #region Private Properties
-
         private Clock Clock => ClockController.Clock;
         private ClockController ClockController => SceneController.ClockController;
         private GLControl GLControl => SceneForm.GLControl;
@@ -191,12 +181,6 @@
         private StringBuilder
             GpuCode,
             GpuLog;
-
-        #endregion
-
-        #region Private Methods
-
-        #region Create / Delete Shaders
 
         private void BindAttribute(int attributeIndex, string variableName) =>
             GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
@@ -359,10 +343,6 @@
             trace._VaoValid = true;
         }
 
-        #endregion
-
-        #region Load / Unload Traces
-
         private int BindIndicesBuffer(int[] indices)
         {
             var vboID = CreateVbo();
@@ -417,10 +397,6 @@
                 InvalidateTrace(trace);
         }
 
-        #endregion
-
-        #region Render
-
         private bool MakeCurrent(bool current)
         {
             if (!GLControl.HasValidContext)
@@ -439,10 +415,6 @@
             }
             return true;
         }
-
-        #endregion
-
-        #region Uniforms
 
         private int GetUniformLocation(string uniformName) => GL.GetUniformLocation(ProgramID, uniformName);
 
@@ -466,9 +438,5 @@
         private void LoadTraceIndex(int traceIndex) => LoadInt(Loc_TraceIndex, traceIndex);
         private void LoadTransform(Trace trace) => LoadMatrix(Loc_Transform, trace.GetTransform());
         private void LoadCameraView() => LoadMatrix(Loc_CameraView, Scene.GetCameraView());
-
-        #endregion
-
-        #endregion
     }
 }

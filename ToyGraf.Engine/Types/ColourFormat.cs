@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Engine.Types
+﻿// <copyright file="ColourFormat.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Engine.Types
 {
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
@@ -6,8 +10,6 @@
     [TypeConverter(typeof(ColourFormatTypeConverter))]
     public class ColourFormat
     {
-        #region Constructors
-
         public ColourFormat() : this(0) { }
 
         public ColourFormat(int bpp) : this(bpp, bpp, bpp, bpp) { }
@@ -36,10 +38,6 @@
             Alpha = alpha;
         }
 
-        #endregion
-
-        #region Public Properties
-
         [DefaultValue(0)]
         [Description(Descriptions.Red)]
         [DisplayName(DisplayNames.Red)]
@@ -60,16 +58,8 @@
         [DisplayName(DisplayNames.Alpha)]
         public int Alpha { get; set; }
 
-        #endregion
-
-        #region Public Operators
-
         public static bool operator ==(ColourFormat p, ColourFormat q) => p is null ? q is null : p.Equals(q);
         public static bool operator !=(ColourFormat p, ColourFormat q) => !(p == q);
-
-        #endregion
-
-        #region Public Methods
 
         public override bool Equals(object obj) => obj is ColourFormat f &&
             f.Red == Red && f.Green == Green && f.Blue == Blue && f.Alpha == Alpha;
@@ -81,10 +71,6 @@
             var t = s.Split(',');
             return new ColourFormat(int.Parse(t[0]), int.Parse(t[1]), int.Parse(t[2]), int.Parse(t[3]));
         }
-
-        #endregion
-
-        #region Internal Classes
 
         internal static class Descriptions
         {
@@ -103,7 +89,5 @@
                 Blue = "Blue",
                 Alpha = "Alpha";
         }
-
-        #endregion
     }
 }

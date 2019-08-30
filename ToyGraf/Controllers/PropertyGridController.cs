@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controllers
+﻿// <copyright file="PropertyGridController.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controllers
 {
     using System;
     using System.ComponentModel;
@@ -11,8 +15,6 @@
 
     internal class PropertyGridController
     {
-        #region Constructors
-
         internal PropertyGridController(SceneController sceneController)
         {
             SceneController = sceneController;
@@ -35,10 +37,6 @@
             PropertyGrid.PropertyValueChanged += PropertyGrid_PropertyValueChanged;
         }
 
-        #endregion
-
-        #region Internal Properties
-
         internal TgPropertyGridAdapter PropertyGridAdapter;
 
         internal bool PropertyGridVisible
@@ -59,10 +57,6 @@
             set => PropertyGridAdapter.SelectedObjects = value;
         }
 
-        #endregion
-
-        #region Internal Methods
-
         internal void ApplyOptions() => InitShowSystemRO(PropertyGridAdapter);
 
         internal static void HidePropertyPagesButton(PropertyGrid propertyGrid) =>
@@ -78,20 +72,12 @@
             PropertyGrid.Refresh();
         }
 
-        #endregion
-
-        #region Private Classes
-
         private enum Subject
         {
             Scene,
             SelectedTraces,
             AllTraces
         }
-
-        #endregion
-
-        #region Private Properties
 
         private HostController _HostController;
         private HostController HostController
@@ -146,10 +132,6 @@
         private ToolStripSplitButton SubjectButton;
         private TraceTableController TraceTableController => SceneController.TraceTableController;
 
-        #endregion
-
-        #region Private Event Handlers
-
         private void HostFormClosing(object sender, FormClosingEventArgs e) =>
             PropertyGridDocked = true;
 
@@ -190,10 +172,6 @@
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
             SceneForm.ViewPropertyGrid.Checked = PropertyGridVisible;
-
-        #endregion
-
-        #region Private Methods
 
         private void AddToolstripItems(ToolStrip toolStrip)
         {
@@ -247,7 +225,5 @@
             SubjectButton.Text = SceneForm.PopupSubjectMenu.Items[(int)subject].Text;
             RefreshDataSource();
         }
-
-        #endregion
     }
 }

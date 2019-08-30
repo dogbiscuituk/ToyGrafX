@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controllers
+﻿// <copyright file="AboutController.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controllers
 {
     using System.Reflection;
     using System.Windows.Forms;
@@ -7,8 +11,6 @@
 
     internal class AboutController
     {
-        #region Internal Interface
-
         internal AboutController()
         {
             View = new AboutDialog();
@@ -44,15 +46,7 @@
             }
         }
 
-        #endregion
-
-        #region Private Properties
-
         private AboutDialog _View;
-
-        #endregion
-
-        #region Private Event Handlers
 
         private void GplLinkClick(object sender, LinkLabelLinkClickedEventArgs e) =>
             Launch(View.GplLinkLabel);
@@ -60,16 +54,10 @@
         private void NewtonsoftLinkClick(object sender, LinkLabelLinkClickedEventArgs e) =>
             Launch(View.NewtonsoftLinkLabel);
 
-        #endregion
-
-        #region Private Methods
-
         private void Launch(LinkLabel linkLabel)
         {
             linkLabel.Text.Launch();
             linkLabel.LinkVisited = true;
         }
-
-        #endregion
     }
 }

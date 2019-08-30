@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controls
+﻿// <copyright file="TgCollectionEditor.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controls
 {
     using System;
     using System.ComponentModel;
@@ -8,13 +12,7 @@
 
     public class TgCollectionEditor : CollectionEditor
     {
-        #region Constructor
-
         public TgCollectionEditor(Type type) : base(type) { }
-
-        #endregion
-
-        #region Public Events
 
         public static event EventHandler
             CollectionFormActivated,
@@ -32,10 +30,6 @@
         public static event LayoutEventHandler CollectionFormLayout;
         public static event PropertyValueChangedEventHandler CollectionItemPropertyValueChanged;
 
-        #endregion
-
-        #region Public Methods
-
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
             var result = base.EditValue(context, provider, value);
@@ -44,10 +38,6 @@
         }
 
         public ITypeDescriptorContext GetContext() => Context;
-
-        #endregion
-
-        #region Protected Override Methods
 
         protected override CollectionForm CreateCollectionForm()
         {
@@ -68,18 +58,10 @@
             return form;
         }
 
-        #endregion
-
-        #region Private Properties
-
         private DialogResult DialogResult;
         private PropertyGrid PropertyGrid => PropertyGridAdapter.PropertyGrid;
         private TgPropertyGridAdapter PropertyGridAdapter;
         private bool Updating;
-
-        #endregion
-
-        #region Private Event Handlers
 
         private void CollectionForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -99,10 +81,6 @@
                 Updating = false;
             }
         }
-
-        #endregion
-
-        #region Private Methods
 
         private void AttachEventHandlers(Form form)
         {
@@ -133,7 +111,5 @@
             form.Shown -= CollectionFormShown;
             PropertyGrid.SelectedObjectsChanged -= PropertyGrid_SelectedObjectsChanged;
         }
-
-        #endregion
     }
 }

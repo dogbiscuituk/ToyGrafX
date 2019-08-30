@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controls
+﻿// <copyright file="TgFlagsCheckedListBox.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controls
 {
     using System;
     using System.ComponentModel;
@@ -6,13 +10,7 @@
 
     public partial class TgFlagsCheckedListBox : CheckedListBox
     {
-        #region Constructor
-
         public TgFlagsCheckedListBox() => InitializeComponent();
-
-        #endregion
-
-        #region Public Properties
 
         [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)]
         public Enum EnumValue
@@ -27,10 +25,6 @@
                 Apply();
             }
         }
-
-        #endregion
-
-        #region Public Methods
 
         public TgFlagsCheckedListBoxItem Add(string text, int value) =>
             Add(new TgFlagsCheckedListBoxItem(text, value));
@@ -49,10 +43,6 @@
                     result |= ((TgFlagsCheckedListBoxItem)Items[index]).Value;
             return result;
         }
-
-        #endregion
-
-        #region Protected Methods
 
         protected override void OnItemCheck(ItemCheckEventArgs e)
         {
@@ -89,17 +79,9 @@
             Updating = false;
         }
 
-        #endregion
-
-        #region Private Fields
-
         private Type _EnumType;
         private Enum _EnumValue;
         private bool Updating;
-
-        #endregion
-
-        #region Private Methods
 
         private void Apply() => UpdateItems((int)Convert.ChangeType(_EnumValue, typeof(int)));
 
@@ -108,7 +90,5 @@
             foreach (var name in Enum.GetNames(_EnumType))
                 Add(name, (int)Convert.ChangeType(Enum.Parse(_EnumType, name), typeof(int)));
         }
-
-        #endregion
     }
 }

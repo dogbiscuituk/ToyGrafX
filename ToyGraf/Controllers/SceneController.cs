@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controllers
+﻿// <copyright file="SceneController.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controllers
 {
     using OpenTK;
     using System;
@@ -15,10 +19,8 @@
     using ToyGraf.Properties;
     using ToyGraf.Views;
 
-    internal class SceneController
+    internal class SceneController : IDisposable
     {
-        #region Constructors
-
         internal SceneController()
         {
             SceneForm = new SceneForm();
@@ -33,10 +35,6 @@
             ConnectAll(true);
         }
 
-        #endregion
-
-        #region Internal Properties
-
         internal ClockController ClockController;
         internal CommandProcessor CommandProcessor { get; private set; }
         internal readonly PropertyGridController PropertyGridController;
@@ -44,10 +42,6 @@
         internal Scene Scene;
         internal SceneForm SceneForm;
         internal readonly TraceTableController TraceTableController;
-
-        #endregion
-
-        #region Internal Methods
 
         internal void ApplyOptions() => PropertyGridController.ApplyOptions();
 
@@ -133,10 +127,6 @@
         internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
             $"{GLSLUrl}{GetBookmark(propertyGrid)}".Launch();
 
-        #endregion
-
-        #region Private Event Handlers
-
         private void Clock_Tick(object sender, EventArgs e) { RenderController.Render(); }
         private void EditOptions_Click(object sender, EventArgs e) => EditOptions();
         private void FileClose_Click(object sender, System.EventArgs e) => SceneForm.Close();
@@ -164,10 +154,6 @@
         private void TbOpen_DropDownOpening(object sender, EventArgs e) => SceneForm.FileReopen.CloneTo(SceneForm.tbOpen);
         private void TbSave_Click(object sender, EventArgs e) => SaveOrSaveAs();
 
-        #endregion
-
-        #region Private Properties
-
         private readonly List<string> ChangedPropertyNames = new List<string>();
         private object ChangedSubject;
         private Clock Clock => ClockController.Clock;
@@ -177,10 +163,6 @@
         private TgPropertyGridAdapter PropertyGridAdapter => PropertyGridController.PropertyGridAdapter;
         private int UpdateCount;
         private bool Updating => UpdateCount > 0;
-
-        #endregion
-
-        #region Private Methods
 
         private void ClockInit() => Clock.Interval_ms = GetFrameMilliseconds();
 
@@ -461,6 +443,18 @@
 
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
 
-        #endregion
+        public void Dispose() => Dispose(true);
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                    SceneForm.Dispose();
+                disposedValue = true;
+            }
+        }
+
+        private bool disposedValue = false;
     }
 }

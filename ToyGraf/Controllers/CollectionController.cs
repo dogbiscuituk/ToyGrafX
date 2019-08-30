@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controllers
+﻿// <copyright file="CollectionController.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -14,8 +18,6 @@
 
     public static class CollectionController
     {
-        #region Public Interface
-
         public static void Start() => AttachEventHandlers();
 
         public static void Stop()
@@ -24,18 +26,10 @@
             SceneController = null;
         }
 
-        #endregion
-
-        #region Private Properties
-
         private static CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         private static Scene Scene => CommandProcessor?.Scene;
         private static SceneController SceneController;
         private static List<Trace> Traces => Scene?.Traces;
-
-        #endregion
-
-        #region Private Event Handlers
 
         private static void TgCollectionEditor_CollectionEdited(object sender, CollectionEditedEventArgs e)
         {
@@ -67,10 +61,6 @@
 
         private static void TgFileNameEditor_InitDialog(object sender, InitDialogEventArgs e) =>
             SceneController.InitTextureDialog(e.OpenFileDialog);
-
-        #endregion
-
-        #region Private Methods
 
         private static void AttachEventHandlers()
         {
@@ -110,7 +100,5 @@
                 traces[index].CopyTo(Traces[index]);
             EndUpdate();
         }
-
-        #endregion
     }
 }

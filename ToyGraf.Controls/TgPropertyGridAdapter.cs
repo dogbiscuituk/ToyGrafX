@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controls
+﻿// <copyright file="TgPropertyGridAdapter.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controls
 {
     using System;
     using System.Collections.Generic;
@@ -8,23 +12,13 @@
 
     public class TgPropertyGridAdapter
     {
-        #region Constructor
-
         public TgPropertyGridAdapter(PropertyGrid propertyGrid) { PropertyGrid = propertyGrid; }
-
-        #endregion
-
-        #region Private Fields
 
         private AttributeCollection _HiddenAttrs, _VisibleAttrs;
         private string[] _HiddenProps, _VisibleProps;
         private readonly List<PropertyDescriptor> Props = new List<PropertyDescriptor>();
         private TgWrap Wrap;
         private List<TgWrap> Wraps;
-
-        #endregion
-
-        #region Public Properties
 
         public AttributeCollection HiddenAttributes
         {
@@ -131,10 +125,6 @@
             }
         }
 
-        #endregion
-
-        #region Private Methods
-
         private void HideAttr(TgWrap wrap, Attribute attr)
         {
             var props = TypeDescriptor.GetProperties(wrap.Object, new Attribute[] { attr });
@@ -195,8 +185,5 @@
                     ShowProp(props[name]);
             PropertyGrid.Refresh();
         }
-
-        #endregion
-
     }
 }

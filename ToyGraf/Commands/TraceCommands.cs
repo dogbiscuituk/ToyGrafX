@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Commands
+﻿// <copyright file="TraceCommands.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Commands
 {
     using OpenTK;
     using ToyGraf.Engine.Types;

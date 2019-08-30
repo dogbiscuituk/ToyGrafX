@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Engine.Types
+﻿// <copyright file="Projection.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Engine.Types
 {
     using System;
     using System.ComponentModel;
@@ -7,8 +11,6 @@
     [TypeConverter(typeof(ProjectionTypeConverter))]
     public class Projection
     {
-        #region Constructors
-
         public Projection(ProjectionType projectionType, float fieldOfView, Point3F frustrumMin, Point3F frustrumMax)
         {
             ProjectionType = projectionType;
@@ -104,10 +106,6 @@
             }
         }
 
-        #endregion
-
-        #region Public Properties
-
         [Description(Descriptions.FieldOfView)]
         [DisplayName(DisplayNames.FieldOfView)]
         public float FieldOfView { get; set; }
@@ -134,16 +132,8 @@
         [Browsable(false)] public float Top { get => FrustrumMax.Y; set => FrustrumMax.Y = value; }
         [Browsable(false)] public float Width { get => Right - Left; set { Right = value / 2; Left = -Right; } }
 
-        #endregion
-
-        #region Public Operators
-
         public static bool operator ==(Projection p, Projection q) => p is null ? q is null : p.Equals(q);
         public static bool operator !=(Projection p, Projection q) => !(p == q);
-
-        #endregion
-
-        #region Public Methods
 
         public override bool Equals(object obj) => obj is Projection p
             && p.ProjectionType == ProjectionType
@@ -165,10 +155,6 @@
         }
 
         public override string ToString() => $"{ProjectionType}, {FieldOfView}, {FrustrumMin}, {FrustrumMax}";
-
-        #endregion
-
-        #region Internal Classes
 
         internal static class Descriptions
         {
@@ -194,7 +180,5 @@ The X and Y components are used in all projection types except Perspective. The 
                 FrustrumMin = "Frustrum Min",
                 ProjectionType = "Projection Type";
         }
-
-        #endregion
     }
 }

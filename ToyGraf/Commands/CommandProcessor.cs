@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Commands
+﻿// <copyright file="CommandProcessor.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Commands
 {
     using System;
     using System.Collections.Generic;
@@ -10,8 +14,6 @@
 
     internal class CommandProcessor
     {
-        #region Public/Internal Interface
-
         internal CommandProcessor(SceneController sceneController)
         {
             SceneController = sceneController;
@@ -56,10 +58,6 @@
             UpdateUI();
         }
 
-        #endregion
-
-        #region Private Properties
-
         private bool CanUndo => UndoStack.Count > 0;
         private bool CanRedo => RedoStack.Count > 0;
 
@@ -73,10 +71,6 @@
         private SceneForm SceneForm => SceneController.SceneForm;
 
         private int LastSave, UpdateCount;
-
-        #endregion
-
-        #region Private Event Handlers
 
         private void EditUndo_Click(object sender, EventArgs e) => Undo();
         private void TbUndo_DropDownOpening(object sender, EventArgs e) => Copy(UndoStack, SceneForm.tbUndo, UndoMultiple);
@@ -100,10 +94,6 @@
             do Undo(); while (RedoStack.Peek() != peek);
             EndUpdate();
         }
-
-        #endregion
-
-        #region Private Methods
 
         private void BeginUpdate() { ++UpdateCount; }
 
@@ -180,7 +170,5 @@
             SceneForm.tbRedo.ToolTipText = $"{redo} (^Y)";
             SceneController.ModifiedChanged();
         }
-
-        #endregion
     }
 }

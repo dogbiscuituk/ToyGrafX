@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controllers
+﻿// <copyright file="SdiController.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controllers
 {
     using System;
     using System.ComponentModel;
@@ -16,18 +20,12 @@
     /// </summary>
     internal abstract class SdiController : MruController
     {
-        #region Protected Constructor
-
         protected SdiController(SceneController sceneController, string filter, string subKeyName)
             : base(sceneController, subKeyName)
         {
             OpenFileDialog = new OpenFileDialog { Filter = filter, Title = "Select the file to open" };
             SaveFileDialog = new SaveFileDialog { Filter = filter, Title = "Save file" };
         }
-
-        #endregion
-
-        #region Internal Interface
 
         internal void Clear()
         {
@@ -134,10 +132,6 @@
             internal string FilePath { get; set; }
         }
 
-        #endregion
-
-        #region Protected Properties
-
         protected internal string FilePath
         {
             get => _filePath;
@@ -151,17 +145,9 @@
             }
         }
 
-        #endregion
-
-        #region Private Properties
-
         private string _filePath = string.Empty;
         private readonly OpenFileDialog OpenFileDialog;
         private readonly SaveFileDialog SaveFileDialog;
-
-        #endregion
-
-        #region Protected Methods
 
         protected abstract void ClearDocument();
 
@@ -223,10 +209,6 @@
             return result;
         }
 
-        #endregion
-
-        #region Private Methods
-
         internal bool LoadFromFile(string filePath)
         {
             var result = false;
@@ -267,7 +249,5 @@
                 }
             return result;
         }
-
-        #endregion
     }
 }

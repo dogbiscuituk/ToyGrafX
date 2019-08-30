@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controllers
+﻿// <copyright file="OptionsController.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controllers
 {
     using System;
     using System.Windows.Forms;
@@ -7,8 +11,6 @@
 
     internal class OptionsController : IDisposable
     {
-        #region Internal Interface
-
         internal OptionsController(SceneController sceneController)
         {
             SceneController = sceneController;
@@ -26,10 +28,6 @@
             return result;
         }
 
-        #endregion
-
-        #region Private Properties
-
         private readonly SceneController SceneController;
         private OptionsDialog OptionsDialog;
         private Options Options
@@ -38,19 +36,11 @@
             set => SetOptions(value);
         }
 
-        #endregion
-
-        #region Private Event Handlers
-
         private void BtnFilesFolder_Click(object sender, EventArgs e) =>
             BrowseFolder("files", OptionsDialog.edFilesFolder);
 
         private void BtnTemplatesFolder_Click(object sender, EventArgs e) =>
             BrowseFolder("templates", OptionsDialog.edTemplatesFolder);
-
-        #endregion
-
-        #region Private Methods
 
         private void BrowseFolder(string detail, TextBox textBox)
         {
@@ -83,10 +73,6 @@
             OptionsDialog.cbShowSystemRO.Checked = options.ShowSystemRO;
         }
 
-        #endregion
-
-        #region IDisposable
-
         public void Dispose() => Dispose(true);
 
         protected virtual void Dispose(bool disposing)
@@ -103,7 +89,5 @@
                 OptionsDialog = null;
             }
         }
-
-        #endregion
     }
 }

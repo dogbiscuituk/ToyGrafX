@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Engine.Utility
+﻿// <copyright file="Grids.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Engine.Utility
 {
     using ToyGraf.Engine.Types;
 

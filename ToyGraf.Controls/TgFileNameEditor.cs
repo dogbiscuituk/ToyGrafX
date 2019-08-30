@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controls
+﻿// <copyright file="TgFileNameEditor.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controls
 {
     using System;
     using System.Windows.Forms;

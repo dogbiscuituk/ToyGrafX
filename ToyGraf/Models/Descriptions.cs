@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Models
+﻿// <copyright file="Descriptions.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Models
 {
     internal static class Descriptions
     {

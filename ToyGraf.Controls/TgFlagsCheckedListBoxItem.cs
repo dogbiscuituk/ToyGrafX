@@ -1,29 +1,22 @@
-﻿namespace ToyGraf.Controls
+﻿// <copyright file="TgFlagsCheckedListBoxItem.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controls
 {
     public class TgFlagsCheckedListBoxItem
     {
-        #region Constructor
-
         public TgFlagsCheckedListBoxItem(string text, int value)
         {
             Text = text;
             Value = value;
         }
 
-        #endregion
-
-        #region Public Properties
-
         public string Text;
         public int Value;
 
-        #endregion
-
-        #region Public Methods
-
         public override string ToString() => Text;
 
-        #endregion
 
         /// <summary>
         /// Is this a single bit flag?

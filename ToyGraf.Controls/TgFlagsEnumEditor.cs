@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controls
+﻿// <copyright file="TgFlagsEnumEditor.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controls
 {
     using System;
     using System.ComponentModel;
@@ -8,8 +12,6 @@
 
     public class TgFlagsEnumEditor : UITypeEditor
     {
-        #region Constructor
-
         public TgFlagsEnumEditor()
         {
             FlagsCheckedListBox = new TgFlagsCheckedListBox
@@ -17,10 +19,6 @@
                 BorderStyle = BorderStyle.None
             };
         }
-
-        #endregion
-
-        #region Public Methods
 
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
@@ -39,12 +37,6 @@
 
         public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context) => UITypeEditorEditStyle.DropDown;
 
-        #endregion
-
-        #region Private Properties
-
         private readonly TgFlagsCheckedListBox FlagsCheckedListBox;
-
-        #endregion
     }
 }

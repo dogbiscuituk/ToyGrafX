@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controllers
+﻿// <copyright file="MruController.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controllers
 {
     using System;
     using System.Linq;
@@ -18,8 +22,6 @@
     /// </summary>
     internal class MruController
     {
-        #region Protected Constructor
-
         protected MruController(SceneController sceneController, string subKeyName)
         {
             if (string.IsNullOrWhiteSpace(subKeyName))
@@ -33,15 +35,7 @@
             RefreshRecentMenu();
         }
 
-        #endregion
-
-        #region Internal Interface
-
         internal virtual void Reopen(ToolStripItem menuItem) { }
-
-        #endregion
-
-        #region Protected Properties
 
         protected ToolStripDropDownItem RecentMenu => SceneController.SceneForm.FileReopen;
 
@@ -52,15 +46,7 @@
             set => SceneController.Scene = value;
         }
 
-        #endregion
-
-        #region Private Properties
-
         private readonly string SubKeyName;
-
-        #endregion
-
-        #region Private Event Handlers
 
         private void OnItemClick(object sender, EventArgs e) => Reopen((ToolStripItem)sender);
 
@@ -85,10 +71,6 @@
                 Console.WriteLine(ex.ToString());
             }
         }
-
-        #endregion
-
-        #region Protected Methods
 
         protected void AddItem(string item)
         {
@@ -136,10 +118,6 @@
             }
             RefreshRecentMenu();
         }
-
-        #endregion
-
-        #region Private Methods
 
         private Win32.RegistryKey CreateSubKey()
         {
@@ -203,7 +181,5 @@
             }
             RecentMenu.Enabled = ok;
         }
-
-        #endregion
     }
 }

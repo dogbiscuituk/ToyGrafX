@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Engine.TypeConverters
+﻿// <copyright file="Euler3FTypeConverter.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Engine.TypeConverters
 {
     using System;
     using System.ComponentModel;

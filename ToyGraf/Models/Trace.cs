@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Models
+﻿// <copyright file="Trace.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Models
 {
     using Newtonsoft.Json;
     using OpenTK;
@@ -13,16 +17,8 @@
 
     public class Trace
     {
-        #region Constructors
-
         public Trace() => RestoreDefaults();
         public Trace(Scene scene) : this() => Init(scene);
-
-        #endregion
-
-        #region Browsable Properties
-
-        #region Placement
 
         [Category(Categories.Placement)]
         [DefaultValue(typeof(Point3F), Defaults.LocationString)]
@@ -56,9 +52,7 @@
         [JsonIgnore]
         public bool Visible { get => _Visible; set => Run(new VisibleCommand(Index, value)); }
 
-        #endregion
 
-        #region Read Only / System
 
         [Category(Categories.SystemRO)]
         [Description(Descriptions.Transform)]
@@ -93,10 +87,6 @@
         [DisplayName(DisplayNames.VboVertexID)]
         [JsonIgnore]
         public int VboVertexID => _VboVertexID;
-
-        #endregion
-
-        #region Shaders
 
         [Category(Categories.ShaderCode)]
         [DefaultValue(Defaults.Shader1Vertex)]
@@ -170,9 +160,7 @@
             set => Run(new TraceComputeShaderCommand(Index, value));
         }
 
-        #endregion
 
-        #region Trace
 
         [Category(Categories.Trace)]
         [DefaultValue(Defaults.Description)]
@@ -225,13 +213,9 @@
             }
         }
 
-        #endregion
-
         private void Invalidate() => RenderController?.InvalidateTrace(this);
 
-        #endregion
 
-        #region Public Methods
 
         public override string ToString() =>
             !string.IsNullOrWhiteSpace(Description)
@@ -239,10 +223,6 @@
             : Index >= 0
             ? $"Trace #{Index + 1}"
             : "New trace";
-
-        #endregion
-
-        #region Persistent Fields
 
         [JsonProperty] internal string _Description;
         [JsonProperty] internal Point3F _Location;
@@ -260,10 +240,6 @@
         [JsonProperty] internal Point3 _StripCount;
         [JsonProperty] internal bool _Visible;
 
-        #endregion
-
-        #region Internal Properties
-
         internal int Index
         {
             get => Scene?.Traces.IndexOf(this) ?? _Index;
@@ -279,10 +255,6 @@
             _VboIndexID;
 
         internal bool _VaoValid;
-
-        #endregion
-
-        #region Internal Methods
 
         internal Trace Clone()
         {
@@ -350,10 +322,6 @@
             SetScale(transform.ExtractScale());
         }
 
-        #endregion
-
-        #region Private Classes
-
         private class Defaults
         {
             internal const Pattern
@@ -400,18 +368,10 @@
                 StripCountString = "100, 100, 0";
         }
 
-        #endregion
-
-        #region Private Properties
-
         private CommandProcessor CommandProcessor => Scene?.CommandProcessor;
         private int _Index;
         private RenderController RenderController => SceneController?.RenderController;
         private SceneController SceneController => Scene?.SceneController;
-
-        #endregion
-
-        #region Private Methods
 
         private void RestoreDefaults()
         {
@@ -440,7 +400,5 @@
         internal void SetOrientation(Vector3 orientation) => Orientation = orientation.ToEuler3F();
         internal void SetOrientation(Quaternion orientation) => Orientation = orientation.ToEuler3F();
         internal void SetScale(Vector3 scale) => Scale = scale.ToPoint3F();
-
-        #endregion
     }
 }

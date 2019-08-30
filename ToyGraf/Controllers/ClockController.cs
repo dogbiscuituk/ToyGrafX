@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controllers
+﻿// <copyright file="ClockController.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controllers
 {
     using System;
     using ToyGraf.Models;
@@ -6,8 +10,6 @@
 
     internal class ClockController
     {
-        #region Constructor
-
         internal ClockController(SceneController sceneController)
         {
             SceneController = sceneController;
@@ -28,10 +30,6 @@
             UpdateTimeControls();
         }
 
-        #endregion
-
-        #region Internal Properties
-
         internal Clock Clock;
         internal bool ClockRunning => Clock.Running;
         internal double VirtualSecondsElapsed => Clock.VirtualSecondsElapsed;
@@ -41,10 +39,6 @@
             get => Clock.VirtualTimeFactor;
             set => Clock.VirtualTimeFactor = value;
         }
-
-        #endregion
-
-        #region Internal Methods
 
         internal void UpdateTimeControls()
         {
@@ -56,10 +50,6 @@
             SceneForm.TimeStop.Enabled = SceneForm.tbStop.Enabled = CanStop;
             UpdateTimeFactor();
         }
-
-        #endregion
-
-        #region Private Properties
 
         private bool CanAccelerate => VirtualTimeFactor < +32;
         private bool CanDecelerate => VirtualTimeFactor > -32;
@@ -75,10 +65,6 @@
         private readonly SceneController SceneController;
         private SceneForm SceneForm => SceneController.SceneForm;
 
-        #endregion
-
-        #region Private Event Handlers
-
         private void Clock_Tick(object sender, EventArgs e) => UpdateTimeDisplay();
         private void TimeDecelerate_Click(object sender, EventArgs e) => Decelerate();
         private void TimeReverse_Click(object sender, EventArgs e) => Reverse();
@@ -86,10 +72,6 @@
         private void TimePause_Click(object sender, EventArgs e) => Pause();
         private void TimeForward_Click(object sender, EventArgs e) => Forward();
         private void TimeAccelerate_Click(object sender, EventArgs e) => Accelerate();
-
-        #endregion
-
-        #region Private Methods
 
         private void Accelerate()
         {
@@ -155,7 +137,5 @@
             if (LastSpeed != speed)
                 LastSpeed = SceneForm.SpeedLabel.Text = speed;
         }
-
-        #endregion
     }
 }

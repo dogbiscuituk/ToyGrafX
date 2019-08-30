@@ -1,4 +1,8 @@
-﻿namespace ToyGraf.Controllers
+﻿// <copyright file="HostController.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Controllers
 {
     using System;
     using System.Drawing;
@@ -7,8 +11,6 @@
 
     internal class HostController
     {
-        #region Internal Interface
-
         internal HostController(string text, Control hostedControl)
         {
             HostedControl = hostedControl;
@@ -42,10 +44,6 @@
 
         internal event EventHandler<FormClosingEventArgs> HostFormClosing;
 
-        #endregion
-
-        #region Private Implementation
-
         private readonly Control HostedControl, ParentControl;
         private readonly HostForm HostForm;
 
@@ -60,7 +58,5 @@
             }
             HostForm.FormClosing -= HostForm_FormClosing;
         }
-
-        #endregion
     }
 }

@@ -1,21 +1,19 @@
-﻿namespace ToyGraf.Models
+﻿// <copyright file="Clock.cs" company="John M Kerr">
+// Copyright (c) John M Kerr. All rights reserved.
+// </copyright>
+
+namespace ToyGraf.Models
 {
     using System;
     using System.Windows.Forms;
 
     public class Clock
     {
-        #region Constructor
-
         public Clock()
         {
             Timer = new Timer { Enabled = false };
             Timer.Tick += Timer_Tick;
         }
-
-        #endregion
-
-        #region Public Properties
 
         public bool Running
         {
@@ -75,15 +73,7 @@
             }
         }
 
-        #endregion
-
-        #region Public Events
-
         public event EventHandler<EventArgs> Tick;
-
-        #endregion
-
-        #region Public Methods
 
         public void Accelerate() => VirtualTimeFactor = +Scale(+VirtualTimeFactor);
         public void Decelerate() => VirtualTimeFactor = -Scale(-VirtualTimeFactor);
@@ -120,10 +110,6 @@
             Running = false;
         }
 
-        #endregion
-
-        #region Private Fields
-
         private const int LimitFactor = 32;
         private bool _Running;
         private DateTime _StartedAt;
@@ -132,15 +118,9 @@
         private readonly Timer Timer;
         private double _VirtualTimeFactor = 1;
 
-        #endregion
-
-        #region Private Event Handlers
-
         private void Timer_Tick(object sender, EventArgs e) => Tick?.Invoke(this, EventArgs.Empty);
 
-        #endregion
 
-        #region Private Methods
 
         private TimeSpan GetVirtualIncrement(DateTime now) =>
             TimeSpan.FromSeconds((now - _StartedAt).TotalSeconds * VirtualTimeFactor);
@@ -161,7 +141,5 @@
                     return LimitFactor;
             }
         }
-
-        #endregion
     }
 }
