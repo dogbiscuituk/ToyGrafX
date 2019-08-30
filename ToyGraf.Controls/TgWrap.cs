@@ -1,8 +1,4 @@
-﻿// <copyright file="TgWrap.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Controls
+﻿namespace ToyGraf.Controls
 {
     using System;
     using System.Collections.Generic;
@@ -13,16 +9,28 @@ namespace ToyGraf.Controls
     /// </summary>
     internal class TgWrap : ICustomTypeDescriptor
     {
+        #region Constructor
+
         internal TgWrap(object obj) => Object = obj;
 
+        #endregion
 
+        #region Public Properties
 
         /// <summary>
         /// The list of visible properties.
         /// </summary>
         public List<PropertyDescriptor> PropertyDescriptors { get; set; } = new List<PropertyDescriptor>();
 
+        #endregion
+
+        #region Internal Fields
+
         internal object Object;
+
+        #endregion
+
+        #region ICustomTypeDescriptor Getter Methods
 
         public AttributeCollection GetAttributes() => TypeDescriptor.GetAttributes(Object, true);
         public string GetClassName() => TypeDescriptor.GetClassName(Object, true);
@@ -36,5 +44,7 @@ namespace ToyGraf.Controls
         public PropertyDescriptorCollection GetProperties() => new PropertyDescriptorCollection(PropertyDescriptors.ToArray(), true);
         public PropertyDescriptorCollection GetProperties(Attribute[] _) => GetProperties();
         public object GetPropertyOwner(PropertyDescriptor pd) => Object;
+
+        #endregion
     }
 }

@@ -1,11 +1,9 @@
-﻿// <copyright file="Command.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Commands
+﻿namespace ToyGraf.Commands
 {
     using System;
     using ToyGraf.Models;
+
+    #region Abstract Base Command
 
     internal abstract class Command<TValue> : ICommand
     {
@@ -42,6 +40,10 @@ namespace ToyGraf.Commands
         public string PropertyName { get; set; }
         protected abstract string Target { get; }
     }
+
+    #endregion
+
+    #region Abstract Property Commands
 
     internal abstract class PropertyCommand<TItem, TValue> : Command<TValue>
     {
@@ -121,7 +123,9 @@ namespace ToyGraf.Commands
             scene.OnPropertyChanged(GetItem(scene), propertyName);
     }
 
+    #endregion
 
+    #region Collection Commands
 
     /// <summary>
     /// Common ancestor for collection management (item insert and delete) commands.
@@ -194,4 +198,6 @@ namespace ToyGraf.Commands
         protected override void PropertyChanged(Scene scene, string propertyName) => scene.OnPropertyChanged(scene, propertyName);
         protected override void RemoveItem(Scene scene) => scene.RemoveTrace(Index);
     }
+
+    #endregion
 }

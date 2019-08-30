@@ -1,8 +1,4 @@
-﻿// <copyright file="TgCollectionEditor.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Controls
+﻿namespace ToyGraf.Controls
 {
     using System;
     using System.ComponentModel;
@@ -12,7 +8,13 @@ namespace ToyGraf.Controls
 
     public class TgCollectionEditor : CollectionEditor
     {
+        #region Constructor
+
         public TgCollectionEditor(Type type) : base(type) { }
+
+        #endregion
+
+        #region Public Events
 
         public static event EventHandler
             CollectionFormActivated,
@@ -30,6 +32,10 @@ namespace ToyGraf.Controls
         public static event LayoutEventHandler CollectionFormLayout;
         public static event PropertyValueChangedEventHandler CollectionItemPropertyValueChanged;
 
+        #endregion
+
+        #region Public Methods
+
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
             var result = base.EditValue(context, provider, value);
@@ -38,6 +44,10 @@ namespace ToyGraf.Controls
         }
 
         public ITypeDescriptorContext GetContext() => Context;
+
+        #endregion
+
+        #region Protected Override Methods
 
         protected override CollectionForm CreateCollectionForm()
         {
@@ -58,10 +68,18 @@ namespace ToyGraf.Controls
             return form;
         }
 
+        #endregion
+
+        #region Private Properties
+
         private DialogResult DialogResult;
         private PropertyGrid PropertyGrid => PropertyGridAdapter.PropertyGrid;
         private TgPropertyGridAdapter PropertyGridAdapter;
         private bool Updating;
+
+        #endregion
+
+        #region Private Event Handlers
 
         private void CollectionForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -81,6 +99,10 @@ namespace ToyGraf.Controls
                 Updating = false;
             }
         }
+
+        #endregion
+
+        #region Private Methods
 
         private void AttachEventHandlers(Form form)
         {
@@ -111,5 +133,7 @@ namespace ToyGraf.Controls
             form.Shown -= CollectionFormShown;
             PropertyGrid.SelectedObjectsChanged -= PropertyGrid_SelectedObjectsChanged;
         }
+
+        #endregion
     }
 }

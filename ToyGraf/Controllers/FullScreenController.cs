@@ -1,8 +1,4 @@
-﻿// <copyright file="FullScreenController.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Controllers
+﻿namespace ToyGraf.Controllers
 {
     using System;
     using System.Windows.Forms;
@@ -10,11 +6,17 @@ namespace ToyGraf.Controllers
 
     internal class FullScreenController
     {
+        #region Internal Interface
+
         internal FullScreenController(SceneController sceneController)
         {
             SceneController = sceneController;
             Form.ViewFullScreen.Click += ZoomFullScreen_Click;
         }
+
+        #endregion
+
+        #region Private Properties
 
         private readonly SceneController SceneController;
         private SceneForm Form => SceneController.SceneForm;
@@ -66,7 +68,15 @@ namespace ToyGraf.Controllers
             WindowState = FormWindowState.Maximized
         };
 
+        #endregion
+
+        #region Private Event Handlers
+
         private void ZoomFullScreen_Click(object sender, EventArgs e) => ToggleFullScreen();
+
+        #endregion
+
+        #region Private Methods
 
         private void AdjustFullScreen()
         {
@@ -80,6 +90,10 @@ namespace ToyGraf.Controllers
         }
 
         private void ToggleFullScreen() => FullScreen = !FullScreen;
+
+        #endregion
+
+        #region Private Types
 
         [Flags]
         internal enum FormElements
@@ -98,5 +112,7 @@ namespace ToyGraf.Controllers
             internal FormElements Elements;
             internal FormWindowState WindowState;
         }
+
+        #endregion
     }
 }

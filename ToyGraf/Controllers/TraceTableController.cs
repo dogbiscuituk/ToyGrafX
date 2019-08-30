@@ -1,8 +1,4 @@
-﻿// <copyright file="TraceTableController.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Controllers
+﻿namespace ToyGraf.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -14,6 +10,8 @@ namespace ToyGraf.Controllers
 
     internal class TraceTableController
     {
+        #region Internal Interface
+
         internal TraceTableController(SceneController sceneController)
         {
             SceneController = sceneController;
@@ -42,6 +40,10 @@ namespace ToyGraf.Controllers
             if (traces.Any())
                 TraceTable.DataSource = traces;
         }
+
+        #endregion
+
+        #region Private Properties
 
         private Scene Scene => SceneController.Scene;
         private readonly SceneController SceneController;
@@ -82,6 +84,10 @@ namespace ToyGraf.Controllers
 
         private bool Updating;
 
+        #endregion
+
+        #region Private Event Handlers
+
         private void EditInvertSelection_Click(object sender, EventArgs e) =>
             InvertSelection();
 
@@ -116,6 +122,10 @@ namespace ToyGraf.Controllers
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
             SceneForm.ViewTraceTable.Checked = TraceTableVisible;
+
+        #endregion
+
+        #region Private Methods
 
         private void Init()
         {
@@ -177,5 +187,7 @@ namespace ToyGraf.Controllers
         }
 
         private void SelectAll() => TraceTable.SelectAll();
+
+        #endregion
     }
 }

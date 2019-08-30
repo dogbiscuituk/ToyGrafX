@@ -1,14 +1,11 @@
-﻿// <copyright file="MenuController.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Controllers
+﻿namespace ToyGraf.Controllers
 {
     using System;
     using System.Windows.Forms;
 
     internal static class MenuController
     {
+        #region Internal Interface
 
         /// <summary>
         /// Copy the Items from one ToolStrip to another.
@@ -42,6 +39,10 @@ namespace ToyGraf.Controllers
         internal static void CloneTo(this ToolStripDropDownItem s, ToolStrip t) =>
             s.DropDownItems.CloneTo(t.Items);
 
+        #endregion
+
+        #region Private Methods
+
         private static ToolStripItem Clone(this ToolStripItem s)
         {
             switch (s)
@@ -73,5 +74,7 @@ namespace ToyGraf.Controllers
             foreach (ToolStripItem i in s)
                 t.Add(i.Clone());
         }
+
+        #endregion
     }
 }

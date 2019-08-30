@@ -1,8 +1,4 @@
-﻿// <copyright file="Point3F.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Engine.Types
+﻿namespace ToyGraf.Engine.Types
 {
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
@@ -10,6 +6,8 @@ namespace ToyGraf.Engine.Types
     [TypeConverter(typeof(Point3FTypeConverter))]
     public class Point3F
     {
+        #region Constructors
+
         public Point3F() : this(0, 0, 0) { }
 
         public Point3F(Point3F p) : this(p.X, p.Y, p.Z) { }
@@ -31,6 +29,10 @@ namespace ToyGraf.Engine.Types
             Z = z;
         }
 
+        #endregion
+
+        #region Public Properties
+
         [DefaultValue(0f)]
         [Description(Descriptions.X)]
         [DisplayName(DisplayNames.X)]
@@ -48,8 +50,16 @@ namespace ToyGraf.Engine.Types
 
         public static Point3F Zero = new Point3F();
 
+        #endregion
+
+        #region Public Operators
+
         public static bool operator ==(Point3F p, Point3F q) => p is null ? q is null : p.Equals(q);
         public static bool operator !=(Point3F p, Point3F q) => !(p == q);
+
+        #endregion
+
+        #region Public Methods
 
         public override bool Equals(object obj) => obj is Point3F p && p.X == X && p.Y == Y && p.Z == Z;
         public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
@@ -60,6 +70,10 @@ namespace ToyGraf.Engine.Types
             var t = s.Split(',');
             return new Point3F(float.Parse(t[0]), float.Parse(t[1]), float.Parse(t[2]));
         }
+
+        #endregion
+
+        #region Internal Classes
 
         internal static class Descriptions
         {
@@ -76,5 +90,7 @@ namespace ToyGraf.Engine.Types
                 Y = "Y",
                 Z = "Z";
         }
+
+        #endregion
     }
 }

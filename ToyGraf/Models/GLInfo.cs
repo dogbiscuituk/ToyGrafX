@@ -1,8 +1,4 @@
-﻿// <copyright file="GLInfo.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Models
+﻿namespace ToyGraf.Models
 {
     using OpenTK.Graphics.OpenGL;
     using System.ComponentModel;
@@ -10,6 +6,8 @@ namespace ToyGraf.Models
     [TypeConverter(typeof(GLInfoTypeConverter))]
     public class GLInfo
     {
+        #region Constructors
+
         public GLInfo() : this(
             number: GL.GetString(StringName.Version),
             major: GL.GetInteger(GetPName.MajorVersion),
@@ -28,6 +26,10 @@ namespace ToyGraf.Models
             Vendor = vendor;
             Renderer = renderer;
         }
+
+        #endregion
+
+        #region Public Properties
 
         [Description(Descriptions.GLInfo_Number)]
         [DisplayName(DisplayNames.GLInfo_Number)]
@@ -53,7 +55,13 @@ namespace ToyGraf.Models
         [DisplayName(DisplayNames.GLInfo_Renderer)]
         public string Renderer { get; }
 
+        #endregion
+
+        #region Public Methods
+
         public override string ToString() =>
             $"{Number}, {Major}, {Minor}, {Shader}, {Vendor}, {Renderer}";
+
+        #endregion
     }
 }

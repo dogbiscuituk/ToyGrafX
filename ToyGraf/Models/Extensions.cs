@@ -1,8 +1,4 @@
-﻿// <copyright file="Extensions.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Models
+﻿namespace ToyGraf.Models
 {
     public static class Extensions
     {

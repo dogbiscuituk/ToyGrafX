@@ -1,8 +1,4 @@
-﻿// <copyright file="Trace.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Models
+﻿namespace ToyGraf.Models
 {
     using Newtonsoft.Json;
     using OpenTK;
@@ -17,8 +13,16 @@ namespace ToyGraf.Models
 
     public class Trace
     {
+        #region Constructors
+
         public Trace() => RestoreDefaults();
         public Trace(Scene scene) : this() => Init(scene);
+
+        #endregion
+
+        #region Browsable Properties
+
+        #region Placement
 
         [Category(Categories.Placement)]
         [DefaultValue(typeof(Point3F), Defaults.LocationString)]
@@ -52,7 +56,9 @@ namespace ToyGraf.Models
         [JsonIgnore]
         public bool Visible { get => _Visible; set => Run(new VisibleCommand(Index, value)); }
 
+        #endregion
 
+        #region Read Only / System
 
         [Category(Categories.SystemRO)]
         [Description(Descriptions.Transform)]
@@ -87,6 +93,10 @@ namespace ToyGraf.Models
         [DisplayName(DisplayNames.VboVertexID)]
         [JsonIgnore]
         public int VboVertexID => _VboVertexID;
+
+        #endregion
+
+        #region Shaders
 
         [Category(Categories.ShaderCode)]
         [DefaultValue(Defaults.Shader1Vertex)]
@@ -160,7 +170,9 @@ namespace ToyGraf.Models
             set => Run(new TraceComputeShaderCommand(Index, value));
         }
 
+        #endregion
 
+        #region Trace
 
         [Category(Categories.Trace)]
         [DefaultValue(Defaults.Description)]
@@ -213,9 +225,13 @@ namespace ToyGraf.Models
             }
         }
 
+        #endregion
+
         private void Invalidate() => RenderController?.InvalidateTrace(this);
 
+        #endregion
 
+        #region Public Methods
 
         public override string ToString() =>
             !string.IsNullOrWhiteSpace(Description)
@@ -223,6 +239,10 @@ namespace ToyGraf.Models
             : Index >= 0
             ? $"Trace #{Index + 1}"
             : "New trace";
+
+        #endregion
+
+        #region Persistent Fields
 
         [JsonProperty] internal string _Description;
         [JsonProperty] internal Point3F _Location;
@@ -240,6 +260,10 @@ namespace ToyGraf.Models
         [JsonProperty] internal Point3 _StripCount;
         [JsonProperty] internal bool _Visible;
 
+        #endregion
+
+        #region Internal Properties
+
         internal int Index
         {
             get => Scene?.Traces.IndexOf(this) ?? _Index;
@@ -255,6 +279,10 @@ namespace ToyGraf.Models
             _VboIndexID;
 
         internal bool _VaoValid;
+
+        #endregion
+
+        #region Internal Methods
 
         internal Trace Clone()
         {
@@ -322,6 +350,10 @@ namespace ToyGraf.Models
             SetScale(transform.ExtractScale());
         }
 
+        #endregion
+
+        #region Private Classes
+
         private class Defaults
         {
             internal const Pattern
@@ -368,10 +400,18 @@ namespace ToyGraf.Models
                 StripCountString = "100, 100, 0";
         }
 
+        #endregion
+
+        #region Private Properties
+
         private CommandProcessor CommandProcessor => Scene?.CommandProcessor;
         private int _Index;
         private RenderController RenderController => SceneController?.RenderController;
         private SceneController SceneController => Scene?.SceneController;
+
+        #endregion
+
+        #region Private Methods
 
         private void RestoreDefaults()
         {
@@ -400,5 +440,7 @@ namespace ToyGraf.Models
         internal void SetOrientation(Vector3 orientation) => Orientation = orientation.ToEuler3F();
         internal void SetOrientation(Quaternion orientation) => Orientation = orientation.ToEuler3F();
         internal void SetScale(Vector3 scale) => Scale = scale.ToPoint3F();
+
+        #endregion
     }
 }

@@ -1,8 +1,4 @@
-﻿// <copyright file="Camera.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Engine.Types
+﻿namespace ToyGraf.Engine.Types
 {
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
@@ -10,6 +6,8 @@ namespace ToyGraf.Engine.Types
     [TypeConverter(typeof(CameraTypeConverter))]
     public class Camera
     {
+        #region Constructors
+
         public Camera() : this(new Point3F(), new Euler3F()) { }
 
         public Camera(Camera camera) : this(camera.Position, camera.Rotation) { }
@@ -58,6 +56,10 @@ namespace ToyGraf.Engine.Types
             this(new Point3F(x, y, z), new Euler3F(pitch, yaw, roll))
         { }
 
+        #endregion
+
+        #region Public Properties
+
         [Description(Descriptions.Position)]
         [DisplayName(DisplayNames.Position)]
         [TypeConverter(typeof(Point3FTypeConverter))]
@@ -68,8 +70,16 @@ namespace ToyGraf.Engine.Types
         [TypeConverter(typeof(Euler3FTypeConverter))]
         public Euler3F Rotation { get; set; } = new Euler3F();
 
+        #endregion
+
+        #region Public Operators
+
         public static bool operator ==(Camera p, Camera q) => p is null ? q is null : p.Equals(q);
         public static bool operator !=(Camera p, Camera q) => !(p == q);
+
+        #endregion
+
+        #region Public Methods
 
         public override bool Equals(object obj) =>
             obj is Camera c && c.Position == Position && c.Rotation == Rotation;
@@ -98,6 +108,10 @@ namespace ToyGraf.Engine.Types
 
         public override string ToString() => $"{Position}, {Rotation}";
 
+        #endregion
+
+        #region Internal Classes
+
         internal static class Descriptions
         {
             internal const string
@@ -112,7 +126,13 @@ namespace ToyGraf.Engine.Types
                 Rotation = "Rotation°";
         }
 
+        #endregion
+
+        #region Private Properties
+
         private Point3F HomePosition;
         private Euler3F HomeRotation;
+
+        #endregion
     }
 }

@@ -1,8 +1,4 @@
-﻿// <copyright file="Categories.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Engine.Utility
+﻿namespace ToyGraf.Engine.Utility
 {
     public static class Categories
     {

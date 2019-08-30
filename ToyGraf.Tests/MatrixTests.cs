@@ -1,8 +1,4 @@
-﻿// <copyright file="MatrixTests.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Tests
+﻿namespace ToyGraf.Tests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using OpenTK;

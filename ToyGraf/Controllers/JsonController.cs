@@ -1,8 +1,4 @@
-﻿// <copyright file="JsonController.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Controllers
+﻿namespace ToyGraf.Controllers
 {
     using Newtonsoft.Json;
     using System;
@@ -18,6 +14,8 @@ namespace ToyGraf.Controllers
     /// </summary>
     internal class JsonController : SdiController
     {
+        #region Internal Interface
+
         internal JsonController(SceneController sceneController)
             : base(sceneController, Properties.Settings.Default.FileFilter, "LibraryMRU")
         { }
@@ -33,6 +31,10 @@ namespace ToyGraf.Controllers
                 return text;
             }
         }
+
+        #endregion
+
+        #region Protected I/O Overrides
 
         protected override void ClearDocument() => Scene.Clear();
 
@@ -57,6 +59,10 @@ namespace ToyGraf.Controllers
                 return UseStream(() => GetSerializer().Serialize(writer, Scene));
         }
 
+        #endregion
+
+        #region Private Implementation
+
         private Control View => SceneController.SceneForm;
 
         private static JsonSerializer GetSerializer() => new JsonSerializer
@@ -64,5 +70,7 @@ namespace ToyGraf.Controllers
             DefaultValueHandling = DefaultValueHandling.Include,
             Formatting = Formatting.Indented
         };
+
+        #endregion
     }
 }

@@ -1,8 +1,4 @@
-﻿// <copyright file="AppController.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Controllers
+﻿namespace ToyGraf.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -15,6 +11,8 @@ namespace ToyGraf.Controllers
 
     internal static class AppController
     {
+        #region Static Constructor
+
         static AppController()
         {
             CollectionController.Start();
@@ -23,6 +21,10 @@ namespace ToyGraf.Controllers
             ApplyOptions();
             AddNewSceneController();
         }
+
+        #endregion
+
+        #region Internal Properties
 
         internal static AboutDialog AboutDialog
         {
@@ -64,6 +66,10 @@ namespace ToyGraf.Controllers
 
         internal static List<SceneController> SceneControllers = new List<SceneController>();
 
+        #endregion
+
+        #region Internal Methods
+
         internal static SceneController AddNewSceneController()
         {
             var sceneController = new SceneController();
@@ -99,11 +105,19 @@ namespace ToyGraf.Controllers
                 Close();
         }
 
+        #endregion
+
+        #region Private Properties
+
         private static AboutDialog _AboutDialog;
         private static readonly string DefaultFilesFolderPath =
             $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\{Application.ProductName}";
         private static Settings Settings => Settings.Default;
         private static Timer Timer;
+
+        #endregion
+
+        #region Private Event Handlers
 
         private static void Timer_Tick(object sender, EventArgs e)
         {
@@ -112,6 +126,10 @@ namespace ToyGraf.Controllers
             Timer = null;
             AboutDialog.Hide();
         }
+
+        #endregion
+
+        #region Private Methods
 
         private static void ApplyOptions()
         {
@@ -125,5 +143,7 @@ namespace ToyGraf.Controllers
 
         private static void ApplyOptions(SceneController sceneController) =>
             sceneController.ApplyOptions();
+
+        #endregion
     }
 }

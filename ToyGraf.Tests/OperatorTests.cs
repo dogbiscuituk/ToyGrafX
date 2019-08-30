@@ -1,8 +1,4 @@
-﻿// <copyright file="OperatorTests.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Tests
+﻿namespace ToyGraf.Tests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using ToyGraf.Engine.Types;
@@ -13,6 +9,7 @@ namespace ToyGraf.Tests
     [TestClass]
     public class OperatorTests
     {
+        #region Public Test Methods
 
         /// <summary>
         /// Check that the Camera copy constructor yields a result equal to the original,
@@ -223,6 +220,10 @@ namespace ToyGraf.Tests
             UnequalProjection(t, t, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 99);
         }
 
+        #endregion
+
+        #region Private Helper Methods
+
         private void UnequalCamera(params float[] a)
         {
             var p = new Camera(a[0], a[1], a[2], a[3], a[4], a[5]);
@@ -276,5 +277,7 @@ namespace ToyGraf.Tests
             Assert.IsFalse(p == q);
             Assert.IsTrue(p != q);
         }
+
+        #endregion
     }
 }

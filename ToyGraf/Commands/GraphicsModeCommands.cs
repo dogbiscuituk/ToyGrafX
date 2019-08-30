@@ -1,8 +1,4 @@
-﻿// <copyright file="GraphicsModeCommands.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Commands
+﻿namespace ToyGraf.Commands
 {
     using ToyGraf.Engine.Types;
     using ToyGraf.Models;

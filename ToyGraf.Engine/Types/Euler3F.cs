@@ -1,8 +1,4 @@
-﻿// <copyright file="Euler3F.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Engine.Types
+﻿namespace ToyGraf.Engine.Types
 {
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
@@ -10,6 +6,8 @@ namespace ToyGraf.Engine.Types
     [TypeConverter(typeof(Euler3FTypeConverter))]
     public class Euler3F
     {
+        #region Constructors
+
         public Euler3F() : this(0, 0, 0) { }
 
         public Euler3F(Euler3F p) : this(p.Pitch, p.Yaw, p.Roll) { }
@@ -31,6 +29,10 @@ namespace ToyGraf.Engine.Types
             Roll = roll;
         }
 
+        #endregion
+
+        #region Public Properties
+
         [DefaultValue(0f)]
         [Description(Descriptions.Pitch)]
         [DisplayName(DisplayNames.Pitch)]
@@ -48,8 +50,16 @@ namespace ToyGraf.Engine.Types
 
         public static Euler3F Zero = new Euler3F();
 
+        #endregion
+
+        #region Public Operators
+
         public static bool operator ==(Euler3F p, Euler3F q) => p is null ? q is null : p.Equals(q);
         public static bool operator !=(Euler3F p, Euler3F q) => !(p == q);
+
+        #endregion
+
+        #region Public Methods
 
         public override bool Equals(object obj) => obj is Euler3F p &&
             p.Pitch == Pitch && p.Yaw == Yaw && p.Roll == Roll;
@@ -61,6 +71,10 @@ namespace ToyGraf.Engine.Types
             var t = s.Split(',');
             return new Euler3F(float.Parse(t[0]), float.Parse(t[1]), float.Parse(t[2]));
         }
+
+        #endregion
+
+        #region Internal Classes
 
         internal static class Descriptions
         {
@@ -77,5 +91,7 @@ namespace ToyGraf.Engine.Types
                 Roll = "Roll°",
                 Yaw = "Yaw°";
         }
+
+        #endregion
     }
 }

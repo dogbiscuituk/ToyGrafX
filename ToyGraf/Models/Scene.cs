@@ -1,8 +1,4 @@
-﻿// <copyright file="Scene.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Models
+﻿namespace ToyGraf.Models
 {
     using Newtonsoft.Json;
     using OpenTK;
@@ -22,9 +18,17 @@ namespace ToyGraf.Models
 
     public class Scene
     {
+        #region Constructors
+
         public Scene() => RestoreDefaults();
 
         internal Scene(SceneController sceneController) : this() => SceneController = sceneController;
+
+        #endregion
+
+        #region Public Properties
+
+        #region Graphics Mode
 
         [Category(Categories.GraphicsMode)]
         [DefaultValue(typeof(ColourFormat), Defaults.ColourFormatString)]
@@ -96,7 +100,9 @@ namespace ToyGraf.Models
         [JsonIgnore]
         public bool VSync { get => _VSync; set => Run(new VSyncCommand(value)); }
 
+        #endregion
 
+        #region Read Only / System
 
         [Category(Categories.SystemRO)]
         [Description(Descriptions.CameraView)]
@@ -147,7 +153,9 @@ namespace ToyGraf.Models
             set => Run(new ProjectionMatrixCommand(value));
         }
 
+        #endregion
 
+        #region Scene
 
         [Category(Categories.Scene)]
         [DefaultValue(typeof(Point3F), Defaults.CameraString)]
@@ -184,7 +192,9 @@ namespace ToyGraf.Models
         [JsonProperty]
         public List<Trace> Traces { get; private set; }
 
+        #endregion
 
+        #region Shaders
 
         [Category(Categories.ShaderTemplates)]
         [DefaultValue(Defaults.Shader1Vertex)]
@@ -258,10 +268,20 @@ namespace ToyGraf.Models
             set => Run(new SceneComputeShaderCommand(value));
         }
 
+        #endregion
+
+        #endregion
+
+        #region Public Methods
+
         public override string ToString() =>
             !string.IsNullOrWhiteSpace(Title)
             ? _Title
             : "New scene";
+
+        #endregion
+
+        #region Internal Properties
 
         internal CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         internal bool IsModified => CommandProcessor?.IsModified ?? false;
@@ -290,6 +310,10 @@ namespace ToyGraf.Models
         [JsonProperty] internal bool _Stereo;
         [JsonProperty] internal string _Title;
         [JsonProperty] internal bool _VSync;
+
+        #endregion
+
+        #region Internal Methods
 
         internal void AddTrace(Trace trace) => Traces.Add(trace);
 
@@ -370,6 +394,10 @@ namespace ToyGraf.Models
 
         internal void SetCameraView(Matrix4 _) { }
         internal void SetProjection(Matrix4 _) { }
+
+        #endregion
+
+        #region Private Classes
 
         private class Defaults
         {
@@ -458,9 +486,17 @@ void main()
                 Traces => new List<Trace>();
         }
 
+        #endregion
+
+        #region Private Properties
+
         private GLControl GLControl => SceneForm?.GLControl;
         private RenderController RenderController => SceneController.RenderController;
         private SceneForm SceneForm => SceneController?.SceneForm;
+
+        #endregion
+
+        #region Private Methods
 
         private void RestoreDefaults()
         {
@@ -495,5 +531,7 @@ void main()
             else
                 command.RunOn(this);
         }
+
+        #endregion
     }
 }

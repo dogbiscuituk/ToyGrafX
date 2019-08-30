@@ -1,8 +1,4 @@
-﻿// <copyright file="ClockController.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Controllers
+﻿namespace ToyGraf.Controllers
 {
     using System;
     using ToyGraf.Models;
@@ -10,6 +6,8 @@ namespace ToyGraf.Controllers
 
     internal class ClockController
     {
+        #region Constructor
+
         internal ClockController(SceneController sceneController)
         {
             SceneController = sceneController;
@@ -30,6 +28,10 @@ namespace ToyGraf.Controllers
             UpdateTimeControls();
         }
 
+        #endregion
+
+        #region Internal Properties
+
         internal Clock Clock;
         internal bool ClockRunning => Clock.Running;
         internal double VirtualSecondsElapsed => Clock.VirtualSecondsElapsed;
@@ -39,6 +41,10 @@ namespace ToyGraf.Controllers
             get => Clock.VirtualTimeFactor;
             set => Clock.VirtualTimeFactor = value;
         }
+
+        #endregion
+
+        #region Internal Methods
 
         internal void UpdateTimeControls()
         {
@@ -50,6 +56,10 @@ namespace ToyGraf.Controllers
             SceneForm.TimeStop.Enabled = SceneForm.tbStop.Enabled = CanStop;
             UpdateTimeFactor();
         }
+
+        #endregion
+
+        #region Private Properties
 
         private bool CanAccelerate => VirtualTimeFactor < +32;
         private bool CanDecelerate => VirtualTimeFactor > -32;
@@ -65,6 +75,10 @@ namespace ToyGraf.Controllers
         private readonly SceneController SceneController;
         private SceneForm SceneForm => SceneController.SceneForm;
 
+        #endregion
+
+        #region Private Event Handlers
+
         private void Clock_Tick(object sender, EventArgs e) => UpdateTimeDisplay();
         private void TimeDecelerate_Click(object sender, EventArgs e) => Decelerate();
         private void TimeReverse_Click(object sender, EventArgs e) => Reverse();
@@ -72,6 +86,10 @@ namespace ToyGraf.Controllers
         private void TimePause_Click(object sender, EventArgs e) => Pause();
         private void TimeForward_Click(object sender, EventArgs e) => Forward();
         private void TimeAccelerate_Click(object sender, EventArgs e) => Accelerate();
+
+        #endregion
+
+        #region Private Methods
 
         private void Accelerate()
         {
@@ -137,5 +155,7 @@ namespace ToyGraf.Controllers
             if (LastSpeed != speed)
                 LastSpeed = SceneForm.SpeedLabel.Text = speed;
         }
+
+        #endregion
     }
 }

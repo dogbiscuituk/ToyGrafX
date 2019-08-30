@@ -1,15 +1,12 @@
-﻿// <copyright file="ColumnsController.cs" company="John M Kerr">
-// Copyright (c) John M Kerr. All rights reserved.
-// </copyright>
-
-namespace ToyGraf.Controllers
+﻿namespace ToyGraf.Controllers
 {
-    using System;
     using System.Windows.Forms;
     using ToyGraf.Views;
 
-    internal class ColumnsController : IDisposable
+    internal class ColumnsController
     {
+        #region Internal Interface
+
         internal ColumnsController(TraceTableController traceTableController)
         {
             TraceTableController = traceTableController;
@@ -25,8 +22,16 @@ namespace ToyGraf.Controllers
                 SaveColumns();
         }
 
+        #endregion
+
+        #region Private Event Handlers
+
         private void CbAll_CheckedChanged(object sender, System.EventArgs e) => UpdateCheckBoxes();
         private void ColumnsListBox_ItemCheck(object sender, ItemCheckEventArgs e) => UpdateCbAll(e.Index, e.NewValue);
+
+        #endregion
+
+        #region Private Properties
 
         private DataGridViewColumnCollection Columns => TraceTable.Columns;
         private readonly ColumnsDialog ColumnsDialog;
@@ -34,6 +39,10 @@ namespace ToyGraf.Controllers
         private CheckedListBox.ObjectCollection Items => ColumnsListBox.Items;
         private DataGridView TraceTable => TraceTableController.TraceTable;
         private readonly TraceTableController TraceTableController;
+
+        #endregion
+
+        #region PrivateMethods
 
         private void LoadColumns()
         {
@@ -90,18 +99,6 @@ namespace ToyGraf.Controllers
             Updating = false;
         }
 
-        public void Dispose() => Dispose(true);
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                    ColumnsDialog.Dispose();
-                disposedValue = true;
-            }
-        }
-
-        private bool disposedValue = false;
+        #endregion
     }
 }
