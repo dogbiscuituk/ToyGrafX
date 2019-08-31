@@ -25,25 +25,25 @@
         #region Placement
 
         [Category(Categories.Placement)]
-        [DefaultValue(typeof(Point3F), Defaults.LocationString)]
+        [DefaultValue(typeof(Vector3f), Defaults.LocationString)]
         [Description(Descriptions.Location)]
         [DisplayName(DisplayNames.Location)]
         [JsonIgnore]
-        public Point3F Location { get => _Location; set => Run(new LocationCommand(Index, value)); }
+        public Vector3f Location { get => _Location; set => Run(new LocationCommand(Index, value)); }
 
         [Category(Categories.Placement)]
-        [DefaultValue(typeof(Euler3F), Defaults.OrientationString)]
+        [DefaultValue(typeof(Euler3f), Defaults.OrientationString)]
         [Description(Descriptions.Orientation)]
         [DisplayName(DisplayNames.Orientation)]
         [JsonIgnore]
-        public Euler3F Orientation { get => _Orientation; set => Run(new OrientationCommand(Index, value)); }
+        public Euler3f Orientation { get => _Orientation; set => Run(new OrientationCommand(Index, value)); }
 
         [Category(Categories.Placement)]
-        [DefaultValue(typeof(Point3F), Defaults.ScaleString)]
+        [DefaultValue(typeof(Vector3f), Defaults.ScaleString)]
         [Description(Descriptions.Scale)]
         [DisplayName(DisplayNames.Scale)]
         [JsonIgnore]
-        public Point3F Scale
+        public Vector3f Scale
         {
             get => _Scale;
             set => Run(new ScaleCommand(Index, value));
@@ -182,18 +182,18 @@
         public string Description { get => _Description; set => Run(new DescriptionCommand(Index, value)); }
 
         [Category(Categories.Trace)]
-        [DefaultValue(typeof(Point3F), Defaults.MaximumString)]
+        [DefaultValue(typeof(Vector3f), Defaults.MaximumString)]
         [Description(Descriptions.Maximum)]
         [DisplayName(DisplayNames.Maximum)]
         [JsonIgnore]
-        public Point3F Maximum { get => _Maximum; set => Run(new MaximumCommand(Index, value)); }
+        public Vector3f Maximum { get => _Maximum; set => Run(new MaximumCommand(Index, value)); }
 
         [Category(Categories.Trace)]
-        [DefaultValue(typeof(Point3F), Defaults.MinimumString)]
+        [DefaultValue(typeof(Vector3f), Defaults.MinimumString)]
         [Description(Descriptions.Minimum)]
         [DisplayName(DisplayNames.Minimum)]
         [JsonIgnore]
-        public Point3F Minimum { get => _Minimum; set => Run(new MinimumCommand(Index, value)); }
+        public Vector3f Minimum { get => _Minimum; set => Run(new MinimumCommand(Index, value)); }
 
         [Category(Categories.Trace)]
         [DefaultValue(typeof(Pattern), Defaults.PatternString)]
@@ -211,11 +211,11 @@
         }
 
         [Category(Categories.Trace)]
-        [DefaultValue(typeof(Point3), Defaults.StripCountString)]
+        [DefaultValue(typeof(Vector3i), Defaults.StripCountString)]
         [Description(Descriptions.StripCount)]
         [DisplayName(DisplayNames.StripCount)]
         [JsonIgnore]
-        public Point3 StripCount
+        public Vector3i StripCount
         {
             get => _StripCount;
             set
@@ -245,19 +245,19 @@
         #region Persistent Fields
 
         [JsonProperty] internal string _Description;
-        [JsonProperty] internal Point3F _Location;
-        [JsonProperty] internal Point3F _Maximum;
-        [JsonProperty] internal Point3F _Minimum;
-        [JsonProperty] internal Euler3F _Orientation;
+        [JsonProperty] internal Vector3f _Location;
+        [JsonProperty] internal Vector3f _Maximum;
+        [JsonProperty] internal Vector3f _Minimum;
+        [JsonProperty] internal Euler3f _Orientation;
         [JsonProperty] internal Pattern _Pattern;
-        [JsonProperty] internal Point3F _Scale;
+        [JsonProperty] internal Vector3f _Scale;
         [JsonProperty] internal string _Shader1Vertex;
         [JsonProperty] internal string _Shader2TessControl;
         [JsonProperty] internal string _Shader3TessEvaluation;
         [JsonProperty] internal string _Shader4Geometry;
         [JsonProperty] internal string _Shader5Fragment;
         [JsonProperty] internal string _Shader6Compute;
-        [JsonProperty] internal Point3 _StripCount;
+        [JsonProperty] internal Vector3i _StripCount;
         [JsonProperty] internal bool _Visible;
 
         #endregion
@@ -365,17 +365,17 @@
             internal const int
                 Index = -1;
 
-            internal static Euler3F
-                Orientation = new Euler3F();
+            internal static Euler3f
+                Orientation = new Euler3f();
 
-            internal static Point3
-                StripCount = new Point3(100, 100, 0);
+            internal static Vector3i
+                StripCount = new Vector3i(100, 100, 0);
 
-            internal static Point3F
-                Location = new Point3F(),
-                Maximum = new Point3F(),
-                Minimum = new Point3F(),
-                Scale = new Point3F(1, 1, 1);
+            internal static Vector3f
+                Location = new Vector3f(),
+                Maximum = new Vector3f(),
+                Minimum = new Vector3f(),
+                Scale = new Vector3f(1, 1, 1);
 
             internal const string
                 Description = "",
@@ -436,10 +436,10 @@
         private bool Run(ITracePropertyCommand command) =>
             CommandProcessor != null ? CommandProcessor.Run(command) : command.RunOn(this);
 
-        internal void SetLocation(Vector3 location) => Location = location.ToPoint3F();
-        internal void SetOrientation(Vector3 orientation) => Orientation = orientation.ToEuler3F();
-        internal void SetOrientation(Quaternion orientation) => Orientation = orientation.ToEuler3F();
-        internal void SetScale(Vector3 scale) => Scale = scale.ToPoint3F();
+        internal void SetLocation(Vector3 location) => Location = location.ToVector3f();
+        internal void SetOrientation(Vector3 orientation) => Orientation = orientation.ToEuler3f();
+        internal void SetOrientation(Quaternion orientation) => Orientation = orientation.ToEuler3f();
+        internal void SetScale(Vector3 scale) => Scale = scale.ToVector3f();
 
         #endregion
     }

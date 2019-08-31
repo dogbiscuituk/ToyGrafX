@@ -11,30 +11,30 @@
         { }
     }
 
-    internal class LocationCommand : TracePropertyCommand<Point3F>
+    internal class LocationCommand : TracePropertyCommand<Vector3f>
     {
-        internal LocationCommand(int index, Point3F value) : base(index, DisplayNames.Location,
+        internal LocationCommand(int index, Vector3f value) : base(index, DisplayNames.Location,
             value, e => e._Location, (e, v) => e._Location = v)
         { }
     }
 
-    internal class MaximumCommand : TracePropertyCommand<Point3F>
+    internal class MaximumCommand : TracePropertyCommand<Vector3f>
     {
-        internal MaximumCommand(int index, Point3F value) : base(index, DisplayNames.Maximum,
+        internal MaximumCommand(int index, Vector3f value) : base(index, DisplayNames.Maximum,
             value, t => t._Maximum, (t, v) => t._Maximum = v)
         { }
     }
 
-    internal class MinimumCommand : TracePropertyCommand<Point3F>
+    internal class MinimumCommand : TracePropertyCommand<Vector3f>
     {
-        internal MinimumCommand(int index, Point3F value) : base(index, DisplayNames.Minimum,
+        internal MinimumCommand(int index, Vector3f value) : base(index, DisplayNames.Minimum,
             value, t => t._Minimum, (t, v) => t._Minimum = v)
         { }
     }
 
-    internal class OrientationCommand : TracePropertyCommand<Euler3F>
+    internal class OrientationCommand : TracePropertyCommand<Euler3f>
     {
-        internal OrientationCommand(int index, Euler3F value) : base(index, DisplayNames.Orientation,
+        internal OrientationCommand(int index, Euler3f value) : base(index, DisplayNames.Orientation,
             value, e => e._Orientation, (e, v) => e._Orientation = v)
         { }
     }
@@ -46,16 +46,16 @@
         { }
     }
 
-    internal class ScaleCommand : TracePropertyCommand<Point3F>
+    internal class ScaleCommand : TracePropertyCommand<Vector3f>
     {
-        internal ScaleCommand(int index, Point3F value) : base(index, DisplayNames.Scale,
+        internal ScaleCommand(int index, Vector3f value) : base(index, DisplayNames.Scale,
             value, e => e._Scale, (e, v) => e._Scale = v)
         { }
     }
 
-    internal class StripCountCommand : TracePropertyCommand<Point3>
+    internal class StripCountCommand : TracePropertyCommand<Vector3i>
     {
-        internal StripCountCommand(int index, Point3 value) : base(index, DisplayNames.StripCount,
+        internal StripCountCommand(int index, Vector3i value) : base(index, DisplayNames.StripCount,
             value, t => t._StripCount, (t, v) => t._StripCount = v)
         { }
     }

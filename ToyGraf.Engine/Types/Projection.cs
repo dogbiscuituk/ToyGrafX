@@ -9,12 +9,12 @@
     {
         #region Constructors
 
-        public Projection(ProjectionType projectionType, float fieldOfView, Point3F frustrumMin, Point3F frustrumMax)
+        public Projection(ProjectionType projectionType, float fieldOfView, Vector3f frustrumMin, Vector3f frustrumMax)
         {
             ProjectionType = projectionType;
             FieldOfView = fieldOfView;
-            FrustrumMin = new Point3F(frustrumMin);
-            FrustrumMax = new Point3F(frustrumMax);
+            FrustrumMin = new Vector3f(frustrumMin);
+            FrustrumMax = new Vector3f(frustrumMax);
         }
 
         public Projection(Projection projection) :
@@ -43,8 +43,8 @@
         public Projection(ProjectionType projectionType, float left, float right, float bottom, float top, float near, float far)
         {
             ProjectionType = projectionType;
-            FrustrumMin = new Point3F(left, bottom, near);
-            FrustrumMax = new Point3F(right, top, far);
+            FrustrumMin = new Vector3f(left, bottom, near);
+            FrustrumMax = new Vector3f(right, top, far);
         }
 
         public Projection(Projection projection, string field, object value) : this(projection)
@@ -58,10 +58,10 @@
                     FieldOfView = (float)value;
                     return;
                 case DisplayNames.FrustrumMin:
-                    FrustrumMin = (Point3F)value;
+                    FrustrumMin = (Vector3f)value;
                     return;
                 case DisplayNames.FrustrumMax:
-                    FrustrumMax = (Point3F)value;
+                    FrustrumMax = (Vector3f)value;
                     return;
             }
             var v = (float)value;
@@ -71,27 +71,27 @@
                 case DisplayNames.FrustrumMin:
                     switch (fields[1])
                     {
-                        case Point3F.DisplayNames.X: FrustrumMin.X = v; break;
-                        case Point3F.DisplayNames.Y: FrustrumMin.Y = v; break;
-                        case Point3F.DisplayNames.Z: FrustrumMin.Z = v; break;
+                        case Vector3f.DisplayNames.X: FrustrumMin.X = v; break;
+                        case Vector3f.DisplayNames.Y: FrustrumMin.Y = v; break;
+                        case Vector3f.DisplayNames.Z: FrustrumMin.Z = v; break;
                     }
                     break;
                 case DisplayNames.FrustrumMax:
                     switch (fields[1])
                     {
-                        case Point3F.DisplayNames.X: FrustrumMax.X = v; break;
-                        case Point3F.DisplayNames.Y: FrustrumMax.Y = v; break;
-                        case Point3F.DisplayNames.Z: FrustrumMax.Z = v; break;
+                        case Vector3f.DisplayNames.X: FrustrumMax.X = v; break;
+                        case Vector3f.DisplayNames.Y: FrustrumMax.Y = v; break;
+                        case Vector3f.DisplayNames.Z: FrustrumMax.Z = v; break;
                     }
                     break;
             }
 
-            Point3F p = fields[0] == DisplayNames.FrustrumMin ? FrustrumMin : FrustrumMax;
+            Vector3f p = fields[0] == DisplayNames.FrustrumMin ? FrustrumMin : FrustrumMax;
             switch (fields[1])
             {
-                case Point3F.DisplayNames.X: p.X = v; break;
-                case Point3F.DisplayNames.Y: p.Y = v; break;
-                case Point3F.DisplayNames.Z: p.Z = v; break;
+                case Vector3f.DisplayNames.X: p.X = v; break;
+                case Vector3f.DisplayNames.Y: p.Y = v; break;
+                case Vector3f.DisplayNames.Z: p.Z = v; break;
             }
             switch (fields[0])
             {
@@ -114,11 +114,11 @@
 
         [Description(Descriptions.FrustrumMax)]
         [DisplayName(DisplayNames.FrustrumMax)]
-        public Point3F FrustrumMax { get; set; } = new Point3F();
+        public Vector3f FrustrumMax { get; set; } = new Vector3f();
 
         [Description(Descriptions.FrustrumMin)]
         [DisplayName(DisplayNames.FrustrumMin)]
-        public Point3F FrustrumMin { get; set; } = new Point3F();
+        public Vector3f FrustrumMin { get; set; } = new Vector3f();
 
         [Description(Descriptions.ProjectionType)]
         [DisplayName(DisplayNames.ProjectionType)]
@@ -160,8 +160,8 @@
             return new Projection(
                 (ProjectionType)Enum.Parse(typeof(ProjectionType), t[0]),
                 float.Parse(t[1]),
-                new Point3F(float.Parse(t[2]), float.Parse(t[3]), float.Parse(t[4])),
-                new Point3F(float.Parse(t[5]), float.Parse(t[6]), float.Parse(t[7])));
+                new Vector3f(float.Parse(t[2]), float.Parse(t[3]), float.Parse(t[4])),
+                new Vector3f(float.Parse(t[5]), float.Parse(t[6]), float.Parse(t[7])));
         }
 
         public override string ToString() => $"{ProjectionType}, {FieldOfView}, {FrustrumMin}, {FrustrumMax}";

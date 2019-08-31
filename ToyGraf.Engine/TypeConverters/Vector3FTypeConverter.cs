@@ -5,17 +5,17 @@
     using System.Globalization;
     using ToyGraf.Engine.Types;
 
-    public class Point3TypeConverter : TypeConverter
+    public class Vector3fTypeConverter : TypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) =>
             sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) =>
-            value is string s ? Point3.Parse(s) : base.ConvertFrom(context, culture, value);
+            value is string s ? Vector3f.Parse(s) : base.ConvertFrom(context, culture, value);
 
         public override PropertyDescriptorCollection GetProperties(
             ITypeDescriptorContext context, object value, Attribute[] attributes) =>
-            TypeDescriptor.GetProperties(typeof(Point3), attributes)
+            TypeDescriptor.GetProperties(typeof(Vector3f), attributes)
                 .Sort(new string[] { "X", "Y", "Z" });
 
         public override bool GetPropertiesSupported(ITypeDescriptorContext context) => true;

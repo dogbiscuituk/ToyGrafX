@@ -3,16 +3,16 @@
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
 
-    [TypeConverter(typeof(Point3TypeConverter))]
-    public class Point3
+    [TypeConverter(typeof(Vector3fTypeConverter))]
+    public class Vector3f
     {
         #region Constructors
 
-        public Point3() : this(0, 0, 0) { }
+        public Vector3f() : this(0, 0, 0) { }
 
-        public Point3(Point3 p) : this(p.X, p.Y, p.Z) { }
+        public Vector3f(Vector3f p) : this(p.X, p.Y, p.Z) { }
 
-        public Point3(Point3 p, string fieldName, int value) : this(p)
+        public Vector3f(Vector3f p, string fieldName, float value) : this(p)
         {
             switch (fieldName)
             {
@@ -22,7 +22,7 @@
             }
         }
 
-        public Point3(int x, int y, int z)
+        public Vector3f(float x, float y, float z)
         {
             X = x;
             Y = y;
@@ -33,40 +33,45 @@
 
         #region Public Properties
 
-        [DefaultValue(0)]
+        [DefaultValue(0f)]
         [Description(Descriptions.X)]
         [DisplayName(DisplayNames.X)]
-        public int X { get; set; }
+        public float X { get; set; }
 
-        [DefaultValue(0)]
+        [DefaultValue(0f)]
         [Description(Descriptions.Y)]
         [DisplayName(DisplayNames.Y)]
-        public int Y { get; set; }
+        public float Y { get; set; }
 
-        [DefaultValue(0)]
+        [DefaultValue(0f)]
         [Description(Descriptions.Z)]
         [DisplayName(DisplayNames.Z)]
-        public int Z { get; set; }
+        public float Z { get; set; }
+
+        public static Vector3f Zero = new Vector3f();
 
         #endregion
 
         #region Public Operators
 
-        public static bool operator ==(Point3 p, Point3 q) => p is null ? q is null : p.Equals(q);
-        public static bool operator !=(Point3 p, Point3 q) => !(p == q);
+        public static bool operator ==(Vector3f p, Vector3f q) => p is null ? q is null : p.Equals(q);
+        public static bool operator !=(Vector3f p, Vector3f q) => !(p == q);
+        public static Vector3f operator -(Vector3f p) => new Vector3f(-p.X, -p.Y, -p.Z);
+        public static Vector3f operator +(Vector3f p, Vector3f q) => new Vector3f(p.X + q.X, p.Y + q.Y, p.Z + q.Z);
+        public static Vector3f operator -(Vector3f p, Vector3f q) => new Vector3f(p.X - q.X, p.Y - q.Y, p.Z - q.Z);
 
         #endregion
 
         #region Public Methods
 
-        public override bool Equals(object obj) => obj is Point3 p && p.X == X && p.Y == Y && p.Z == Z;
-        public override int GetHashCode() => X ^ Y ^ Z;
+        public override bool Equals(object obj) => obj is Vector3f p && p.X == X && p.Y == Y && p.Z == Z;
+        public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
         public override string ToString() => $"{X}, {Y}, {Z}";
 
-        public static Point3 Parse(string s)
+        public static Vector3f Parse(string s)
         {
             var t = s.Split(',');
-            return new Point3(int.Parse(t[0]), int.Parse(t[1]), int.Parse(t[2]));
+            return new Vector3f(float.Parse(t[0]), float.Parse(t[1]), float.Parse(t[2]));
         }
 
         #endregion

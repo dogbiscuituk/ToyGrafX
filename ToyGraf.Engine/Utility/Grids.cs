@@ -12,7 +12,7 @@
         /// <returns>
         /// 3(cx+1)(cy+1)(cz+1) floats, being the xyz coordinates of the points in the lattice.
         /// </returns>
-        public static float[] GetGrid(Point3 p) => GetGrid(p.X, p.Y, p.Z);
+        public static float[] GetGrid(Vector3i p) => GetGrid(p.X, p.Y, p.Z);
 
         /// <summary>
         /// Get the coordinates of all points in a regular 3D xyz lattice, where -1 <= x,y,z <= +1.
@@ -51,7 +51,7 @@
             return result;
         }
 
-        public static int[] GetIndices(Point3 p, Pattern pattern)
+        public static int[] GetIndices(Vector3i p, Pattern pattern)
         {
             switch (pattern)
             {

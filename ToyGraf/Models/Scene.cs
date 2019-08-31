@@ -158,7 +158,7 @@
         #region Scene
 
         [Category(Categories.Scene)]
-        [DefaultValue(typeof(Point3F), Defaults.CameraString)]
+        [DefaultValue(typeof(Vector3f), Defaults.CameraString)]
         [Description(Descriptions.Camera)]
         [DisplayName(DisplayNames.Camera)]
         [JsonIgnore]
@@ -470,7 +470,7 @@ void main()
                 GPUStatus = GPUStatus.OK;
 
             internal static Camera
-                Camera = new Camera(0, 0, 2, 0, 0, 0);
+                Camera = new Camera();
 
             internal static Color
                 BackgroundColour = Color.White;

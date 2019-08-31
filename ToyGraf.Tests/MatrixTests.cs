@@ -54,7 +54,7 @@
         public void CreateTransformationDefault()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: new Euler3F(), scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: new Euler3f(), scale: Unity);
             Assert.AreEqual(expected, actual);
         }
 
@@ -65,7 +65,7 @@
         public void CreateRotationX()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateX, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateX, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -76,7 +76,7 @@
         public void CreateRotationY()
         {
             var expected = new Matrix4(0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateY, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateY, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -87,7 +87,7 @@
         public void CreateRotationZ()
         {
             var expected = new Matrix4(0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateZ, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateZ, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -98,7 +98,7 @@
         public void CreateRotationXY()
         {
             var expected = new Matrix4(0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateXY, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateXY, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -109,7 +109,7 @@
         public void CreateRotationXZ()
         {
             var expected = new Matrix4(0, 0, 1, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateXZ, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateXZ, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -120,7 +120,7 @@
         public void CreateRotationYZ()
         {
             var expected = new Matrix4(0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateYZ, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateYZ, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -131,7 +131,7 @@
         public void CreateRotationXYZ()
         {
             var expected = new Matrix4(0, 0, 1, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: RotateXYZ, scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateXYZ, scale: Unity);
             CompareMatrices(expected, actual);
         }
 
@@ -142,7 +142,7 @@
         public void CreateScaling()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 4, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(), orientation: new Euler3F(), scale: new Point3F(1, 4, 9));
+            var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: new Euler3f(), scale: new Vector3f(1, 4, 9));
             Assert.AreEqual(expected, actual);
         }
 
@@ -153,7 +153,7 @@
         public void CreateTransformationGeneral()
         {
             var expected = new Matrix4(0, 0, 9, 0, 0, -9, 0, 0, 9, 0, 0, 0, 7, 11, 13, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(7, 11, 13), orientation: RotateXYZ, scale: new Point3F(9, 9, 9));
+            var actual = Maths.CreateTransformation(location: new Vector3f(7, 11, 13), orientation: RotateXYZ, scale: new Vector3f(9, 9, 9));
             CompareMatrices(expected, actual);
         }
 
@@ -164,7 +164,7 @@
         public void CreateTranslation()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 3, 5, 1);
-            var actual = Maths.CreateTransformation(location: new Point3F(2, 3, 5), orientation: new Euler3F(), scale: Unity);
+            var actual = Maths.CreateTransformation(location: new Vector3f(2, 3, 5), orientation: new Euler3f(), scale: Unity);
             Assert.AreEqual(expected, actual);
         }
 
@@ -186,7 +186,7 @@
         public void CreateCameraViewPosition()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 3, 5, 1);
-            var actual = Maths.CreateCameraView(new Camera { Position = new Point3F(-2, -3, -5) });
+            var actual = Maths.CreateCameraView(new Camera { Position = new Vector3f(-2, -3, -5) });
             Assert.AreEqual(expected, actual);
         }
 
@@ -197,7 +197,7 @@
         public void CreateCameraViewPitch()
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateCameraView(new Camera { Rotation = new Euler3F(pitch: 90, yaw: 0, roll: 0) });
+            var actual = Maths.CreateCameraView(new Camera { Rotation = new Euler3f(pitch: 90, yaw: 0, roll: 0) });
             CompareMatrices(expected, actual);
         }
 
@@ -208,7 +208,7 @@
         public void CreateCameraViewYaw()
         {
             var expected = new Matrix4(0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateCameraView(new Camera { Rotation = new Euler3F(pitch: 0, yaw: 90, roll: 0) });
+            var actual = Maths.CreateCameraView(new Camera { Rotation = new Euler3f(pitch: 0, yaw: 90, roll: 0) });
             CompareMatrices(expected, actual);
         }
 
@@ -219,7 +219,7 @@
         public void CreateCameraViewRoll()
         {
             var expected = new Matrix4(0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateCameraView(new Camera { Rotation = new Euler3F(pitch: 0, yaw: 0, roll: 90) });
+            var actual = Maths.CreateCameraView(new Camera { Rotation = new Euler3f(pitch: 0, yaw: 0, roll: 90) });
             CompareMatrices(expected, actual);
         }
 
@@ -232,21 +232,21 @@
             var expected = new Matrix4(0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 13, -11, -7, 1);
             var actual = Maths.CreateCameraView(new Camera
             {
-                Position = new Point3F(7, 11, 13),
-                Rotation = new Euler3F(90, -90, 90)
+                Position = new Vector3f(7, 11, 13),
+                Rotation = new Euler3f(90, -90, 90)
             });
             CompareMatrices(expected, actual);
         }
 
-        private static readonly Point3F Unity = new Point3F(1, 1, 1);
-        private static readonly Euler3F
-            RotateX = new Euler3F(90, 0, 0),
-            RotateY = new Euler3F(0, 90, 0),
-            RotateZ = new Euler3F(0, 0, 90),
-            RotateXY = new Euler3F(90, 90, 0),
-            RotateXZ = new Euler3F(90, 0, 90),
-            RotateYZ = new Euler3F(0, 90, 90),
-            RotateXYZ = new Euler3F(90, 90, 90);
+        private static readonly Vector3f Unity = new Vector3f(1, 1, 1);
+        private static readonly Euler3f
+            RotateX = new Euler3f(90, 0, 0),
+            RotateY = new Euler3f(0, 90, 0),
+            RotateZ = new Euler3f(0, 0, 90),
+            RotateXY = new Euler3f(90, 90, 0),
+            RotateXZ = new Euler3f(90, 0, 90),
+            RotateYZ = new Euler3f(0, 90, 90),
+            RotateXYZ = new Euler3f(90, 90, 90);
 
         private void CompareMatrices(Matrix4 expected, Matrix4 actual, float delta = 1e-6f)
         {

@@ -4,12 +4,12 @@
     using ToyGraf.Engine.Types;
 
     /// <summary>
-    /// Test the equality operators on the simple support types.
+    /// Test the provided operators on the simple support types.
     /// </summary>
     [TestClass]
     public class OperatorTests
     {
-        #region Public Test Methods
+        #region Copy Constructors
 
         /// <summary>
         /// Check that the Camera copy constructor yields a result equal to the original,
@@ -42,44 +42,14 @@
         }
 
         /// <summary>
-        /// Check that the Euler3F copy constructor yields a result equal to the original,
+        /// Check that the Euler3f copy constructor yields a result equal to the original,
         /// but having a different reference.
         /// </summary>
         [TestMethod]
-        public void CopyEuler3F()
+        public void CopyEuler3f()
         {
-            var p = new Euler3F(1, 2, 3);
-            var q = new Euler3F(p);
-            Assert.IsTrue(p.Equals(q));
-            Assert.IsTrue(p == q);
-            Assert.IsFalse(p != q);
-            Assert.IsFalse(ReferenceEquals(p, q));
-        }
-
-        /// <summary>
-        /// Check that the Point3 copy constructor yields a result equal to the original,
-        /// but having a different reference.
-        /// </summary>
-        [TestMethod]
-        public void CopyPoint3()
-        {
-            var p = new Point3(1, 2, 3);
-            var q = new Point3(p);
-            Assert.IsTrue(p.Equals(q));
-            Assert.IsTrue(p == q);
-            Assert.IsFalse(p != q);
-            Assert.IsFalse(ReferenceEquals(p, q));
-        }
-
-        /// <summary>
-        /// Check that the Point3F copy constructor yields a result equal to the original,
-        /// but having a different reference.
-        /// </summary>
-        [TestMethod]
-        public void CopyPoint3F()
-        {
-            var p = new Point3F(1, 2, 3);
-            var q = new Point3F(p);
+            var p = new Euler3f(1, 2, 3);
+            var q = new Euler3f(p);
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
@@ -100,6 +70,40 @@
             Assert.IsFalse(p != q);
             Assert.IsFalse(ReferenceEquals(p, q));
         }
+
+        /// <summary>
+        /// Check that the Vector3f copy constructor yields a result equal to the original,
+        /// but having a different reference.
+        /// </summary>
+        [TestMethod]
+        public void CopyVector3f()
+        {
+            var p = new Vector3f(1, 2, 3);
+            var q = new Vector3f(p);
+            Assert.IsTrue(p.Equals(q));
+            Assert.IsTrue(p == q);
+            Assert.IsFalse(p != q);
+            Assert.IsFalse(ReferenceEquals(p, q));
+        }
+
+        /// <summary>
+        /// Check that the Vector3i copy constructor yields a result equal to the original,
+        /// but having a different reference.
+        /// </summary>
+        [TestMethod]
+        public void CopyVector3i()
+        {
+            var p = new Vector3i(1, 2, 3);
+            var q = new Vector3i(p);
+            Assert.IsTrue(p.Equals(q));
+            Assert.IsTrue(p == q);
+            Assert.IsFalse(p != q);
+            Assert.IsFalse(ReferenceEquals(p, q));
+        }
+
+        #endregion
+
+        #region Equality
 
         [TestMethod]
         public void EqualCamera()
@@ -122,30 +126,10 @@
         }
 
         [TestMethod]
-        public void EqualEuler3F()
+        public void EqualEuler3f()
         {
-            var p = new Euler3F(1, 2, 3);
-            var q = new Euler3F(1, 2, 3);
-            Assert.IsTrue(p.Equals(q));
-            Assert.IsTrue(p == q);
-            Assert.IsFalse(p != q);
-        }
-
-        [TestMethod]
-        public void EqualPoint3()
-        {
-            var p = new Point3(1, 2, 3);
-            var q = new Point3(1, 2, 3);
-            Assert.IsTrue(p.Equals(q));
-            Assert.IsTrue(p == q);
-            Assert.IsFalse(p != q);
-        }
-
-        [TestMethod]
-        public void EqualPoint3F()
-        {
-            var p = new Point3F(1, 2, 3);
-            var q = new Point3F(1, 2, 3);
+            var p = new Euler3f(1, 2, 3);
+            var q = new Euler3f(1, 2, 3);
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
@@ -154,12 +138,36 @@
         [TestMethod]
         public void EqualProjection()
         {
-            var p = new Projection(ProjectionType.Perspective, 1, new Point3F(2, 3, 4), new Point3F(5, 6, 7));
-            var q = new Projection(ProjectionType.Perspective, 1, new Point3F(2, 3, 4), new Point3F(5, 6, 7));
+            var p = new Projection(ProjectionType.Perspective, 1, new Vector3f(2, 3, 4), new Vector3f(5, 6, 7));
+            var q = new Projection(ProjectionType.Perspective, 1, new Vector3f(2, 3, 4), new Vector3f(5, 6, 7));
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
         }
+
+        [TestMethod]
+        public void EqualVector3f()
+        {
+            var p = new Vector3f(1, 2, 3);
+            var q = new Vector3f(1, 2, 3);
+            Assert.IsTrue(p.Equals(q));
+            Assert.IsTrue(p == q);
+            Assert.IsFalse(p != q);
+        }
+
+        [TestMethod]
+        public void EqualVector3i()
+        {
+            var p = new Vector3i(1, 2, 3);
+            var q = new Vector3i(1, 2, 3);
+            Assert.IsTrue(p.Equals(q));
+            Assert.IsTrue(p == q);
+            Assert.IsFalse(p != q);
+        }
+
+        #endregion
+
+        #region Inequality
 
         [TestMethod]
         public void UnequalCamera()
@@ -182,27 +190,11 @@
         }
 
         [TestMethod]
-        public void UnequalEuler3F()
+        public void UnequalEuler3f()
         {
-            UnequalEuler3F(1, 2, 3, 99, 2, 3);
-            UnequalEuler3F(1, 2, 3, 1, 99, 3);
-            UnequalEuler3F(1, 2, 3, 1, 2, 99);
-        }
-
-        [TestMethod]
-        public void UnequalPoint3()
-        {
-            UnequalPoint3(1, 2, 3, 99, 2, 3);
-            UnequalPoint3(1, 2, 3, 1, 99, 3);
-            UnequalPoint3(1, 2, 3, 1, 2, 99);
-        }
-
-        [TestMethod]
-        public void UnequalPoint3F()
-        {
-            UnequalPoint3F(1, 2, 3, 99, 2, 3);
-            UnequalPoint3F(1, 2, 3, 1, 99, 3);
-            UnequalPoint3F(1, 2, 3, 1, 2, 99);
+            UnequalEuler3f(1, 2, 3, 99, 2, 3);
+            UnequalEuler3f(1, 2, 3, 1, 99, 3);
+            UnequalEuler3f(1, 2, 3, 1, 2, 99);
         }
 
         [TestMethod]
@@ -219,6 +211,134 @@
             UnequalProjection(t, t, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 99, 7);
             UnequalProjection(t, t, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 99);
         }
+
+        [TestMethod]
+        public void UnequalVector3f()
+        {
+            UnequalVector3f(1, 2, 3, 99, 2, 3);
+            UnequalVector3f(1, 2, 3, 1, 99, 3);
+            UnequalVector3f(1, 2, 3, 1, 2, 99);
+        }
+
+        [TestMethod]
+        public void UnequalVector3i()
+        {
+            UnequalVector3i(1, 2, 3, 99, 2, 3);
+            UnequalVector3i(1, 2, 3, 1, 99, 3);
+            UnequalVector3i(1, 2, 3, 1, 2, 99);
+        }
+
+        #endregion
+
+        #region Other Operators
+
+        #region Euler3f
+
+        [TestMethod]
+        public void Euler3fAdd()
+        {
+            Euler3f
+                expected = new Euler3f(3, 6, 9),
+                p = new Euler3f(1, 2, 3),
+                q = new Euler3f(2, 4, 6),
+                actual = p + q;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Euler3fNegate()
+        {
+            Euler3f
+                expected = new Euler3f(-1, -2, -3),
+                p = new Euler3f(1, 2, 3),
+                actual = -p;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Euler3fSubtract()
+        {
+            Euler3f
+                expected = new Euler3f(-1, -2, -3),
+                p = new Euler3f(1, 2, 3),
+                q = new Euler3f(2, 4, 6),
+                actual = p - q;
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Vector3f
+
+        [TestMethod]
+        public void Vector3fAdd()
+        {
+            Vector3f
+                expected = new Vector3f(3, 6, 9),
+                p = new Vector3f(1, 2, 3),
+                q = new Vector3f(2, 4, 6),
+                actual = p + q;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3fNegate()
+        {
+            Vector3f
+                expected = new Vector3f(-1, -2, -3),
+                p = new Vector3f(1, 2, 3),
+                actual = -p;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3fSubtract()
+        {
+            Vector3f
+                expected = new Vector3f(-1, -2, -3),
+                p = new Vector3f(1, 2, 3),
+                q = new Vector3f(2, 4, 6),
+                actual = p - q;
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Vector3i
+
+        [TestMethod]
+        public void Vector3iAdd()
+        {
+            Vector3i
+                expected = new Vector3i(3, 6, 9),
+                p = new Vector3i(1, 2, 3),
+                q = new Vector3i(2, 4, 6),
+                actual = p + q;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3iNegate()
+        {
+            Vector3i
+                expected = new Vector3i(-1, -2, -3),
+                p = new Vector3i(1, 2, 3),
+                actual = -p;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3iSubtract()
+        {
+            Vector3i
+                expected = new Vector3i(-1, -2, -3),
+                p = new Vector3i(1, 2, 3),
+                q = new Vector3i(2, 4, 6),
+                actual = p - q;
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
 
         #endregion
 
@@ -242,28 +362,10 @@
             Assert.IsTrue(p != q);
         }
 
-        private void UnequalEuler3F(params float[] a)
+        private void UnequalEuler3f(params float[] a)
         {
-            var p = new Euler3F(a[0], a[1], a[2]);
-            var q = new Euler3F(a[3], a[4], a[5]);
-            Assert.IsFalse(p.Equals(q));
-            Assert.IsFalse(p == q);
-            Assert.IsTrue(p != q);
-        }
-
-        private void UnequalPoint3(params int[] a)
-        {
-            var p = new Point3F(a[0], a[1], a[2]);
-            var q = new Point3F(a[3], a[4], a[5]);
-            Assert.IsFalse(p.Equals(q));
-            Assert.IsFalse(p == q);
-            Assert.IsTrue(p != q);
-        }
-
-        private void UnequalPoint3F(params float[] a)
-        {
-            var p = new Point3F(a[0], a[1], a[2]);
-            var q = new Point3F(a[3], a[4], a[5]);
+            var p = new Euler3f(a[0], a[1], a[2]);
+            var q = new Euler3f(a[3], a[4], a[5]);
             Assert.IsFalse(p.Equals(q));
             Assert.IsFalse(p == q);
             Assert.IsTrue(p != q);
@@ -271,8 +373,26 @@
 
         private void UnequalProjection(ProjectionType typeA, ProjectionType typeB, params float[] a)
         {
-            var p = new Projection(typeA, a[0], new Point3F(a[1], a[2], a[3]), new Point3F(a[4], a[5], a[6]));
-            var q = new Projection(typeB, a[7], new Point3F(a[8], a[9], a[10]), new Point3F(a[11], a[12], a[13]));
+            var p = new Projection(typeA, a[0], new Vector3f(a[1], a[2], a[3]), new Vector3f(a[4], a[5], a[6]));
+            var q = new Projection(typeB, a[7], new Vector3f(a[8], a[9], a[10]), new Vector3f(a[11], a[12], a[13]));
+            Assert.IsFalse(p.Equals(q));
+            Assert.IsFalse(p == q);
+            Assert.IsTrue(p != q);
+        }
+
+        private void UnequalVector3f(params float[] a)
+        {
+            var p = new Vector3f(a[0], a[1], a[2]);
+            var q = new Vector3f(a[3], a[4], a[5]);
+            Assert.IsFalse(p.Equals(q));
+            Assert.IsFalse(p == q);
+            Assert.IsTrue(p != q);
+        }
+
+        private void UnequalVector3i(params int[] a)
+        {
+            var p = new Vector3i(a[0], a[1], a[2]);
+            var q = new Vector3i(a[3], a[4], a[5]);
             Assert.IsFalse(p.Equals(q));
             Assert.IsFalse(p == q);
             Assert.IsTrue(p != q);

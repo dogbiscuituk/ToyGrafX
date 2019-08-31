@@ -66,6 +66,7 @@
     <Compile Include="Commands\TraceCommands.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Controllers\CameraController.cs" />
     <Compile Include="Controllers\ClockController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\ColumnsController.cs" />

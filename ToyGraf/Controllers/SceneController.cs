@@ -23,6 +23,7 @@
         {
             SceneForm = new SceneForm();
             Scene = new Scene(this);
+            CameraController = new CameraController(this);
             ClockController = new ClockController(this);
             CommandProcessor = new CommandProcessor(this);
             new FullScreenController(this);
@@ -168,6 +169,7 @@
 
         #region Private Properties
 
+        private readonly CameraController CameraController;
         private readonly List<string> ChangedPropertyNames = new List<string>();
         private object ChangedSubject;
         private Clock Clock => ClockController.Clock;
@@ -444,17 +446,17 @@
             switch (property)
             {
                 case DisplayNames.Location:
-                    return new LocationCommand(index, new Point3F(trace.Location, field, (float)value));
+                    return new LocationCommand(index, new Vector3f(trace.Location, field, (float)value));
                 case DisplayNames.Maximum:
-                    return new MaximumCommand(index, new Point3F(trace.Maximum, field, (float)value));
+                    return new MaximumCommand(index, new Vector3f(trace.Maximum, field, (float)value));
                 case DisplayNames.Minimum:
-                    return new MinimumCommand(index, new Point3F(trace.Minimum, field, (float)value));
+                    return new MinimumCommand(index, new Vector3f(trace.Minimum, field, (float)value));
                 case DisplayNames.Orientation:
-                    return new OrientationCommand(index, new Euler3F(trace.Orientation, field, (float)value));
+                    return new OrientationCommand(index, new Euler3f(trace.Orientation, field, (float)value));
                 case DisplayNames.Scale:
-                    return new ScaleCommand(index, new Point3F(trace.Scale, field, (float)value));
+                    return new ScaleCommand(index, new Vector3f(trace.Scale, field, (float)value));
                 case DisplayNames.StripCount:
-                    return new StripCountCommand(index, new Point3(trace.StripCount, field, (int)value));
+                    return new StripCountCommand(index, new Vector3i(trace.StripCount, field, (int)value));
             }
             return null;
         }
