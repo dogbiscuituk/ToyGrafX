@@ -8,7 +8,7 @@
     {
         #region Constructors
 
-        public Camera() : this(new Vector3f(), new Euler3f()) { }
+        public Camera() : this(Defaults.Position, Defaults.Rotation) { }
 
         public Camera(Camera camera) : this(camera.Position, camera.Rotation) { }
 
@@ -111,6 +111,15 @@
         #endregion
 
         #region Internal Classes
+
+        internal static class Defaults
+        {
+            internal static Euler3f
+                Rotation = new Euler3f();
+
+            internal static Vector3f
+                Position = new Vector3f(0, 0, 2);
+        }
 
         internal static class Descriptions
         {
