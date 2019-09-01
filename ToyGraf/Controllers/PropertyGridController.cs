@@ -44,7 +44,11 @@
         internal bool PropertyGridVisible
         {
             get => !SceneForm.SplitContainer2.Panel2Collapsed;
-            set => SceneForm.SplitContainer2.Panel2Collapsed = !value;
+            set
+            {
+                SceneForm.SplitContainer2.Panel2Collapsed = !value;
+                Refresh();
+            }
         }
 
         internal object SelectedObject

@@ -30,7 +30,11 @@
         internal bool TraceTableVisible
         {
             get => !SceneForm.SplitContainer1.Panel2Collapsed;
-            set => SceneForm.SplitContainer1.Panel2Collapsed = !value;
+            set
+            {
+                SceneForm.SplitContainer1.Panel2Collapsed = !value;
+                Refresh();
+            }
         }
 
         internal void Refresh()
