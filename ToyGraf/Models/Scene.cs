@@ -395,6 +395,17 @@
         internal void SetCameraView(Matrix4 _) { }
         internal void SetProjection(Matrix4 _) { }
 
+        internal void CameraMoveBack() => CameraMoveFront(-0.1f);
+        internal void CameraMoveDown() => CameraMoveUp(-0.1f);
+        internal void CameraMoveForward() => CameraMoveFront(+0.1f);
+        internal void CameraMoveLeft() => CameraMoveRight(-0.1f);
+        internal void CameraMoveRight() => CameraMoveRight(+0.1f);
+        internal void CameraMoveUp() => CameraMoveUp(+0.1f);
+        internal void CameraRotateDown() => CameraRotateUp(-0.1f);
+        internal void CameraRotateLeft() => CameraRotateRight(-0.1f);
+        internal void CameraRotateRight() => CameraRotateRight(+0.1f);
+        internal void CameraRotateUp() => CameraRotateUp(+0.1f);
+
         #endregion
 
         #region Private Classes
@@ -497,6 +508,20 @@ void main()
         #endregion
 
         #region Private Methods
+
+        private void CameraMove(Vector3f basis, float delta, bool strafe)
+        {
+            var shift = delta * basis;
+            Camera = strafe
+                ? new Camera(Camera.Position + shift, Camera.Focus + shift)
+                : new Camera(Camera, "Position", Camera.Position + shift);
+        }
+
+        private void CameraMoveFront(float delta) => CameraMove(Camera.Ufront, delta, false);
+        private void CameraMoveRight(float delta) => CameraMove(Camera.Uright, delta, true);
+        private void CameraMoveUp(float delta) => CameraMove(Camera.Uup, delta, true);
+        private void CameraRotateRight(float delta) { }
+        private void CameraRotateUp(float delta) { }
 
         private void RestoreDefaults()
         {

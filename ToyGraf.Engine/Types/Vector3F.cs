@@ -59,6 +59,9 @@
         public static Vector3f operator -(Vector3f p) => new Vector3f(-p.X, -p.Y, -p.Z);
         public static Vector3f operator +(Vector3f p, Vector3f q) => new Vector3f(p.X + q.X, p.Y + q.Y, p.Z + q.Z);
         public static Vector3f operator -(Vector3f p, Vector3f q) => new Vector3f(p.X - q.X, p.Y - q.Y, p.Z - q.Z);
+        public static Vector3f operator *(Vector3f p, float q) => new Vector3f(p.X * q, p.Y * q, p.Z * q);
+        public static Vector3f operator *(float p, Vector3f q) => new Vector3f(p * q.X, p * q.Y, p * q.Z);
+        public static Vector3f operator /(Vector3f p, float q) => new Vector3f(p.X / q, p.Y / q, p.Z / q);
 
         #endregion
 

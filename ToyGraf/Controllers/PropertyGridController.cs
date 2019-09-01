@@ -74,8 +74,11 @@
 
         internal void Refresh()
         {
-            RefreshDataSource();
-            PropertyGrid.Refresh();
+            if (PropertyGridVisible)
+            {
+                RefreshDataSource();
+                PropertyGrid.Refresh();
+            }
         }
 
         #endregion

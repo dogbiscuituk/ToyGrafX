@@ -35,10 +35,13 @@
 
         internal void Refresh()
         {
-            TraceTable.DataSource = null;
-            var traces = Scene.Traces;
-            if (traces.Any())
-                TraceTable.DataSource = traces;
+            if (TraceTableVisible)
+            {
+                TraceTable.DataSource = null;
+                var traces = Scene.Traces;
+                if (traces.Any())
+                    TraceTable.DataSource = traces;
+            }
         }
 
         #endregion

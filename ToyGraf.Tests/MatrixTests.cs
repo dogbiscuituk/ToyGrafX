@@ -169,12 +169,12 @@
         }
 
         /// <summary>
-        /// Get the view matrix for the default camera location & orientation.
+        /// Get the view matrix for the default camera location.
         /// </summary>
         [TestMethod]
         public void CreateCameraView()
         {
-            var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -2, 1);
             var actual = Maths.CreateCameraView(new Camera());
             Assert.AreEqual(expected, actual);
         }
@@ -185,57 +185,32 @@
         [TestMethod]
         public void CreateCameraViewPosition()
         {
-            var expected = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 3, 5, 1);
+            var expected = new Matrix4(
+                -0.9284767f, -0.1807426f, -0.3244428f, 0,
+                0, 0.8735891f, -0.4866643f, 0,
+                0.3713907f, -0.4518564f, -0.8111071f, 0,
+                -2.980232E-08f, 0, -6.164414f, 1);
             var actual = Maths.CreateCameraView(new Camera { Position = new Vector3f(-2, -3, -5) });
-            Assert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
-        /// Get the view matrix for a camera tilted by 90°.
-        /// </summary>
-        [TestMethod]
-        public void CreateCameraViewPitch()
-        {
-            var expected = new Matrix4(1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateCameraView(new Camera { Rotation = new Euler3f(pitch: 90, yaw: 0, roll: 0) });
             CompareMatrices(expected, actual);
         }
 
         /// <summary>
-        /// Get the view matrix for a camera panned by 90°.
-        /// </summary>
-        [TestMethod]
-        public void CreateCameraViewYaw()
-        {
-            var expected = new Matrix4(0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateCameraView(new Camera { Rotation = new Euler3f(pitch: 0, yaw: 90, roll: 0) });
-            CompareMatrices(expected, actual);
-        }
-
-        /// <summary>
-        /// Get the view matrix for a camera rolled by 90°.
-        /// </summary>
-        [TestMethod]
-        public void CreateCameraViewRoll()
-        {
-            var expected = new Matrix4(0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-            var actual = Maths.CreateCameraView(new Camera { Rotation = new Euler3f(pitch: 0, yaw: 0, roll: 90) });
-            CompareMatrices(expected, actual);
-        }
-
-        /// <summary>
-        /// Get the view matrix for a general camera location & orientation.
+        /// Get the view matrix for a general camera location.
         /// </summary>
         [TestMethod]
         public void CreateCameraViewGeneral()
         {
-            var expected = new Matrix4(0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 13, -11, -7, 1);
+            var expected = new Matrix4(
+                0.8479983f, -0.342783f, 0.404226f, 0,
+                0, 0.7626922f, 0.6467617f, 0,
+                -0.529999f, -0.5484528f, 0.6467617f, 0,
+                0.9539982f, 1.139754f, -18.35186f, 1);
             var actual = Maths.CreateCameraView(new Camera
             {
                 Position = new Vector3f(7, 11, 13),
-                Rotation = new Euler3f(90, -90, 90)
+                Focus = new Vector3f(2, 3, 5)
             });
-            CompareMatrices(expected, actual);
+            CompareMatrices(expected, actual, 1e-5f);
         }
 
         private static readonly Vector3f Unity = new Vector3f(1, 1, 1);

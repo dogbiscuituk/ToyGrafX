@@ -23,7 +23,6 @@
         {
             SceneForm = new SceneForm();
             Scene = new Scene(this);
-            CameraController = new CameraController(this);
             ClockController = new ClockController(this);
             CommandProcessor = new CommandProcessor(this);
             new FullScreenController(this);
@@ -138,6 +137,16 @@
 
         #region Private Event Handlers
 
+        private void CameraMoveBack_Click(object sender, System.EventArgs e) => Scene.CameraMoveBack();
+        private void CameraMoveDown_Click(object sender, EventArgs e) => Scene.CameraMoveDown();
+        private void CameraMoveForward_Click(object sender, System.EventArgs e) => Scene.CameraMoveForward();
+        private void CameraMoveLeft_Click(object sender, EventArgs e) => Scene.CameraMoveLeft();
+        private void CameraMoveRight_Click(object sender, EventArgs e) => Scene.CameraMoveRight();
+        private void CameraMoveUp_Click(object sender, EventArgs e) => Scene.CameraMoveUp();
+        private void CameraRotateDown_Click(object sender, EventArgs e) => Scene.CameraRotateDown();
+        private void CameraRotateLeft_Click(object sender, EventArgs e) => Scene.CameraRotateLeft();
+        private void CameraRotateRight_Click(object sender, EventArgs e) => Scene.CameraRotateRight();
+        private void CameraRotateUp_Click(object sender, EventArgs e) => Scene.CameraRotateUp();
         private void Clock_Tick(object sender, EventArgs e) { RenderController.Render(); }
         private void EditOptions_Click(object sender, EventArgs e) => EditOptions();
         private void FileClose_Click(object sender, System.EventArgs e) => SceneForm.Close();
@@ -169,7 +178,6 @@
 
         #region Private Properties
 
-        private readonly CameraController CameraController;
         private readonly List<string> ChangedPropertyNames = new List<string>();
         private object ChangedSubject;
         private Clock Clock => ClockController.Clock;
@@ -232,14 +240,24 @@
                 SceneForm.FileExit.Click += FileExit_Click;
                 SceneForm.EditOptions.Click += EditOptions_Click;
                 SceneForm.EditRefresh.Click += (sender, e) => RenderController.Refresh();
+                SceneForm.CameraMoveLeft.Click += CameraMoveLeft_Click;
+                SceneForm.CameraMoveRight.Click += CameraMoveRight_Click;
+                SceneForm.CameraMoveForward.Click += CameraMoveForward_Click;
+                SceneForm.CameraMoveBack.Click += CameraMoveBack_Click;
+                SceneForm.CameraMoveUp.Click += CameraMoveUp_Click;
+                SceneForm.CameraMoveDown.Click += CameraMoveDown_Click;
+                SceneForm.CameraRotateLeft.Click += CameraRotateLeft_Click;
+                SceneForm.CameraRotateRight.Click += CameraRotateRight_Click;
+                SceneForm.CameraRotateUp.Click += CameraRotateUp_Click;
+                SceneForm.CameraRotateDown.Click += CameraRotateDown_Click;
+                SceneForm.HelpOpenGLShadingLanguage.Click += HelpTheOpenGLShadingLanguage_Click;
+                SceneForm.HelpAbout.Click += HelpAbout_Click;
                 SceneForm.tbNew.ButtonClick += FileNewEmptyScene_Click;
                 SceneForm.tbNewEmptyScene.Click += FileNewEmptyScene_Click;
                 SceneForm.tbNewFromTemplate.Click += FileNewFromTemplate_Click;
                 SceneForm.tbOpen.ButtonClick += FileOpen_Click;
                 SceneForm.tbOpen.DropDownOpening += TbOpen_DropDownOpening;
                 SceneForm.tbSave.Click += TbSave_Click;
-                SceneForm.HelpOpenGLShadingLanguage.Click += HelpTheOpenGLShadingLanguage_Click;
-                SceneForm.HelpAbout.Click += HelpAbout_Click;
                 GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
                 GLControl.Load += GLControl_Load;
                 GLControl.Paint += GLControl_Paint;
@@ -263,14 +281,25 @@
                 SceneForm.FileClose.Click -= FileClose_Click;
                 SceneForm.FileExit.Click -= FileExit_Click;
                 SceneForm.EditOptions.Click -= EditOptions_Click;
+                SceneForm.EditRefresh.Click -= (sender, e) => RenderController.Refresh();
+                SceneForm.CameraMoveLeft.Click -= CameraMoveLeft_Click;
+                SceneForm.CameraMoveRight.Click -= CameraMoveRight_Click;
+                SceneForm.CameraMoveForward.Click -= CameraMoveForward_Click;
+                SceneForm.CameraMoveBack.Click -= CameraMoveBack_Click;
+                SceneForm.CameraMoveUp.Click -= CameraMoveUp_Click;
+                SceneForm.CameraMoveDown.Click -= CameraMoveDown_Click;
+                SceneForm.CameraRotateLeft.Click -= CameraRotateLeft_Click;
+                SceneForm.CameraRotateRight.Click -= CameraRotateRight_Click;
+                SceneForm.CameraRotateUp.Click -= CameraRotateUp_Click;
+                SceneForm.CameraRotateDown.Click -= CameraRotateDown_Click;
+                SceneForm.HelpOpenGLShadingLanguage.Click -= HelpTheOpenGLShadingLanguage_Click;
+                SceneForm.HelpAbout.Click -= HelpAbout_Click;
                 SceneForm.tbNew.ButtonClick -= FileNewEmptyScene_Click;
                 SceneForm.tbNewEmptyScene.Click -= FileNewEmptyScene_Click;
                 SceneForm.tbNewFromTemplate.Click -= FileNewFromTemplate_Click;
                 SceneForm.tbOpen.ButtonClick -= FileOpen_Click;
                 SceneForm.tbOpen.DropDownOpening -= TbOpen_DropDownOpening;
                 SceneForm.tbSave.Click -= TbSave_Click;
-                SceneForm.HelpOpenGLShadingLanguage.Click -= HelpTheOpenGLShadingLanguage_Click;
-                SceneForm.HelpAbout.Click -= HelpAbout_Click;
                 GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
                 GLControl.Load -= GLControl_Load;
                 GLControl.Paint -= GLControl_Paint;

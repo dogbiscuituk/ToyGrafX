@@ -7,15 +7,10 @@
 
     public static class Maths
     {
-        public static Matrix4 CreateCameraView(Camera camera) =>
-            CreateCameraView(camera.Position, camera.Rotation);
+        public static Matrix4 CreateCameraView(Camera camera) => CreateCameraView(camera.Position, camera.Focus);
 
-        public static Matrix4 CreateCameraView(Vector3f position, Euler3f rotation) =>
-            Matrix4.LookAt(-position.ToVector3(), Vector3.Zero, new Vector3(0, 1, 0));
-            //Matrix4.CreateTranslation(-position.ToVector3()) *
-            //Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation.Roll)) *
-            //Matrix4.CreateRotationY(MathHelper.DegreesToRadians(rotation.Yaw)) *
-            //Matrix4.CreateRotationX(MathHelper.DegreesToRadians(rotation.Pitch));
+        public static Matrix4 CreateCameraView(Vector3f position, Vector3f focus) =>
+            Matrix4.LookAt(position.ToVector3(), focus.ToVector3(), new Vector3(0, 1, 0));
 
         public static Matrix4 CreateProjection(Projection p) => CreateProjection(p, new Size(16, 9));
 

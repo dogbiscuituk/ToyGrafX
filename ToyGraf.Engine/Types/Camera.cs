@@ -1,38 +1,47 @@
 ﻿namespace ToyGraf.Engine.Types
 {
+    using Newtonsoft.Json;
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
+    using ToyGraf.Engine.Utility;
 
     [TypeConverter(typeof(CameraTypeConverter))]
     public class Camera
     {
         #region Constructors
 
-        public Camera() : this(Defaults.Position, Defaults.Rotation) { }
+        public Camera() : this(Defaults.Position, Defaults.Focus) { }
+        public Camera(Camera camera) : this(camera.Position, camera.Focus) { }
 
-        public Camera(Camera camera) : this(camera.Position, camera.Rotation) { }
-
-        public Camera(Vector3f position, Euler3f rotation)
+        public Camera(Vector3f position, Vector3f focus)
         {
             Position = new Vector3f(position);
-            Rotation = new Euler3f(rotation);
+            Focus = new Vector3f(focus);
         }
 
         public Camera(Camera camera, string field, object value) : this(camera)
         {
             switch (field)
             {
+                case DisplayNames.Focus:
+                    Focus = (Vector3f)value;
+                    return;
                 case DisplayNames.Position:
                     Position = (Vector3f)value;
-                    return;
-                case DisplayNames.Rotation:
-                    Rotation = (Euler3f)value;
                     return;
             }
             var v = (float)value;
             var fields = field.Split('.');
             switch (fields[0])
             {
+                case DisplayNames.Focus:
+                    switch (fields[1])
+                    {
+                        case Vector3f.DisplayNames.X: Focus.X = v; break;
+                        case Vector3f.DisplayNames.Y: Focus.Y = v; break;
+                        case Vector3f.DisplayNames.Z: Focus.Z = v; break;
+                    }
+                    break;
                 case DisplayNames.Position:
                     switch (fields[1])
                     {
@@ -41,34 +50,37 @@
                         case Vector3f.DisplayNames.Z: Position.Z = v; break;
                     }
                     break;
-                case DisplayNames.Rotation:
-                    switch (fields[1])
-                    {
-                        case Euler3f.DisplayNames.Pitch: Rotation.Pitch = v; break;
-                        case Euler3f.DisplayNames.Yaw: Rotation.Yaw = v; break;
-                        case Euler3f.DisplayNames.Roll: Rotation.Roll = v; break;
-                    }
-                    break;
             }
         }
 
-        public Camera(float x, float y, float z, float pitch, float yaw, float roll) :
-            this(new Vector3f(x, y, z), new Euler3f(pitch, yaw, roll))
-        { }
+        public Camera(float x, float y, float z, float u, float v, float w) :
+            this(new Vector3f(x, y, z), new Vector3f(u, v, w)) { }
 
         #endregion
 
         #region Public Properties
+
+        [Description(Descriptions.Focus)]
+        [DisplayName(DisplayNames.Focus)]
+        [TypeConverter(typeof(Vector3fTypeConverter))]
+        public Vector3f Focus { get; set; } = new Vector3f();
 
         [Description(Descriptions.Position)]
         [DisplayName(DisplayNames.Position)]
         [TypeConverter(typeof(Vector3fTypeConverter))]
         public Vector3f Position { get; set; } = new Vector3f();
 
-        [Description(Descriptions.Rotation)]
-        [DisplayName(DisplayNames.Rotation)]
-        [TypeConverter(typeof(Euler3fTypeConverter))]
-        public Euler3f Rotation { get; set; } = new Euler3f();
+        [Browsable(false)]
+        [JsonIgnore]
+        public Vector3f Ufront => (Focus - Position).Normalize();
+
+        [Browsable(false)]
+        [JsonIgnore]
+        public Vector3f Uright => Ufront.Cross(Uup).Normalize();
+
+        [Browsable(false)]
+        [JsonIgnore]
+        public Vector3f Uup => new Vector3f(0, 1, 0);
 
         #endregion
 
@@ -81,32 +93,31 @@
 
         #region Public Methods
 
-        public override bool Equals(object obj) =>
-            obj is Camera c && c.Position == Position && c.Rotation == Rotation;
+        public override bool Equals(object obj) => obj is Camera c && c.Position == Position && c.Focus == Focus;
 
         public void Fix()
         {
+            HomeFocus = Focus;
             HomePosition = Position;
-            HomeRotation = Rotation;
         }
 
-        public override int GetHashCode() => Position.GetHashCode() ^ Rotation.GetHashCode();
+        public override int GetHashCode() => Focus.GetHashCode() ^ Position.GetHashCode();
 
         public static Camera Parse(string s)
         {
             var t = s.Split(',');
             return new Camera(
                 new Vector3f(float.Parse(t[0]), float.Parse(t[1]), float.Parse(t[2])),
-                new Euler3f(float.Parse(t[3]), float.Parse(t[4]), float.Parse(t[5])));
+                new Vector3f(float.Parse(t[3]), float.Parse(t[4]), float.Parse(t[5])));
         }
 
         public void Reset()
         {
             Position = HomePosition;
-            Rotation = HomeRotation;
+            Focus = HomeFocus;
         }
 
-        public override string ToString() => $"{Position}, {Rotation}";
+        public override string ToString() => $"{Position}, {Focus}";
 
         #endregion
 
@@ -114,33 +125,32 @@
 
         internal static class Defaults
         {
-            internal static Euler3f
-                Rotation = new Euler3f();
-
             internal static Vector3f
+                Focus = new Vector3f(),
                 Position = new Vector3f(0, 0, 2);
         }
 
         internal static class Descriptions
         {
             internal const string
-                Position = "A vector representing the Camera's position.",
-                Rotation = "A rotation representing the Camera's orientation.";
+                Focus = "A vector representing the fixed point target of the camera",
+                Position = "A vector representing the camera's position.";
         }
 
         internal static class DisplayNames
         {
             internal const string
-                Position = "Position",
-                Rotation = "Rotation°";
+                Focus = "Focus",
+                Position = "Position";
         }
 
         #endregion
 
         #region Private Properties
 
-        private Vector3f HomePosition;
-        private Euler3f HomeRotation;
+        private Vector3f
+            HomeFocus,
+            HomePosition;
 
         #endregion
     }
