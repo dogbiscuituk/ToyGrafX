@@ -3,6 +3,7 @@
     using Newtonsoft.Json;
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.Design;
@@ -395,16 +396,16 @@
         internal void SetCameraView(Matrix4 _) { }
         internal void SetProjection(Matrix4 _) { }
 
-        internal void CameraMoveBack() => CameraMoveFront(-0.1f);
-        internal void CameraMoveDown() => CameraMoveUp(-0.1f);
-        internal void CameraMoveForward() => CameraMoveFront(+0.1f);
-        internal void CameraMoveLeft() => CameraMoveRight(-0.1f);
-        internal void CameraMoveRight() => CameraMoveRight(+0.1f);
-        internal void CameraMoveUp() => CameraMoveUp(+0.1f);
-        internal void CameraRotateDown() => CameraRotateUp(-0.1f);
-        internal void CameraRotateLeft() => CameraRotateRight(-0.1f);
-        internal void CameraRotateRight() => CameraRotateRight(+0.1f);
-        internal void CameraRotateUp() => CameraRotateUp(+0.1f);
+        internal void CameraMoveBack() => CameraMoveFront(-1);
+        internal void CameraMoveDown() => CameraMoveUp(-1);
+        internal void CameraMoveForward() => CameraMoveFront(+1);
+        internal void CameraMoveLeft() => CameraMoveRight(-1);
+        internal void CameraMoveRight() => CameraMoveRight(+1);
+        internal void CameraMoveUp() => CameraMoveUp(+1);
+        internal void CameraRotateDown() => CameraRotateUp(-1);
+        internal void CameraRotateLeft() => CameraRotateRight(-1);
+        internal void CameraRotateRight() => CameraRotateRight(+1);
+        internal void CameraRotateUp() => CameraRotateUp(+1);
 
         #endregion
 
@@ -501,6 +502,9 @@ void main()
 
         #region Private Properties
 
+        private const float
+            CameraBump = 0.1f;
+
         private GLControl GLControl => SceneForm?.GLControl;
         private RenderController RenderController => SceneController.RenderController;
         private SceneForm SceneForm => SceneController?.SceneForm;
@@ -511,17 +515,27 @@ void main()
 
         private void CameraMove(Vector3f basis, float delta, bool strafe)
         {
-            var shift = delta * basis;
+            var shift = delta * CameraBump * basis;
             Camera = strafe
                 ? new Camera(Camera.Position + shift, Camera.Focus + shift)
                 : new Camera(Camera, "Position", Camera.Position + shift);
         }
 
-        private void CameraMoveFront(float delta) => CameraMove(Camera.Ufront, delta, false);
-        private void CameraMoveRight(float delta) => CameraMove(Camera.Uright, delta, true);
-        private void CameraMoveUp(float delta) => CameraMove(Camera.Uup, delta, true);
-        private void CameraRotateRight(float delta) { }
-        private void CameraRotateUp(float delta) { }
+        private void CameraMoveFront(int delta) => CameraMove(Camera.Ufront, delta, false);
+        private void CameraMoveRight(int delta) => CameraMove(Camera.Uright, delta, true);
+        private void CameraMoveUp(int delta) => CameraMove(Camera.Uup, delta, true);
+
+        private void CameraRotate(Vector3f basis, float delta)
+        {
+            Vector3f
+                f = Camera.Focus,
+                p = Camera.Position - f,
+                q = p + delta * CameraBump * basis;
+            Camera = new Camera(q * p.Length / q.Length + f, f);
+        }
+
+        private void CameraRotateRight(int delta) => CameraRotate(Camera.Uright, delta);
+        private void CameraRotateUp(int delta) => CameraRotate(Camera.Uup, delta);
 
         private void RestoreDefaults()
         {

@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Engine.Types
 {
+    using System;
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
 
@@ -48,6 +49,7 @@
         [DisplayName(DisplayNames.Z)]
         public float Z { get; set; }
 
+        public float Length => (float)Math.Sqrt(X * X + Y * Y + Z * Z);
         public static Vector3f Zero = new Vector3f();
 
         #endregion
