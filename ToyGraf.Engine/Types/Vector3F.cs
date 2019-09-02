@@ -50,7 +50,6 @@
         public float Z { get; set; }
 
         public float Length => (float)Math.Sqrt(X * X + Y * Y + Z * Z);
-        public static Vector3f Zero = new Vector3f();
 
         #endregion
 
@@ -58,6 +57,7 @@
 
         public static bool operator ==(Vector3f p, Vector3f q) => p is null ? q is null : p.Equals(q);
         public static bool operator !=(Vector3f p, Vector3f q) => !(p == q);
+
         public static Vector3f operator -(Vector3f p) => new Vector3f(-p.X, -p.Y, -p.Z);
         public static Vector3f operator +(Vector3f p, Vector3f q) => new Vector3f(p.X + q.X, p.Y + q.Y, p.Z + q.Z);
         public static Vector3f operator -(Vector3f p, Vector3f q) => new Vector3f(p.X - q.X, p.Y - q.Y, p.Z - q.Z);
@@ -69,15 +69,30 @@
 
         #region Public Methods
 
+        public Vector3f Cross(Vector3f p) =>
+            new Vector3f(Y * p.Z - Z * p.Y, Z * p.X - X * p.Z, X * p.Y - Y * p.X);
+
+        public float Dot(Vector3f p) => X * p.X + Y * p.Y + Z * p.Z;
+
         public override bool Equals(object obj) => obj is Vector3f p && p.X == X && p.Y == Y && p.Z == Z;
+
         public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
-        public override string ToString() => $"{X}, {Y}, {Z}";
+
+        public Vector3f Normalize()
+        {
+            if (X == 0 && Y == 0 && Z == 0)
+                return new Vector3f(this);
+            var length = Length;
+            return new Vector3f(X / length, Y / length, Z / length);
+        }
 
         public static Vector3f Parse(string s)
         {
             var t = s.Split(',');
             return new Vector3f(float.Parse(t[0]), float.Parse(t[1]), float.Parse(t[2]));
         }
+
+        public override string ToString() => $"{X}, {Y}, {Z}";
 
         #endregion
 

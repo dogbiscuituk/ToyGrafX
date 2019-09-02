@@ -139,7 +139,17 @@
             this.TimePause = new System.Windows.Forms.ToolStripMenuItem();
             this.TimeForward = new System.Windows.Forms.ToolStripMenuItem();
             this.TimeAccelerate = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.MoveMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.MoveStrafe = new System.Windows.Forms.ToolStripMenuItem();
+            this.MoveLeft = new System.Windows.Forms.ToolStripMenuItem();
+            this.MoveRight = new System.Windows.Forms.ToolStripMenuItem();
+            this.MoveUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.MoveDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.MoveCircle = new System.Windows.Forms.ToolStripMenuItem();
+            this.CircleLeft = new System.Windows.Forms.ToolStripMenuItem();
+            this.CircleRight = new System.Windows.Forms.ToolStripMenuItem();
+            this.CircleUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.CircleDown = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpOpenGLShadingLanguage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripSeparator();
@@ -148,18 +158,14 @@
             this.PopupSubjectScene = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupSubjectSelectedTraces = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupSubjectAllTraces = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMove = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraRotate = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMoveForward = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMoveBack = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMoveLeft = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMoveRight = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMoveUp = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraMoveDown = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraRotateLeft = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraRotateRight = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraRotateUp = new System.Windows.Forms.ToolStripMenuItem();
-            this.CameraRotateDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.MoveZoomRoll = new System.Windows.Forms.ToolStripMenuItem();
+            this.ZoomIn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ZoomOut = new System.Windows.Forms.ToolStripMenuItem();
+            this.RollClockwise = new System.Windows.Forms.ToolStripMenuItem();
+            this.RollAnticlockwise = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
@@ -190,7 +196,7 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(435, 379);
+            this.GLControl.Size = new System.Drawing.Size(434, 378);
             this.GLControl.TabIndex = 1;
             this.GLControl.VSync = false;
             // 
@@ -329,7 +335,7 @@
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.TraceTable);
             this.SplitContainer1.Size = new System.Drawing.Size(751, 515);
-            this.SplitContainer1.SplitterDistance = 379;
+            this.SplitContainer1.SplitterDistance = 378;
             this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
@@ -347,8 +353,8 @@
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(751, 379);
-            this.SplitContainer2.SplitterDistance = 435;
+            this.SplitContainer2.Size = new System.Drawing.Size(751, 378);
+            this.SplitContainer2.SplitterDistance = 434;
             this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
             // 
@@ -358,7 +364,7 @@
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(311, 379);
+            this.PropertyGrid.Size = new System.Drawing.Size(312, 378);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -422,7 +428,7 @@
             this.TraceTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.TraceTable.RowHeadersWidth = 20;
             this.TraceTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TraceTable.Size = new System.Drawing.Size(751, 131);
+            this.TraceTable.Size = new System.Drawing.Size(751, 132);
             this.TraceTable.TabIndex = 0;
             // 
             // colDescription
@@ -757,7 +763,7 @@
             this.SceneMenu,
             this.ViewMenu,
             this.TimeMenu,
-            this.CameraMenu,
+            this.MoveMenu,
             this.HelpMenu});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
@@ -1104,14 +1110,107 @@
             this.TimeAccelerate.Size = new System.Drawing.Size(129, 22);
             this.TimeAccelerate.Text = "&Accelerate";
             // 
-            // CameraMenu
+            // MoveMenu
             // 
-            this.CameraMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CameraMove,
-            this.CameraRotate});
-            this.CameraMenu.Name = "CameraMenu";
-            this.CameraMenu.Size = new System.Drawing.Size(60, 20);
-            this.CameraMenu.Text = "&Camera";
+            this.MoveMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MoveStrafe,
+            this.MoveCircle,
+            this.MoveZoomRoll});
+            this.MoveMenu.Name = "MoveMenu";
+            this.MoveMenu.Size = new System.Drawing.Size(49, 20);
+            this.MoveMenu.Text = "&Move";
+            // 
+            // MoveStrafe
+            // 
+            this.MoveStrafe.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MoveLeft,
+            this.MoveRight,
+            this.toolStripMenuItem5,
+            this.MoveUp,
+            this.MoveDown});
+            this.MoveStrafe.Name = "MoveStrafe";
+            this.MoveStrafe.Size = new System.Drawing.Size(180, 22);
+            this.MoveStrafe.Text = "&Strafe";
+            // 
+            // MoveLeft
+            // 
+            this.MoveLeft.Name = "MoveLeft";
+            this.MoveLeft.ShortcutKeyDisplayString = "^Left";
+            this.MoveLeft.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Left)));
+            this.MoveLeft.Size = new System.Drawing.Size(180, 22);
+            this.MoveLeft.Text = "&Left";
+            // 
+            // MoveRight
+            // 
+            this.MoveRight.Name = "MoveRight";
+            this.MoveRight.ShortcutKeyDisplayString = "^Right";
+            this.MoveRight.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Right)));
+            this.MoveRight.Size = new System.Drawing.Size(180, 22);
+            this.MoveRight.Text = "&Right";
+            // 
+            // MoveUp
+            // 
+            this.MoveUp.Name = "MoveUp";
+            this.MoveUp.ShortcutKeyDisplayString = "^Up";
+            this.MoveUp.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
+            this.MoveUp.Size = new System.Drawing.Size(180, 22);
+            this.MoveUp.Text = "&Up";
+            // 
+            // MoveDown
+            // 
+            this.MoveDown.Name = "MoveDown";
+            this.MoveDown.ShortcutKeyDisplayString = "^Down";
+            this.MoveDown.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
+            this.MoveDown.Size = new System.Drawing.Size(180, 22);
+            this.MoveDown.Text = "&Down";
+            // 
+            // MoveCircle
+            // 
+            this.MoveCircle.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CircleLeft,
+            this.CircleRight,
+            this.toolStripMenuItem6,
+            this.CircleUp,
+            this.CircleDown});
+            this.MoveCircle.Name = "MoveCircle";
+            this.MoveCircle.Size = new System.Drawing.Size(180, 22);
+            this.MoveCircle.Text = "&Circle";
+            // 
+            // CircleLeft
+            // 
+            this.CircleLeft.Name = "CircleLeft";
+            this.CircleLeft.ShortcutKeyDisplayString = "Shift+^Left";
+            this.CircleLeft.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Left)));
+            this.CircleLeft.Size = new System.Drawing.Size(183, 22);
+            this.CircleLeft.Text = "&Left";
+            // 
+            // CircleRight
+            // 
+            this.CircleRight.Name = "CircleRight";
+            this.CircleRight.ShortcutKeyDisplayString = "Shift+^Right";
+            this.CircleRight.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Right)));
+            this.CircleRight.Size = new System.Drawing.Size(183, 22);
+            this.CircleRight.Text = "&Right";
+            // 
+            // CircleUp
+            // 
+            this.CircleUp.Name = "CircleUp";
+            this.CircleUp.ShortcutKeyDisplayString = "Shift+^Up";
+            this.CircleUp.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Up)));
+            this.CircleUp.Size = new System.Drawing.Size(183, 22);
+            this.CircleUp.Text = "&Up";
+            // 
+            // CircleDown
+            // 
+            this.CircleDown.Name = "CircleDown";
+            this.CircleDown.ShortcutKeyDisplayString = "Shift+^Down";
+            this.CircleDown.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Down)));
+            this.CircleDown.Size = new System.Drawing.Size(183, 22);
+            this.CircleDown.Text = "&Down";
             // 
             // HelpMenu
             // 
@@ -1167,113 +1266,66 @@
             this.PopupSubjectAllTraces.Size = new System.Drawing.Size(154, 22);
             this.PopupSubjectAllTraces.Text = "&All Traces";
             // 
-            // CameraMove
+            // MoveZoomRoll
             // 
-            this.CameraMove.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CameraMoveLeft,
-            this.CameraMoveRight,
-            this.CameraMoveForward,
-            this.CameraMoveBack,
-            this.CameraMoveUp,
-            this.CameraMoveDown});
-            this.CameraMove.Name = "CameraMove";
-            this.CameraMove.Size = new System.Drawing.Size(180, 22);
-            this.CameraMove.Text = "&Move";
+            this.MoveZoomRoll.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ZoomIn,
+            this.ZoomOut,
+            this.toolStripMenuItem7,
+            this.RollClockwise,
+            this.RollAnticlockwise});
+            this.MoveZoomRoll.Name = "MoveZoomRoll";
+            this.MoveZoomRoll.Size = new System.Drawing.Size(180, 22);
+            this.MoveZoomRoll.Text = "&Zoom / Roll";
             // 
-            // CameraRotate
+            // ZoomIn
             // 
-            this.CameraRotate.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CameraRotateLeft,
-            this.CameraRotateRight,
-            this.CameraRotateUp,
-            this.CameraRotateDown});
-            this.CameraRotate.Name = "CameraRotate";
-            this.CameraRotate.Size = new System.Drawing.Size(180, 22);
-            this.CameraRotate.Text = "&Rotate";
+            this.ZoomIn.Name = "ZoomIn";
+            this.ZoomIn.ShortcutKeyDisplayString = "^PgUp";
+            this.ZoomIn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.PageUp)));
+            this.ZoomIn.Size = new System.Drawing.Size(246, 22);
+            this.ZoomIn.Text = "Zoom &In";
             // 
-            // CameraMoveForward
+            // ZoomOut
             // 
-            this.CameraMoveForward.Name = "CameraMoveForward";
-            this.CameraMoveForward.ShortcutKeyDisplayString = "^Up";
-            this.CameraMoveForward.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
-            this.CameraMoveForward.Size = new System.Drawing.Size(180, 22);
-            this.CameraMoveForward.Text = "&Forward";
+            this.ZoomOut.Name = "ZoomOut";
+            this.ZoomOut.ShortcutKeyDisplayString = "^PgDn";
+            this.ZoomOut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Next)));
+            this.ZoomOut.Size = new System.Drawing.Size(246, 22);
+            this.ZoomOut.Text = "Zoom &Out";
             // 
-            // CameraMoveBack
+            // RollClockwise
             // 
-            this.CameraMoveBack.Name = "CameraMoveBack";
-            this.CameraMoveBack.ShortcutKeyDisplayString = "^Down";
-            this.CameraMoveBack.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
-            this.CameraMoveBack.Size = new System.Drawing.Size(180, 22);
-            this.CameraMoveBack.Text = "&Back";
+            this.RollClockwise.Name = "RollClockwise";
+            this.RollClockwise.ShortcutKeyDisplayString = "Shift+^PgUp";
+            this.RollClockwise.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.PageUp)));
+            this.RollClockwise.Size = new System.Drawing.Size(246, 22);
+            this.RollClockwise.Text = "Roll &Clockwise";
             // 
-            // CameraMoveLeft
+            // RollAnticlockwise
             // 
-            this.CameraMoveLeft.Name = "CameraMoveLeft";
-            this.CameraMoveLeft.ShortcutKeyDisplayString = "^Left";
-            this.CameraMoveLeft.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Left)));
-            this.CameraMoveLeft.Size = new System.Drawing.Size(180, 22);
-            this.CameraMoveLeft.Text = "&Left";
+            this.RollAnticlockwise.Name = "RollAnticlockwise";
+            this.RollAnticlockwise.ShortcutKeyDisplayString = "Shift+^PgDn";
+            this.RollAnticlockwise.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Next)));
+            this.RollAnticlockwise.Size = new System.Drawing.Size(246, 22);
+            this.RollAnticlockwise.Text = "Roll &Anticlockwise";
             // 
-            // CameraMoveRight
+            // toolStripMenuItem5
             // 
-            this.CameraMoveRight.Name = "CameraMoveRight";
-            this.CameraMoveRight.ShortcutKeyDisplayString = "^Right";
-            this.CameraMoveRight.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Right)));
-            this.CameraMoveRight.Size = new System.Drawing.Size(180, 22);
-            this.CameraMoveRight.Text = "&Right";
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(177, 6);
             // 
-            // CameraMoveUp
+            // toolStripMenuItem6
             // 
-            this.CameraMoveUp.Name = "CameraMoveUp";
-            this.CameraMoveUp.ShortcutKeyDisplayString = "^PgUp";
-            this.CameraMoveUp.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.PageUp)));
-            this.CameraMoveUp.Size = new System.Drawing.Size(180, 22);
-            this.CameraMoveUp.Text = "&Up";
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 6);
             // 
-            // CameraMoveDown
+            // toolStripMenuItem7
             // 
-            this.CameraMoveDown.Name = "CameraMoveDown";
-            this.CameraMoveDown.ShortcutKeyDisplayString = "^PgDn";
-            this.CameraMoveDown.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Next)));
-            this.CameraMoveDown.Size = new System.Drawing.Size(180, 22);
-            this.CameraMoveDown.Text = "&Down";
-            // 
-            // CameraRotateLeft
-            // 
-            this.CameraRotateLeft.Name = "CameraRotateLeft";
-            this.CameraRotateLeft.ShortcutKeyDisplayString = "Shift+^Left";
-            this.CameraRotateLeft.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Left)));
-            this.CameraRotateLeft.Size = new System.Drawing.Size(183, 22);
-            this.CameraRotateLeft.Text = "&Left";
-            // 
-            // CameraRotateRight
-            // 
-            this.CameraRotateRight.Name = "CameraRotateRight";
-            this.CameraRotateRight.ShortcutKeyDisplayString = "Shift+^Right";
-            this.CameraRotateRight.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Right)));
-            this.CameraRotateRight.Size = new System.Drawing.Size(183, 22);
-            this.CameraRotateRight.Text = "&Right";
-            // 
-            // CameraRotateUp
-            // 
-            this.CameraRotateUp.Name = "CameraRotateUp";
-            this.CameraRotateUp.ShortcutKeyDisplayString = "Shift+^Up";
-            this.CameraRotateUp.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Up)));
-            this.CameraRotateUp.Size = new System.Drawing.Size(183, 22);
-            this.CameraRotateUp.Text = "&Up";
-            // 
-            // CameraRotateDown
-            // 
-            this.CameraRotateDown.Name = "CameraRotateDown";
-            this.CameraRotateDown.ShortcutKeyDisplayString = "Shift+^Down";
-            this.CameraRotateDown.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Down)));
-            this.CameraRotateDown.Size = new System.Drawing.Size(183, 22);
-            this.CameraRotateDown.Text = "&Down";
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(243, 6);
             // 
             // SceneForm
             // 
@@ -1424,18 +1476,24 @@
         internal System.Windows.Forms.ToolStripStatusLabel SpeedLabel;
         internal System.Windows.Forms.ToolStripStatusLabel Tlabel;
         internal System.Windows.Forms.ToolStripMenuItem EditRefresh;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMenu;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMove;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMoveLeft;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMoveRight;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMoveForward;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMoveBack;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMoveUp;
-        internal System.Windows.Forms.ToolStripMenuItem CameraMoveDown;
-        internal System.Windows.Forms.ToolStripMenuItem CameraRotate;
-        internal System.Windows.Forms.ToolStripMenuItem CameraRotateLeft;
-        internal System.Windows.Forms.ToolStripMenuItem CameraRotateRight;
-        internal System.Windows.Forms.ToolStripMenuItem CameraRotateUp;
-        internal System.Windows.Forms.ToolStripMenuItem CameraRotateDown;
+        internal System.Windows.Forms.ToolStripMenuItem MoveMenu;
+        internal System.Windows.Forms.ToolStripMenuItem MoveStrafe;
+        internal System.Windows.Forms.ToolStripMenuItem MoveLeft;
+        internal System.Windows.Forms.ToolStripMenuItem MoveRight;
+        internal System.Windows.Forms.ToolStripMenuItem MoveUp;
+        internal System.Windows.Forms.ToolStripMenuItem MoveDown;
+        internal System.Windows.Forms.ToolStripMenuItem MoveCircle;
+        internal System.Windows.Forms.ToolStripMenuItem CircleLeft;
+        internal System.Windows.Forms.ToolStripMenuItem CircleRight;
+        internal System.Windows.Forms.ToolStripMenuItem CircleUp;
+        internal System.Windows.Forms.ToolStripMenuItem CircleDown;
+        internal System.Windows.Forms.ToolStripMenuItem MoveZoomRoll;
+        internal System.Windows.Forms.ToolStripMenuItem ZoomIn;
+        internal System.Windows.Forms.ToolStripMenuItem ZoomOut;
+        internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
+        internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
+        internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
+        internal System.Windows.Forms.ToolStripMenuItem RollClockwise;
+        internal System.Windows.Forms.ToolStripMenuItem RollAnticlockwise;
     }
 }
