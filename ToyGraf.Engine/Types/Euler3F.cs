@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Engine.Types
 {
+    using OpenTK;
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
 
@@ -56,9 +57,13 @@
 
         public static bool operator ==(Euler3f p, Euler3f q) => p is null ? q is null : p.Equals(q);
         public static bool operator !=(Euler3f p, Euler3f q) => !(p == q);
+
         public static Euler3f operator -(Euler3f p) => new Euler3f(-p.Pitch, -p.Yaw, -p.Roll);
         public static Euler3f operator +(Euler3f p, Euler3f q) => new Euler3f(p.Pitch + q.Pitch, p.Yaw + q.Yaw, p.Roll + q.Roll);
         public static Euler3f operator -(Euler3f p, Euler3f q) => new Euler3f(p.Pitch - q.Pitch, p.Yaw - q.Yaw, p.Roll - q.Roll);
+
+        public static implicit operator Euler3f(Vector3 p) => new Euler3f(p.X, p.Y, p.Z);
+        public static implicit operator Euler3f(Quaternion p) => new Euler3f(p.X, p.Y, p.Z);
 
         #endregion
 
@@ -66,14 +71,18 @@
 
         public override bool Equals(object obj) => obj is Euler3f p &&
             p.Pitch == Pitch && p.Yaw == Yaw && p.Roll == Roll;
+
         public override int GetHashCode() => Pitch.GetHashCode() ^ Yaw.GetHashCode() ^ Roll.GetHashCode();
-        public override string ToString() => $"{Pitch}, {Yaw}, {Roll}";
 
         public static Euler3f Parse(string s)
         {
             var t = s.Split(',');
             return new Euler3f(float.Parse(t[0]), float.Parse(t[1]), float.Parse(t[2]));
         }
+
+        public override string ToString() => $"{Pitch}, {Yaw}, {Roll}";
+
+        public Vector3 ToVector3() => new Vector3(Pitch, Yaw, Roll);
 
         #endregion
 

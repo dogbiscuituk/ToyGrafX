@@ -436,10 +436,10 @@
         private bool Run(ITracePropertyCommand command) =>
             CommandProcessor != null ? CommandProcessor.Run(command) : command.RunOn(this);
 
-        internal void SetLocation(Vector3 location) => Location = location.ToVector3f();
-        internal void SetOrientation(Vector3 orientation) => Orientation = orientation.ToEuler3f();
-        internal void SetOrientation(Quaternion orientation) => Orientation = orientation.ToEuler3f();
-        internal void SetScale(Vector3 scale) => Scale = scale.ToVector3f();
+        internal void SetLocation(Vector3 location) => Location = location;
+        internal void SetOrientation(Vector3 orientation) => Orientation = orientation;
+        internal void SetOrientation(Quaternion orientation) => Orientation = orientation;
+        internal void SetScale(Vector3 scale) => Scale = scale;
 
         #endregion
     }

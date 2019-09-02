@@ -49,6 +49,7 @@
         [DisplayName(DisplayNames.Z)]
         public int Z { get; set; }
 
+        [Browsable(false)]
         public float Length => (float)Math.Sqrt(X * X + Y * Y + Z * Z);
 
         #endregion

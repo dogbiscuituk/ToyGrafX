@@ -66,6 +66,8 @@
         {
             "Invalidate Program".Spit();
             ProgramCompiled = false;
+            InvalidateCameraView();
+            InvalidateProjection();
             if (!MakeCurrent(true))
                 return;
             DeleteShaders();

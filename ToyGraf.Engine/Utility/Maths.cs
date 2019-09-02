@@ -1,7 +1,6 @@
 ﻿namespace ToyGraf.Engine.Utility
 {
     using OpenTK;
-    using System;
     using System.Drawing;
     using ToyGraf.Engine.Types;
 
@@ -10,7 +9,7 @@
         public static Matrix4 CreateCameraView(Camera camera) => CreateCameraView(camera.Position, camera.Focus);
 
         public static Matrix4 CreateCameraView(Vector3f position, Vector3f focus) =>
-            Matrix4.LookAt(position.ToVector3(), focus.ToVector3(), new Vector3(0, 1, 0));
+            Matrix4.LookAt(position, focus, new Vector3(0, 1, 0));
 
         public static Matrix4 CreateProjection(Projection p) => CreateProjection(p, new Size(16, 9));
 
@@ -35,14 +34,8 @@
             Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(orientation.Roll)) *
             Matrix4.CreateRotationY(MathHelper.DegreesToRadians(orientation.Yaw)) *
             Matrix4.CreateRotationX(MathHelper.DegreesToRadians(orientation.Pitch)) *
-            Matrix4.CreateTranslation(location.ToVector3());
+            Matrix4.CreateTranslation(location);
 
         public static int GCD(int a, int b) => b == 0 ? a : GCD(b, a % b);
-
-        public static Euler3f ToEuler3f(this Vector3 p) => new Euler3f(p.X, p.Y, p.Z);
-        public static Euler3f ToEuler3f(this Quaternion p) => new Euler3f(p.X, p.Y, p.Z);
-        public static Vector3 ToVector3(this Euler3f p) => new Vector3(p.Pitch, p.Yaw, p.Roll);
-        public static Vector3 ToVector3(this Vector3f p) => new Vector3(p.X, p.Y, p.Z);
-        public static Vector3f ToVector3f(this Vector3 p) => new Vector3f(p.X, p.Y, p.Z);
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Engine.Types
 {
+    using OpenTK;
     using System;
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
@@ -49,6 +50,7 @@
         [DisplayName(DisplayNames.Z)]
         public float Z { get; set; }
 
+        [Browsable(false)]
         public float Length => (float)Math.Sqrt(X * X + Y * Y + Z * Z);
 
         #endregion
@@ -64,6 +66,9 @@
         public static Vector3f operator *(Vector3f p, float q) => new Vector3f(p.X * q, p.Y * q, p.Z * q);
         public static Vector3f operator *(float p, Vector3f q) => new Vector3f(p * q.X, p * q.Y, p * q.Z);
         public static Vector3f operator /(Vector3f p, float q) => new Vector3f(p.X / q, p.Y / q, p.Z / q);
+
+        public static implicit operator Vector3(Vector3f p) => new Vector3(p.X, p.Y, p.Z);
+        public static implicit operator Vector3f(Vector3 p) => new Vector3f(p.X, p.Y, p.Z);
 
         #endregion
 
