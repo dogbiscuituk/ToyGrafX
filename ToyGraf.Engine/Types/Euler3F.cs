@@ -49,8 +49,6 @@
         [DisplayName(DisplayNames.Roll)]
         public float Roll { get; set; }
 
-        public static Euler3f Zero = new Euler3f();
-
         #endregion
 
         #region Public Operators

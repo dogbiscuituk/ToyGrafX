@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGraf.Controls", "ToyGraf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGraf", "ToyGraf\ToyGraf.csproj", "{3CF52784-3703-4E94-8903-B0E18B68A44D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGraf.Tests", "ToyGraf.Tests\ToyGraf.Tests.csproj", "{0A893D40-4BA7-4E41-9F34-5B182F5BB791}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGraf.Engine.Tests", "ToyGraf.Tests\ToyGraf.Engine.Tests.csproj", "{0A893D40-4BA7-4E41-9F34-5B182F5BB791}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGraf.Engine", "ToyGraf.Engine\ToyGraf.Engine.csproj", "{EAAA782B-3C65-4ED7-BCB6-E94F1618F1A6}"
 EndProject

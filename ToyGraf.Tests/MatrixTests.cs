@@ -1,4 +1,4 @@
-﻿namespace ToyGraf.Tests
+﻿namespace ToyGraf.Engine.Tests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using OpenTK;
@@ -223,7 +223,7 @@
             RotateYZ = new Euler3f(0, 90, 90),
             RotateXYZ = new Euler3f(90, 90, 90);
 
-        private void CompareMatrices(Matrix4 expected, Matrix4 actual, float delta = 1e-6f)
+        private static void CompareMatrices(Matrix4 expected, Matrix4 actual, float delta = 1e-6f)
         {
             for (var row = 0; row < 4; row++)
                 for (var col = 0; col < 4; col++)

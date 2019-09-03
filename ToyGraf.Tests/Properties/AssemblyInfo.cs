@@ -1,8 +1,8 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("ToyGraf.Tests")]
-[assembly: AssemblyDescription("Tests for Graphical Calculus Utility for Windows")]
+[assembly: AssemblyTitle("ToyGraf.Engine.Tests")]
+[assembly: AssemblyDescription("Engine Tests for Graphical Calculus Utility for Windows")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("John M Kerr")]
 [assembly: AssemblyProduct("ToyGraf")]

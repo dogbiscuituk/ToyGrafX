@@ -51,7 +51,7 @@
         public float Z { get; set; }
 
         [Browsable(false)]
-        public float Length => (float)Math.Sqrt(X * X + Y * Y + Z * Z);
+        public float Norm => (float)Math.Sqrt(X * X + Y * Y + Z * Z);
 
         #endregion
 
@@ -87,7 +87,7 @@
         {
             if (X == 0 && Y == 0 && Z == 0)
                 return new Vector3f(this);
-            var length = Length;
+            var length = Norm;
             return new Vector3f(X / length, Y / length, Z / length);
         }
 

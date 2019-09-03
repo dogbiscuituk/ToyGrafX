@@ -530,7 +530,7 @@ void main()
                 f = Camera.Focus,
                 p = Camera.Position - f,
                 q = p + delta * CameraBump * basis;
-            Camera = new Camera(q * p.Length / q.Length + f, f);
+            Camera = new Camera(q * p.Norm / q.Norm + f, f);
         }
 
         private void CameraRotateRight(int delta) => CameraRotate(Camera.Uright, delta);
