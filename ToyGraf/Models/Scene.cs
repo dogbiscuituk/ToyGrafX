@@ -3,7 +3,6 @@
     using Newtonsoft.Json;
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.Design;

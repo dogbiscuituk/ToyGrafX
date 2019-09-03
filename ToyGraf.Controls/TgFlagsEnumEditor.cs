@@ -8,7 +8,7 @@
 
     public class TgFlagsEnumEditor : UITypeEditor
     {
-        #region Constructor
+        #region Constructors
 
         public TgFlagsEnumEditor()
         {

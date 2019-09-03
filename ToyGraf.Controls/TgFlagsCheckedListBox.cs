@@ -6,7 +6,7 @@
 
     public partial class TgFlagsCheckedListBox : CheckedListBox
     {
-        #region Constructor
+        #region Constructors
 
         public TgFlagsCheckedListBox() => InitializeComponent();
 

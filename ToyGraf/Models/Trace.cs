@@ -233,6 +233,33 @@
 
         #region Public Methods
 
+        public void CopyFrom(Trace trace)
+        {
+            // System
+            Index = trace.Index;
+            // Domain & Range
+            Maximum = new Vector3f(trace.Maximum);
+            Minimum = new Vector3f(trace.Minimum);
+            // Placement
+            Location = new Vector3f(trace.Location);
+            Orientation = new Euler3f(trace.Orientation);
+            Scale = new Vector3f(trace.Scale);
+            // Shaders
+            Shader1Vertex = trace.Shader1Vertex;
+            Shader2TessControl = trace.Shader2TessControl;
+            Shader3TessEvaluation = trace.Shader3TessEvaluation;
+            Shader4Geometry = trace.Shader4Geometry;
+            Shader5Fragment = trace.Shader5Fragment;
+            Shader6Compute = trace.Shader6Compute;
+            // Terrain
+            StripCount = new Vector3i(trace.StripCount);
+            // Trace
+            Description = trace.Description;
+            Visible = trace.Visible;
+        }
+
+        public void CopyTo(Trace trace) => trace.CopyFrom(this);
+
         public override string ToString() =>
             !string.IsNullOrWhiteSpace(Description)
             ? _Description

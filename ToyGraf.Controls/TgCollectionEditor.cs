@@ -8,7 +8,7 @@
 
     public class TgCollectionEditor : CollectionEditor
     {
-        #region Constructor
+        #region Constructors
 
         public TgCollectionEditor(Type type) : base(type) { }
 

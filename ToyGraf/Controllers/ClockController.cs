@@ -6,7 +6,7 @@
 
     internal class ClockController
     {
-        #region Constructor
+        #region Constructors
 
         internal ClockController(SceneController sceneController)
         {

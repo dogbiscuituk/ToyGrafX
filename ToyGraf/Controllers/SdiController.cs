@@ -16,7 +16,7 @@
     /// </summary>
     internal abstract class SdiController : MruController
     {
-        #region Protected Constructor
+        #region Constructors
 
         protected SdiController(SceneController sceneController, string filter, string subKeyName)
             : base(sceneController, subKeyName)

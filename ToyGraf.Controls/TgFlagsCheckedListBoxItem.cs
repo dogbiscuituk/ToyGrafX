@@ -2,7 +2,7 @@
 {
     public class TgFlagsCheckedListBoxItem
     {
-        #region Constructor
+        #region Constructors
 
         public TgFlagsCheckedListBoxItem(string text, int value)
         {

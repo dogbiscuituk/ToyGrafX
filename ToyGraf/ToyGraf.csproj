@@ -81,7 +81,6 @@
     <Compile Include="Controllers\TraceTableController.cs" />
     <Compile Include="Models\Clock.cs" />
     <Compile Include="Models\Enums\FilterIndex.cs" />
-    <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\Descriptions.cs" />
     <Compile Include="Models\DisplayNames.cs" />
     <Compile Include="Models\GLInfo.cs" />

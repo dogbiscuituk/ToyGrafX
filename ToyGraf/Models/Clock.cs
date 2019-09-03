@@ -5,7 +5,7 @@
 
     public class Clock
     {
-        #region Constructor
+        #region Constructors
 
         public Clock()
         {

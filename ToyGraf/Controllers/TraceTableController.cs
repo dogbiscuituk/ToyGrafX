@@ -10,7 +10,7 @@
 
     internal class TraceTableController
     {
-        #region Internal Interface
+        #region Constructors
 
         internal TraceTableController(SceneController sceneController)
         {
@@ -18,6 +18,10 @@
             Init();
             Refresh();
         }
+
+        #endregion
+
+        #region Internal Properties
 
         internal IEnumerable<Trace> Selection => TraceTable.SelectedRows
             .OfType<DataGridViewRow>()
@@ -36,6 +40,10 @@
                 Refresh();
             }
         }
+
+        #endregion
+
+        #region Internal Methods
 
         internal void Refresh()
         {
@@ -126,7 +134,8 @@
             TraceTableVisible = !TraceTableVisible;
         }
 
-        private void TraceTable_SelectionChanged(object sender, EventArgs e) => OnSelectionChanged();
+        private void TraceTable_SelectionChanged(object sender, EventArgs e) =>
+            OnSelectionChanged();
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
             SceneForm.ViewTraceTable.Checked = TraceTableVisible;

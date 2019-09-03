@@ -11,7 +11,7 @@
 
     public class RenderController
     {
-        #region Constructor
+        #region Constructors
 
         internal RenderController(SceneController sceneController) =>
             SceneController = sceneController;

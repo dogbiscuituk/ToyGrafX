@@ -11,7 +11,7 @@
 
     internal static class AppController
     {
-        #region Static Constructor
+        #region Static Constructors
 
         static AppController()
         {

@@ -8,7 +8,7 @@
 
     public class TgPropertyGridAdapter
     {
-        #region Constructor
+        #region Constructors
 
         public TgPropertyGridAdapter(PropertyGrid propertyGrid) { PropertyGrid = propertyGrid; }
 

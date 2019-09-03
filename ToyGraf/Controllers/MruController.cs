@@ -18,7 +18,7 @@
     /// </summary>
     internal class MruController
     {
-        #region Protected Constructor
+        #region Constructors
 
         protected MruController(SceneController sceneController, string subKeyName)
         {

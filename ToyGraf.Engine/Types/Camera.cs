@@ -3,7 +3,6 @@
     using Newtonsoft.Json;
     using System.ComponentModel;
     using ToyGraf.Engine.TypeConverters;
-    using ToyGraf.Engine.Utility;
 
     [TypeConverter(typeof(CameraTypeConverter))]
     public class Camera
@@ -54,7 +53,8 @@
         }
 
         public Camera(float x, float y, float z, float u, float v, float w) :
-            this(new Vector3f(x, y, z), new Vector3f(u, v, w)) { }
+            this(new Vector3f(x, y, z), new Vector3f(u, v, w))
+        { }
 
         #endregion
 

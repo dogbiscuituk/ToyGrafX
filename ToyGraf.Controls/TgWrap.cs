@@ -9,7 +9,7 @@
     /// </summary>
     internal class TgWrap : ICustomTypeDescriptor
     {
-        #region Constructor
+        #region Constructors
 
         internal TgWrap(object obj) => Object = obj;
 
