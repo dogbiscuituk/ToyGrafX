@@ -15,7 +15,6 @@
         internal CommandProcessor(SceneController sceneController)
         {
             SceneController = sceneController;
-            // Edit
             SceneForm.EditUndo.Click += EditUndo_Click;
             SceneForm.tbUndo.ButtonClick += EditUndo_Click;
             SceneForm.tbUndo.DropDownOpening += TbUndo_DropDownOpening;
@@ -40,6 +39,15 @@
         internal void DeleteTrace(int index) => Run(new TraceDeleteCommand(index));
         internal void InsertTrace(int index) => Run(new TraceInsertCommand(index));
 
+        /// <summary>
+        /// Run a command, pushing its memento on to the Undo stack.
+        /// </summary>
+        /// <param name="command">The command to run.</param>
+        /// <param name="spoof">A flag indicating whether the command should actually be run. 
+        /// If true, the command should be run as normal. 
+        /// If false, the relevant properties have already been changed on the target, 
+        /// so just log the memento to the Undo stack.</param>
+        /// <returns>True if the command was run, and actually caused a property change.</returns>
         public bool Run(ICommand command, bool spoof = false)
         {
             if (command == null)

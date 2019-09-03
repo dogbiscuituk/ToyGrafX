@@ -83,6 +83,7 @@
         }
 
         internal void LoadFromFile(string filePath) => JsonController.LoadFromFile(filePath);
+
         internal void ModifiedChanged() => SceneForm.Text = JsonController.WindowCaption;
 
         internal void OnPropertyChanged(Scene scene, params string[] propertyNames)
@@ -447,14 +448,17 @@
         }
 
         private void Resize() => RenderController.InvalidateProjection();
+
         private bool SaveFile() => JsonController.Save();
+
         private bool SaveFileAs() => JsonController.SaveAs();
+
         private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();
 
         private void Spoof(ICommand command)
         {
             CommandProcessor.Run(command, true);
-            OnPropertyChanged(command.PropertyName);
+            OnPropertyChanged(command.PropertyName); // Remember the side effects!
         }
 
         private ICommand Spoof(string property, string field, object value)
