@@ -71,6 +71,11 @@
 
         #region Public Methods
 
+        public Vector3i Cross(Vector3i p) =>
+            new Vector3i(Y * p.Z - Z * p.Y, Z * p.X - X * p.Z, X * p.Y - Y * p.X);
+
+        public int Dot(Vector3i p) => X * p.X + Y * p.Y + Z * p.Z;
+
         public override bool Equals(object obj) => obj is Vector3i p && p.X == X && p.Y == Y && p.Z == Z;
         public override int GetHashCode() => X ^ Y ^ Z;
 

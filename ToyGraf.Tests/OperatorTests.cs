@@ -238,10 +238,10 @@
         public void Euler3fAdd()
         {
             Euler3f
-                expected = new Euler3f(3, 6, 9),
                 p = new Euler3f(1, 2, 3),
                 q = new Euler3f(2, 4, 6),
-                actual = p + q;
+                actual = p + q,
+                expected = new Euler3f(3, 6, 9);
             Assert.AreEqual(expected, actual);
         }
 
@@ -249,9 +249,9 @@
         public void Euler3fNegate()
         {
             Euler3f
-                expected = new Euler3f(-1, -2, -3),
                 p = new Euler3f(1, 2, 3),
-                actual = -p;
+                actual = -p,
+                expected = new Euler3f(-1, -2, -3);
             Assert.AreEqual(expected, actual);
         }
 
@@ -259,10 +259,10 @@
         public void Euler3fSubtract()
         {
             Euler3f
-                expected = new Euler3f(-1, -2, -3),
                 p = new Euler3f(1, 2, 3),
                 q = new Euler3f(2, 4, 6),
-                actual = p - q;
+                actual = p - q,
+                expected = new Euler3f(-1, -2, -3);
             Assert.AreEqual(expected, actual);
         }
 
@@ -274,10 +274,63 @@
         public void Vector3fAdd()
         {
             Vector3f
-                expected = new Vector3f(3, 6, 9),
                 p = new Vector3f(1, 2, 3),
                 q = new Vector3f(2, 4, 6),
-                actual = p + q;
+                actual = p + q,
+                expected = new Vector3f(3, 6, 9);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3fCrossProduct()
+        {
+            Vector3f
+                p = new Vector3f(1, 2, 3),
+                q = new Vector3f(2, 3, 4),
+                actual = p.Cross(q),
+                expected = new Vector3f(-1, 2, -1);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3fDivide()
+        {
+            Vector3f
+                p = new Vector3f(10, 20, 30),
+                actual = p / 2.5f,
+                expected = new Vector3f(4, 8, 12);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3fDotProduct()
+        {
+            Vector3f
+                p = new Vector3f(1.5f, 4, 3.125f),
+                q = new Vector3f(2, 4.25f, 16);
+            float
+                actual = p.Dot(q),
+                expected = 70;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3fMultiplyLeft()
+        {
+            Vector3f
+                p = new Vector3f(2, 4, 6),
+                actual = 2.5f * p,
+                expected = new Vector3f(5, 10, 15);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3fMultiplyRight()
+        {
+            Vector3f
+                p = new Vector3f(4, 0, 8),
+                actual = p * 1.25f,
+                expected = new Vector3f(5, 0, 10);
             Assert.AreEqual(expected, actual);
         }
 
@@ -285,9 +338,9 @@
         public void Vector3fNegate()
         {
             Vector3f
-                expected = new Vector3f(-1, -2, -3),
                 p = new Vector3f(1, 2, 3),
-                actual = -p;
+                actual = -p,
+                expected = new Vector3f(-1, -2, -3);
             Assert.AreEqual(expected, actual);
         }
 
@@ -295,10 +348,10 @@
         public void Vector3fSubtract()
         {
             Vector3f
-                expected = new Vector3f(-1, -2, -3),
                 p = new Vector3f(1, 2, 3),
                 q = new Vector3f(2, 4, 6),
-                actual = p - q;
+                actual = p - q,
+                expected = new Vector3f(-1, -2, -3);
             Assert.AreEqual(expected, actual);
         }
 
@@ -310,10 +363,53 @@
         public void Vector3iAdd()
         {
             Vector3i
-                expected = new Vector3i(3, 6, 9),
                 p = new Vector3i(1, 2, 3),
                 q = new Vector3i(2, 4, 6),
-                actual = p + q;
+                actual = p + q,
+                expected = new Vector3i(3, 6, 9);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3iCrossProduct()
+        {
+            Vector3i
+                p = new Vector3i(1, 2, 3),
+                q = new Vector3i(2, 3, 4),
+                actual = p.Cross(q),
+                expected = new Vector3i(-1, 2, -1);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3iDotProduct()
+        {
+            Vector3i
+                p = new Vector3i(1, 4, 3),
+                q = new Vector3i(2, 4, 16);
+            int
+                actual = p.Dot(q),
+                expected = 66;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3iMultiplyLeft()
+        {
+            Vector3i
+                p = new Vector3i(1, 2, 3),
+                actual = 2 * p,
+                expected = new Vector3i(2, 4, 6);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3iMultiplyRight()
+        {
+            Vector3i
+                p = new Vector3i(2, 3, 4),
+                actual = p * 3,
+                expected = new Vector3i(6, 9, 12);
             Assert.AreEqual(expected, actual);
         }
 
@@ -321,9 +417,9 @@
         public void Vector3iNegate()
         {
             Vector3i
-                expected = new Vector3i(-1, -2, -3),
                 p = new Vector3i(1, 2, 3),
-                actual = -p;
+                actual = -p,
+                expected = new Vector3i(-1, -2, -3);
             Assert.AreEqual(expected, actual);
         }
 
@@ -331,10 +427,10 @@
         public void Vector3iSubtract()
         {
             Vector3i
-                expected = new Vector3i(-1, -2, -3),
                 p = new Vector3i(1, 2, 3),
                 q = new Vector3i(2, 4, 6),
-                actual = p - q;
+                actual = p - q,
+                expected = new Vector3i(-1, -2, -3);
             Assert.AreEqual(expected, actual);
         }
 
