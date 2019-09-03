@@ -7,22 +7,30 @@
 
     internal class HostController
     {
-        #region Internal Interface
+        #region Constructor
 
         internal HostController(string text, Control hostedControl)
         {
             HostedControl = hostedControl;
             ParentControl = hostedControl.Parent;
-            HostForm = new HostForm { Text = text };
+            HostForm = new HostForm
+            {
+                ClientSize = new Size(HostedControl.Width, HostedControl.Height),
+                Location = hostedControl.PointToScreen(new Point()),
+                Text = text
+            };
             HostForm.FormClosing += HostForm_FormClosing;
         }
 
-        internal void AdjustFormSize()
-        {
-            HostForm.ClientSize = new Size(
-                HostedControl.Width,
-                HostedControl.Height);
-        }
+        #endregion
+
+        #region Internal Events
+
+        internal event EventHandler<FormClosingEventArgs> HostFormClosing;
+
+        #endregion
+
+        #region Internal Methods
 
         internal void Close()
         {
@@ -34,20 +42,21 @@
 
         internal void Show(IWin32Window owner)
         {
-            AdjustFormSize();
             ParentControl.Controls.Remove(HostedControl);
             HostForm.Controls.Add(HostedControl);
             HostForm.Show(owner);
         }
 
-        internal event EventHandler<FormClosingEventArgs> HostFormClosing;
-
         #endregion
 
-        #region Private Implementation
+        #region Private Properties
 
         private readonly Control HostedControl, ParentControl;
         private readonly HostForm HostForm;
+
+        #endregion
+
+        #region Private Event Handlers
 
         private void HostForm_FormClosing(object sender, FormClosingEventArgs e)
         {
