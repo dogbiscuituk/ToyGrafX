@@ -68,24 +68,25 @@
 
         private SceneForm SceneForm => SceneController.SceneForm;
 
-        private bool TraceTableDocked
+        private bool TraceTableFloating
         {
-            get => TraceTable.FindForm() == SceneForm;
+            get => TraceTable.FindForm() != SceneForm;
             set
             {
-                if (TraceTableDocked != value)
-                    if (TraceTableDocked)
-                    {
-                        TraceTableVisible = false;
-                        HostController.HostFormClosing += HostFormClosing;
-                        HostController.Show(SceneForm);
-                    }
-                    else
-                    {
-                        HostController.HostFormClosing -= HostFormClosing;
-                        HostController.Close();
-                        TraceTableVisible = true;
-                    }
+                if (TraceTableFloating == value)
+                    return;
+                if (value)
+                {
+                    TraceTableVisible = false;
+                    HostController.HostFormClosing += HostFormClosing;
+                    HostController.Show(SceneForm);
+                }
+                else
+                {
+                    HostController.HostFormClosing -= HostFormClosing;
+                    HostController.Close();
+                    TraceTableVisible = true;
+                }
             }
         }
 
@@ -102,26 +103,26 @@
             SelectAll();
 
         private void HostFormClosing(object sender, FormClosingEventArgs e) =>
-            TraceTableDocked = true;
+            TraceTableFloating = false;
 
         private void PopupTraceTableColumns_Click(object sender, EventArgs e) =>
             new ColumnsController(this).ShowDialog(SceneForm);
 
         private void PopupTraceTableDock_Click(object sender, System.EventArgs e) =>
-            TraceTableDocked = !TraceTableDocked;
+            TraceTableFloating = !TraceTableFloating;
 
         private void PopupTraceTableHide_Click(object sender, EventArgs e)
         {
-            TraceTableDocked = true;
+            TraceTableFloating = false;
             TraceTableVisible = false;
         }
 
         private void PopupTraceTableMenu_Opening(object sender, CancelEventArgs e) =>
-            SceneForm.PopupTraceTableFloat.Text = TraceTableDocked ? "&Undock" : "&Dock";
+            SceneForm.PopupTraceTableFloat.Text = TraceTableFloating ? "&Dock" : "&Undock";
 
         private void ToggleTraceTable(object sender, EventArgs e)
         {
-            TraceTableDocked = true;
+            TraceTableFloating = false;
             TraceTableVisible = !TraceTableVisible;
         }
 
