@@ -54,8 +54,9 @@
                 expected = 66;
             Assert.AreEqual(expected, actual);
         }
+
         [TestMethod]
-        public void Vector3iEqual()
+        public void Vector3iEquality()
         {
             var p = new Vector3i(1, 2, 3);
             var q = new Vector3i(1, 2, 3);
@@ -64,6 +65,13 @@
             Assert.IsFalse(p != q);
         }
 
+        [TestMethod]
+        public void Vector3iInequality()
+        {
+            Vector3iInequality(1, 2, 3, 99, 2, 3);
+            Vector3iInequality(1, 2, 3, 1, 99, 3);
+            Vector3iInequality(1, 2, 3, 1, 2, 99);
+        }
 
         [TestMethod]
         public void Vector3iMultiplyLeft()
@@ -116,15 +124,7 @@
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
-        public void Vector3iUnequal()
-        {
-            Vector3iUnequal(1, 2, 3, 99, 2, 3);
-            Vector3iUnequal(1, 2, 3, 1, 99, 3);
-            Vector3iUnequal(1, 2, 3, 1, 2, 99);
-        }
-
-        private static void Vector3iUnequal(params int[] a)
+        private static void Vector3iInequality(params int[] a)
         {
             var p = new Vector3i(a[0], a[1], a[2]);
             var q = new Vector3i(a[3], a[4], a[5]);

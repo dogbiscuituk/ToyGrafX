@@ -22,7 +22,7 @@
         }
 
         [TestMethod]
-        public void ColourFormatEqual()
+        public void ColourFormatEquality()
         {
             var p = new ColourFormat(1, 2, 3, 4);
             var q = new ColourFormat(1, 2, 3, 4);
@@ -32,15 +32,15 @@
         }
 
         [TestMethod]
-        public void ColourFormatUnequal()
+        public void ColourFormatInequality()
         {
-            ColourFormatUnequal(1, 2, 3, 4, 8, 2, 3, 4);
-            ColourFormatUnequal(1, 2, 3, 4, 1, 8, 3, 4);
-            ColourFormatUnequal(1, 2, 3, 4, 1, 2, 8, 4);
-            ColourFormatUnequal(1, 2, 3, 4, 1, 2, 3, 8);
+            ColourFormatInequality(1, 2, 3, 4, 8, 2, 3, 4);
+            ColourFormatInequality(1, 2, 3, 4, 1, 8, 3, 4);
+            ColourFormatInequality(1, 2, 3, 4, 1, 2, 8, 4);
+            ColourFormatInequality(1, 2, 3, 4, 1, 2, 3, 8);
         }
 
-        private static void ColourFormatUnequal(params int[] a)
+        private static void ColourFormatInequality(params int[] a)
         {
             var p = new ColourFormat(a[0], a[1], a[2], a[3]);
             var q = new ColourFormat(a[4], a[5], a[6], a[7]);

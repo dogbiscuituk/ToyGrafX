@@ -66,13 +66,21 @@
         }
 
         [TestMethod]
-        public void Vector3fEqual()
+        public void Vector3fEquality()
         {
             var p = new Vector3f(1, 2, 3);
             var q = new Vector3f(1, 2, 3);
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
+        }
+
+        [TestMethod]
+        public void Vector3fInequality()
+        {
+            Vector3fInequality(1, 2, 3, 99, 2, 3);
+            Vector3fInequality(1, 2, 3, 1, 99, 3);
+            Vector3fInequality(1, 2, 3, 1, 2, 99);
         }
 
         [TestMethod]
@@ -126,15 +134,7 @@
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
-        public void Vector3fUnequal()
-        {
-            Vector3fUnequal(1, 2, 3, 99, 2, 3);
-            Vector3fUnequal(1, 2, 3, 1, 99, 3);
-            Vector3fUnequal(1, 2, 3, 1, 2, 99);
-        }
-
-        private static void Vector3fUnequal(params float[] a)
+        private static void Vector3fInequality(params float[] a)
         {
             var p = new Vector3f(a[0], a[1], a[2]);
             var q = new Vector3f(a[3], a[4], a[5]);

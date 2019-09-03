@@ -184,7 +184,7 @@
         [JsonIgnore]
         public List<Trace> TraceList
         {
-            get => Traces.Select(t => t.Clone()).ToList();
+            get => Traces.Select(t => new Trace(t)).ToList();
             set => Traces = value;
         }
 
@@ -410,9 +410,9 @@
 
         #region Private Classes
 
-        private class Defaults
+        public class Defaults
         {
-            internal const string
+            public const string
                 BackgroundColourString = "White",
                 CameraString = "0, 0, 2, 0, 0, 0",
                 ColourFormatString = "0, 0, 0, 0",
@@ -464,36 +464,36 @@ void main()
                 Shader6Compute = "",
                 Title = "";
 
-            internal const bool
+            public const bool
                 Stereo = false,
                 VSync = false;
 
-            internal const int
+            public const int
                 Buffers = 2,
                 Depth = 24,
                 SampleCount = 0,
                 Stencil = 8;
 
-            internal const double
+            public const double
                 FPS = 60;
 
-            internal GPUStatus
+            public GPUStatus
                 GPUStatus = GPUStatus.OK;
 
-            internal static Camera
+            public static Camera
                 Camera = new Camera();
 
-            internal static Color
+            public static Color
                 BackgroundColour = Color.White;
 
-            internal static ColourFormat
+            public static ColourFormat
                 ColourFormat = new ColourFormat(8),
                 AccumColourFormat = new ColourFormat();
 
-            internal static Projection
+            public static Projection
                 Projection = new Projection(75, 16, 9, 0.1f, 1000);
 
-            internal static List<Trace>
+            public static List<Trace>
                 Traces => new List<Trace>();
         }
 

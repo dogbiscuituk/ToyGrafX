@@ -22,7 +22,7 @@
         }
 
         [TestMethod]
-        public void CameraEqual()
+        public void CameraEquality()
         {
             var p = new Camera(1, 2, 3, 4, 5, 6);
             var q = new Camera(1, 2, 3, 4, 5, 6);
@@ -32,17 +32,17 @@
         }
 
         [TestMethod]
-        public void CameraUnequal()
+        public void CameraInequality()
         {
-            CameraUnequal(1, 2, 3, 4, 5, 6, 99, 2, 3, 4, 5, 6);
-            CameraUnequal(1, 2, 3, 4, 5, 6, 1, 99, 3, 4, 5, 6);
-            CameraUnequal(1, 2, 3, 4, 5, 6, 1, 2, 99, 4, 5, 6);
-            CameraUnequal(1, 2, 3, 4, 5, 6, 1, 2, 3, 99, 5, 6);
-            CameraUnequal(1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 99, 6);
-            CameraUnequal(1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 99);
+            CameraInequality(1, 2, 3, 4, 5, 6, 99, 2, 3, 4, 5, 6);
+            CameraInequality(1, 2, 3, 4, 5, 6, 1, 99, 3, 4, 5, 6);
+            CameraInequality(1, 2, 3, 4, 5, 6, 1, 2, 99, 4, 5, 6);
+            CameraInequality(1, 2, 3, 4, 5, 6, 1, 2, 3, 99, 5, 6);
+            CameraInequality(1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 99, 6);
+            CameraInequality(1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 99);
         }
 
-        private static void CameraUnequal(params float[] a)
+        private static void CameraInequality(params float[] a)
         {
             var p = new Camera(a[0], a[1], a[2], a[3], a[4], a[5]);
             var q = new Camera(a[6], a[7], a[8], a[9], a[10], a[11]);

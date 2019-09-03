@@ -17,10 +17,11 @@
 
         public Trace() => RestoreDefaults();
         public Trace(Scene scene) : this() => Init(scene);
+        public Trace(Trace trace) : this() => CopyFrom(trace);
 
         #endregion
 
-        #region Browsable Properties
+        #region Public Properties
 
         #region Placement
 
@@ -227,8 +228,6 @@
 
         #endregion
 
-        private void Invalidate() => RenderController?.InvalidateTrace(this);
-
         #endregion
 
         #region Public Methods
@@ -311,13 +310,6 @@
 
         #region Internal Methods
 
-        internal Trace Clone()
-        {
-            var trace = new Trace();
-            trace.CopyFrom(this);
-            return trace;
-        }
-
         internal string GetScript(ShaderType shaderType)
         {
             switch (shaderType)
@@ -381,37 +373,31 @@
 
         #region Private Classes
 
-        private class Defaults
+        public class Defaults
         {
-            internal const Pattern
+            public const Pattern
                 Pattern = Engine.Types.Pattern.TriangleStrip;
 
-            internal const bool
+            public const bool
                 Visible = true;
 
-            internal const int
+            public const int
                 Index = -1;
 
-            internal static Euler3f
+            public static Euler3f
                 Orientation = new Euler3f();
 
-            internal static Vector3i
+            public static Vector3i
                 StripCount = new Vector3i(100, 100, 0);
 
-            internal static Vector3f
+            public static Vector3f
                 Location = new Vector3f(),
                 Maximum = new Vector3f(),
                 Minimum = new Vector3f(),
                 Scale = new Vector3f(1, 1, 1);
 
-            internal const string
+            public const string
                 Description = "",
-                LocationString = "0, 0, 0",
-                MaximumString = "0, 0, 0",
-                MinimumString = "0, 0, 0",
-                OrientationString = "0, 0, 0",
-                PatternString = "TriangleStrip",
-                ScaleString = "1, 1, 1",
                 Shader1Vertex = @"   z = sqrt(x * x + y * y);
    z = cos(20 * z - 10 * t) * exp(-3 * z);
    r = (x + 1) / 2;
@@ -423,7 +409,15 @@
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
                 Shader5Fragment = @"   FragColor = vec4(colour, 0.1f);",
-                Shader6Compute = "",
+                Shader6Compute = "";
+
+            internal const string
+                LocationString = "0, 0, 0",
+                MaximumString = "0, 0, 0",
+                MinimumString = "0, 0, 0",
+                OrientationString = "0, 0, 0",
+                PatternString = "TriangleStrip",
+                ScaleString = "1, 1, 1",
                 StripCountString = "100, 100, 0";
         }
 
@@ -439,6 +433,8 @@
         #endregion
 
         #region Private Methods
+
+        private void Invalidate() => RenderController?.InvalidateTrace(this);
 
         private void RestoreDefaults()
         {
@@ -464,8 +460,11 @@
             CommandProcessor != null ? CommandProcessor.Run(command) : command.RunOn(this);
 
         internal void SetLocation(Vector3 location) => Location = location;
+
         internal void SetOrientation(Vector3 orientation) => Orientation = orientation;
+
         internal void SetOrientation(Quaternion orientation) => Orientation = orientation;
+
         internal void SetScale(Vector3 scale) => Scale = scale;
 
         #endregion

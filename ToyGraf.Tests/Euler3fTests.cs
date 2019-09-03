@@ -33,13 +33,21 @@
         }
 
         [TestMethod]
-        public void Euler3fEqual()
+        public void Euler3fEquality()
         {
             var p = new Euler3f(1, 2, 3);
             var q = new Euler3f(1, 2, 3);
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
+        }
+
+        [TestMethod]
+        public void Euler3fInequality()
+        {
+            Euler3fInequality(1, 2, 3, 99, 2, 3);
+            Euler3fInequality(1, 2, 3, 1, 99, 3);
+            Euler3fInequality(1, 2, 3, 1, 2, 99);
         }
 
         [TestMethod]
@@ -63,15 +71,7 @@
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
-        public void Euler3fUnequal()
-        {
-            Euler3fUnequal(1, 2, 3, 99, 2, 3);
-            Euler3fUnequal(1, 2, 3, 1, 99, 3);
-            Euler3fUnequal(1, 2, 3, 1, 2, 99);
-        }
-
-        private static void Euler3fUnequal(params float[] a)
+        private static void Euler3fInequality(params float[] a)
         {
             var p = new Euler3f(a[0], a[1], a[2]);
             var q = new Euler3f(a[3], a[4], a[5]);
