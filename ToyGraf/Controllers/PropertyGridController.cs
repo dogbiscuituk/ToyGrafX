@@ -113,24 +113,25 @@
 
         private PropertyGrid PropertyGrid => SceneForm.PropertyGrid;
 
-        private bool PropertyGridDocked
+        private bool PropertyGridFloating
         {
-            get => PropertyGrid.FindForm() == SceneForm;
+            get => PropertyGrid.FindForm() != SceneForm;
             set
             {
-                if (PropertyGridDocked != value)
-                    if (PropertyGridDocked)
-                    {
-                        PropertyGridVisible = false;
-                        HostController.HostFormClosing += HostFormClosing;
-                        HostController.Show(SceneForm);
-                    }
-                    else
-                    {
-                        HostController.HostFormClosing -= HostFormClosing;
-                        HostController.Close();
-                        PropertyGridVisible = true;
-                    }
+                if (PropertyGridFloating == value)
+                    return;
+                if (value)
+                {
+                    PropertyGridVisible = false;
+                    HostController.HostFormClosing += HostFormClosing;
+                    HostController.Show(SceneForm);
+                }
+                else
+                {
+                    HostController.HostFormClosing -= HostFormClosing;
+                    HostController.Close();
+                    PropertyGridVisible = true;
+                }
             }
         }
 
@@ -158,19 +159,19 @@
         #region Private Event Handlers
 
         private void HostFormClosing(object sender, FormClosingEventArgs e) =>
-            PropertyGridDocked = true;
+            PropertyGridFloating = false;
 
         private void PopupPropertyGridDock_Click(object sender, EventArgs e) =>
-            PropertyGridDocked = !PropertyGridDocked;
+            PropertyGridFloating = !PropertyGridFloating;
 
         private void PopupPropertyGridHide_Click(object sender, EventArgs e)
         {
-            PropertyGridDocked = true;
+            PropertyGridFloating = false;
             PropertyGridVisible = false;
         }
 
         private void PopupPropertyGridMenu_Opening(object sender, CancelEventArgs e) =>
-            SceneForm.PopupPropertyGridFloat.Text = PropertyGridDocked ? "&Undock" : "&Dock";
+            SceneForm.PopupPropertyGridFloat.Text = PropertyGridFloating ? "&Dock" : "&Undock";
 
         private void PopupSubjectMenu_Opening(object sender, CancelEventArgs e)
         {
@@ -179,7 +180,8 @@
                 ((ToolStripMenuItem)items[index]).Checked = index == (int)SelectedSubject;
         }
 
-        private void PopupSubject_Click(object sender, System.EventArgs e) => SelectSubject((ToolStripItem)sender);
+        private void PopupSubject_Click(object sender, System.EventArgs e) =>
+            SelectSubject((ToolStripItem)sender);
 
         private void PropertyGrid_PropertyValueChanged(object sender, PropertyValueChangedEventArgs e) =>
             SceneController?.PropertyChanged(e);
@@ -191,7 +193,7 @@
 
         private void TogglePropertyGrid(object sender, EventArgs e)
         {
-            PropertyGridDocked = true;
+            PropertyGridFloating = false;
             PropertyGridVisible = !PropertyGridVisible;
         }
 
