@@ -30,6 +30,7 @@
 
         private static CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         private static Scene Scene => CommandProcessor?.Scene;
+        private static RenderController RenderController => SceneController.RenderController;
         private static SceneController SceneController;
         private static List<Trace> Traces => Scene?.Traces;
 
@@ -101,7 +102,11 @@
             // First step: remove any deleted Traces.
             for (int index = Traces.Count - 1; index >= 0; index--)
                 if (traces.FirstOrDefault(p => p.Index == index) == null)
+                {
+                    var trace = Traces[index];
                     CommandProcessor.DeleteTrace(index);
+                    RenderController.InvalidateTrace(trace);
+                }
             // Second step: insert/append any new Traces.
             foreach (var source in traces.Where(p => p.Index < 0))
                 CommandProcessor.AppendTrace();
