@@ -451,7 +451,11 @@
         private bool SaveFileAs() => JsonController.SaveAs();
         private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();
 
-        private void Spoof(ICommand command) => CommandProcessor.Run(command, true);
+        private void Spoof(ICommand command)
+        {
+            CommandProcessor.Run(command, true);
+            OnPropertyChanged(command.PropertyName);
+        }
 
         private ICommand Spoof(string property, string field, object value)
         {
