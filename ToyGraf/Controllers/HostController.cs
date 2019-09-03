@@ -7,10 +7,11 @@
 
     internal class HostController
     {
-        #region Constructor
+        #region Constructors
 
-        internal HostController(string text, Control hostedControl)
+        internal HostController(IWin32Window owner, string text, Control hostedControl)
         {
+            Owner = owner;
             HostedControl = hostedControl;
             ParentControl = hostedControl.Parent;
             HostForm = new HostForm
@@ -24,28 +25,38 @@
 
         #endregion
 
-        #region Internal Events
+        #region InternalProperties
 
-        internal event EventHandler<FormClosingEventArgs> HostFormClosing;
+        internal bool FormVisible
+        {
+            get => HostForm.Visible;
+            set
+            {
+                if (HostForm.Visible == value)
+                    return;
+                if (value)
+                {
+                    ParentControl.Controls.Remove(HostedControl);
+                    HostForm.Controls.Add(HostedControl);
+                    HostForm.Show(Owner);
+                    if (HostForm.WindowState == FormWindowState.Minimized)
+                        HostForm.WindowState = FormWindowState.Normal;
+                }
+                else
+                {
+                    HostForm.Controls.Remove(HostedControl);
+                    ParentControl.Controls.Add(HostedControl);
+                    HostedControl.BringToFront();
+                    HostForm.Hide();
+                }
+            }
+        }
 
         #endregion
 
-        #region Internal Methods
+        #region Internal Events
 
-        internal void Close()
-        {
-            HostForm.Controls.Remove(HostedControl);
-            ParentControl.Controls.Add(HostedControl);
-            HostedControl.BringToFront();
-            HostForm.Hide();
-        }
-
-        internal void Show(IWin32Window owner)
-        {
-            ParentControl.Controls.Remove(HostedControl);
-            HostForm.Controls.Add(HostedControl);
-            HostForm.Show(owner);
-        }
+        internal event EventHandler<FormClosingEventArgs> HostFormClosing;
 
         #endregion
 
@@ -53,6 +64,7 @@
 
         private readonly Control HostedControl, ParentControl;
         private readonly HostForm HostForm;
+        private IWin32Window Owner;
 
         #endregion
 

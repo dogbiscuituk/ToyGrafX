@@ -33,10 +33,13 @@
 
         internal bool TraceTableVisible
         {
-            get => !SceneForm.SplitContainer1.Panel2Collapsed;
+            get => _TraceTableVisible;
             set
             {
-                SceneForm.SplitContainer1.Panel2Collapsed = !value;
+                if (TraceTableVisible == value)
+                    return;
+                _TraceTableVisible = value;
+                UpdateConfiguration();
                 Refresh();
             }
         }
@@ -69,32 +72,30 @@
             get
             {
                 if (_HostController == null)
-                    _HostController = new HostController("Trace Table", TraceTable);
+                {
+                    _HostController = new HostController(SceneForm, "Trace Table", TraceTable);
+                    _HostController.HostFormClosing += HostController_HostFormClosing;
+                }
                 return _HostController;
             }
         }
 
         private SceneForm SceneForm => SceneController.SceneForm;
 
-        private bool TraceTableFloating
+        private bool
+            _TraceTableDocked = true,
+            _TraceTableVisible = true;
+
+        private bool TraceTableDocked
         {
-            get => TraceTable.FindForm() != SceneForm;
+            get => _TraceTableDocked;
             set
             {
-                if (TraceTableFloating == value)
+                if (TraceTableDocked == value)
                     return;
-                if (value)
-                {
-                    TraceTableVisible = false;
-                    HostController.HostFormClosing += HostFormClosing;
-                    HostController.Show(SceneForm);
-                }
-                else
-                {
-                    HostController.HostFormClosing -= HostFormClosing;
-                    HostController.Close();
-                    TraceTableVisible = true;
-                }
+                _TraceTableDocked = value;
+                UpdateConfiguration();
+                HostController.FormVisible = !value && _TraceTableVisible;
             }
         }
 
@@ -110,29 +111,23 @@
         private void EditSelectAll_Click(object sender, EventArgs e) =>
             SelectAll();
 
-        private void HostFormClosing(object sender, FormClosingEventArgs e) =>
-            TraceTableFloating = false;
+        private void HostController_HostFormClosing(object sender, FormClosingEventArgs e) =>
+            TraceTableVisible = false;
 
         private void PopupTraceTableColumns_Click(object sender, EventArgs e) =>
             new ColumnsController(this).ShowDialog(SceneForm);
 
         private void PopupTraceTableDock_Click(object sender, System.EventArgs e) =>
-            TraceTableFloating = !TraceTableFloating;
+            TraceTableDocked = !TraceTableDocked;
 
-        private void PopupTraceTableHide_Click(object sender, EventArgs e)
-        {
-            TraceTableFloating = false;
+        private void PopupTraceTableHide_Click(object sender, EventArgs e) =>
             TraceTableVisible = false;
-        }
 
         private void PopupTraceTableMenu_Opening(object sender, CancelEventArgs e) =>
-            SceneForm.PopupTraceTableFloat.Text = TraceTableFloating ? "&Dock" : "&Undock";
+            SceneForm.PopupTraceTableFloat.Text = TraceTableDocked ? "&Undock" : "&Dock";
 
-        private void ToggleTraceTable(object sender, EventArgs e)
-        {
-            TraceTableFloating = false;
+        private void ToggleTraceTable(object sender, EventArgs e) =>
             TraceTableVisible = !TraceTableVisible;
-        }
 
         private void TraceTable_SelectionChanged(object sender, EventArgs e) =>
             OnSelectionChanged();
@@ -204,6 +199,12 @@
         }
 
         private void SelectAll() => TraceTable.SelectAll();
+
+        private void UpdateConfiguration()
+        {
+            SceneForm.SplitContainer1.Panel2Collapsed = !(_TraceTableDocked && _TraceTableVisible);
+            HostController.FormVisible = !_TraceTableDocked && _TraceTableVisible;
+        }
 
         #endregion
     }

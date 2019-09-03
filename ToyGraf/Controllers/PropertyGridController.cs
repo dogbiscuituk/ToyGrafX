@@ -33,6 +33,7 @@
             HidePropertyPagesButton(toolStrip);
             AddToolstripItems(toolStrip);
             PropertyGrid.PropertyValueChanged += PropertyGrid_PropertyValueChanged;
+            Refresh();
         }
 
         #endregion
@@ -43,10 +44,13 @@
 
         internal bool PropertyGridVisible
         {
-            get => !SceneForm.SplitContainer2.Panel2Collapsed;
+            get => _PropertyGridVisible;
             set
             {
-                SceneForm.SplitContainer2.Panel2Collapsed = !value;
+                if (PropertyGridVisible == value)
+                    return;
+                _PropertyGridVisible = value;
+                UpdateConfiguration();
                 Refresh();
             }
         }
@@ -106,32 +110,30 @@
             get
             {
                 if (_HostController == null)
-                    _HostController = new HostController("Property Grid", PropertyGrid);
+                {
+                    _HostController = new HostController(SceneForm, "Property Grid", PropertyGrid);
+                    _HostController.HostFormClosing += HostController_HostFormClosing;
+                }
                 return _HostController;
             }
         }
 
         private PropertyGrid PropertyGrid => SceneForm.PropertyGrid;
 
-        private bool PropertyGridFloating
+        private bool
+            _PropertyGridDocked = true,
+            _PropertyGridVisible = true;
+
+        private bool PropertyGridDocked
         {
-            get => PropertyGrid.FindForm() != SceneForm;
+            get => _PropertyGridDocked;
             set
             {
-                if (PropertyGridFloating == value)
+                if (PropertyGridDocked == value)
                     return;
-                if (value)
-                {
-                    PropertyGridVisible = false;
-                    HostController.HostFormClosing += HostFormClosing;
-                    HostController.Show(SceneForm);
-                }
-                else
-                {
-                    HostController.HostFormClosing -= HostFormClosing;
-                    HostController.Close();
-                    PropertyGridVisible = true;
-                }
+                _PropertyGridDocked = value;
+                UpdateConfiguration();
+                HostController.FormVisible = !value && _PropertyGridVisible;
             }
         }
 
@@ -158,20 +160,17 @@
 
         #region Private Event Handlers
 
-        private void HostFormClosing(object sender, FormClosingEventArgs e) =>
-            PropertyGridFloating = false;
+        private void HostController_HostFormClosing(object sender, FormClosingEventArgs e) =>
+            PropertyGridVisible = false;
 
         private void PopupPropertyGridDock_Click(object sender, EventArgs e) =>
-            PropertyGridFloating = !PropertyGridFloating;
+            PropertyGridDocked = !PropertyGridDocked;
 
-        private void PopupPropertyGridHide_Click(object sender, EventArgs e)
-        {
-            PropertyGridFloating = false;
+        private void PopupPropertyGridHide_Click(object sender, EventArgs e) =>
             PropertyGridVisible = false;
-        }
 
         private void PopupPropertyGridMenu_Opening(object sender, CancelEventArgs e) =>
-            SceneForm.PopupPropertyGridFloat.Text = PropertyGridFloating ? "&Dock" : "&Undock";
+            SceneForm.PopupPropertyGridFloat.Text = PropertyGridDocked ? "&Undock" : "&Dock";
 
         private void PopupSubjectMenu_Opening(object sender, CancelEventArgs e)
         {
@@ -191,11 +190,8 @@
 
         private void SubjectButton_ButtonClick(object sender, System.EventArgs e) => SelectNextSubject();
 
-        private void TogglePropertyGrid(object sender, EventArgs e)
-        {
-            PropertyGridFloating = false;
+        private void TogglePropertyGrid(object sender, EventArgs e) =>
             PropertyGridVisible = !PropertyGridVisible;
-        }
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
             SceneForm.ViewPropertyGrid.Checked = PropertyGridVisible;
@@ -255,6 +251,12 @@
             _SelectedSubject = subject;
             SubjectButton.Text = SceneForm.PopupSubjectMenu.Items[(int)subject].Text;
             RefreshDataSource();
+        }
+
+        private void UpdateConfiguration()
+        {
+            SceneForm.SplitContainer2.Panel2Collapsed = !(_PropertyGridDocked && _PropertyGridVisible);
+            HostController.FormVisible = !_PropertyGridDocked && _PropertyGridVisible;
         }
 
         #endregion
