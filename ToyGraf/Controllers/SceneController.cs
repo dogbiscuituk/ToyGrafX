@@ -329,6 +329,7 @@
             CommandProcessor.Clear();
             EndUpdate();
             ConnectControllers(true);
+            RenderController.InvalidateProgram();
         }
 
         private void FilePathRequest(SdiController.FilePathEventArgs e)
