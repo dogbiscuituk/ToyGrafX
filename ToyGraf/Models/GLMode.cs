@@ -3,7 +3,6 @@
     using OpenTK;
     using OpenTK.Graphics;
     using System.ComponentModel;
-    using ToyGraf.Engine.Types;
 
     [TypeConverter(typeof(GLModeTypeConverter))]
     public class GLMode
@@ -27,36 +26,36 @@
 
         #region Public Properties
 
-        [Description(Descriptions.AccumColourFormat)]
-        [DisplayName(DisplayNames.AccumColourFormat)]
+        [Description(Descriptions.GLMode_AccumColourFormat)]
+        [DisplayName(DisplayNames.GLMode_AccumColourFormat)]
         public string AccumColourFormat { get; }
 
-        [Description(Descriptions.Buffers)]
-        [DisplayName(DisplayNames.Buffers)]
+        [Description(Descriptions.GLMode_Buffers)]
+        [DisplayName(DisplayNames.GLMode_Buffers)]
         public int Buffers { get; }
 
-        [Description(Descriptions.ColourFormat)]
-        [DisplayName(DisplayNames.ColourFormat)]
+        [Description(Descriptions.GLMode_ColourFormat)]
+        [DisplayName(DisplayNames.GLMode_ColourFormat)]
         public string ColourFormat { get; }
 
-        [Description(Descriptions.Depth)]
-        [DisplayName(DisplayNames.Depth)]
+        [Description(Descriptions.GLMode_Depth)]
+        [DisplayName(DisplayNames.GLMode_Depth)]
         public int Depth { get; }
 
-        [Description(Descriptions.GLModeIndex)]
-        [DisplayName(DisplayNames.GLModeIndex)]
+        [Description(Descriptions.GLMode_Index)]
+        [DisplayName(DisplayNames.GLMode_Index)]
         public System.IntPtr? Index { get; }
 
-        [Description(Descriptions.SampleCount)]
-        [DisplayName(DisplayNames.SampleCount)]
+        [Description(Descriptions.GLMode_SampleCount)]
+        [DisplayName(DisplayNames.GLMode_SampleCount)]
         public int SampleCount { get; }
 
-        [Description(Descriptions.Stencil)]
-        [DisplayName(DisplayNames.Stencil)]
+        [Description(Descriptions.GLMode_Stencil)]
+        [DisplayName(DisplayNames.GLMode_Stencil)]
         public int Stencil { get; }
 
-        [Description(Descriptions.Stereo)]
-        [DisplayName(DisplayNames.Stereo)]
+        [Description(Descriptions.GLMode_Stereo)]
+        [DisplayName(DisplayNames.GLMode_Stereo)]
         public bool Stereo { get; }
 
         #endregion
