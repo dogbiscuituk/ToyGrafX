@@ -465,12 +465,8 @@
         {
             switch (property)
             {
-                case DisplayNames.AccumColourFormat:
-                    return new AccumColourFormatCommand(new ColourFormat(Scene.AccumColourFormat, field, (int)value));
                 case DisplayNames.Camera:
                     return new CameraCommand(new Camera(Scene.Camera, field, value));
-                case DisplayNames.ColourFormat:
-                    return new ColourFormatCommand(new ColourFormat(Scene.ColourFormat, field, (int)value));
                 case DisplayNames.Projection:
                     return new ProjectionCommand(new Projection(Scene.Projection, field, value));
             }

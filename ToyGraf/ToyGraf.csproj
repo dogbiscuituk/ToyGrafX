@@ -85,6 +85,8 @@
     <Compile Include="Models\DisplayNames.cs" />
     <Compile Include="Models\GLInfo.cs" />
     <Compile Include="Models\GLInfoTypeConverter.cs" />
+    <Compile Include="Models\GLMode.cs" />
+    <Compile Include="Models\GLModeTypeConverter.cs" />
     <Compile Include="Models\Scene.cs" />
     <Compile Include="Models\Structs\Options.cs" />
     <Compile Include="Models\Trace.cs" />

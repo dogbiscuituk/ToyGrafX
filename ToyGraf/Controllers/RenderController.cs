@@ -20,6 +20,7 @@
 
         #region Internal Properties
 
+        internal static GLInfo _GLInfo;
         internal GLInfo GLInfo
         {
             get
@@ -35,8 +36,21 @@
             }
         }
 
-        internal static GLInfo _GLInfo;
-        private static readonly object GLInfoSyncRoot = new object();
+        internal static GLMode _GLMode;
+        internal GLMode GLMode
+        {
+            get
+            {
+                if (_GLMode == null && MakeCurrent(true))
+                {
+                    var mode = new GLMode(GLControl);
+                    MakeCurrent(false);
+                    lock (GLModeSyncRoot)
+                        _GLMode = mode;
+                }
+                return _GLMode;
+            }
+        }
 
         #endregion
 
@@ -159,6 +173,8 @@
         private Clock Clock => ClockController.Clock;
         private ClockController ClockController => SceneController.ClockController;
         private GLControl GLControl => SceneForm.GLControl;
+        private static readonly object GLInfoSyncRoot = new object();
+        private static readonly object GLModeSyncRoot = new object();
         private Scene Scene => SceneController.Scene;
         private readonly SceneController SceneController;
         private SceneForm SceneForm => SceneController.SceneForm;

@@ -28,80 +28,6 @@
 
         #region Public Properties
 
-        #region Graphics Mode
-
-        [Category(Categories.GraphicsMode)]
-        [DefaultValue(typeof(ColourFormat), Defaults.ColourFormatString)]
-        [Description(Descriptions.AccumColourFormat)]
-        [DisplayName(DisplayNames.AccumColourFormat)]
-        [JsonIgnore]
-        public ColourFormat AccumColourFormat { get => _AccumColourFormat; set => Run(new AccumColourFormatCommand(value)); }
-
-        [Category(Categories.GraphicsMode)]
-        [DefaultValue(typeof(Color), Defaults.BackgroundColourString)]
-        [Description(Descriptions.BackgroundColour)]
-        [DisplayName(DisplayNames.BackgroundColour)]
-        [JsonIgnore]
-        public Color BackgroundColour { get => _BackgroundColour; set => Run(new BackgroundColourCommand(value)); }
-
-        [Category(Categories.GraphicsMode)]
-        [DefaultValue(Defaults.Buffers)]
-        [Description(Descriptions.Buffers)]
-        [DisplayName(DisplayNames.Buffers)]
-        [JsonIgnore]
-        public int Buffers { get => _Buffers; set => Run(new BuffersCommand(value)); }
-
-        [Category(Categories.GraphicsMode)]
-        [DefaultValue(typeof(ColourFormat), Defaults.ColourFormatString)]
-        [Description(Descriptions.ColourFormat)]
-        [DisplayName(DisplayNames.ColourFormat)]
-        [JsonIgnore]
-        public ColourFormat ColourFormat { get => _ColourFormat; set => Run(new ColourFormatCommand(value)); }
-
-        [Category(Categories.GraphicsMode)]
-        [DefaultValue(Defaults.Depth)]
-        [Description(Descriptions.Depth)]
-        [DisplayName(DisplayNames.Depth)]
-        [JsonIgnore]
-        public int Depth { get => _Depth; set => Run(new DepthCommand(value)); }
-
-        [Category(Categories.GraphicsMode)]
-        [DefaultValue(Defaults.FPS)]
-        [Description(Descriptions.FPS)]
-        [DisplayName(DisplayNames.FPS)]
-        [JsonIgnore]
-        public double FPS { get => _FPS; set => Run(new FpsCommand(value)); }
-
-        [Category(Categories.GraphicsMode)]
-        [DefaultValue(Defaults.SampleCount)]
-        [Description(Descriptions.SampleCount)]
-        [DisplayName(DisplayNames.SampleCount)]
-        [JsonIgnore]
-        public int SampleCount { get => _SampleCount; set => Run(new SampleCountCommand(value)); }
-
-        [Category(Categories.GraphicsMode)]
-        [DefaultValue(Defaults.Stencil)]
-        [Description(Descriptions.Stencil)]
-        [DisplayName(DisplayNames.Stencil)]
-        [JsonIgnore]
-        public int Stencil { get => _Stencil; set => Run(new StencilCommand(value)); }
-
-        [Category(Categories.GraphicsMode)]
-        [DefaultValue(Defaults.Stereo)]
-        [Description(Descriptions.Stereo)]
-        [DisplayName(DisplayNames.Stereo)]
-        [JsonIgnore]
-        public bool Stereo { get => _Stereo; set => Run(new StereoCommand(value)); }
-
-        [Category(Categories.GraphicsMode)]
-        [DefaultValue(Defaults.VSync)]
-        [Description(Descriptions.VSync)]
-        [DisplayName(DisplayNames.VSync)]
-        [JsonIgnore]
-        public bool VSync { get => _VSync; set => Run(new VSyncCommand(value)); }
-
-        #endregion
-
         #region Read Only / System
 
         [Category(Categories.SystemRO)]
@@ -118,7 +44,15 @@
         [Description(Descriptions.GLInfo)]
         [DisplayName(DisplayNames.GLInfo)]
         [JsonIgnore]
+        [ReadOnly(true)]
         public GLInfo GLInfo => RenderController._GLInfo ?? RenderController?.GLInfo;
+
+        [Category(Categories.SystemRO)]
+        [Description(Descriptions.GLMode)]
+        [DisplayName(DisplayNames.GLMode)]
+        [JsonIgnore]
+        [ReadOnly(true)]
+        public GLMode GLMode => RenderController._GLMode ?? RenderController?.GLMode;
 
         [Category(Categories.SystemRO)]
         [DefaultValue(Defaults.GPUCode)]
@@ -158,11 +92,25 @@
         #region Scene
 
         [Category(Categories.Scene)]
+        [DefaultValue(typeof(Color), Defaults.BackgroundColourString)]
+        [Description(Descriptions.BackgroundColour)]
+        [DisplayName(DisplayNames.BackgroundColour)]
+        [JsonIgnore]
+        public Color BackgroundColour { get => _BackgroundColour; set => Run(new BackgroundColourCommand(value)); }
+
+        [Category(Categories.Scene)]
         [DefaultValue(typeof(Vector3f), Defaults.CameraString)]
         [Description(Descriptions.Camera)]
         [DisplayName(DisplayNames.Camera)]
         [JsonIgnore]
         public Camera Camera { get => _Camera; set => Run(new CameraCommand(value)); }
+
+        [Category(Categories.Scene)]
+        [DefaultValue(Defaults.FPS)]
+        [Description(Descriptions.FPS)]
+        [DisplayName(DisplayNames.FPS)]
+        [JsonIgnore]
+        public double FPS { get => _FPS; set => Run(new FpsCommand(value)); }
 
         [Category(Categories.Scene)]
         [Description(Descriptions.Projection)]
@@ -191,6 +139,13 @@
         // Used as a DataSource.DataMember, so public visibility required.
         [JsonProperty]
         public List<Trace> Traces { get; private set; }
+
+        [Category(Categories.Scene)]
+        [DefaultValue(Defaults.VSync)]
+        [Description(Descriptions.VSync)]
+        [DisplayName(DisplayNames.VSync)]
+        [JsonIgnore]
+        public bool VSync { get => _VSync; set => Run(new VSyncCommand(value)); }
 
         #endregion
 
@@ -291,23 +246,16 @@
         internal string _GPULog;
         internal GPUStatus _GPUStatus;
 
-        [JsonProperty] internal ColourFormat _AccumColourFormat;
         [JsonProperty] internal Color _BackgroundColour;
-        [JsonProperty] internal int _Buffers;
         [JsonProperty] internal Camera _Camera;
-        [JsonProperty] internal ColourFormat _ColourFormat;
-        [JsonProperty] internal int _Depth;
         [JsonProperty] internal double _FPS;
         [JsonProperty] internal Projection _Projection;
-        [JsonProperty] internal int _SampleCount;
         [JsonProperty] internal string _Shader1Vertex;
         [JsonProperty] internal string _Shader2TessControl;
         [JsonProperty] internal string _Shader3TessEvaluation;
         [JsonProperty] internal string _Shader4Geometry;
         [JsonProperty] internal string _Shader5Fragment;
         [JsonProperty] internal string _Shader6Compute;
-        [JsonProperty] internal int _Stencil;
-        [JsonProperty] internal bool _Stereo;
         [JsonProperty] internal string _Title;
         [JsonProperty] internal bool _VSync;
 
@@ -415,7 +363,6 @@
             public const string
                 BackgroundColourString = "White",
                 CameraString = "0, 0, 2, 0, 0, 0",
-                ColourFormatString = "0, 0, 0, 0",
                 GPUCode = "",
                 GPULog = "",
                 GPUStatusString = "OK",
@@ -465,14 +412,7 @@ void main()
                 Title = "";
 
             public const bool
-                Stereo = false,
                 VSync = false;
-
-            public const int
-                Buffers = 2,
-                Depth = 24,
-                SampleCount = 0,
-                Stencil = 8;
 
             public const double
                 FPS = 60;
@@ -485,10 +425,6 @@ void main()
 
             public static Color
                 BackgroundColour = Color.White;
-
-            public static ColourFormat
-                ColourFormat = new ColourFormat(8),
-                AccumColourFormat = new ColourFormat();
 
             public static Projection
                 Projection = new Projection(75, 16, 9, 0.1f, 1000);
@@ -538,28 +474,21 @@ void main()
 
         private void RestoreDefaults()
         {
-            _AccumColourFormat = Defaults.AccumColourFormat;
             _BackgroundColour = Defaults.BackgroundColour;
-            _Buffers = Defaults.Buffers;
             _Camera = Defaults.Camera;
-            _ColourFormat = Defaults.ColourFormat;
-            _Depth = Defaults.Depth;
             _FPS = Defaults.FPS;
             _GPUCode = Defaults.GPUCode;
             _GPULog = Defaults.GPULog;
             _Projection = Defaults.Projection;
-            _SampleCount = Defaults.SampleCount;
             _Shader1Vertex = Defaults.Shader1Vertex;
             _Shader2TessControl = Defaults.Shader2TessControl;
             _Shader3TessEvaluation = Defaults.Shader3TessEvaluation;
             _Shader4Geometry = Defaults.Shader4Geometry;
             _Shader5Fragment = Defaults.Shader5Fragment;
             _Shader6Compute = Defaults.Shader6Compute;
-            _Stencil = Defaults.Stencil;
-            _Stereo = Defaults.Stereo;
             _Title = Defaults.Title;
-            Traces = Defaults.Traces;
             _VSync = Defaults.VSync;
+            Traces = Defaults.Traces;
         }
 
         private void Run(IScenePropertyCommand command)

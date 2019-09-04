@@ -20,6 +20,8 @@
             GLInfo_Renderer = "Renderer Name",
             GLInfo_Shader = "GLSL Version Number",
             GLInfo_Vendor = "Vendor Name",
+            GLMode = "Graphics Mode",
+            GLModeIndex = "Graphics Mode Index",
             GPUCode = "GPU Code",
             GPULog = "GPU Log",
             GPUStatus = "GPU Status",

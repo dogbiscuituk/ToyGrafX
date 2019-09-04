@@ -7,7 +7,6 @@
         /// being incorporated into property paths when parsing PropertyGrid events.
         /// </summary>
         public const string
-            GraphicsMode = "Graphics Mode ",
             Placement = "Placement ",
             Scene = "Scene ",
             ShaderCode = "Shader Code ",

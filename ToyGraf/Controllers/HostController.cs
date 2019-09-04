@@ -39,8 +39,6 @@
                     ParentControl.Controls.Remove(HostedControl);
                     HostForm.Controls.Add(HostedControl);
                     HostForm.Show(Owner);
-                    if (HostForm.WindowState == FormWindowState.Minimized)
-                        HostForm.WindowState = FormWindowState.Normal;
                 }
                 else
                 {

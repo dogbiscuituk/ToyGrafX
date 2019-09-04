@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ToyGraf")]
-[assembly: AssemblyDescription("Graphical Calculus Utility for Windows")]
+[assembly: AssemblyDescription("Graphical Calculus Utility")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("John M Kerr")]
 [assembly: AssemblyProduct("ToyGraf")]
