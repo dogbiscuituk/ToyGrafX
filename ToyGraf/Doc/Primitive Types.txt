@@ -1,0 +1,32 @@
+var coords = Grids.GetGrid(trace.StripCount);
+var indices = Grids.GetIndices(trace.StripCount, trace.Pattern);
+
+Pattern -> BeginMode or PrimitiveType
+
+
+		Dimension
+		-----------------
+Pattern		1	2	3
+---------------------------------
+Points		Y	Y	Y
+Lines		Y	Y	
+LinesStrip	Y	Y	
+Triangles		Y	
+TriangleStrip		Y	
+
+Points1D
+Points2D
+Points3D
+Lines1D
+Lines2D
+LineStrip1D
+LineStrip2D
+Triangles2D
+TriangleStrip2D
+
+
+Points	Points
+Grid	Lines
+	LineStrip (rectangular)
+Mesh	LineStrip (triangular)
+Fill	TriangleStrip

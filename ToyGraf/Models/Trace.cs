@@ -376,7 +376,7 @@
         public class Defaults
         {
             public const Pattern
-                Pattern = Engine.Types.Pattern.TriangleStrip;
+                Pattern = Engine.Types.Pattern.Fill;
 
             public const bool
                 Visible = true;

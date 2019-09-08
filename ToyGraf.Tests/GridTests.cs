@@ -1,6 +1,7 @@
 ﻿namespace ToyGraf.Engine.Tests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
 
     [TestClass]
@@ -13,7 +14,7 @@
         public void CheckGrid()
         {
             var expected = new float[] { 0, 0, 0 };
-            var actual = Grids.GetGrid();
+            var actual = Entity.GetCoordinates(0, 0, 0);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -35,7 +36,7 @@
                 +0.75f, 0, 0,
                 +1.00f, 0, 0
             };
-            var actual = Grids.GetGrid(cx: 8);
+            var actual = Entity.GetCoordinates(cx: 8);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -57,7 +58,7 @@
                 0, +0.75f, 0,
                 0, +1.00f, 0
             };
-            var actual = Grids.GetGrid(cy: 8);
+            var actual = Entity.GetCoordinates(cy: 8);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -79,7 +80,7 @@
                 0, 0, +0.75f,
                 0, 0, +1.00f
             };
-            var actual = Grids.GetGrid(cz: 8);
+            var actual = Entity.GetCoordinates(cz: 8);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -110,7 +111,7 @@
                 +1.00f, -1.00f, 0, +1.00f, -0.75f, 0, +1.00f, -0.50f, 0, +1.00f, -0.25f, 0, +1.00f, 0, 0,
                 +1.00f, +0.25f, 0, +1.00f, +0.50f, 0, +1.00f, +0.75f, 0, +1.00f, +1.00f, 0
             };
-            var actual = Grids.GetGrid(cx: 8, cy: 8);
+            var actual = Entity.GetCoordinates(cx: 8, cy: 8);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -141,7 +142,7 @@
                 +1.00f, 0, -1.00f, +1.00f, 0, -0.75f, +1.00f, 0, -0.50f, +1.00f, 0, -0.25f, +1.00f, 0, 0,
                 +1.00f, 0, +0.25f, +1.00f, 0, +0.50f, +1.00f, 0, +0.75f, +1.00f, 0, +1.00f
             };
-            var actual = Grids.GetGrid(cx: 8, cz: 8);
+            var actual = Entity.GetCoordinates(cx: 8, cz: 8);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -172,7 +173,7 @@
                 0, +1.00f, -1.00f, 0, +1.00f, -0.75f, 0, +1.00f, -0.50f, 0, +1.00f, -0.25f, 0, +1.00f, 0,
                 0, +1.00f, +0.25f, 0, +1.00f, +0.50f, 0, +1.00f, +0.75f, 0, +1.00f, +1.00f
             };
-            var actual = Grids.GetGrid(cy: 8, cz: 8);
+            var actual = Entity.GetCoordinates(cy: 8, cz: 8);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -210,7 +211,7 @@
                 1, +0.5f, -1, 1, +0.5f, -.5f, 1, +0.5f, 0, 1, +0.5f, .5f, 1, +0.5f, 1,
                 1, +1.0f, -1, 1, +1.0f, -.5f, 1, +1.0f, 0, 1, +1.0f, .5f, 1, +1.0f, 1
             };
-            var actual = Grids.GetGrid(4, 4, 4);
+            var actual = Entity.GetCoordinates(4, 4, 4);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -228,36 +229,7 @@
                 +1, -0.5f, -1, +1, -0.5f, 0, +1, -0.5f, 1, +1, +0.0f, -1, +1, +0.0f, 0, +1, +0.0f, 1,
                 +1, +0.5f, -1, +1, +0.5f, 0, +1, +0.5f, 1, +1, +1.0f, -1, +1, +1.0f, 0, +1, +1.0f, 1
             };
-            var actual = Grids.GetGrid(1, 4, 2);
-            CollectionAssert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
-        /// Check the 384 (6*8*8) vertex indices needed to cover with triangles, a plane partitioned by an 8x8 grid.
-        /// </summary>
-        [TestMethod]
-        public void CheckTriangleIndices()
-        {
-            var expected = new int[]
-            {
-                00, 09, 01, 01, 09, 10, 01, 10, 02, 02, 10, 11, 02, 11, 03, 03, 11, 12, 03, 12, 04, 04, 12, 13,
-                04, 13, 05, 05, 13, 14, 05, 14, 06, 06, 14, 15, 06, 15, 07, 07, 15, 16, 07, 16, 08, 08, 16, 17,
-                09, 18, 10, 10, 18, 19, 10, 19, 11, 11, 19, 20, 11, 20, 12, 12, 20, 21, 12, 21, 13, 13, 21, 22,
-                13, 22, 14, 14, 22, 23, 14, 23, 15, 15, 23, 24, 15, 24, 16, 16, 24, 25, 16, 25, 17, 17, 25, 26,
-                18, 27, 19, 19, 27, 28, 19, 28, 20, 20, 28, 29, 20, 29, 21, 21, 29, 30, 21, 30, 22, 22, 30, 31,
-                22, 31, 23, 23, 31, 32, 23, 32, 24, 24, 32, 33, 24, 33, 25, 25, 33, 34, 25, 34, 26, 26, 34, 35,
-                27, 36, 28, 28, 36, 37, 28, 37, 29, 29, 37, 38, 29, 38, 30, 30, 38, 39, 30, 39, 31, 31, 39, 40,
-                31, 40, 32, 32, 40, 41, 32, 41, 33, 33, 41, 42, 33, 42, 34, 34, 42, 43, 34, 43, 35, 35, 43, 44,
-                36, 45, 37, 37, 45, 46, 37, 46, 38, 38, 46, 47, 38, 47, 39, 39, 47, 48, 39, 48, 40, 40, 48, 49,
-                40, 49, 41, 41, 49, 50, 41, 50, 42, 42, 50, 51, 42, 51, 43, 43, 51, 52, 43, 52, 44, 44, 52, 53,
-                45, 54, 46, 46, 54, 55, 46, 55, 47, 47, 55, 56, 47, 56, 48, 48, 56, 57, 48, 57, 49, 49, 57, 58,
-                49, 58, 50, 50, 58, 59, 50, 59, 51, 51, 59, 60, 51, 60, 52, 52, 60, 61, 52, 61, 53, 53, 61, 62,
-                54, 63, 55, 55, 63, 64, 55, 64, 56, 56, 64, 65, 56, 65, 57, 57, 65, 66, 57, 66, 58, 58, 66, 67,
-                58, 67, 59, 59, 67, 68, 59, 68, 60, 60, 68, 69, 60, 69, 61, 61, 69, 70, 61, 70, 62, 62, 70, 71,
-                63, 72, 64, 64, 72, 73, 64, 73, 65, 65, 73, 74, 65, 74, 66, 66, 74, 75, 66, 75, 67, 67, 75, 76,
-                67, 76, 68, 68, 76, 77, 68, 77, 69, 69, 77, 78, 69, 78, 70, 70, 78, 79, 70, 79, 71, 71, 79, 80
-            };
-            var actual = Grids.GetTriangleIndicesXY(8, 8);
+            var actual = Entity.GetCoordinates(1, 4, 2);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -279,7 +251,7 @@
                 63, 55, 64, 56, 65, 57, 66, 58, 67, 59, 68, 60, 69, 61, 70, 62, 71,
                 80, 70, 79, 69, 78, 68, 77, 67, 76, 66, 75, 65, 74, 64, 73, 63, 72
             };
-            var actual = Grids.GetTriangleStripIndicesXY(8, 8);
+            var actual = Entity.GetIndices(Pattern.Fill, 8, 8);
             CollectionAssert.AreEqual(expected, actual);
         }
     }

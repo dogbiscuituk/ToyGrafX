@@ -58,7 +58,9 @@
     <Compile Include="TypeConverters\ProjectionTypeConverter.cs" />
     <Compile Include="Types\Camera.cs" />
     <Compile Include="Types\Euler3f.cs" />
+    <Compile Include="Types\FillType.cs" />
     <Compile Include="Types\GPUStatus.cs" />
+    <Compile Include="Types\Entity.cs" />
     <Compile Include="Types\Pattern.cs" />
     <Compile Include="Types\Vector3i.cs" />
     <Compile Include="Types\Vector3f.cs" />
@@ -66,7 +68,6 @@
     <Compile Include="Types\ProjectionType.cs" />
     <Compile Include="Utility\Categories.cs" />
     <Compile Include="Utility\Functions.cs" />
-    <Compile Include="Utility\Grids.cs" />
     <Compile Include="Utility\Maths.cs" />
     <Compile Include="Utility\Processes.cs" />
     <Compile Include="Utility\Strings.cs" />

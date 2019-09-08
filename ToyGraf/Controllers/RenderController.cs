@@ -144,8 +144,8 @@
                     ValidateTrace(trace);
                     GL.BindVertexArray(trace._VaoID);
                     GL.EnableVertexAttribArray(0);
-                    //GL.DrawArrays(PrimitiveType.LineStrip, 0, prototype.VertexCount);
-                    GL.DrawElements(PrimitiveType.TriangleStrip, trace._VaoVertexCount, DrawElementsType.UnsignedInt, 0);
+                    GL.DrawElements((PrimitiveType)((int)trace.Pattern & 0x0F),
+                        trace._VaoVertexCount, DrawElementsType.UnsignedInt, 0);
                     GL.DisableVertexAttribArray(0);
                     GL.BindVertexArray(0);
                 }
@@ -367,9 +367,9 @@
             if (trace._VaoValid)
                 return;
             $"Validate Trace '{trace}'".Spit();
-            var coords = Grids.GetGrid(trace.StripCount);
-            var indices = Grids.GetIndices(trace.StripCount, trace.Pattern);
             DeleteTraceVao(trace);
+            var coords = Entity.GetCoordinates(trace.StripCount);
+            var indices = Entity.GetIndices(trace.Pattern, trace.StripCount);
             GL.BindVertexArray(trace._VaoID = CreateVao());
             trace._VboIndexID = BindIndicesBuffer(indices);
             trace._VboVertexID = StoreDataInAttributeList(0, coords);
