@@ -2,6 +2,7 @@
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
+    using System;
     using System.Text;
     using ToyGraf.Commands;
     using ToyGraf.Engine.Types;
@@ -74,6 +75,12 @@
         {
             "Invalidate Camera View".Spit();
             CameraViewValid = false;
+        }
+
+        internal void InvalidateGLMode()
+        {
+            lock (GLModeSyncRoot)
+                _GLMode = null;
         }
 
         internal void InvalidateProgram()

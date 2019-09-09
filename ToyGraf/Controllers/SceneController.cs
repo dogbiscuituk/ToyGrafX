@@ -133,6 +133,8 @@
             return true;
         }
 
+        internal void SetGLMode(GLMode mode) => RecreateGLControl(mode);
+
         internal void Show() => SceneForm.Show();
 
         internal void ShowOpenGLSLBook(PropertyGrid propertyGrid) =>
@@ -329,28 +331,6 @@
             }
         }
 
-        private void CreateGLControl(OpenTK.Graphics.GraphicsMode mode = null)
-        {
-            var parent = GLControlParent;
-            var control = GLControl;
-            if (control != null)
-            {
-                ConnectGLControl(false);
-                parent.Remove(control);
-                control.Dispose();
-            }
-            control = mode == null ? new GLControl() : new GLControl(mode);
-            control.BackColor = Scene.BackgroundColour;
-            control.Dock = DockStyle.Fill;
-            control.Location = new System.Drawing.Point(0, 0);
-            control.Name = "GLControl";
-            control.Size = new System.Drawing.Size(100, 100);
-            control.TabIndex = 1;
-            control.VSync = Scene.VSync;
-            parent.Add(control);
-            ConnectGLControl(true);
-        }
-
         private void EditOptions()
         {
             using (var optionsController = new OptionsController(this))
@@ -485,6 +465,25 @@
             return sceneController;
         }
 
+        private void RecreateGLControl(GraphicsMode mode)
+        {
+            ConnectGLControl(false);
+            var control = GLControl;
+            GLControlParent.Remove(control);
+            control.Dispose();
+            control = new GLControl(mode);
+            control.BackColor = Scene.BackgroundColour;
+            control.Dock = DockStyle.Fill;
+            control.Location = new System.Drawing.Point(0, 0);
+            control.Name = "GLControl";
+            control.Size = new System.Drawing.Size(100, 100);
+            control.TabIndex = 1;
+            control.VSync = Scene.VSync;
+            GLControlParent.Add(control);
+            ConnectGLControl(true);
+            RenderController.InvalidateGLMode();
+        }
+
         private void Resize() => RenderController.InvalidateProjection();
 
         private bool SaveFile() => JsonController.Save();
@@ -506,7 +505,7 @@
                 case DisplayNames.Camera:
                     return new CameraCommand(new Camera(Scene.Camera, field, value));
                 case DisplayNames.GLMode:
-                    return new GraphicsModeCommand(new GLMode(Scene.GLMode, field, value));
+                    return new GLModeCommand(new GLMode(Scene.GLMode, field, value));
                 case DisplayNames.Projection:
                     return new ProjectionCommand(new Projection(Scene.Projection, field, value));
             }

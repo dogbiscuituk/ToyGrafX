@@ -33,6 +33,13 @@
         { }
     }
 
+    internal class GLModeCommand : ScenePropertyCommand<GLMode>
+    {
+        internal GLModeCommand(GLMode value) : base(DisplayNames.GLMode,
+            value, s => s.GetGLMode(), (s, v) => s.SetGLMode(v))
+        { }
+    }
+
     internal class ProjectionCommand : ScenePropertyCommand<Projection>
     {
         internal ProjectionCommand(Projection value) : base(DisplayNames.Projection,
@@ -64,4 +71,10 @@
         internal TraceDeleteCommand(int index) : base(index, false) { }
     }
 
+    internal class VSyncCommand : ScenePropertyCommand<bool>
+    {
+        internal VSyncCommand(bool value) : base(DisplayNames.VSync,
+            value, s => s._VSync, (s, v) => s._VSync = v)
+        { }
+    }
 }

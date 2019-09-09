@@ -109,7 +109,7 @@
         public GLMode GLMode
         {
             get => SceneController?.GLMode;
-            set => Run(new GraphicsModeCommand(value));
+            set => Run(new GLModeCommand(value));
         }
 
         [Category(Categories.Scene)]
@@ -278,6 +278,7 @@
         }
 
         internal Matrix4 GetCameraView() => Maths.CreateCameraView(Camera);
+        internal GLMode GetGLMode() => SceneController?.GLMode;
         internal Matrix4 GetProjection() => Maths.CreateProjection(Projection, GLControl.ClientSize);
 
         internal string GetScript(ShaderType shaderType)
@@ -314,6 +315,8 @@
             if (index >= 0 && index < Traces.Count)
                 Traces.RemoveAt(index);
         }
+
+        internal void SetGLMode(GLMode mode) => SceneController?.SetGLMode(mode);
 
         internal void SetScript(ShaderType shaderType, string script)
         {

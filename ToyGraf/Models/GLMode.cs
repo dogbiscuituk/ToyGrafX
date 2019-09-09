@@ -12,21 +12,13 @@
         #region Constructors
 
         public GLMode(GLMode mode) :
-            this(mode.Index, mode.ColourFormat, mode.AccumColourFormat, mode.Buffers, mode.Depth, mode.Samples, mode.Stencil, mode.Stereo)
+            this(mode.Index, mode.ColourFormat, mode.AccumColourFormat,
+                mode.Buffers, mode.Depth, mode.Samples, mode.Stencil, mode.Stereo)
         { }
 
         public GLMode(IntPtr? index, ColourFormat colourFormat, ColourFormat accumColourFormat,
-            int buffers, int depth, int samples, int stencil, bool stereo)
-        {
-            Index = index;
-            ColourFormat = colourFormat;
-            AccumColourFormat = accumColourFormat;
-            Buffers = buffers;
-            Depth = depth;
-            Samples = samples;
-            Stencil = stencil;
-            Stereo = stereo;
-        }
+            int buffers, int depth, int samples, int stencil, bool stereo) =>
+            Init(index, colourFormat, accumColourFormat, buffers, depth, samples, stencil, stereo);
 
         public GLMode(GLControl control)
         {
@@ -39,6 +31,19 @@
             Samples = mode.Samples;
             Stencil = mode.Stencil;
             Stereo = mode.Stereo;
+        }
+
+        private void Init(IntPtr? index, ColourFormat colourFormat, ColourFormat accumColourFormat,
+            int buffers, int depth, int samples, int stencil, bool stereo)
+        {
+            Index = index;
+            ColourFormat = new ColourFormat(colourFormat);
+            AccumColourFormat = new ColourFormat(accumColourFormat);
+            Buffers = buffers;
+            Depth = depth;
+            Samples = samples;
+            Stencil = stencil;
+            Stereo = stereo;
         }
 
         public GLMode(GLMode mode, string field, object value) : this(mode)
@@ -126,6 +131,25 @@
         [Description(Descriptions.GLMode_Stereo)]
         [DisplayName(DisplayNames.GLMode_Stereo)]
         public bool Stereo { get; set; }
+
+        #endregion
+
+        #region Public Operators
+
+        public static implicit operator GLMode(GraphicsMode p) => new GLMode(
+            p.Index,
+            new ColourFormat(p.ColorFormat),
+            new ColourFormat(p.AccumulatorFormat),
+            p.Buffers, p.Depth, p.Samples, p.Stencil, p.Stereo);
+
+        public static implicit operator GraphicsMode(GLMode p) => new GraphicsMode(
+            color: p.ColourFormat,
+            accum: p.AccumColourFormat,
+            buffers: p.Buffers,
+            depth: p.Depth,
+            samples: p.Samples,
+            stencil: p.Stencil,
+            stereo: p.Stereo);
 
         #endregion
 

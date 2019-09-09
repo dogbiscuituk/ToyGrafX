@@ -60,7 +60,6 @@
     <Compile Include="Commands\BaseCommands.cs" />
     <Compile Include="Commands\CommandInterfaces.cs" />
     <Compile Include="Commands\CommandProcessor.cs" />
-    <Compile Include="Commands\GraphicsModeCommands.cs" />
     <Compile Include="Commands\SceneCommands.cs" />
     <Compile Include="Commands\ShaderCommands.cs" />
     <Compile Include="Commands\TraceCommands.cs" />
