@@ -11,40 +11,15 @@
     {
         #region Constructors
 
-        public GLMode(GLMode mode) :
-            this(mode.Index, mode.ColourFormat, mode.AccumColourFormat,
-                mode.Buffers, mode.Depth, mode.Samples, mode.Stencil, mode.Stereo)
-        { }
+        public GLMode(GLControl control) : this(control.GraphicsMode) { }
+
+        public GLMode(GLMode mode) =>
+            Init(mode.Index, mode.ColourFormat, mode.AccumColourFormat,
+            mode.Buffers, mode.Depth, mode.Samples, mode.Stencil, mode.Stereo);
 
         public GLMode(IntPtr? index, ColourFormat colourFormat, ColourFormat accumColourFormat,
             int buffers, int depth, int samples, int stencil, bool stereo) =>
             Init(index, colourFormat, accumColourFormat, buffers, depth, samples, stencil, stereo);
-
-        public GLMode(GLControl control)
-        {
-            var mode = control.GraphicsMode;
-            Index = mode.Index;
-            ColourFormat = new ColourFormat(mode.ColorFormat);
-            AccumColourFormat = new ColourFormat(mode.AccumulatorFormat);
-            Buffers = mode.Buffers;
-            Depth = mode.Depth;
-            Samples = mode.Samples;
-            Stencil = mode.Stencil;
-            Stereo = mode.Stereo;
-        }
-
-        private void Init(IntPtr? index, ColourFormat colourFormat, ColourFormat accumColourFormat,
-            int buffers, int depth, int samples, int stencil, bool stereo)
-        {
-            Index = index;
-            ColourFormat = new ColourFormat(colourFormat);
-            AccumColourFormat = new ColourFormat(accumColourFormat);
-            Buffers = buffers;
-            Depth = depth;
-            Samples = samples;
-            Stencil = stencil;
-            Stereo = stereo;
-        }
 
         public GLMode(GLMode mode, string field, object value) : this(mode)
         {
@@ -137,10 +112,14 @@
         #region Public Operators
 
         public static implicit operator GLMode(GraphicsMode p) => new GLMode(
-            p.Index,
-            new ColourFormat(p.ColorFormat),
-            new ColourFormat(p.AccumulatorFormat),
-            p.Buffers, p.Depth, p.Samples, p.Stencil, p.Stereo);
+            index: p.Index,
+            colourFormat: new ColourFormat(p.ColorFormat),
+            accumColourFormat: new ColourFormat(p.AccumulatorFormat),
+            buffers: p.Buffers,
+            depth: p.Depth,
+            samples: p.Samples,
+            stencil: p.Stencil,
+            stereo: p.Stereo);
 
         public static implicit operator GraphicsMode(GLMode p) => new GraphicsMode(
             color: p.ColourFormat,
@@ -156,7 +135,6 @@
         #region Public Methods
 
         public override bool Equals(object obj) => obj is GLMode p
-            && p.Index == Index
             && p.ColourFormat == ColourFormat
             && p.AccumColourFormat == AccumColourFormat
             && p.Buffers == Buffers
@@ -166,22 +144,20 @@
             && p.Stereo == Stereo;
 
         public override int GetHashCode() =>
-            (int)Index ^ ColourFormat.GetHashCode() ^ AccumColourFormat.GetHashCode() ^
+            ColourFormat.GetHashCode() ^ AccumColourFormat.GetHashCode() ^
             Buffers ^ Depth ^ Samples ^ Stencil ^ (Stereo ? 1 : 0);
 
         public static GLMode Parse(string s)
         {
             var t = s.Split(',');
-            return new GLMode(
-                (IntPtr?)int.Parse(t[0]),
-                new ColourFormat(int.Parse(t[1]), int.Parse(t[2]), int.Parse(t[3]), int.Parse(t[4])),
-                new ColourFormat(int.Parse(t[5]), int.Parse(t[6]), int.Parse(t[7]), int.Parse(t[8])),
-                int.Parse(t[9]), int.Parse(t[10]), int.Parse(t[11]), int.Parse(t[12]),
-                bool.Parse(t[13]));
+            return new GLMode((IntPtr?)0,
+                new ColourFormat(int.Parse(t[0]), int.Parse(t[1]), int.Parse(t[2]), int.Parse(t[3])),
+                new ColourFormat(int.Parse(t[4]), int.Parse(t[5]), int.Parse(t[6]), int.Parse(t[7])),
+                int.Parse(t[8]), int.Parse(t[9]), int.Parse(t[10]), int.Parse(t[11]), bool.Parse(t[12]));
         }
 
         public override string ToString() =>
-            $"{Index}, {ColourFormat}, {AccumColourFormat}, {Buffers}, {Depth}, {Samples}, {Stencil}, {Stereo}";
+            $"{ColourFormat}, {AccumColourFormat}, {Buffers}, {Depth}, {Samples}, {Stencil}, {Stereo}";
 
         #endregion
 
@@ -189,6 +165,19 @@
 
         public string GetColourFormat(ColorFormat source) =>
             $"{source.Red}, {source.Green}, {source.Blue}, {source.Alpha}";
+
+        private void Init(IntPtr? index, ColourFormat colourFormat, ColourFormat accumColourFormat,
+            int buffers, int depth, int samples, int stencil, bool stereo)
+        {
+            Index = index;
+            ColourFormat = new ColourFormat(colourFormat);
+            AccumColourFormat = new ColourFormat(accumColourFormat);
+            Buffers = buffers;
+            Depth = depth;
+            Samples = samples;
+            Stencil = stencil;
+            Stereo = stereo;
+        }
 
         #endregion
     }
