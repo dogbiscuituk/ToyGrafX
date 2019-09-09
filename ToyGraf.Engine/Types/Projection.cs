@@ -58,35 +58,15 @@
                     FieldOfView = (float)value;
                     return;
                 case DisplayNames.FrustrumMin:
-                    FrustrumMin = (Vector3f)value;
+                    FrustrumMin = new Vector3f((Vector3f)value);
                     return;
                 case DisplayNames.FrustrumMax:
-                    FrustrumMax = (Vector3f)value;
+                    FrustrumMax = new Vector3f((Vector3f)value);
                     return;
             }
             var v = (float)value;
             var fields = field.Split('.');
-            switch (fields[0])
-            {
-                case DisplayNames.FrustrumMin:
-                    switch (fields[1])
-                    {
-                        case Vector3f.DisplayNames.X: FrustrumMin.X = v; break;
-                        case Vector3f.DisplayNames.Y: FrustrumMin.Y = v; break;
-                        case Vector3f.DisplayNames.Z: FrustrumMin.Z = v; break;
-                    }
-                    break;
-                case DisplayNames.FrustrumMax:
-                    switch (fields[1])
-                    {
-                        case Vector3f.DisplayNames.X: FrustrumMax.X = v; break;
-                        case Vector3f.DisplayNames.Y: FrustrumMax.Y = v; break;
-                        case Vector3f.DisplayNames.Z: FrustrumMax.Z = v; break;
-                    }
-                    break;
-            }
-
-            Vector3f p = fields[0] == DisplayNames.FrustrumMin ? FrustrumMin : FrustrumMax;
+            var p = fields[0] == DisplayNames.FrustrumMin ? FrustrumMin : FrustrumMax;
             switch (fields[1])
             {
                 case Vector3f.DisplayNames.X: p.X = v; break;

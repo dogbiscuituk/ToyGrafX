@@ -14,7 +14,7 @@
                 "AccumColourFormat",
                 "Buffers",
                 "Depth",
-                "SampleCount",
+                "Samples",
                 "Stencil",
                 "Stereo"
             });

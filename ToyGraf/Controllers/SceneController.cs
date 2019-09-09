@@ -1,6 +1,7 @@
 ﻿namespace ToyGraf.Controllers
 {
     using OpenTK;
+    using OpenTK.Graphics;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -14,6 +15,7 @@
     using ToyGraf.Models.Enums;
     using ToyGraf.Properties;
     using ToyGraf.Views;
+    using static System.Windows.Forms.Control;
 
     internal class SceneController
     {
@@ -39,6 +41,8 @@
 
         internal ClockController ClockController;
         internal CommandProcessor CommandProcessor { get; private set; }
+        internal GLControl GLControl => GLControlParent[0] as GLControl;
+        internal GLMode GLMode => RenderController._GLMode ?? RenderController?.GLMode;
         internal readonly PropertyGridController PropertyGridController;
         internal readonly RenderController RenderController;
         internal Scene Scene;
@@ -182,7 +186,7 @@
         private readonly List<string> ChangedPropertyNames = new List<string>();
         private object ChangedSubject;
         private Clock Clock => ClockController.Clock;
-        private GLControl GLControl => SceneForm?.GLControl;
+        private ControlCollection GLControlParent => SceneForm?.SplitContainer2.Panel1.Controls;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
         private TgPropertyGridAdapter PropertyGridAdapter => PropertyGridController.PropertyGridAdapter;
@@ -259,10 +263,6 @@
                 SceneForm.tbOpen.ButtonClick += FileOpen_Click;
                 SceneForm.tbOpen.DropDownOpening += TbOpen_DropDownOpening;
                 SceneForm.tbSave.Click += TbSave_Click;
-                GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
-                GLControl.Load += GLControl_Load;
-                GLControl.Paint += GLControl_Paint;
-                GLControl.Resize += GLControl_Resize;
                 JsonController.FileLoaded += JsonController_FileLoaded;
                 JsonController.FilePathChanged += JsonController_FilePathChanged;
                 JsonController.FilePathRequest += JsonController_FilePathRequest;
@@ -301,10 +301,6 @@
                 SceneForm.tbOpen.ButtonClick -= FileOpen_Click;
                 SceneForm.tbOpen.DropDownOpening -= TbOpen_DropDownOpening;
                 SceneForm.tbSave.Click -= TbSave_Click;
-                GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
-                GLControl.Load -= GLControl_Load;
-                GLControl.Paint -= GLControl_Paint;
-                GLControl.Resize -= GLControl_Resize;
                 JsonController.FileLoaded -= JsonController_FileLoaded;
                 JsonController.FilePathChanged -= JsonController_FilePathChanged;
                 JsonController.FilePathRequest -= JsonController_FilePathRequest;
@@ -312,6 +308,47 @@
                 JsonController.FileSaving -= JsonController_FileSaving;
                 JsonController.FileSaved -= JsonController_FileSaved;
             }
+            ConnectGLControl(connect);
+        }
+
+        private void ConnectGLControl(bool connect)
+        {
+            if (connect)
+            {
+                GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
+                GLControl.Load += GLControl_Load;
+                GLControl.Paint += GLControl_Paint;
+                GLControl.Resize += GLControl_Resize;
+            }
+            else
+            {
+                GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
+                GLControl.Load -= GLControl_Load;
+                GLControl.Paint -= GLControl_Paint;
+                GLControl.Resize -= GLControl_Resize;
+            }
+        }
+
+        private void CreateGLControl(OpenTK.Graphics.GraphicsMode mode = null)
+        {
+            var parent = GLControlParent;
+            var control = GLControl;
+            if (control != null)
+            {
+                ConnectGLControl(false);
+                parent.Remove(control);
+                control.Dispose();
+            }
+            control = mode == null ? new GLControl() : new GLControl(mode);
+            control.BackColor = Scene.BackgroundColour;
+            control.Dock = DockStyle.Fill;
+            control.Location = new System.Drawing.Point(0, 0);
+            control.Name = "GLControl";
+            control.Size = new System.Drawing.Size(100, 100);
+            control.TabIndex = 1;
+            control.VSync = Scene.VSync;
+            parent.Add(control);
+            ConnectGLControl(true);
         }
 
         private void EditOptions()
@@ -468,6 +505,8 @@
             {
                 case DisplayNames.Camera:
                     return new CameraCommand(new Camera(Scene.Camera, field, value));
+                case DisplayNames.GLMode:
+                    return new GraphicsModeCommand(new GLMode(Scene.GLMode, field, value));
                 case DisplayNames.Projection:
                     return new ProjectionCommand(new Projection(Scene.Projection, field, value));
             }

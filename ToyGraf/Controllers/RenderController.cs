@@ -172,7 +172,7 @@
 
         private Clock Clock => ClockController.Clock;
         private ClockController ClockController => SceneController.ClockController;
-        private GLControl GLControl => SceneForm.GLControl;
+        private GLControl GLControl => SceneController.GLControl;
         private static readonly object GLInfoSyncRoot = new object();
         private static readonly object GLModeSyncRoot = new object();
         private Scene Scene => SceneController.Scene;

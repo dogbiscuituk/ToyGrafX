@@ -51,12 +51,14 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeConverters\CameraTypeConverter.cs" />
+    <Compile Include="TypeConverters\ColourFormatTypeConverter.cs" />
     <Compile Include="TypeConverters\EnumDescriptionTypeConverter.cs" />
     <Compile Include="TypeConverters\Euler3fTypeConverter.cs" />
     <Compile Include="TypeConverters\Vector3fTypeConverter.cs" />
     <Compile Include="TypeConverters\Vector3iTypeConverter.cs" />
     <Compile Include="TypeConverters\ProjectionTypeConverter.cs" />
     <Compile Include="Types\Camera.cs" />
+    <Compile Include="Types\ColourFormat.cs" />
     <Compile Include="Types\Euler3f.cs" />
     <Compile Include="Types\FillType.cs" />
     <Compile Include="Types\GPUStatus.cs" />

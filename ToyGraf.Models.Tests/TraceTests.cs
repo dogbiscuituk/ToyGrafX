@@ -13,12 +13,12 @@
             Trace
                 source = new Trace
                 {
-                    Description = "New trace",
+                    Description = "Test trace",
                     Location = new Vector3f(1, 2, 3),
                     Maximum = new Vector3f(4, 5, 6),
                     Minimum = new Vector3f(-7, -8, -9),
                     Orientation = new Euler3f(10, 11, 12),
-                    Pattern = Pattern.Fill,
+                    Pattern = Pattern.Saltires,
                     Scale = new Vector3f(13, 14, 15),
                     Shader1Vertex = "/* Vertex Shader */",
                     Shader2TessControl = "/* Tessellation Control Shader */",

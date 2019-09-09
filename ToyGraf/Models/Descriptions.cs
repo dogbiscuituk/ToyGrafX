@@ -28,7 +28,7 @@ Vendor-specific information may follow the version number. Its format depends on
             GLMode_ColourFormat = "The number of bits per pixel in each colour channel.",
             GLMode_Depth = "The number of bits in the depth buffer.",
             GLMode_Index = "The platform-specific index for the current graphics mode.",
-            GLMode_SampleCount = "The number of Full Screen Anti-Aliasing (FSAA) samples used.",
+            GLMode_Samples = "The number of Full Screen Anti-Aliasing (FSAA) samples used.",
             GLMode_Stencil = "The number of bits in the stencil buffer.",
             GLMode_Stereo = "Indicates whether this display mode is stereoscopic 3D.",
             GPUCode = "The full source code of the GPU program.",

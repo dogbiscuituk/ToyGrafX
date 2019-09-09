@@ -234,26 +234,21 @@
 
         public void CopyFrom(Trace trace)
         {
-            // System
+            _Description = trace.Description;
             _Index = trace.Index;
-            // Domain & Range
+            _Location = new Vector3f(trace.Location);
             _Maximum = new Vector3f(trace.Maximum);
             _Minimum = new Vector3f(trace.Minimum);
-            // Placement
-            _Location = new Vector3f(trace.Location);
             _Orientation = new Euler3f(trace.Orientation);
+            _Pattern = trace.Pattern;
             _Scale = new Vector3f(trace.Scale);
-            // Shaders
             _Shader1Vertex = trace.Shader1Vertex;
             _Shader2TessControl = trace.Shader2TessControl;
             _Shader3TessEvaluation = trace.Shader3TessEvaluation;
             _Shader4Geometry = trace.Shader4Geometry;
             _Shader5Fragment = trace.Shader5Fragment;
             _Shader6Compute = trace.Shader6Compute;
-            // Terrain
             _StripCount = new Vector3i(trace.StripCount);
-            // Trace
-            _Description = trace.Description;
             _Visible = trace.Visible;
         }
 

@@ -22,7 +22,7 @@
             GLMode_ColourFormat = "Colour Format",
             GLMode_Depth = "Depth Bits",
             GLMode_Index = "Index",
-            GLMode_SampleCount = "Sample Count",
+            GLMode_Samples = "Sample Count",
             GLMode_Stencil = "Stencil Bits",
             GLMode_Stereo = "Stereo",
             GPUCode = "GPU Code",

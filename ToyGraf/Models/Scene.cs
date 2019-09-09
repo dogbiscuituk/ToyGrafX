@@ -44,21 +44,12 @@
         [Description(Descriptions.GLInfo)]
         [DisplayName(DisplayNames.GLInfo)]
         [JsonIgnore]
-        [ReadOnly(true)]
         public GLInfo GLInfo => RenderController._GLInfo ?? RenderController?.GLInfo;
-
-        [Category(Categories.SystemRO)]
-        [Description(Descriptions.GLMode)]
-        [DisplayName(DisplayNames.GLMode)]
-        [JsonIgnore]
-        [ReadOnly(true)]
-        public GLMode GLMode => RenderController._GLMode ?? RenderController?.GLMode;
 
         [Category(Categories.SystemRO)]
         [DefaultValue(Defaults.GPUCode)]
         [Description(Descriptions.GPUCode)]
         [DisplayName(DisplayNames.GPUCode)]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string GPUCode => _GPUCode;
 
@@ -66,7 +57,6 @@
         [DefaultValue(Defaults.GPULog)]
         [Description(Descriptions.GPULog)]
         [DisplayName(DisplayNames.GPULog)]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string GPULog => _GPULog;
 
@@ -111,6 +101,16 @@
         [DisplayName(DisplayNames.FPS)]
         [JsonIgnore]
         public double FPS { get => _FPS; set => Run(new FpsCommand(value)); }
+
+        [Category(Categories.Scene)]
+        [Description(Descriptions.GLMode)]
+        [DisplayName(DisplayNames.GLMode)]
+        [JsonIgnore]
+        public GLMode GLMode
+        {
+            get => SceneController?.GLMode;
+            set => Run(new GraphicsModeCommand(value));
+        }
 
         [Category(Categories.Scene)]
         [Description(Descriptions.Projection)]
@@ -440,7 +440,7 @@ void main()
         private const float
             CameraBump = 0.1f;
 
-        private GLControl GLControl => SceneForm?.GLControl;
+        private GLControl GLControl => SceneController?.GLControl;
         private RenderController RenderController => SceneController.RenderController;
         private SceneForm SceneForm => SceneController?.SceneForm;
 
