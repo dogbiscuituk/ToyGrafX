@@ -63,8 +63,6 @@
 
         #region Private Implementation
 
-        private Control View => SceneController.SceneForm;
-
         private static JsonSerializer GetSerializer() => new JsonSerializer
         {
             DefaultValueHandling = DefaultValueHandling.Include,

@@ -2,7 +2,6 @@
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using ToyGraf.Engine.Types;
-    using ToyGraf.Engine.Utility;
 
     [TestClass]
     public class GridTests
@@ -234,7 +233,8 @@
         }
 
         /// <summary>
-        /// Check the 137 (1+8*(1+8*2)) vertex indices needed to cover with a single triangle strip, a plane partitioned by an 8x8 grid.
+        /// Check the 137 (1+8*(1+8*2)) vertex indices needed to cover with a single triangle strip,
+        /// a plane partitioned by an 8x8 grid.
         /// </summary>
         [TestMethod]
         public void CheckTriangleStripIndices()

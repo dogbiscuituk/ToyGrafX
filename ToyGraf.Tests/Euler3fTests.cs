@@ -6,6 +6,8 @@
     [TestClass]
     public class Euler3fTests
     {
+        #region Test Methods
+
         [TestMethod]
         public void Euler3fAdd()
         {
@@ -24,8 +26,9 @@
         [TestMethod]
         public void Euler3fCopy()
         {
-            var p = new Euler3f(1, 2, 3);
-            var q = new Euler3f(p);
+            Euler3f
+                p = new Euler3f(1, 2, 3),
+                q = new Euler3f(p);
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
@@ -35,8 +38,9 @@
         [TestMethod]
         public void Euler3fEquality()
         {
-            var p = new Euler3f(1, 2, 3);
-            var q = new Euler3f(1, 2, 3);
+            Euler3f
+                p = new Euler3f(1, 2, 3),
+                q = new Euler3f(1, 2, 3);
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
@@ -71,13 +75,20 @@
             Assert.AreEqual(expected, actual);
         }
 
+        #endregion
+
+        #region Private Static Helper Methods
+
         private static void Euler3fInequality(params float[] a)
         {
-            var p = new Euler3f(a[0], a[1], a[2]);
-            var q = new Euler3f(a[3], a[4], a[5]);
+            Euler3f
+                p = new Euler3f(a[0], a[1], a[2]),
+                q = new Euler3f(a[3], a[4], a[5]);
             Assert.IsFalse(p.Equals(q));
             Assert.IsFalse(p == q);
             Assert.IsTrue(p != q);
         }
+
+        #endregion
     }
 }

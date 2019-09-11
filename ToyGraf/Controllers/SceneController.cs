@@ -106,9 +106,9 @@
 
         /// <summary>
         /// When the PropertyGrid signals editing of a subproperty, it has already modified the
-        /// parent property directly, bypassing the Command pattern. Therefore we need to spoof the
-        /// appropriate command, to ensure the undo/redo mechanism is kept in sync with the state of
-        /// the model.
+        /// parent property directly, bypassing the Command pattern. Therefore we may need to spoof
+        /// an appropriate command, to ensure the undo/redo mechanism is kept in sync with the state
+        /// of the model.
         /// </summary>
         /// <param name="e">The EventArgs from the original event.</param>
         internal bool PropertyChanged(PropertyValueChangedEventArgs e)
@@ -125,11 +125,12 @@
                 return false;
             var value = e.OldValue;
             var scene = PropertyGridAdapter.SelectedObject;
+            var spoof = property != DisplayNames.GLMode;
             if (scene != null)
-                Spoof(Spoof(property, field, value));
+                RunCommand(GetSceneCommand(property, field, value), spoof);
             else
                 foreach (Trace trace in PropertyGridAdapter.SelectedObjects)
-                    Spoof(Spoof(trace, property, field, value));
+                    RunCommand(GetTraceCommand(trace, property, field, value), true);
             return true;
         }
 
@@ -163,6 +164,7 @@
         private void FileOpen_Click(object sender, System.EventArgs e) => OpenFile();
         private void FileSave_Click(object sender, System.EventArgs e) => SaveFile();
         private void FileSaveAs_Click(object sender, System.EventArgs e) => SaveFileAs();
+        private void GLControl_BackColorChanged(object sender, EventArgs e) => BackColorChanged();
         private void GLControl_ClientSizeChanged(object sender, EventArgs e) => Resize();
         private void GLControl_Load(object sender, EventArgs e) { }
         private void GLControl_Paint(object sender, PaintEventArgs e) => RenderController.Render();
@@ -198,6 +200,8 @@
         #endregion
 
         #region Private Methods
+
+        private void BackColorChanged() => GLControl.Parent.BackColor = Scene.BackgroundColour;
 
         private void ClockInit() => Clock.Interval_ms = GetFrameMilliseconds();
 
@@ -317,6 +321,7 @@
         {
             if (connect)
             {
+                GLControl.BackColorChanged += GLControl_BackColorChanged;
                 GLControl.ClientSizeChanged += GLControl_ClientSizeChanged;
                 GLControl.Load += GLControl_Load;
                 GLControl.Paint += GLControl_Paint;
@@ -324,6 +329,7 @@
             }
             else
             {
+                GLControl.BackColorChanged -= GLControl_BackColorChanged;
                 GLControl.ClientSizeChanged -= GLControl_ClientSizeChanged;
                 GLControl.Load -= GLControl_Load;
                 GLControl.Paint -= GLControl_Paint;
@@ -346,7 +352,7 @@
             CommandProcessor.Clear();
             EndUpdate();
             ConnectControllers(true);
-            RenderController.InvalidateProgram();
+            RecreateGLControl(Scene.GLMode);
         }
 
         private void FilePathRequest(SdiController.FilePathEventArgs e)
@@ -397,6 +403,41 @@
                 return null;
             JsonController.Clear();
             return this;
+        }
+
+        private ICommand GetSceneCommand(string property, string field, object value)
+        {
+            switch (property)
+            {
+                case DisplayNames.Camera:
+                    return new CameraCommand(new Camera(Scene.Camera, field, value));
+                case DisplayNames.GLMode:
+                    return new GLModeCommand(new GLMode(Scene.GLMode, field, value));
+                case DisplayNames.Projection:
+                    return new ProjectionCommand(new Projection(Scene.Projection, field, value));
+            }
+            return null;
+        }
+
+        private ICommand GetTraceCommand(Trace trace, string property, string field, object value)
+        {
+            var index = trace.Index;
+            switch (property)
+            {
+                case DisplayNames.Location:
+                    return new LocationCommand(index, new Vector3f(trace.Location, field, (float)value));
+                case DisplayNames.Maximum:
+                    return new MaximumCommand(index, new Vector3f(trace.Maximum, field, (float)value));
+                case DisplayNames.Minimum:
+                    return new MinimumCommand(index, new Vector3f(trace.Minimum, field, (float)value));
+                case DisplayNames.Orientation:
+                    return new OrientationCommand(index, new Euler3f(trace.Orientation, field, (float)value));
+                case DisplayNames.Scale:
+                    return new ScaleCommand(index, new Vector3f(trace.Scale, field, (float)value));
+                case DisplayNames.StripCount:
+                    return new StripCountCommand(index, new Vector3i(trace.StripCount, field, (int)value));
+            }
+            return null;
         }
 
         private void HelpAbout() => new AboutController().ShowDialog(SceneForm);
@@ -465,13 +506,14 @@
             return sceneController;
         }
 
-        private void RecreateGLControl(GraphicsMode mode)
+        private void RecreateGLControl(GraphicsMode mode = null)
         {
+            BackColorChanged();
             ConnectGLControl(false);
             var control = GLControl;
             GLControlParent.Remove(control);
             control.Dispose();
-            control = new GLControl(mode);
+            control = mode == null ? new GLControl() : new GLControl(mode);
             control.BackColor = Scene.BackgroundColour;
             control.Dock = DockStyle.Fill;
             control.Location = new System.Drawing.Point(0, 0);
@@ -481,57 +523,22 @@
             control.VSync = Scene.VSync;
             GLControlParent.Add(control);
             ConnectGLControl(true);
-            RenderController.InvalidateGLMode();
+            RenderController.Refresh();
         }
 
         private void Resize() => RenderController.InvalidateProjection();
+
+        private void RunCommand(ICommand command, bool spoof)
+        {
+            CommandProcessor.Run(command, spoof);
+            OnPropertyChanged(command.PropertyName); // Remember the side effects!
+        }
 
         private bool SaveFile() => JsonController.Save();
 
         private bool SaveFileAs() => JsonController.SaveAs();
 
         private bool SaveOrSaveAs() => Scene.IsModified ? SaveFile() : SaveFileAs();
-
-        private void Spoof(ICommand command)
-        {
-            CommandProcessor.Run(command, true);
-            OnPropertyChanged(command.PropertyName); // Remember the side effects!
-        }
-
-        private ICommand Spoof(string property, string field, object value)
-        {
-            switch (property)
-            {
-                case DisplayNames.Camera:
-                    return new CameraCommand(new Camera(Scene.Camera, field, value));
-                case DisplayNames.GLMode:
-                    return new GLModeCommand(new GLMode(Scene.GLMode, field, value));
-                case DisplayNames.Projection:
-                    return new ProjectionCommand(new Projection(Scene.Projection, field, value));
-            }
-            return null;
-        }
-
-        private ICommand Spoof(Trace trace, string property, string field, object value)
-        {
-            var index = trace.Index;
-            switch (property)
-            {
-                case DisplayNames.Location:
-                    return new LocationCommand(index, new Vector3f(trace.Location, field, (float)value));
-                case DisplayNames.Maximum:
-                    return new MaximumCommand(index, new Vector3f(trace.Maximum, field, (float)value));
-                case DisplayNames.Minimum:
-                    return new MinimumCommand(index, new Vector3f(trace.Minimum, field, (float)value));
-                case DisplayNames.Orientation:
-                    return new OrientationCommand(index, new Euler3f(trace.Orientation, field, (float)value));
-                case DisplayNames.Scale:
-                    return new ScaleCommand(index, new Vector3f(trace.Scale, field, (float)value));
-                case DisplayNames.StripCount:
-                    return new StripCountCommand(index, new Vector3i(trace.StripCount, field, (int)value));
-            }
-            return null;
-        }
 
         private void UpdateCaption() { SceneForm.Text = JsonController.WindowCaption; }
 

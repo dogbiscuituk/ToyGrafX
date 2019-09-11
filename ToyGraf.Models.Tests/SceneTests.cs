@@ -10,18 +10,19 @@
         public void SceneCreateDefault()
         {
             var scene = new Scene();
-            Assert.AreEqual(scene.BackgroundColour, Scene.Defaults.BackgroundColour);
-            Assert.AreEqual(scene.Camera, Scene.Defaults.Camera);
-            Assert.AreEqual(scene.FPS, Scene.Defaults.FPS);
-            Assert.AreEqual(scene.Projection, Scene.Defaults.Projection);
-            Assert.AreEqual(scene.Shader1Vertex, Scene.Defaults.Shader1Vertex);
-            Assert.AreEqual(scene.Shader2TessControl, Scene.Defaults.Shader2TessControl);
-            Assert.AreEqual(scene.Shader3TessEvaluation, Scene.Defaults.Shader3TessEvaluation);
-            Assert.AreEqual(scene.Shader4Geometry, Scene.Defaults.Shader4Geometry);
-            Assert.AreEqual(scene.Shader5Fragment, Scene.Defaults.Shader5Fragment);
-            Assert.AreEqual(scene.Shader6Compute, Scene.Defaults.Shader6Compute);
-            Assert.AreEqual(scene.Title, Scene.Defaults.Title);
-            Assert.AreEqual(scene.VSync, Scene.Defaults.VSync);
+            Assert.AreEqual(Scene.Defaults.BackgroundColour, scene.BackgroundColour);
+            Assert.AreEqual(Scene.Defaults.Camera, scene.Camera);
+            Assert.AreEqual(Scene.Defaults.FPS, scene.FPS);
+            Assert.AreEqual(Scene.Defaults.Projection, scene.Projection);
+            Assert.AreEqual(Scene.Defaults.Shader1Vertex, scene.Shader1Vertex);
+            Assert.AreEqual(Scene.Defaults.Shader2TessControl, scene.Shader2TessControl);
+            Assert.AreEqual(Scene.Defaults.Shader3TessEvaluation, scene.Shader3TessEvaluation);
+            Assert.AreEqual(Scene.Defaults.Shader4Geometry, scene.Shader4Geometry);
+            Assert.AreEqual(Scene.Defaults.Shader5Fragment, scene.Shader5Fragment);
+            Assert.AreEqual(Scene.Defaults.Shader6Compute, scene.Shader6Compute);
+            Assert.AreEqual(Scene.Defaults.Title, scene.Title);
+            Assert.AreEqual(0, scene.Traces.Count);
+            Assert.AreEqual(Scene.Defaults.VSync, scene.VSync);
         }
     }
 }

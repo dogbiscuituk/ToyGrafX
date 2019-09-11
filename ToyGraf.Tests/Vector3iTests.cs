@@ -6,6 +6,8 @@
     [TestClass]
     public class Vector3iTests
     {
+        #region Test Methods
+
         [TestMethod]
         public void Vector3iAdd()
         {
@@ -24,8 +26,9 @@
         [TestMethod]
         public void Vector3iCopy()
         {
-            var p = new Vector3i(1, 2, 3);
-            var q = new Vector3i(p);
+            Vector3i
+                p = new Vector3i(1, 2, 3),
+                q = new Vector3i(p);
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
@@ -58,8 +61,9 @@
         [TestMethod]
         public void Vector3iEquality()
         {
-            var p = new Vector3i(1, 2, 3);
-            var q = new Vector3i(1, 2, 3);
+            Vector3i
+                p = new Vector3i(1, 2, 3),
+                q = new Vector3i(1, 2, 3);
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
@@ -106,7 +110,7 @@
         [TestMethod]
         public void Vector3iNorm()
         {
-            Vector3i p = new Vector3i(5, 12, 84);
+            var p = new Vector3i(5, 12, 84);
             float
                 actual = p.Norm,
                 expected = 85;
@@ -124,6 +128,10 @@
             Assert.AreEqual(expected, actual);
         }
 
+        #endregion
+
+        #region Private Static Helper Methods
+
         private static void Vector3iInequality(params int[] a)
         {
             var p = new Vector3i(a[0], a[1], a[2]);
@@ -132,5 +140,7 @@
             Assert.IsFalse(p == q);
             Assert.IsTrue(p != q);
         }
+
+        #endregion
     }
 }

@@ -13,8 +13,9 @@
         [TestMethod]
         public void ColourFormatCopy()
         {
-            var p = new ColourFormat(1, 2, 3, 4);
-            var q = new ColourFormat(p);
+            ColourFormat
+                p = new ColourFormat(1, 2, 3, 4),
+                q = new ColourFormat(p);
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
@@ -24,8 +25,9 @@
         [TestMethod]
         public void ColourFormatEquality()
         {
-            var p = new ColourFormat(1, 2, 3, 4);
-            var q = new ColourFormat(1, 2, 3, 4);
+            ColourFormat
+                p = new ColourFormat(1, 2, 3, 4),
+                q = new ColourFormat(1, 2, 3, 4);
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
@@ -42,8 +44,9 @@
 
         private static void ColourFormatInequality(params int[] a)
         {
-            var p = new ColourFormat(a[0], a[1], a[2], a[3]);
-            var q = new ColourFormat(a[4], a[5], a[6], a[7]);
+            ColourFormat
+                p = new ColourFormat(a[0], a[1], a[2], a[3]),
+                q = new ColourFormat(a[4], a[5], a[6], a[7]);
             Assert.IsFalse(p.Equals(q));
             Assert.IsFalse(p == q);
             Assert.IsTrue(p != q);

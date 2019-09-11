@@ -77,12 +77,6 @@
             CameraViewValid = false;
         }
 
-        internal void InvalidateGLMode()
-        {
-            lock (GLModeSyncRoot)
-                _GLMode = null;
-        }
-
         internal void InvalidateProgram()
         {
             "Invalidate Program".Spit();
@@ -119,9 +113,9 @@
 
         internal void Refresh()
         {
-            InvalidateCameraView();
+            lock (GLModeSyncRoot)
+                _GLMode = null;
             InvalidateProgram();
-            InvalidateProjection();
             foreach (var trace in Scene.Traces)
                 InvalidateTrace(trace);
         }

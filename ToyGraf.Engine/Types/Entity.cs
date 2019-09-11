@@ -97,15 +97,17 @@
         {
             var result = new int[cx * (2 * cy + 1) + 1];
             int p = 0, q = 0;
+            var even = true;
             result[p++] = 0;
             for (var i = 0; i < cx; i++)
             {
                 for (var j = 0; j < cy; j++)
                 {
                     result[p++] = q + cy + 1;
-                    result[p++] = (i & 1) == 0 ? ++q : --q;
+                    result[p++] = even ? ++q : --q;
                 }
                 result[p++] = q += cy + 1;
+                even = !even;
             }
             return result;
         }
@@ -117,14 +119,14 @@
         {
             switch (pattern)
             {
+                case Pattern.Fill:
+                    return GetFill(cx, cy);
                 case Pattern.Points:
                     return GetPoints(cx, cy, cz);
                 case Pattern.Rectangles:
                     return GetRectangles(cx, cy, cz);
                 case Pattern.Saltires:
                     return GetSaltires(cx, cy);
-                case Pattern.Fill:
-                    return GetFill(cx, cy);
                 case Pattern.Triangles:
                     return GetTriangles(cx, cy);
             }
@@ -146,7 +148,7 @@
             int p = 0, q = 0;
             for (var x = 0; x <= cx; x++)
                 for (var y = 0; y <= cy; y++)
-                    for (var z = 0; z <= cz; z++, q++)
+                    for (var z = 0; z <= cz; z++)
                     {
                         if (x < cx)
                         {
@@ -163,6 +165,7 @@
                             result[p++] = q;
                             result[p++] = q + 1;
                         }
+                        q++;
                     }
             return result;
         }
@@ -219,6 +222,20 @@
                     q++;
                 }
             return result;
+        }
+
+        #endregion
+
+        #region
+
+        private static void Sort(ref int x1, ref int x2)
+        {
+            if (x1 > x2)
+            {
+                var x = x1;
+                x1 = x2;
+                x2 = x;
+            }
         }
 
         #endregion

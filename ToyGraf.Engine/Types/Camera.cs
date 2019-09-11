@@ -113,19 +113,19 @@
 
         public void Reset()
         {
-            Position = HomePosition;
             Focus = HomeFocus;
+            Position = HomePosition;
         }
 
         public override string ToString() => $"{Position}, {Focus}";
 
         #endregion
 
-        #region Internal Classes
+        #region Nested Classes
 
-        internal static class Defaults
+        public static class Defaults
         {
-            internal static Vector3f
+            public static Vector3f
                 Focus = new Vector3f(),
                 Position = new Vector3f(0, 0, 2);
         }

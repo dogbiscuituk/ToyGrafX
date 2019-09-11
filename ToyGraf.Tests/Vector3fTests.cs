@@ -6,6 +6,8 @@
     [TestClass]
     public class Vector3fTests
     {
+        #region Test Methods
+
         [TestMethod]
         public void Vector3fAdd()
         {
@@ -24,8 +26,9 @@
         [TestMethod]
         public void Vector3fCopy()
         {
-            var p = new Vector3f(1, 2, 3);
-            var q = new Vector3f(p);
+            Vector3f
+                p = new Vector3f(1, 2, 3),
+                q = new Vector3f(p);
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
@@ -68,8 +71,9 @@
         [TestMethod]
         public void Vector3fEquality()
         {
-            var p = new Vector3f(1, 2, 3);
-            var q = new Vector3f(1, 2, 3);
+            Vector3f
+                p = new Vector3f(1, 2, 3),
+                q = new Vector3f(1, 2, 3);
             Assert.IsTrue(p.Equals(q));
             Assert.IsTrue(p == q);
             Assert.IsFalse(p != q);
@@ -134,6 +138,10 @@
             Assert.AreEqual(expected, actual);
         }
 
+        #endregion
+
+        #region Private Static Helper Methods
+
         private static void Vector3fInequality(params float[] a)
         {
             var p = new Vector3f(a[0], a[1], a[2]);
@@ -142,5 +150,7 @@
             Assert.IsFalse(p == q);
             Assert.IsTrue(p != q);
         }
+
+        #endregion
     }
 }

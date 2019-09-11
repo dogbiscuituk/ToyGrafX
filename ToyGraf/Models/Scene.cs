@@ -105,7 +105,6 @@
         [Category(Categories.Scene)]
         [Description(Descriptions.GLMode)]
         [DisplayName(DisplayNames.GLMode)]
-        [JsonIgnore]
         public GLMode GLMode
         {
             get => SceneController?.GLMode;
@@ -445,7 +444,6 @@ void main()
 
         private GLControl GLControl => SceneController?.GLControl;
         private RenderController RenderController => SceneController.RenderController;
-        private SceneForm SceneForm => SceneController?.SceneForm;
 
         #endregion
 
