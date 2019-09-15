@@ -11,7 +11,7 @@
         public void TraceCreateCopy()
         {
             Trace
-                source = new Trace
+                p = new Trace
                 {
                     Description = "Test trace",
                     Location = new Vector3f(1, 2, 3),
@@ -29,44 +29,44 @@
                     StripCount = new Vector3i(16, 17, 18),
                     Visible = false
                 },
-                target = new Trace(source);
-            Assert.AreEqual(source.Description, target.Description);
-            Assert.AreEqual(source.Location, target.Location);
-            Assert.AreEqual(source.Maximum, target.Maximum);
-            Assert.AreEqual(source.Minimum, target.Minimum);
-            Assert.AreEqual(source.Orientation, target.Orientation);
-            Assert.AreEqual(source.Pattern, target.Pattern);
-            Assert.AreEqual(source.Scale, target.Scale);
-            Assert.AreEqual(source.Shader1Vertex, target.Shader1Vertex);
-            Assert.AreEqual(source.Shader2TessControl, target.Shader2TessControl);
-            Assert.AreEqual(source.Shader3TessEvaluation, target.Shader3TessEvaluation);
-            Assert.AreEqual(source.Shader4Geometry, target.Shader4Geometry);
-            Assert.AreEqual(source.Shader5Fragment, target.Shader5Fragment);
-            Assert.AreEqual(source.Shader6Compute, target.Shader6Compute);
-            Assert.AreEqual(source.StripCount, target.StripCount);
-            Assert.AreEqual(source.Visible, target.Visible);
-            Assert.IsFalse(ReferenceEquals(source, target));
+                q = new Trace(p);
+            Assert.AreEqual(p.Description, q.Description);
+            Assert.AreEqual(p.Location, q.Location);
+            Assert.AreEqual(p.Maximum, q.Maximum);
+            Assert.AreEqual(p.Minimum, q.Minimum);
+            Assert.AreEqual(p.Orientation, q.Orientation);
+            Assert.AreEqual(p.Pattern, q.Pattern);
+            Assert.AreEqual(p.Scale, q.Scale);
+            Assert.AreEqual(p.Shader1Vertex, q.Shader1Vertex);
+            Assert.AreEqual(p.Shader2TessControl, q.Shader2TessControl);
+            Assert.AreEqual(p.Shader3TessEvaluation, q.Shader3TessEvaluation);
+            Assert.AreEqual(p.Shader4Geometry, q.Shader4Geometry);
+            Assert.AreEqual(p.Shader5Fragment, q.Shader5Fragment);
+            Assert.AreEqual(p.Shader6Compute, q.Shader6Compute);
+            Assert.AreEqual(p.StripCount, q.StripCount);
+            Assert.AreEqual(p.Visible, q.Visible);
+            Assert.IsFalse(ReferenceEquals(p, q));
         }
 
         [TestMethod]
         public void TraceCreateDefault()
         {
-            var trace = new Trace();
-            Assert.AreEqual(Trace.Defaults.Description, trace.Description);
-            Assert.AreEqual(Trace.Defaults.Location, trace.Location);
-            Assert.AreEqual(Trace.Defaults.Maximum, trace.Maximum);
-            Assert.AreEqual(Trace.Defaults.Minimum, trace.Minimum);
-            Assert.AreEqual(Trace.Defaults.Orientation, trace.Orientation);
-            Assert.AreEqual(Trace.Defaults.Pattern, trace.Pattern);
-            Assert.AreEqual(Trace.Defaults.Scale, trace.Scale);
-            Assert.AreEqual(Trace.Defaults.Shader1Vertex, trace.Shader1Vertex);
-            Assert.AreEqual(Trace.Defaults.Shader2TessControl, trace.Shader2TessControl);
-            Assert.AreEqual(Trace.Defaults.Shader3TessEvaluation, trace.Shader3TessEvaluation);
-            Assert.AreEqual(Trace.Defaults.Shader4Geometry, trace.Shader4Geometry);
-            Assert.AreEqual(Trace.Defaults.Shader5Fragment, trace.Shader5Fragment);
-            Assert.AreEqual(Trace.Defaults.Shader6Compute, trace.Shader6Compute);
-            Assert.AreEqual(Trace.Defaults.StripCount, trace.StripCount);
-            Assert.AreEqual(Trace.Defaults.Visible, trace.Visible);
+            var p = new Trace();
+            Assert.AreEqual(Trace.Defaults.Description, p.Description);
+            Assert.AreEqual(Trace.Defaults.Location, p.Location);
+            Assert.AreEqual(Trace.Defaults.Maximum, p.Maximum);
+            Assert.AreEqual(Trace.Defaults.Minimum, p.Minimum);
+            Assert.AreEqual(Trace.Defaults.Orientation, p.Orientation);
+            Assert.AreEqual(Trace.Defaults.Pattern, p.Pattern);
+            Assert.AreEqual(Trace.Defaults.Scale, p.Scale);
+            Assert.AreEqual(Trace.Defaults.Shader1Vertex, p.Shader1Vertex);
+            Assert.AreEqual(Trace.Defaults.Shader2TessControl, p.Shader2TessControl);
+            Assert.AreEqual(Trace.Defaults.Shader3TessEvaluation, p.Shader3TessEvaluation);
+            Assert.AreEqual(Trace.Defaults.Shader4Geometry, p.Shader4Geometry);
+            Assert.AreEqual(Trace.Defaults.Shader5Fragment, p.Shader5Fragment);
+            Assert.AreEqual(Trace.Defaults.Shader6Compute, p.Shader6Compute);
+            Assert.AreEqual(Trace.Defaults.StripCount, p.StripCount);
+            Assert.AreEqual(Trace.Defaults.Visible, p.Visible);
         }
     }
 }
