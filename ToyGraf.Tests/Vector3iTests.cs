@@ -20,11 +20,10 @@
         }
 
         /// <summary>
-        /// Check that the Vector3i copy constructor yields a result equal to the original,
-        /// but having a different reference.
+        /// Copy constructor.
         /// </summary>
         [TestMethod]
-        public void Vector3iCopy()
+        public void Vector3iCreateCopy()
         {
             Vector3i
                 p = new Vector3i(1, 2, 3),
@@ -35,8 +34,43 @@
             Assert.IsFalse(ReferenceEquals(p, q));
         }
 
+        /// <summary>
+        /// Copy & Modify constructor.
+        /// </summary>
         [TestMethod]
-        public void Vector3iCrossProduct()
+        public void Vector3iCreateCopyModify()
+        {
+            Vector3iCreateCopyModify(Vector3i.DisplayNames.X, 99, 3, 5);
+            Vector3iCreateCopyModify(Vector3i.DisplayNames.Y, 2, 99, 5);
+            Vector3iCreateCopyModify(Vector3i.DisplayNames.Z, 2, 3, 99);
+        }
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        [TestMethod]
+        public void Vector3iCreateDefault()
+        {
+            var p = new Vector3i();
+            Assert.AreEqual(0, p.X);
+            Assert.AreEqual(0, p.Y);
+            Assert.AreEqual(0, p.Z);
+        }
+
+        /// <summary>
+        /// General constructor.
+        /// </summary>
+        [TestMethod]
+        public void Vector3iCreateGeneral()
+        {
+            var p = new Vector3i(2, 3, 5);
+            Assert.AreEqual(2, p.X);
+            Assert.AreEqual(3, p.Y);
+            Assert.AreEqual(5, p.Z);
+        }
+
+        [TestMethod]
+        public void Vector3iCross()
         {
             Vector3i
                 p = new Vector3i(1, 2, 3),
@@ -47,7 +81,7 @@
         }
 
         [TestMethod]
-        public void Vector3iDotProduct()
+        public void Vector3iDot()
         {
             Vector3i
                 p = new Vector3i(1, 4, 3),
@@ -70,11 +104,21 @@
         }
 
         [TestMethod]
+        public void Vector3iImplicitToVector3f()
+        {
+            var p = new Vector3i(2, 3, 5);
+            Vector3f q = p;
+            Assert.AreEqual(2, q.X);
+            Assert.AreEqual(3, q.Y);
+            Assert.AreEqual(5, q.Z);
+        }
+
+        [TestMethod]
         public void Vector3iInequality()
         {
-            Vector3iInequality(1, 2, 3, 99, 2, 3);
-            Vector3iInequality(1, 2, 3, 1, 99, 3);
-            Vector3iInequality(1, 2, 3, 1, 2, 99);
+            Vector3iInequality(99, 3, 5);
+            Vector3iInequality(2, 99, 5);
+            Vector3iInequality(2, 3, 99);
         }
 
         [TestMethod]
@@ -118,6 +162,15 @@
         }
 
         [TestMethod]
+        public void Vector3iParse()
+        {
+            var p = Vector3i.Parse("+2,-3, 5 ");
+            Assert.AreEqual(2, p.X);
+            Assert.AreEqual(-3, p.Y);
+            Assert.AreEqual(5, p.Z);
+        }
+
+        [TestMethod]
         public void Vector3iSubtract()
         {
             Vector3i
@@ -132,10 +185,19 @@
 
         #region Private Static Helper Methods
 
+        private static void Vector3iCreateCopyModify(string field, params int[] a)
+        {
+            var p = new Vector3i(2, 3, 5);
+            p = new Vector3i(p, field, 99);
+            Assert.AreEqual(p.X, a[0]);
+            Assert.AreEqual(p.Y, a[1]);
+            Assert.AreEqual(p.Z, a[2]);
+        }
+
         private static void Vector3iInequality(params int[] a)
         {
-            var p = new Vector3i(a[0], a[1], a[2]);
-            var q = new Vector3i(a[3], a[4], a[5]);
+            var p = new Vector3i(2, 3, 5);
+            var q = new Vector3i(a[0], a[1], a[2]);
             Assert.IsFalse(p.Equals(q));
             Assert.IsFalse(p == q);
             Assert.IsTrue(p != q);

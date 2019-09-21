@@ -1,6 +1,7 @@
 ﻿namespace ToyGraf.Engine.Tests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using OpenTK;
     using ToyGraf.Engine.Types;
 
     [TestClass]
@@ -35,18 +36,20 @@
         }
 
         /// <summary>
-        /// Copy+Modify constructor.
+        /// Copy & Modify constructor.
         /// </summary>
+        [TestMethod]
         public void Vector3fCreateCopyModify()
         {
-            Vector3fCreateCopyModify("X", 99, 3, 5);
-            Vector3fCreateCopyModify("Y", 2, 99, 5);
-            Vector3fCreateCopyModify("Z", 2, 3, 99);
+            Vector3fCreateCopyModify(Vector3f.DisplayNames.X, 99, 3, 5);
+            Vector3fCreateCopyModify(Vector3f.DisplayNames.Y, 2, 99, 5);
+            Vector3fCreateCopyModify(Vector3f.DisplayNames.Z, 2, 3, 99);
         }
 
         /// <summary>
         /// Default constructor.
         /// </summary>
+        [TestMethod]
         public void Vector3fCreateDefault()
         {
             var p = new Vector3f();
@@ -58,6 +61,7 @@
         /// <summary>
         /// General constructor.
         /// </summary>
+        [TestMethod]
         public void Vector3fCreateGeneral()
         {
             var p = new Vector3f(2, 3, 5);
@@ -111,6 +115,26 @@
         }
 
         [TestMethod]
+        public void Vector3fImplicitFromVector3()
+        {
+            var p = new Vector3(2, 3, 5);
+            Vector3f q = p;
+            Assert.AreEqual(2, q.X);
+            Assert.AreEqual(3, q.Y);
+            Assert.AreEqual(5, q.Z);
+        }
+
+        [TestMethod]
+        public void Vector3fImplicitToVector3()
+        {
+            var p = new Vector3f(2, 3, 5);
+            Vector3 q = p;
+            Assert.AreEqual(2, q.X);
+            Assert.AreEqual(3, q.Y);
+            Assert.AreEqual(5, q.Z);
+        }
+
+        [TestMethod]
         public void Vector3fInequality()
         {
             Vector3fInequality(99, 3, 5);
@@ -159,6 +183,24 @@
         }
 
         [TestMethod]
+        public void Vector3fNormalize()
+        {
+            Vector3f
+                actual = new Vector3f(2, 3, 5).Normalize(),
+                expected = new Vector3f(0.3244428f, 0.4866643f, 0.8111071f);
+            Vector3fCompare(expected, actual);
+        }
+
+        [TestMethod]
+        public void Vector3fParse()
+        {
+            var p = Vector3f.Parse("+2.5,-3.75, 0.5875e1 ");
+            Assert.AreEqual(2.5f, p.X);
+            Assert.AreEqual(-3.75f, p.Y);
+            Assert.AreEqual(5.875f, p.Z);
+        }
+
+        [TestMethod]
         public void Vector3fSubtract()
         {
             Vector3f
@@ -172,6 +214,13 @@
         #endregion
 
         #region Private Static Helper Methods
+
+        private static void Vector3fCompare(Vector3f expected, Vector3f actual, float delta = 1e-7f)
+        {
+            Assert.AreEqual(expected.X, actual.X, delta);
+            Assert.AreEqual(expected.Y, actual.Y, delta);
+            Assert.AreEqual(expected.Z, actual.Z, delta);
+        }
 
         private static void Vector3fCreateCopyModify(string field, params float[] a)
         {

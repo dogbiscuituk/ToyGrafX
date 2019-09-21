@@ -10,10 +10,23 @@
     {
         #region Constructors
 
+        /// <summary>
+        /// Default Constructor.
+        /// </summary>
         public Vector3f() : this(0, 0, 0) { }
 
+        /// <summary>
+        /// Copy Constructor.
+        /// </summary>
+        /// <param name="p"></param>
         public Vector3f(Vector3f p) : this(p.X, p.Y, p.Z) { }
 
+        /// <summary>
+        /// General Constructor.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="z"></param>
         public Vector3f(float x, float y, float z)
         {
             X = x;
@@ -21,6 +34,12 @@
             Z = z;
         }
 
+        /// <summary>
+        /// Copy & Modify Constructor.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="value"></param>
         public Vector3f(Vector3f p, string fieldName, float value) : this(p)
         {
             switch (fieldName)
@@ -101,7 +120,7 @@
 
         #endregion
 
-        #region Internal Classes
+        #region Nested Classes
 
         internal static class Descriptions
         {
@@ -111,7 +130,7 @@
                 Z = "The Z component of the vector.";
         }
 
-        internal static class DisplayNames
+        public static class DisplayNames
         {
             public const string
                 X = "X",

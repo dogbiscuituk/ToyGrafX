@@ -66,7 +66,7 @@
         {
             var expected = new Matrix4(1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1);
             var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateX, scale: Unity);
-            CompareMatrices(expected, actual);
+            Matrix4Compare(expected, actual);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@
         {
             var expected = new Matrix4(0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1);
             var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateY, scale: Unity);
-            CompareMatrices(expected, actual);
+            Matrix4Compare(expected, actual);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@
         {
             var expected = new Matrix4(0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
             var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateZ, scale: Unity);
-            CompareMatrices(expected, actual);
+            Matrix4Compare(expected, actual);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@
         {
             var expected = new Matrix4(0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1);
             var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateXY, scale: Unity);
-            CompareMatrices(expected, actual);
+            Matrix4Compare(expected, actual);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@
         {
             var expected = new Matrix4(0, 0, 1, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 1);
             var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateXZ, scale: Unity);
-            CompareMatrices(expected, actual);
+            Matrix4Compare(expected, actual);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@
         {
             var expected = new Matrix4(0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1);
             var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateYZ, scale: Unity);
-            CompareMatrices(expected, actual);
+            Matrix4Compare(expected, actual);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@
         {
             var expected = new Matrix4(0, 0, 1, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1);
             var actual = Maths.CreateTransformation(location: new Vector3f(), orientation: RotateXYZ, scale: Unity);
-            CompareMatrices(expected, actual);
+            Matrix4Compare(expected, actual);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@
         {
             var expected = new Matrix4(0, 0, 9, 0, 0, -9, 0, 0, 9, 0, 0, 0, 7, 11, 13, 1);
             var actual = Maths.CreateTransformation(location: new Vector3f(7, 11, 13), orientation: RotateXYZ, scale: new Vector3f(9, 9, 9));
-            CompareMatrices(expected, actual);
+            Matrix4Compare(expected, actual);
         }
 
         /// <summary>
@@ -180,21 +180,6 @@
         }
 
         /// <summary>
-        /// Get the view matrix for an offset camera position.
-        /// </summary>
-        [TestMethod]
-        public void CreateCameraViewPosition()
-        {
-            var expected = new Matrix4(
-                -0.9284767f, -0.1807426f, -0.3244428f, 0,
-                0, 0.8735891f, -0.4866643f, 0,
-                0.3713907f, -0.4518564f, -0.8111071f, 0,
-                -2.980232E-08f, 0, -6.164414f, 1);
-            var actual = Maths.CreateCameraView(new Camera { Position = new Vector3f(-2, -3, -5) });
-            CompareMatrices(expected, actual);
-        }
-
-        /// <summary>
         /// Get the view matrix for a general camera location.
         /// </summary>
         [TestMethod]
@@ -210,7 +195,22 @@
                 Position = new Vector3f(7, 11, 13),
                 Focus = new Vector3f(2, 3, 5)
             });
-            CompareMatrices(expected, actual, 1e-5f);
+            Matrix4Compare(expected, actual, 1e-5f);
+        }
+
+        /// <summary>
+        /// Get the view matrix for an offset camera position.
+        /// </summary>
+        [TestMethod]
+        public void CreateCameraViewPosition()
+        {
+            var expected = new Matrix4(
+                -0.9284767f, -0.1807426f, -0.3244428f, 0,
+                0, 0.8735891f, -0.4866643f, 0,
+                0.3713907f, -0.4518564f, -0.8111071f, 0,
+                -2.980232E-08f, 0, -6.164414f, 1);
+            var actual = Maths.CreateCameraView(new Camera { Position = new Vector3f(-2, -3, -5) });
+            Matrix4Compare(expected, actual);
         }
 
         private static readonly Vector3f Unity = new Vector3f(1, 1, 1);
@@ -223,7 +223,7 @@
             RotateYZ = new Euler3f(0, 90, 90),
             RotateXYZ = new Euler3f(90, 90, 90);
 
-        private static void CompareMatrices(Matrix4 expected, Matrix4 actual, float delta = 1e-6f)
+        private static void Matrix4Compare(Matrix4 expected, Matrix4 actual, float delta = 1e-6f)
         {
             for (var row = 0; row < 4; row++)
                 for (var col = 0; col < 4; col++)

@@ -13,6 +13,13 @@
 
         public Vector3i(Vector3i p) : this(p.X, p.Y, p.Z) { }
 
+        public Vector3i(int x, int y, int z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+
         public Vector3i(Vector3i p, string fieldName, int value) : this(p)
         {
             switch (fieldName)
@@ -21,13 +28,6 @@
                 case DisplayNames.Y: Y = value; break;
                 case DisplayNames.Z: Z = value; break;
             }
-        }
-
-        public Vector3i(int x, int y, int z)
-        {
-            X = x;
-            Y = y;
-            Z = z;
         }
 
         #endregion
@@ -97,7 +97,7 @@
 
         #endregion
 
-        #region Internal Classes
+        #region Nested Classes
 
         internal static class Descriptions
         {
@@ -107,7 +107,7 @@
                 Z = "The Z component of the vector.";
         }
 
-        internal static class DisplayNames
+        public static class DisplayNames
         {
             public const string
                 X = "X",

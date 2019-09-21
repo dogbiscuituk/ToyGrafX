@@ -7,11 +7,10 @@
     public class ColourFormatTests
     {
         /// <summary>
-        /// Check that the ColourFormat copy constructor yields a result equal to the original,
-        /// but having a different reference.
+        /// Copy constructor.
         /// </summary>
         [TestMethod]
-        public void ColourFormatCopy()
+        public void ColourFormatCreateCopy()
         {
             ColourFormat
                 p = new ColourFormat(1, 2, 3, 4),
@@ -36,17 +35,17 @@
         [TestMethod]
         public void ColourFormatInequality()
         {
-            ColourFormatInequality(1, 2, 3, 4, 8, 2, 3, 4);
-            ColourFormatInequality(1, 2, 3, 4, 1, 8, 3, 4);
-            ColourFormatInequality(1, 2, 3, 4, 1, 2, 8, 4);
-            ColourFormatInequality(1, 2, 3, 4, 1, 2, 3, 8);
+            ColourFormatInequality(8, 2, 3, 4);
+            ColourFormatInequality(1, 8, 3, 4);
+            ColourFormatInequality(1, 2, 8, 4);
+            ColourFormatInequality(1, 2, 3, 8);
         }
 
         private static void ColourFormatInequality(params int[] a)
         {
             ColourFormat
-                p = new ColourFormat(a[0], a[1], a[2], a[3]),
-                q = new ColourFormat(a[4], a[5], a[6], a[7]);
+                p = new ColourFormat(1, 2, 3, 4),
+                q = new ColourFormat(a[0], a[1], a[2], a[3]);
             Assert.IsFalse(p.Equals(q));
             Assert.IsFalse(p == q);
             Assert.IsTrue(p != q);

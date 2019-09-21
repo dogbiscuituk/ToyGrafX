@@ -9,14 +9,46 @@
     {
         #region Constructors
 
+        /// <summary>
+        /// Default Constructor.
+        /// </summary>
         public ColourFormat() : this(0) { }
 
-        public ColourFormat(int bpp) : this(bpp, bpp, bpp, bpp) { }
-
+        /// <summary>
+        /// Copy Constructor.
+        /// </summary>
+        /// <param name="colourFormat"></param>
         public ColourFormat(ColourFormat colourFormat) :
             this(colourFormat.Red, colourFormat.Green, colourFormat.Blue, colourFormat.Alpha)
         { }
 
+        /// <summary>
+        /// Uniform Constructor.
+        /// </summary>
+        /// <param name="bpp"></param>
+        public ColourFormat(int bpp) : this(bpp, bpp, bpp, bpp) { }
+
+        /// <summary>
+        /// General Constructor
+        /// </summary>
+        /// <param name="red"></param>
+        /// <param name="green"></param>
+        /// <param name="blue"></param>
+        /// <param name="alpha"></param>
+        public ColourFormat(int red, int green, int blue, int alpha)
+        {
+            Red = red;
+            Green = green;
+            Blue = blue;
+            Alpha = alpha;
+        }
+
+        /// <summary>
+        /// Copy & Modify Constructor.
+        /// </summary>
+        /// <param name="colourFormat"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="value"></param>
         public ColourFormat(ColourFormat colourFormat, string fieldName, int value) :
             this(colourFormat)
         {
@@ -27,14 +59,6 @@
                 case DisplayNames.Blue: Blue = value; break;
                 case DisplayNames.Alpha: Alpha = value; break;
             }
-        }
-
-        public ColourFormat(int red, int green, int blue, int alpha)
-        {
-            Red = red;
-            Green = green;
-            Blue = blue;
-            Alpha = alpha;
         }
 
         #endregion

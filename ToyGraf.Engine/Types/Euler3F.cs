@@ -13,6 +13,13 @@
 
         public Euler3f(Euler3f p) : this(p.Pitch, p.Yaw, p.Roll) { }
 
+        public Euler3f(float pitch, float yaw, float roll)
+        {
+            Pitch = pitch;
+            Yaw = yaw;
+            Roll = roll;
+        }
+
         public Euler3f(Euler3f p, string fieldName, float value) : this(p)
         {
             switch (fieldName)
@@ -21,13 +28,6 @@
                 case DisplayNames.Yaw: Yaw = value; break;
                 case DisplayNames.Roll: Roll = value; break;
             }
-        }
-
-        public Euler3f(float pitch, float yaw, float roll)
-        {
-            Pitch = pitch;
-            Yaw = yaw;
-            Roll = roll;
         }
 
         #endregion
@@ -59,6 +59,9 @@
         public static Euler3f operator -(Euler3f p) => new Euler3f(-p.Pitch, -p.Yaw, -p.Roll);
         public static Euler3f operator +(Euler3f p, Euler3f q) => new Euler3f(p.Pitch + q.Pitch, p.Yaw + q.Yaw, p.Roll + q.Roll);
         public static Euler3f operator -(Euler3f p, Euler3f q) => new Euler3f(p.Pitch - q.Pitch, p.Yaw - q.Yaw, p.Roll - q.Roll);
+        public static Euler3f operator *(Euler3f p, float q) => new Euler3f(p.Pitch * q, p.Yaw * q, p.Roll * q);
+        public static Euler3f operator *(float p, Euler3f q) => new Euler3f(p * q.Pitch, p * q.Yaw, p * q.Roll);
+        public static Euler3f operator /(Euler3f p, float q) => new Euler3f(p.Pitch / q, p.Yaw / q, p.Roll / q);
 
         public static implicit operator Euler3f(Vector3 p) => new Euler3f(p.X, p.Y, p.Z);
         public static implicit operator Euler3f(Quaternion p) => new Euler3f(p.X, p.Y, p.Z);
@@ -84,19 +87,19 @@
 
         #endregion
 
-        #region Internal Classes
+        #region Nested Classes
 
         internal static class Descriptions
         {
             internal const string
-                Pitch = "The component of rotation about the X axis.",
-                Roll = "The component of rotation about the Z axis.",
-                Yaw = "The component of rotation about the Y axis.";
+                Pitch = "The component of rotation about the X axis (degrees).",
+                Roll = "The component of rotation about the Z axis (degrees).",
+                Yaw = "The component of rotation about the Y axis (degrees).";
         }
 
-        internal static class DisplayNames
+        public static class DisplayNames
         {
-            internal const string
+            public const string
                 Pitch = "Pitch°",
                 Roll = "Roll°",
                 Yaw = "Yaw°";
