@@ -14,6 +14,13 @@
 
         public Vector3f(Vector3f p) : this(p.X, p.Y, p.Z) { }
 
+        public Vector3f(float x, float y, float z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+
         public Vector3f(Vector3f p, string fieldName, float value) : this(p)
         {
             switch (fieldName)
@@ -22,13 +29,6 @@
                 case DisplayNames.Y: Y = value; break;
                 case DisplayNames.Z: Z = value; break;
             }
-        }
-
-        public Vector3f(float x, float y, float z)
-        {
-            X = x;
-            Y = y;
-            Z = z;
         }
 
         #endregion

@@ -20,11 +20,10 @@
         }
 
         /// <summary>
-        /// Check that the Vector3f copy constructor yields a result equal to the original,
-        /// but having a different reference.
+        /// Copy constructor.
         /// </summary>
         [TestMethod]
-        public void Vector3fCopy()
+        public void Vector3fCreateCopy()
         {
             Vector3f
                 p = new Vector3f(1, 2, 3),
@@ -35,8 +34,40 @@
             Assert.IsFalse(ReferenceEquals(p, q));
         }
 
+        /// <summary>
+        /// Copy+Modify constructor.
+        /// </summary>
+        public void Vector3fCreateCopyModify()
+        {
+            Vector3fCreateCopyModify("X", 99, 3, 5);
+            Vector3fCreateCopyModify("Y", 2, 99, 5);
+            Vector3fCreateCopyModify("Z", 2, 3, 99);
+        }
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public void Vector3fCreateDefault()
+        {
+            var p = new Vector3f();
+            Assert.AreEqual(0, p.X);
+            Assert.AreEqual(0, p.Y);
+            Assert.AreEqual(0, p.Z);
+        }
+
+        /// <summary>
+        /// General constructor.
+        /// </summary>
+        public void Vector3fCreateGeneral()
+        {
+            var p = new Vector3f(2, 3, 5);
+            Assert.AreEqual(2, p.X);
+            Assert.AreEqual(3, p.Y);
+            Assert.AreEqual(5, p.Z);
+        }
+
         [TestMethod]
-        public void Vector3fCrossProduct()
+        public void Vector3fCross()
         {
             Vector3f
                 p = new Vector3f(1, 2, 3),
@@ -57,7 +88,7 @@
         }
 
         [TestMethod]
-        public void Vector3fDotProduct()
+        public void Vector3fDot()
         {
             Vector3f
                 p = new Vector3f(1.5f, 4, 3.125f),
@@ -82,9 +113,9 @@
         [TestMethod]
         public void Vector3fInequality()
         {
-            Vector3fInequality(1, 2, 3, 99, 2, 3);
-            Vector3fInequality(1, 2, 3, 1, 99, 3);
-            Vector3fInequality(1, 2, 3, 1, 2, 99);
+            Vector3fInequality(99, 3, 5);
+            Vector3fInequality(2, 99, 5);
+            Vector3fInequality(2, 3, 99);
         }
 
         [TestMethod]
@@ -142,10 +173,19 @@
 
         #region Private Static Helper Methods
 
+        private static void Vector3fCreateCopyModify(string field, params float[] a)
+        {
+            var p = new Vector3f(2, 3, 5);
+            p = new Vector3f(p, field, 99);
+            Assert.AreEqual(p.X, a[0]);
+            Assert.AreEqual(p.Y, a[1]);
+            Assert.AreEqual(p.Z, a[2]);
+        }
+
         private static void Vector3fInequality(params float[] a)
         {
-            var p = new Vector3f(a[0], a[1], a[2]);
-            var q = new Vector3f(a[3], a[4], a[5]);
+            var p = new Vector3f(2, 3, 5);
+            var q = new Vector3f(a[0], a[1], a[1]);
             Assert.IsFalse(p.Equals(q));
             Assert.IsFalse(p == q);
             Assert.IsTrue(p != q);
