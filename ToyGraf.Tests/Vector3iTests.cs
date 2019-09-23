@@ -19,11 +19,22 @@
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod]
+        public void Vector3iCross()
+        {
+            Vector3i
+                p = new Vector3i(1, 2, 3),
+                q = new Vector3i(2, 3, 4),
+                actual = p.Cross(q),
+                expected = new Vector3i(-1, 2, -1);
+            Assert.AreEqual(expected, actual);
+        }
+
         /// <summary>
         /// Copy constructor.
         /// </summary>
         [TestMethod]
-        public void Vector3iCreateCopy()
+        public void Vector3iCtorCopy()
         {
             Vector3i
                 p = new Vector3i(1, 2, 3),
@@ -38,18 +49,18 @@
         /// Copy & Modify constructor.
         /// </summary>
         [TestMethod]
-        public void Vector3iCreateCopyModify()
+        public void Vector3iCtorCopyModify()
         {
-            Vector3iCreateCopyModify(Vector3i.DisplayNames.X, 99, 3, 5);
-            Vector3iCreateCopyModify(Vector3i.DisplayNames.Y, 2, 99, 5);
-            Vector3iCreateCopyModify(Vector3i.DisplayNames.Z, 2, 3, 99);
+            Vector3iCtorCopyModify(Vector3i.DisplayNames.X, 99, 3, 5);
+            Vector3iCtorCopyModify(Vector3i.DisplayNames.Y, 2, 99, 5);
+            Vector3iCtorCopyModify(Vector3i.DisplayNames.Z, 2, 3, 99);
         }
 
         /// <summary>
         /// Default constructor.
         /// </summary>
         [TestMethod]
-        public void Vector3iCreateDefault()
+        public void Vector3iCtorDefault()
         {
             var p = new Vector3i();
             Assert.AreEqual(0, p.X);
@@ -61,23 +72,12 @@
         /// General constructor.
         /// </summary>
         [TestMethod]
-        public void Vector3iCreateGeneral()
+        public void Vector3iCtorGeneral()
         {
             var p = new Vector3i(2, 3, 5);
             Assert.AreEqual(2, p.X);
             Assert.AreEqual(3, p.Y);
             Assert.AreEqual(5, p.Z);
-        }
-
-        [TestMethod]
-        public void Vector3iCross()
-        {
-            Vector3i
-                p = new Vector3i(1, 2, 3),
-                q = new Vector3i(2, 3, 4),
-                actual = p.Cross(q),
-                expected = new Vector3i(-1, 2, -1);
-            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -165,9 +165,9 @@
         public void Vector3iParse()
         {
             var p = Vector3i.Parse("+2,-3, 5 ");
-            Assert.AreEqual(2, p.X);
+            Assert.AreEqual(+2, p.X);
             Assert.AreEqual(-3, p.Y);
-            Assert.AreEqual(5, p.Z);
+            Assert.AreEqual(+5, p.Z);
         }
 
         [TestMethod]
@@ -185,13 +185,13 @@
 
         #region Private Static Helper Methods
 
-        private static void Vector3iCreateCopyModify(string field, params int[] a)
+        private static void Vector3iCtorCopyModify(string field, params int[] expected)
         {
             var p = new Vector3i(2, 3, 5);
             p = new Vector3i(p, field, 99);
-            Assert.AreEqual(p.X, a[0]);
-            Assert.AreEqual(p.Y, a[1]);
-            Assert.AreEqual(p.Z, a[2]);
+            Assert.AreEqual(expected[0], p.X);
+            Assert.AreEqual(expected[1], p.Y);
+            Assert.AreEqual(expected[2], p.Z);
         }
 
         private static void Vector3iInequality(params int[] a)

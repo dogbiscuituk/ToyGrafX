@@ -23,7 +23,7 @@
         /// Copy constructor.
         /// </summary>
         [TestMethod]
-        public void Euler3fCreateCopy()
+        public void Euler3fCtorCopy()
         {
             Euler3f
                 p = new Euler3f(1, 2, 3),
@@ -38,18 +38,18 @@
         /// Copy & Modify constructor.
         /// </summary>
         [TestMethod]
-        public void Euler3fCreateCopyModify()
+        public void Euler3fCtorCopyModify()
         {
-            Euler3fCreateCopyModify(Euler3f.DisplayNames.Pitch, 99, 3, 5);
-            Euler3fCreateCopyModify(Euler3f.DisplayNames.Yaw, 2, 99, 5);
-            Euler3fCreateCopyModify(Euler3f.DisplayNames.Roll, 2, 3, 99);
+            Euler3fCtorCopyModify(Euler3f.DisplayNames.Pitch, 99, 3, 5);
+            Euler3fCtorCopyModify(Euler3f.DisplayNames.Yaw, 2, 99, 5);
+            Euler3fCtorCopyModify(Euler3f.DisplayNames.Roll, 2, 3, 99);
         }
 
         /// <summary>
         /// Default constructor.
         /// </summary>
         [TestMethod]
-        public void Euler3fCreateDefault()
+        public void Euler3fCtorDefault()
         {
             var p = new Euler3f();
             Assert.AreEqual(0, p.Pitch);
@@ -61,7 +61,7 @@
         /// General constructor.
         /// </summary>
         [TestMethod]
-        public void Euler3fCreateGeneral()
+        public void Euler3fCtorGeneral()
         {
             var p = new Euler3f(2, 3, 5);
             Assert.AreEqual(2, p.Pitch);
@@ -151,13 +151,13 @@
 
         #region Private Static Helper Methods
 
-        private static void Euler3fCreateCopyModify(string field, params float[] a)
+        private static void Euler3fCtorCopyModify(string field, params float[] expected)
         {
             var p = new Euler3f(2, 3, 5);
             p = new Euler3f(p, field, 99);
-            Assert.AreEqual(p.Pitch, a[0]);
-            Assert.AreEqual(p.Yaw, a[1]);
-            Assert.AreEqual(p.Roll, a[2]);
+            Assert.AreEqual(expected[0], p.Pitch);
+            Assert.AreEqual(expected[1], p.Yaw);
+            Assert.AreEqual(expected[2], p.Roll);
         }
 
         private static void Euler3fInequality(params float[] a)
