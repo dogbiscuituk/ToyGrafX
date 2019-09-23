@@ -15,14 +15,6 @@
         public ColourFormat() : this(0) { }
 
         /// <summary>
-        /// Copy Constructor.
-        /// </summary>
-        /// <param name="colourFormat"></param>
-        public ColourFormat(ColourFormat colourFormat) :
-            this(colourFormat.Red, colourFormat.Green, colourFormat.Blue, colourFormat.Alpha)
-        { }
-
-        /// <summary>
         /// Uniform Constructor.
         /// </summary>
         /// <param name="bpp"></param>
@@ -44,6 +36,14 @@
         }
 
         /// <summary>
+        /// Copy Constructor.
+        /// </summary>
+        /// <param name="colourFormat"></param>
+        public ColourFormat(ColourFormat colourFormat) :
+            this(colourFormat.Red, colourFormat.Green, colourFormat.Blue, colourFormat.Alpha)
+        { }
+
+        /// <summary>
         /// Copy & Modify Constructor.
         /// </summary>
         /// <param name="colourFormat"></param>
@@ -59,28 +59,6 @@
                 case DisplayNames.Blue: Blue = value; break;
                 case DisplayNames.Alpha: Alpha = value; break;
             }
-        }
-
-        #endregion
-
-        #region Public Classes
-
-        public static class Descriptions
-        {
-            public const string
-                Red = "The Red component of the colour format.",
-                Green = "The Green component of the colour format.",
-                Blue = "The Blue component of the colour format.",
-                Alpha = "The Alpha component of the colour format.";
-        }
-
-        public static class DisplayNames
-        {
-            public const string
-                Red = "Red",
-                Green = "Green",
-                Blue = "Blue",
-                Alpha = "Alpha";
         }
 
         #endregion
@@ -123,13 +101,37 @@
 
         public override bool Equals(object obj) => obj is ColourFormat f &&
             f.Red == Red && f.Green == Green && f.Blue == Blue && f.Alpha == Alpha;
+
         public override int GetHashCode() => Red ^ Green ^ Blue ^ Alpha;
-        public override string ToString() => $"{Red}, {Green}, {Blue}, {Alpha}";
 
         public static ColourFormat Parse(string s)
         {
             var t = s.Split(',');
             return new ColourFormat(int.Parse(t[0]), int.Parse(t[1]), int.Parse(t[2]), int.Parse(t[3]));
+        }
+
+        public override string ToString() => $"{Red}, {Green}, {Blue}, {Alpha}";
+
+        #endregion
+
+        #region Nested Classes
+
+        private static class Descriptions
+        {
+            internal const string
+                Red = "The Red component of the colour format.",
+                Green = "The Green component of the colour format.",
+                Blue = "The Blue component of the colour format.",
+                Alpha = "The Alpha component of the colour format.";
+        }
+
+        public static class DisplayNames
+        {
+            public const string
+                Red = "Red",
+                Green = "Green",
+                Blue = "Blue",
+                Alpha = "Alpha";
         }
 
         #endregion

@@ -16,12 +16,6 @@
         public Vector3f() : this(0, 0, 0) { }
 
         /// <summary>
-        /// Copy Constructor.
-        /// </summary>
-        /// <param name="p"></param>
-        public Vector3f(Vector3f p) : this(p.X, p.Y, p.Z) { }
-
-        /// <summary>
         /// General Constructor.
         /// </summary>
         /// <param name="x"></param>
@@ -33,6 +27,12 @@
             Y = y;
             Z = z;
         }
+
+        /// <summary>
+        /// Copy Constructor.
+        /// </summary>
+        /// <param name="p"></param>
+        public Vector3f(Vector3f p) : this(p.X, p.Y, p.Z) { }
 
         /// <summary>
         /// Copy & Modify Constructor.
@@ -122,9 +122,9 @@
 
         #region Nested Classes
 
-        internal static class Descriptions
+        private static class Descriptions
         {
-            public const string
+            internal const string
                 X = "The X component of the vector.",
                 Y = "The Y component of the vector.",
                 Z = "The Z component of the vector.";

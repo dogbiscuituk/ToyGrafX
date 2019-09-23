@@ -9,10 +9,17 @@
     {
         #region Constructors
 
+        /// <summary>
+        /// Default Constructor.
+        /// </summary>
         public Vector3i() : this(0, 0, 0) { }
 
-        public Vector3i(Vector3i p) : this(p.X, p.Y, p.Z) { }
-
+        /// <summary>
+        /// General Constructor.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="z"></param>
         public Vector3i(int x, int y, int z)
         {
             X = x;
@@ -20,6 +27,18 @@
             Z = z;
         }
 
+        /// <summary>
+        /// Copy Constructor.
+        /// </summary>
+        /// <param name="p"></param>
+        public Vector3i(Vector3i p) : this(p.X, p.Y, p.Z) { }
+
+        /// <summary>
+        /// Copy & Modify Constructor.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="value"></param>
         public Vector3i(Vector3i p, string fieldName, int value) : this(p)
         {
             switch (fieldName)
@@ -77,6 +96,7 @@
         public int Dot(Vector3i p) => X * p.X + Y * p.Y + Z * p.Z;
 
         public override bool Equals(object obj) => obj is Vector3i p && p.X == X && p.Y == Y && p.Z == Z;
+
         public override int GetHashCode() => X ^ Y ^ Z;
 
         public Vector3f Normalize()
@@ -99,9 +119,9 @@
 
         #region Nested Classes
 
-        internal static class Descriptions
+        private static class Descriptions
         {
-            public const string
+            internal const string
                 X = "The X component of the vector.",
                 Y = "The Y component of the vector.",
                 Z = "The Z component of the vector.";

@@ -9,10 +9,17 @@
     {
         #region Constructors
 
+        /// <summary>
+        /// Default Constructor.
+        /// </summary>
         public Euler3f() : this(0, 0, 0) { }
 
-        public Euler3f(Euler3f p) : this(p.Pitch, p.Yaw, p.Roll) { }
-
+        /// <summary>
+        /// General Constructor.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="z"></param>
         public Euler3f(float pitch, float yaw, float roll)
         {
             Pitch = pitch;
@@ -20,6 +27,18 @@
             Roll = roll;
         }
 
+        /// <summary>
+        /// Copy Constructor.
+        /// </summary>
+        /// <param name="p"></param>
+        public Euler3f(Euler3f p) : this(p.Pitch, p.Yaw, p.Roll) { }
+
+        /// <summary>
+        /// Copy & Modify Constructor.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="value"></param>
         public Euler3f(Euler3f p, string fieldName, float value) : this(p)
         {
             switch (fieldName)
@@ -89,7 +108,7 @@
 
         #region Nested Classes
 
-        internal static class Descriptions
+        private static class Descriptions
         {
             internal const string
                 Pitch = "The component of rotation about the X axis (degrees).",
