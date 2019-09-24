@@ -84,6 +84,7 @@
 
         public static implicit operator Euler3f(Vector3 p) => new Euler3f(p.X, p.Y, p.Z);
         public static implicit operator Euler3f(Quaternion p) => new Euler3f(p.X, p.Y, p.Z);
+        public static implicit operator Vector3(Euler3f p) => new Vector3(p.Pitch, p.Yaw, p.Roll);
 
         #endregion
 
@@ -101,8 +102,6 @@
         }
 
         public override string ToString() => $"{Pitch}, {Yaw}, {Roll}";
-
-        public Vector3 ToVector3() => new Vector3(Pitch, Yaw, Roll);
 
         #endregion
 

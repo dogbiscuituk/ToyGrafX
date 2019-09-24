@@ -14,7 +14,6 @@
     using ToyGraf.Controls;
     using ToyGraf.Engine.Types;
     using ToyGraf.Engine.Utility;
-    using ToyGraf.Views;
 
     public class Scene
     {

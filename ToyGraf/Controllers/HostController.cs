@@ -62,7 +62,7 @@
 
         private readonly Control HostedControl, ParentControl;
         private readonly HostForm HostForm;
-        private IWin32Window Owner;
+        private readonly IWin32Window Owner;
 
         #endregion
 
