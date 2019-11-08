@@ -190,7 +190,7 @@
         private readonly List<string> ChangedPropertyNames = new List<string>();
         private object ChangedSubject;
         private Clock Clock => ClockController.Clock;
-        private ControlCollection GLControlParent => SceneForm?.SplitContainer2.Panel1.Controls;
+        private ControlCollection GLControlParent => SceneForm?.SplitContainer3.Panel2.Controls;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
         private TgPropertyGridAdapter PropertyGridAdapter => PropertyGridController.PropertyGridAdapter;
