@@ -164,13 +164,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ToyGraf.Common\ToyGraf.Common.csproj">
+      <Project>{eaaa782b-3c65-4ed7-bcb6-e94f1618f1a6}</Project>
+      <Name>ToyGraf.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ToyGraf.Controls\ToyGraf.Controls.csproj">
       <Project>{65f81bec-da42-416a-9b90-2c27f94a4a86}</Project>
       <Name>ToyGraf.Controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ToyGraf.Engine\ToyGraf.Engine.csproj">
-      <Project>{eaaa782b-3c65-4ed7-bcb6-e94f1618f1a6}</Project>
-      <Name>ToyGraf.Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

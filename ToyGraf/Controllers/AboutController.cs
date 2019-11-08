@@ -2,7 +2,7 @@
 {
     using System.Reflection;
     using System.Windows.Forms;
-    using ToyGraf.Engine.Utility;
+    using ToyGraf.Common.Utility;
     using ToyGraf.Views;
 
     internal class AboutController

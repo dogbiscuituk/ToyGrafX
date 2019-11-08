@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Windows.Forms;
     using ToyGraf.Controls;
-    using ToyGraf.Engine.Utility;
+    using ToyGraf.Common.Utility;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
