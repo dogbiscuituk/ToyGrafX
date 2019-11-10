@@ -15,7 +15,6 @@
     using ToyGraf.Models.Enums;
     using ToyGraf.Properties;
     using ToyGraf.Views;
-    using static System.Windows.Forms.Control;
 
     internal class SceneController
     {
@@ -190,7 +189,7 @@
         private readonly List<string> ChangedPropertyNames = new List<string>();
         private object ChangedSubject;
         private Clock Clock => ClockController.Clock;
-        private ControlCollection GLControlParent => SceneForm?.SplitContainer2.Panel1.Controls;
+        private Control.ControlCollection GLControlParent => SceneForm?.SplitContainer2.Panel1.Controls;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
         private TgPropertyGridAdapter PropertyGridAdapter => PropertyGridController.PropertyGridAdapter;
