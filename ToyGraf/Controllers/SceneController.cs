@@ -9,8 +9,8 @@
     using System.Windows.Forms;
     using ToyGraf.Commands;
     using ToyGraf.Controls;
-    using ToyGraf.Engine.Types;
-    using ToyGraf.Engine.Utility;
+    using ToyGraf.Common.Types;
+    using ToyGraf.Common.Utility;
     using ToyGraf.Models;
     using ToyGraf.Models.Enums;
     using ToyGraf.Properties;
@@ -189,7 +189,7 @@
         private readonly List<string> ChangedPropertyNames = new List<string>();
         private object ChangedSubject;
         private Clock Clock => ClockController.Clock;
-        private Control.ControlCollection GLControlParent => SceneForm?.SplitContainer2.Panel1.Controls;
+        private Control.ControlCollection GLControlParent => SceneForm?.SplitContainer3.Panel2.Controls;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
         private TgPropertyGridAdapter PropertyGridAdapter => PropertyGridController.PropertyGridAdapter;
