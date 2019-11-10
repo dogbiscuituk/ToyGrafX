@@ -12,8 +12,8 @@
     using ToyGraf.Commands;
     using ToyGraf.Controllers;
     using ToyGraf.Controls;
-    using ToyGraf.Engine.Types;
-    using ToyGraf.Engine.Utility;
+    using ToyGraf.Common.Types;
+    using ToyGraf.Common.Utility;
 
     public class Scene
     {

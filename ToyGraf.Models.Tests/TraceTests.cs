@@ -1,7 +1,7 @@
-﻿namespace ToyGraf.Tests
+﻿namespace ToyGraf.Models.Tests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using ToyGraf.Engine.Types;
+    using ToyGraf.Common.Types;
     using ToyGraf.Models;
 
     [TestClass]

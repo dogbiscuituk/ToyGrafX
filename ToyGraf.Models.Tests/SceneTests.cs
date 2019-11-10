@@ -1,4 +1,4 @@
-﻿namespace ToyGraf.Tests
+﻿namespace ToyGraf.Models.Tests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using ToyGraf.Models;

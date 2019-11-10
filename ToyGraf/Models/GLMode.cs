@@ -4,7 +4,7 @@
     using OpenTK.Graphics;
     using System;
     using System.ComponentModel;
-    using ToyGraf.Engine.Types;
+    using ToyGraf.Common.Types;
 
     [TypeConverter(typeof(GLModeTypeConverter))]
     public class GLMode

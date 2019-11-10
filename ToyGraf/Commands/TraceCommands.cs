@@ -1,7 +1,7 @@
 ﻿namespace ToyGraf.Commands
 {
     using OpenTK;
-    using ToyGraf.Engine.Types;
+    using ToyGraf.Common.Types;
     using ToyGraf.Models;
 
     internal class DescriptionCommand : TracePropertyCommand<string>

@@ -3,7 +3,7 @@
     using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
-    using ToyGraf.Engine.Utility;
+    using ToyGraf.Common.Utility;
 
     public static class TgControls
     {

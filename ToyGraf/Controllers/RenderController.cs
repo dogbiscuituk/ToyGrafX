@@ -4,8 +4,8 @@
     using OpenTK.Graphics.OpenGL;
     using System.Text;
     using ToyGraf.Commands;
-    using ToyGraf.Engine.Types;
-    using ToyGraf.Engine.Utility;
+    using ToyGraf.Common.Types;
+    using ToyGraf.Common.Utility;
     using ToyGraf.Models;
     using ToyGraf.Views;
 

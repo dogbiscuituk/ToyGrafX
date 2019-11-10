@@ -2,7 +2,7 @@
 {
     using OpenTK;
     using System.Drawing;
-    using ToyGraf.Engine.Types;
+    using ToyGraf.Common.Types;
     using ToyGraf.Models;
 
     internal class BackgroundColourCommand : ScenePropertyCommand<Color>

@@ -8,8 +8,8 @@
     using System.Drawing.Design;
     using ToyGraf.Commands;
     using ToyGraf.Controllers;
-    using ToyGraf.Engine.Types;
-    using ToyGraf.Engine.Utility;
+    using ToyGraf.Common.Types;
+    using ToyGraf.Common.Utility;
 
     public class Trace
     {
@@ -371,7 +371,7 @@
         public class Defaults
         {
             public const Pattern
-                Pattern = Engine.Types.Pattern.Fill;
+                Pattern = Common.Types.Pattern.Fill;
 
             public const bool
                 Visible = true;
