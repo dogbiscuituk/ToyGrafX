@@ -41,6 +41,7 @@
 
         internal ClockController ClockController;
         internal CommandProcessor CommandProcessor { get; private set; }
+        internal EntityEditController EntityEditController;
         internal GLControl GLControl => GLControlParent[0] as GLControl;
         internal GLMode GLMode => RenderController._GLMode ?? RenderController?.GLMode;
         internal readonly PropertyGridController PropertyGridController;
@@ -148,7 +149,6 @@
         private readonly List<string> ChangedPropertyNames = new List<string>();
         private object ChangedSubject;
         private Clock Clock => ClockController.Clock;
-        private EntityEditController EntityEditController;
         private Control.ControlCollection GLControlParent => SceneForm?.SplitContainer3.Panel2.Controls;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;

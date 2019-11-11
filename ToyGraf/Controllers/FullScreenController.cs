@@ -20,6 +20,7 @@
 
         private readonly SceneController SceneController;
         private SceneForm Form => SceneController.SceneForm;
+        private EntityEditController EntityEditController => SceneController.EntityEditController;
         private PropertyGridController PropertyGridController => SceneController.PropertyGridController;
         private TraceTableController TraceTableController => SceneController.TraceTableController;
 
@@ -44,6 +45,7 @@
                 | (Form.MainMenuStrip.Visible ? FormElements.MainMenu : 0)
                 | (Form.Toolbar.Visible ? FormElements.Toolbar : 0)
                 | (Form.StatusBar.Visible ? FormElements.StatusBar : 0)
+                | (EntityEditController.EditControlVisible ? FormElements.EntityEdit : 0)
                 | (PropertyGridController.EditControlVisible ? FormElements.PropertyGrid : 0)
                 | (TraceTableController.EditControlVisible ? FormElements.TraceTable : 0),
                 WindowState = Form.WindowState
@@ -55,6 +57,7 @@
                 Form.MainMenuStrip.Visible = (elements & FormElements.MainMenu) != 0;
                 Form.Toolbar.Visible = (elements & FormElements.Toolbar) != 0;
                 Form.StatusBar.Visible = (elements & FormElements.StatusBar) != 0;
+                EntityEditController.EditControlVisible = (elements & FormElements.EntityEdit) != 0;
                 PropertyGridController.EditControlVisible = (elements & FormElements.PropertyGrid) != 0;
                 TraceTableController.EditControlVisible = (elements & FormElements.TraceTable) != 0;
                 Form.WindowState = value.WindowState;
@@ -102,8 +105,9 @@
             MainMenu = 0x01,
             Toolbar = 0x02,
             StatusBar = 0x04,
-            PropertyGrid = 0x08,
-            TraceTable = 0x10
+            EntityEdit = 0x08,
+            PropertyGrid = 0x10,
+            TraceTable = 0x20,
         }
 
         private struct FormState

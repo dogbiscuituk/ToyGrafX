@@ -7,7 +7,7 @@
 
     internal class HostController
     {
-        #region Constructors
+        #region Constructor
 
         internal HostController(IWin32Window owner, string text, Control hostedControl)
         {
