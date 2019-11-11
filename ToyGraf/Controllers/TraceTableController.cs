@@ -8,13 +8,13 @@
     using ToyGraf.Models;
     using ToyGraf.Views;
 
-    internal class TraceTableController
+    internal class TraceTableController : DockableEditController
     {
         #region Constructors
 
         internal TraceTableController(SceneController sceneController)
+            : base(sceneController, "Trace Table")
         {
-            SceneController = sceneController;
             Init();
             Refresh();
         }
@@ -31,26 +31,15 @@
 
         internal DataGridView TraceTable => SceneForm.TraceTable;
 
-        internal bool TraceTableVisible
-        {
-            get => _TraceTableVisible;
-            set
-            {
-                if (TraceTableVisible == value)
-                    return;
-                _TraceTableVisible = value;
-                UpdateConfiguration();
-                Refresh();
-            }
-        }
-
         #endregion
 
-        #region Internal Methods
+        #region Protected Overrides
 
-        internal void Refresh()
+        protected override Control EditControl => TraceTable;
+
+        protected internal override void Refresh()
         {
-            if (TraceTableVisible)
+            if (EditControlVisible)
             {
                 TraceTable.DataSource = null;
                 var traces = Scene.Traces;
@@ -59,45 +48,15 @@
             }
         }
 
+        protected override void UpdateConfiguration()
+        {
+            SceneForm.SplitContainer1.Panel2Collapsed = !(_EditControlDocked && _EditControlVisible);
+            HostController.FormVisible = !_EditControlDocked && _EditControlVisible;
+        }
+
         #endregion
 
         #region Private Properties
-
-        private Scene Scene => SceneController.Scene;
-        private readonly SceneController SceneController;
-
-        private HostController _HostController;
-        private HostController HostController
-        {
-            get
-            {
-                if (_HostController == null)
-                {
-                    _HostController = new HostController(SceneForm, "Trace Table", TraceTable);
-                    _HostController.HostFormClosing += HostController_HostFormClosing;
-                }
-                return _HostController;
-            }
-        }
-
-        private SceneForm SceneForm => SceneController.SceneForm;
-
-        private bool
-            _TraceTableDocked = true,
-            _TraceTableVisible = true;
-
-        private bool TraceTableDocked
-        {
-            get => _TraceTableDocked;
-            set
-            {
-                if (TraceTableDocked == value)
-                    return;
-                _TraceTableDocked = value;
-                UpdateConfiguration();
-                HostController.FormVisible = !value && _TraceTableVisible;
-            }
-        }
 
         private bool Updating;
 
@@ -112,28 +71,28 @@
             SelectAll();
 
         private void HostController_HostFormClosing(object sender, FormClosingEventArgs e) =>
-            TraceTableVisible = false;
+            EditControlVisible = false;
 
         private void PopupTraceTableColumns_Click(object sender, EventArgs e) =>
             new ColumnsController(this).ShowDialog(SceneForm);
 
         private void PopupTraceTableDock_Click(object sender, System.EventArgs e) =>
-            TraceTableDocked = !TraceTableDocked;
+            EditControlDocked = !EditControlDocked;
 
         private void PopupTraceTableHide_Click(object sender, EventArgs e) =>
-            TraceTableVisible = false;
+            EditControlVisible = false;
 
         private void PopupTraceTableMenu_Opening(object sender, CancelEventArgs e) =>
-            SceneForm.PopupTraceTableFloat.Text = TraceTableDocked ? "&Undock" : "&Dock";
+            SceneForm.PopupTraceTableFloat.Text = EditControlDocked ? "&Undock" : "&Dock";
 
         private void ToggleTraceTable(object sender, EventArgs e) =>
-            TraceTableVisible = !TraceTableVisible;
+            EditControlVisible = !EditControlVisible;
 
         private void TraceTable_SelectionChanged(object sender, EventArgs e) =>
             OnSelectionChanged();
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
-            SceneForm.ViewTraceTable.Checked = TraceTableVisible;
+            SceneForm.ViewTraceTable.Checked = EditControlVisible;
 
         #endregion
 
@@ -199,12 +158,6 @@
         }
 
         private void SelectAll() => TraceTable.SelectAll();
-
-        private void UpdateConfiguration()
-        {
-            SceneForm.SplitContainer1.Panel2Collapsed = !(_TraceTableDocked && _TraceTableVisible);
-            HostController.FormVisible = !_TraceTableDocked && _TraceTableVisible;
-        }
 
         #endregion
     }

@@ -9,13 +9,13 @@
     using ToyGraf.Models;
     using ToyGraf.Views;
 
-    internal class PropertyGridController
+    internal class PropertyGridController : DockableEditController
     {
-        #region Constructors
+        #region Constructor
 
         internal PropertyGridController(SceneController sceneController)
+            : base(sceneController, "Property Grid")
         {
-            SceneController = sceneController;
             PropertyGridAdapter = new TgPropertyGridAdapter(PropertyGrid)
             {
                 HiddenProperties = new[] { "Traces" }
@@ -42,19 +42,6 @@
 
         internal TgPropertyGridAdapter PropertyGridAdapter;
 
-        internal bool PropertyGridVisible
-        {
-            get => _PropertyGridVisible;
-            set
-            {
-                if (PropertyGridVisible == value)
-                    return;
-                _PropertyGridVisible = value;
-                UpdateConfiguration();
-                Refresh();
-            }
-        }
-
         internal object SelectedObject
         {
             get => PropertyGridAdapter.SelectedObject;
@@ -80,16 +67,24 @@
             propertyGridAdapter.HiddenAttributes = AppController.Options.ShowSystemRO
                 ? null : new AttributeCollection(new CategoryAttribute(Categories.SystemRO));
 
-        internal void Refresh()
+        #endregion
+
+        protected override Control EditControl => PropertyGrid;
+
+        protected internal override void Refresh()
         {
-            if (PropertyGridVisible)
+            if (EditControlVisible)
             {
                 RefreshDataSource();
                 PropertyGrid.Refresh();
             }
         }
 
-        #endregion
+        protected override void UpdateConfiguration()
+        {
+            SceneForm.SplitContainer2.Panel2Collapsed = !(_EditControlDocked && _EditControlVisible);
+            HostController.FormVisible = !_EditControlDocked && _EditControlVisible;
+        }
 
         #region Private Classes
 
@@ -104,43 +99,7 @@
 
         #region Private Properties
 
-        private HostController _HostController;
-        private HostController HostController
-        {
-            get
-            {
-                if (_HostController == null)
-                {
-                    _HostController = new HostController(SceneForm, "Property Grid", PropertyGrid);
-                    _HostController.HostFormClosing += HostController_HostFormClosing;
-                }
-                return _HostController;
-            }
-        }
-
         private PropertyGrid PropertyGrid => SceneForm.PropertyGrid;
-
-        private bool
-            _PropertyGridDocked = true,
-            _PropertyGridVisible = true;
-
-        private bool PropertyGridDocked
-        {
-            get => _PropertyGridDocked;
-            set
-            {
-                if (PropertyGridDocked == value)
-                    return;
-                _PropertyGridDocked = value;
-                UpdateConfiguration();
-                HostController.FormVisible = !value && _PropertyGridVisible;
-            }
-        }
-
-        private Scene Scene => SceneController.Scene;
-        private readonly SceneController SceneController;
-
-        private SceneForm SceneForm => SceneController.SceneForm;
 
         private Subject _SelectedSubject = Subject.Scene;
         private Subject SelectedSubject
@@ -160,17 +119,14 @@
 
         #region Private Event Handlers
 
-        private void HostController_HostFormClosing(object sender, FormClosingEventArgs e) =>
-            PropertyGridVisible = false;
-
         private void PopupPropertyGridDock_Click(object sender, EventArgs e) =>
-            PropertyGridDocked = !PropertyGridDocked;
+            EditControlDocked = !EditControlDocked;
 
         private void PopupPropertyGridHide_Click(object sender, EventArgs e) =>
-            PropertyGridVisible = false;
+            EditControlVisible = false;
 
         private void PopupPropertyGridMenu_Opening(object sender, CancelEventArgs e) =>
-            SceneForm.PopupPropertyGridFloat.Text = PropertyGridDocked ? "&Undock" : "&Dock";
+            SceneForm.PopupPropertyGridFloat.Text = EditControlDocked ? "&Undock" : "&Dock";
 
         private void PopupSubjectMenu_Opening(object sender, CancelEventArgs e)
         {
@@ -191,10 +147,10 @@
         private void SubjectButton_ButtonClick(object sender, System.EventArgs e) => SelectNextSubject();
 
         private void TogglePropertyGrid(object sender, EventArgs e) =>
-            PropertyGridVisible = !PropertyGridVisible;
+            EditControlVisible = !EditControlVisible;
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
-            SceneForm.ViewPropertyGrid.Checked = PropertyGridVisible;
+            SceneForm.ViewPropertyGrid.Checked = EditControlVisible;
 
         #endregion
 
@@ -251,12 +207,6 @@
             _SelectedSubject = subject;
             SubjectButton.Text = SceneForm.PopupSubjectMenu.Items[(int)subject].Text;
             RefreshDataSource();
-        }
-
-        private void UpdateConfiguration()
-        {
-            SceneForm.SplitContainer2.Panel2Collapsed = !(_PropertyGridDocked && _PropertyGridVisible);
-            HostController.FormVisible = !_PropertyGridDocked && _PropertyGridVisible;
         }
 
         #endregion

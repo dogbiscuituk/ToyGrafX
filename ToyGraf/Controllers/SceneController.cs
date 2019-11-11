@@ -26,6 +26,7 @@
             Scene = new Scene(this);
             ClockController = new ClockController(this);
             CommandProcessor = new CommandProcessor(this);
+            EntityEditController = new EntityEditController(this);
             new FullScreenController(this);
             JsonController = new JsonController(this);
             PropertyGridController = new PropertyGridController(this);
@@ -142,6 +143,21 @@
 
         #endregion
 
+        #region Private Properties
+
+        private readonly List<string> ChangedPropertyNames = new List<string>();
+        private object ChangedSubject;
+        private Clock Clock => ClockController.Clock;
+        private EntityEditController EntityEditController;
+        private Control.ControlCollection GLControlParent => SceneForm?.SplitContainer3.Panel2.Controls;
+        private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
+        private readonly JsonController JsonController;
+        private TgPropertyGridAdapter PropertyGridAdapter => PropertyGridController.PropertyGridAdapter;
+        private int UpdateCount;
+        private bool Updating => UpdateCount > 0;
+
+        #endregion
+
         #region Private Event Handlers
 
         private void CameraMoveBack_Click(object sender, System.EventArgs e) => Scene.CameraMoveBack();
@@ -181,20 +197,6 @@
         private void SceneForm_FormClosing(object sender, FormClosingEventArgs e) => e.Cancel = !FormClosing(e.CloseReason);
         private void TbOpen_DropDownOpening(object sender, EventArgs e) => SceneForm.FileReopen.CloneTo(SceneForm.tbOpen);
         private void TbSave_Click(object sender, EventArgs e) => SaveOrSaveAs();
-
-        #endregion
-
-        #region Private Properties
-
-        private readonly List<string> ChangedPropertyNames = new List<string>();
-        private object ChangedSubject;
-        private Clock Clock => ClockController.Clock;
-        private Control.ControlCollection GLControlParent => SceneForm?.SplitContainer3.Panel2.Controls;
-        private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
-        private readonly JsonController JsonController;
-        private TgPropertyGridAdapter PropertyGridAdapter => PropertyGridController.PropertyGridAdapter;
-        private int UpdateCount;
-        private bool Updating => UpdateCount > 0;
 
         #endregion
 
