@@ -21,10 +21,10 @@
                 HiddenProperties = new[] { "Traces" }
             };
             SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
-            SceneForm.ViewPropertyGrid.Click += TogglePropertyGrid;
+            SceneForm.ViewPropertyGrid.Click += ToggleEditControl;
             SceneForm.PopupPropertyGridMenu.Opening += PopupPropertyGridMenu_Opening;
-            SceneForm.PopupPropertyGridFloat.Click += PopupPropertyGridDock_Click;
-            SceneForm.PopupPropertyGridHide.Click += PopupPropertyGridHide_Click;
+            SceneForm.PopupPropertyGridFloat.Click += PopupEditControlFloat_Click;
+            SceneForm.PopupPropertyGridHide.Click += PopupEditControlHide_Click;
             SceneForm.PopupSubjectMenu.Opening += PopupSubjectMenu_Opening;
             SceneForm.PopupSubjectScene.Click += PopupSubject_Click;
             SceneForm.PopupSubjectSelectedTraces.Click += PopupSubject_Click;
@@ -119,12 +119,6 @@
 
         #region Private Event Handlers
 
-        private void PopupPropertyGridDock_Click(object sender, EventArgs e) =>
-            EditControlDocked = !EditControlDocked;
-
-        private void PopupPropertyGridHide_Click(object sender, EventArgs e) =>
-            EditControlVisible = false;
-
         private void PopupPropertyGridMenu_Opening(object sender, CancelEventArgs e) =>
             SceneForm.PopupPropertyGridFloat.Text = EditControlDocked ? "&Undock" : "&Dock";
 
@@ -145,9 +139,6 @@
             PropertyChanged();
 
         private void SubjectButton_ButtonClick(object sender, System.EventArgs e) => SelectNextSubject();
-
-        private void TogglePropertyGrid(object sender, EventArgs e) =>
-            EditControlVisible = !EditControlVisible;
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
             SceneForm.ViewPropertyGrid.Checked = EditControlVisible;

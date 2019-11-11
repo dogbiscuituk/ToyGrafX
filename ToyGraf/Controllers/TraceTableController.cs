@@ -70,23 +70,11 @@
         private void EditSelectAll_Click(object sender, EventArgs e) =>
             SelectAll();
 
-        private void HostController_HostFormClosing(object sender, FormClosingEventArgs e) =>
-            EditControlVisible = false;
-
         private void PopupTraceTableColumns_Click(object sender, EventArgs e) =>
             new ColumnsController(this).ShowDialog(SceneForm);
 
-        private void PopupTraceTableDock_Click(object sender, System.EventArgs e) =>
-            EditControlDocked = !EditControlDocked;
-
-        private void PopupTraceTableHide_Click(object sender, EventArgs e) =>
-            EditControlVisible = false;
-
         private void PopupTraceTableMenu_Opening(object sender, CancelEventArgs e) =>
             SceneForm.PopupTraceTableFloat.Text = EditControlDocked ? "&Undock" : "&Dock";
-
-        private void ToggleTraceTable(object sender, EventArgs e) =>
-            EditControlVisible = !EditControlVisible;
 
         private void TraceTable_SelectionChanged(object sender, EventArgs e) =>
             OnSelectionChanged();
@@ -129,10 +117,10 @@
             SceneForm.EditSelectAll.Click += EditSelectAll_Click;
             SceneForm.EditInvertSelection.Click += EditInvertSelection_Click;
             SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
-            SceneForm.ViewTraceTable.Click += ToggleTraceTable;
+            SceneForm.ViewTraceTable.Click += ToggleEditControl;
             SceneForm.PopupTraceTableMenu.Opening += PopupTraceTableMenu_Opening;
-            SceneForm.PopupTraceTableFloat.Click += PopupTraceTableDock_Click;
-            SceneForm.PopupTraceTableHide.Click += PopupTraceTableHide_Click;
+            SceneForm.PopupTraceTableFloat.Click += PopupEditControlFloat_Click;
+            SceneForm.PopupTraceTableHide.Click += PopupEditControlHide_Click;
             SceneForm.PopupTraceTableColumns.Click += PopupTraceTableColumns_Click;
         }
 

@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Controllers
 {
+    using System;
     using System.Windows.Forms;
     using ToyGraf.Models;
     using ToyGraf.Views;
@@ -72,6 +73,19 @@
                 return _HostController;
             }
         }
+
+        #endregion
+
+        #region Protected Event Handlers
+
+        protected void PopupEditControlFloat_Click(object sender, EventArgs e) =>
+            EditControlDocked = !EditControlDocked;
+
+        protected void PopupEditControlHide_Click(object sender, EventArgs e) =>
+            EditControlVisible = false;
+
+        protected void ToggleEditControl(object sender, EventArgs e) =>
+            EditControlVisible = !EditControlVisible;
 
         #endregion
 

@@ -12,9 +12,10 @@
             : base(sceneController, "Entity Editor")
         {
             SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
+            SceneForm.ViewEntityEditor.Click += ToggleEditControl;
             SceneForm.PopupEntityEditMenu.Opening += PopupEntityEditMenu_Opening;
-            SceneForm.PopupEntityEditFloat.Click += PopupEntityEditFloat_Click;
-            SceneForm.PopupEntityEditHide.Click += PopupEntityEditHide_Click;
+            SceneForm.PopupEntityEditFloat.Click += PopupEditControlFloat_Click;
+            SceneForm.PopupEntityEditHide.Click += PopupEditControlHide_Click;
         }
 
         #endregion
@@ -30,7 +31,7 @@
 
         protected override void UpdateConfiguration()
         {
-            SceneForm.SplitContainer3.Panel2Collapsed = !(_EditControlDocked && _EditControlVisible);
+            SceneForm.SplitContainer3.Panel1Collapsed = !(_EditControlDocked && _EditControlVisible);
             HostController.FormVisible = !_EditControlDocked && _EditControlVisible;
 
         }
@@ -44,15 +45,6 @@
         #endregion
 
         #region Private Event Handlers
-
-        private void HostController_HostFormClosing(object sender, FormClosingEventArgs e) =>
-            EditControlVisible = false;
-
-        private void PopupEntityEditFloat_Click(object sender, System.EventArgs e) =>
-            EditControlDocked = !EditControlDocked;
-
-        private void PopupEntityEditHide_Click(object sender, System.EventArgs e) =>
-            EditControlVisible = false;
 
         private void PopupEntityEditMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e) =>
             SceneForm.PopupEntityEditFloat.Text = EditControlDocked ? "&Undock" : "&Dock";
