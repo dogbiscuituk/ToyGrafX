@@ -28,14 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TgEntityEdit));
             this.ShadersTabControl = new System.Windows.Forms.TabControl();
             this.tpVertex = new System.Windows.Forms.TabPage();
+            this.fctbVertex = new FastColoredTextBoxNS.FastColoredTextBox();
             this.tpTessellationControl = new System.Windows.Forms.TabPage();
             this.tpTessellationEvaluation = new System.Windows.Forms.TabPage();
             this.tpGeometry = new System.Windows.Forms.TabPage();
             this.tpFragment = new System.Windows.Forms.TabPage();
             this.tpCompute = new System.Windows.Forms.TabPage();
             this.ShadersTabControl.SuspendLayout();
+            this.tpVertex.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fctbVertex)).BeginInit();
             this.SuspendLayout();
             // 
             // ShadersTabControl
@@ -55,6 +60,7 @@
             // 
             // tpVertex
             // 
+            this.tpVertex.Controls.Add(this.fctbVertex);
             this.tpVertex.Location = new System.Drawing.Point(4, 24);
             this.tpVertex.Name = "tpVertex";
             this.tpVertex.Padding = new System.Windows.Forms.Padding(3);
@@ -63,6 +69,46 @@
             this.tpVertex.Text = "Vertex";
             this.tpVertex.ToolTipText = "Shader 1: Vertex (mandatory)";
             this.tpVertex.UseVisualStyleBackColor = true;
+            // 
+            // fctbVertex
+            // 
+            this.fctbVertex.AutoCompleteBracketsList = new char[] {
+        '(',
+        ')',
+        '{',
+        '}',
+        '[',
+        ']',
+        '\"',
+        '\"',
+        '\'',
+        '\''};
+            this.fctbVertex.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]" +
+    "*(?<range>:)\\s*(?<range>[^;]+);\r\n";
+            this.fctbVertex.AutoScrollMinSize = new System.Drawing.Size(594, 98);
+            this.fctbVertex.BackBrush = null;
+            this.fctbVertex.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
+            this.fctbVertex.CharHeight = 14;
+            this.fctbVertex.CharWidth = 8;
+            this.fctbVertex.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.fctbVertex.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.fctbVertex.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fctbVertex.IsReplaceMode = false;
+            this.fctbVertex.Language = FastColoredTextBoxNS.Language.CSharp;
+            this.fctbVertex.LeftBracket = '(';
+            this.fctbVertex.LeftBracket2 = '{';
+            this.fctbVertex.Location = new System.Drawing.Point(3, 3);
+            this.fctbVertex.Name = "fctbVertex";
+            this.fctbVertex.Paddings = new System.Windows.Forms.Padding(0);
+            this.fctbVertex.RightBracket = ')';
+            this.fctbVertex.RightBracket2 = '}';
+            this.fctbVertex.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.fctbVertex.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fctbVertex.ServiceColors")));
+            this.fctbVertex.ShowLineNumbers = false;
+            this.fctbVertex.Size = new System.Drawing.Size(466, 326);
+            this.fctbVertex.TabIndex = 0;
+            this.fctbVertex.Text = resources.GetString("fctbVertex.Text");
+            this.fctbVertex.Zoom = 100;
             // 
             // tpTessellationControl
             // 
@@ -123,6 +169,8 @@
             this.Name = "TgEntityEdit";
             this.Size = new System.Drawing.Size(480, 360);
             this.ShadersTabControl.ResumeLayout(false);
+            this.tpVertex.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.fctbVertex)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -136,5 +184,6 @@
         public System.Windows.Forms.TabPage tpGeometry;
         public System.Windows.Forms.TabPage tpFragment;
         public System.Windows.Forms.TabPage tpCompute;
+        public FastColoredTextBoxNS.FastColoredTextBox fctbVertex;
     }
 }
