@@ -123,12 +123,12 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl ShadersTabControl;
-        private System.Windows.Forms.TabPage tpVertex;
-        private System.Windows.Forms.TabPage tpTessellationControl;
-        private System.Windows.Forms.TabPage tpTessellationEvaluation;
-        private System.Windows.Forms.TabPage tpGeometry;
-        private System.Windows.Forms.TabPage tpFragment;
-        private System.Windows.Forms.TabPage tpCompute;
+        public System.Windows.Forms.TabControl ShadersTabControl;
+        public System.Windows.Forms.TabPage tpVertex;
+        public System.Windows.Forms.TabPage tpTessellationControl;
+        public System.Windows.Forms.TabPage tpTessellationEvaluation;
+        public System.Windows.Forms.TabPage tpGeometry;
+        public System.Windows.Forms.TabPage tpFragment;
+        public System.Windows.Forms.TabPage tpCompute;
     }
 }

@@ -33,10 +33,15 @@
 
         #endregion
 
+        #region Private Fields
+
+        private readonly TraceTableController TraceTableController;
+
+        #endregion
+
         #region Private Properties
 
         private DataGridViewColumnCollection Columns => TraceTableController.TraceTable.Columns;
-        private readonly TraceTableController TraceTableController;
 
         #endregion
     }

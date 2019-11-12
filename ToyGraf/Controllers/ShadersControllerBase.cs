@@ -22,10 +22,10 @@
         {
             Updating = true;
             LoadItems();
-            if (ColumnsDialog.ShowDialog(owner) == DialogResult.OK)
-                SaveItems();
             Updating = false;
             UpdateCbAll();
+            if (ColumnsDialog.ShowDialog(owner) == DialogResult.OK)
+                SaveItems();
         }
 
         #endregion

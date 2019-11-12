@@ -33,16 +33,7 @@
 
         #endregion
 
-        #region Protected Properties
-
-        protected override Control Editor => TraceTable;
-        protected override Control EditorParent => SceneForm.SplitContainer1.Panel2;
-
-        #endregion
-
-        #region Protected Methods
-
-        protected override void Collapse(bool collapse) => SceneForm.SplitContainer1.Panel2Collapsed = collapse;
+        #region Protected Internal Methods
 
         protected internal override void Refresh()
         {
@@ -54,6 +45,19 @@
                     TraceTable.DataSource = traces;
             }
         }
+
+        #endregion
+
+        #region Protected Properties
+
+        protected override Control Editor => TraceTable;
+        protected override Control EditorParent => SceneForm.SplitContainer1.Panel2;
+
+        #endregion
+
+        #region Protected Methods
+
+        protected override void Collapse(bool collapse) => SceneForm.SplitContainer1.Panel2Collapsed = collapse;
 
         #endregion
 

@@ -69,6 +69,19 @@
 
         #endregion
 
+        #region Protected Internal Methods
+
+        protected internal override void Refresh()
+        {
+            if (EditorVisible)
+            {
+                RefreshDataSource();
+                PropertyGrid.Refresh();
+            }
+        }
+
+        #endregion
+
         #region Protected Properties
 
         protected override Control Editor => PropertyGrid;
@@ -79,15 +92,6 @@
         #region Protected Methods
 
         protected override void Collapse(bool collapse) => SceneForm.SplitContainer2.Panel2Collapsed = collapse;
-
-        protected internal override void Refresh()
-        {
-            if (EditorVisible)
-            {
-                RefreshDataSource();
-                PropertyGrid.Refresh();
-            }
-        }
 
         #endregion
 
