@@ -4,7 +4,7 @@
     using ToyGraf.Controls;
     using ToyGraf.Views;
 
-    internal class EntityEditController : DockableEditController
+    internal class EntityEditController : HostController
     {
         #region Constructor
 
@@ -23,6 +23,7 @@
         #region Protected Overrides
 
         protected override Control EditControl => EntityEdit;
+        protected override Control ParentControl => SceneForm.SplitContainer3.Panel1;
 
         protected internal override void Refresh()
         {
@@ -32,8 +33,7 @@
         protected override void UpdateConfiguration()
         {
             SceneForm.SplitContainer3.Panel1Collapsed = !(_EditControlDocked && _EditControlVisible);
-            HostController.FormVisible = !_EditControlDocked && _EditControlVisible;
-
+            base.UpdateConfiguration();
         }
 
         #endregion

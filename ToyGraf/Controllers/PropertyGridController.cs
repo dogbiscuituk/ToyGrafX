@@ -9,7 +9,7 @@
     using ToyGraf.Models;
     using ToyGraf.Views;
 
-    internal class PropertyGridController : DockableEditController
+    internal class PropertyGridController : HostController
     {
         #region Constructor
 
@@ -70,6 +70,7 @@
         #endregion
 
         protected override Control EditControl => PropertyGrid;
+        protected override Control ParentControl => SceneForm.SplitContainer2.Panel2;
 
         protected internal override void Refresh()
         {
@@ -83,7 +84,7 @@
         protected override void UpdateConfiguration()
         {
             SceneForm.SplitContainer2.Panel2Collapsed = !(_EditControlDocked && _EditControlVisible);
-            HostController.FormVisible = !_EditControlDocked && _EditControlVisible;
+            base.UpdateConfiguration();
         }
 
         #region Private Classes

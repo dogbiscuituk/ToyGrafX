@@ -8,7 +8,7 @@
     using ToyGraf.Models;
     using ToyGraf.Views;
 
-    internal class TraceTableController : DockableEditController
+    internal class TraceTableController : HostController
     {
         #region Constructors
 
@@ -36,6 +36,7 @@
         #region Protected Overrides
 
         protected override Control EditControl => TraceTable;
+        protected override Control ParentControl => SceneForm.SplitContainer1.Panel2;
 
         protected internal override void Refresh()
         {
@@ -51,7 +52,7 @@
         protected override void UpdateConfiguration()
         {
             SceneForm.SplitContainer1.Panel2Collapsed = !(_EditControlDocked && _EditControlVisible);
-            HostController.FormVisible = !_EditControlDocked && _EditControlVisible;
+            base.UpdateConfiguration();
         }
 
         #endregion
