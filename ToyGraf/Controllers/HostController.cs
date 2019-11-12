@@ -18,12 +18,6 @@
 
         #endregion
 
-        #region Internal Events
-
-        internal event EventHandler<FormClosingEventArgs> HostFormClosing;
-
-        #endregion
-
         #region Protected Internal Properties
 
         protected internal bool EditorVisible
@@ -111,19 +105,16 @@
             {
                 if (FormVisible == value)
                     return;
+                Control
+                    From = value ? EditorParent : HostForm,
+                    To = value ? HostForm : EditorParent;
+                From.Controls.Remove(Editor);
+                To.Controls.Add(Editor);
+                Editor.BringToFront();
                 if (value)
-                {
-                    EditorParent.Controls.Remove(Editor);
-                    HostForm.Controls.Add(Editor);
                     HostForm.Show(SceneForm);
-                }
                 else
-                {
-                    HostForm.Controls.Remove(Editor);
-                    EditorParent.Controls.Add(Editor);
-                    Editor.BringToFront();
                     HostForm.Hide();
-                }
             }
         }
 
@@ -133,19 +124,22 @@
 
         #region Private Event Handlers
 
-        private void HostController_HostFormClosing(object sender, FormClosingEventArgs e) =>
-            EditorVisible = false;
-
         private void HostForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            HostFormClosing?.Invoke(sender, e);
-            if (e.CloseReason == CloseReason.UserClosing)
+            switch (e.CloseReason)
             {
-                e.Cancel = true;
-                HostForm.Hide();
-                return;
+                case CloseReason.UserClosing:
+                    EditorVisible = false;
+                    HostForm.Hide();
+                    goto case CloseReason.FormOwnerClosing;
+                case CloseReason.FormOwnerClosing:
+                    e.Cancel = true;
+                    break;
+                case CloseReason.ApplicationExitCall:
+                default:
+                    HostForm.FormClosing -= HostForm_FormClosing;
+                    break;
             }
-            HostForm.FormClosing -= HostForm_FormClosing;
         }
 
         #endregion
@@ -160,7 +154,7 @@
                 Location = Editor.PointToScreen(new Point()),
                 Text = _Caption
             };
-            hostForm.FormClosing += HostController_HostFormClosing;
+            hostForm.FormClosing += HostForm_FormClosing;
             return hostForm;
         }
 
