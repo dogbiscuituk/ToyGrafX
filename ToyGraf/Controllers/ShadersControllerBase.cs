@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Controllers
 {
+    using System.Drawing;
     using System.Windows.Forms;
     using ToyGraf.Views;
 
@@ -7,9 +8,10 @@
     {
         #region Constructor
 
-        protected ShadersControllerBase()
+        protected ShadersControllerBase(string caption)
         {
             ColumnsDialog = new ColumnsDialog();
+            ColumnsDialog.Text = caption;
             ColumnsDialog.cbAll.CheckedChanged += CbAll_CheckedChanged;
             ColumnsDialog.ColumnsListBox.ItemCheck += ColumnsListBox_ItemCheck;
         }
@@ -24,6 +26,7 @@
             LoadItems();
             Updating = false;
             UpdateCbAll();
+            ColumnsDialog.Size = new Size(ColumnsDialog.Width, 18 * Items.Count + 130);
             if (ColumnsDialog.ShowDialog(owner) == DialogResult.OK)
                 SaveItems();
         }

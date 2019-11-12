@@ -12,16 +12,13 @@
         #region Constructor
 
         internal EntityEditController(SceneController sceneController)
-            : base(sceneController, "Entity Editor")
-        {
-            Init();
-        }
+            : base(sceneController, "Entity Editor") => Init();
 
         #endregion
 
         #region Internal Fields
 
-        internal List<TabPage> AllTabPages;
+        internal List<TabPage> AllTabs;
 
         #endregion
 
@@ -78,15 +75,15 @@
             SceneForm.PopupEntityEditFloat.Click += PopupEditorFloat_Click;
             SceneForm.PopupEntityEditHide.Click += PopupEditorHide_Click;
             SceneForm.PopupEntityEditMenu.Opening += PopupEntityEditMenu_Opening;
-            SceneForm.PopupEntityEditShaders.Click += PopupEntityEditShaders_Click;
+            SceneForm.PopupEntityEditVisibleTabs.Click += PopupEntityEditShaders_Click;
             SceneForm.ViewEntityEditor.Click += ToggleEditor;
             SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
         }
 
         private void InitTabPages()
         {
-            AllTabPages = new List<TabPage>();
-            AllTabPages.AddRange(EntityEdit.ShadersTabControl.TabPages.OfType<TabPage>());
+            AllTabs = new List<TabPage>();
+            AllTabs.AddRange(EntityEdit.ShadersTabControl.TabPages.OfType<TabPage>());
         }
 
         #endregion

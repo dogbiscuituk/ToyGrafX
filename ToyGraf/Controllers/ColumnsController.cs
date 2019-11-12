@@ -7,10 +7,7 @@
         #region Constructor
 
         internal ColumnsController(TraceTableController traceTableController)
-            : base()
-        {
-            TraceTableController = traceTableController;
-        }
+            : base("Visible Columns") => TraceTableController = traceTableController;
 
         #endregion
 

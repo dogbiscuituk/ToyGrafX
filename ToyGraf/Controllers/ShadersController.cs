@@ -9,22 +9,22 @@
         #region Constructor
 
         internal ShadersController(EntityEditController entityEditController)
-            : base() => EntityEditController = entityEditController;
+            : base("Visible Tabs") => EntityEditController = entityEditController;
 
         #endregion
 
         protected override void LoadItems()
         {
-            foreach (var tabPage in AllTabPages)
-                Items.Add(tabPage.Text, VisibleTabPages.Contains(tabPage));
+            foreach (var tabPage in AllTabs)
+                Items.Add(tabPage.Text, VisibleTabs.Contains(tabPage));
         }
 
         protected override void SaveItems()
         {
-            VisibleTabPages.Clear();
+            VisibleTabs.Clear();
             for (var index = 0; index < Items.Count; index++)
                 if (ColumnsListBox.GetItemChecked(index))
-                    VisibleTabPages.Add(AllTabPages[index]);
+                    VisibleTabs.Add(AllTabs[index]);
         }
 
         #region Private Fields
@@ -35,10 +35,10 @@
 
         #region Private Properties
 
-        private List<TabPage> AllTabPages => EntityEditController.AllTabPages;
-        private TgEntityEdit EntityEdit => EntityEditController.EntityEdit;
-        private TabControl TabControl => EntityEdit.ShadersTabControl;
-        private TabControl.TabPageCollection VisibleTabPages => TabControl.TabPages;
+        private List<TabPage> AllTabs => EntityEditController.AllTabs;
+        private TgEntityEdit Editor => EntityEditController.EntityEdit;
+        private TabControl TabControl => Editor.ShadersTabControl;
+        private TabControl.TabPageCollection VisibleTabs => TabControl.TabPages;
 
         #endregion
     }
