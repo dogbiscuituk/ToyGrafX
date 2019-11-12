@@ -14,7 +14,7 @@
 
     public static class CollectionController
     {
-        #region Public Interface
+        #region Public Methods
 
         public static void Start() => AttachEventHandlers();
 
@@ -30,7 +30,7 @@
 
         private static CommandProcessor CommandProcessor => SceneController?.CommandProcessor;
         private static Scene Scene => CommandProcessor?.Scene;
-        private static RenderController RenderController => SceneController.RenderController;
+        private static RenderController RenderController => SceneController?.RenderController;
         private static SceneController SceneController;
         private static List<Trace> Traces => Scene?.Traces;
 
@@ -50,7 +50,10 @@
             {
                 form.Size = new Size(720, 540);
                 form.Text = "Properties";
-                if (form.Owner is SceneForm sceneForm)
+                var owner = form.Owner;
+                if (owner is HostForm)
+                    owner = owner.Owner;
+                if (owner is SceneForm sceneForm)
                 {
                     form.Font = sceneForm.Font;
                     SceneController = AppController.SceneControllers
@@ -91,6 +94,7 @@
             TgFileNameEditor.InitDialog -= TgFileNameEditor_InitDialog;
 
         }
+
         private static void EndUpdate() => SceneController.EndUpdate();
 
         private static PropertyGrid FindPropertyGrid(object sender) =>
