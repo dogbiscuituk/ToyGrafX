@@ -13,34 +13,7 @@
         protected HostController(SceneController sceneController, string caption)
         {
             SceneController = sceneController;
-            Caption = caption;
-        }
-
-        #endregion
-
-        #region InternalProperties
-
-        internal bool FormVisible
-        {
-            get => HostForm.Visible;
-            set
-            {
-                if (HostForm.Visible == value)
-                    return;
-                if (value)
-                {
-                    ParentControl.Controls.Remove(EditControl);
-                    HostForm.Controls.Add(EditControl);
-                    HostForm.Show(SceneForm);
-                }
-                else
-                {
-                    HostForm.Controls.Remove(EditControl);
-                    ParentControl.Controls.Add(EditControl);
-                    EditControl.BringToFront();
-                    HostForm.Hide();
-                }
-            }
+            _Caption = caption;
         }
 
         #endregion
@@ -51,11 +24,26 @@
 
         #endregion
 
-        #region Protected Fields
+        #region Protected Internal Properties
 
-        protected bool
-            _EditControlDocked = true,
-            _EditControlVisible = true;
+        protected internal bool EditorVisible
+        {
+            get => _EditorVisible;
+            set
+            {
+                if (EditorVisible == value)
+                    return;
+                _EditorVisible = value;
+                UpdateConfiguration();
+                Refresh();
+            }
+        }
+
+        protected internal abstract void Refresh();
+
+        #endregion
+
+        #region Protected Fields
 
         protected readonly SceneController SceneController;
 
@@ -63,35 +51,22 @@
 
         #region Protected Properties
 
-        protected abstract Control EditControl { get; }
+        protected abstract Control Editor { get; }
 
-        protected bool EditControlDocked
+        protected bool EditorDocked
         {
-            get => _EditControlDocked;
+            get => _EditorDocked;
             set
             {
-                if (EditControlDocked == value)
+                if (EditorDocked == value)
                     return;
-                _EditControlDocked = value;
+                _EditorDocked = value;
                 UpdateConfiguration();
-                FormVisible = !value && _EditControlVisible;
+                FormVisible = EditorVisible && !EditorDocked;
             }
         }
 
-        protected internal bool EditControlVisible
-        {
-            get => _EditControlVisible;
-            set
-            {
-                if (EditControlVisible == value)
-                    return;
-                _EditControlVisible = value;
-                UpdateConfiguration();
-                Refresh();
-            }
-        }
-
-        protected abstract Control ParentControl { get; }
+        protected abstract Control EditorParent { get; }
 
         protected Scene Scene => SceneController.Scene;
 
@@ -101,36 +76,56 @@
 
         #region Protected Event Handlers
 
-        protected void PopupEditControlFloat_Click(object sender, EventArgs e) =>
-            EditControlDocked = !EditControlDocked;
+        protected void PopupEditorFloat_Click(object sender, EventArgs e) =>
+            EditorDocked = !EditorDocked;
 
-        protected void PopupEditControlHide_Click(object sender, EventArgs e) =>
-            EditControlVisible = false;
+        protected void PopupEditorHide_Click(object sender, EventArgs e) =>
+            EditorVisible = false;
 
-        protected void ToggleEditControl(object sender, EventArgs e) =>
-            EditControlVisible = !EditControlVisible;
+        protected void ToggleEditor(object sender, EventArgs e) =>
+            EditorVisible = !EditorVisible;
 
         #endregion
 
         #region Protected Methods
 
-        protected internal abstract void Refresh();
-
-        protected virtual void UpdateConfiguration()
-        {
-            FormVisible = !_EditControlDocked && _EditControlVisible;
-        }
+        protected abstract void Collapse(bool collapse);
 
         #endregion
 
         #region Private Fields
 
-        private readonly string Caption;
+        private readonly string _Caption;
+        private bool _EditorDocked = true;
+        private bool _EditorVisible = true;
         private HostForm _HostForm;
 
         #endregion
 
         #region Private Properties
+
+        private bool FormVisible
+        {
+            get => HostForm.Visible;
+            set
+            {
+                if (FormVisible == value)
+                    return;
+                if (value)
+                {
+                    EditorParent.Controls.Remove(Editor);
+                    HostForm.Controls.Add(Editor);
+                    HostForm.Show(SceneForm);
+                }
+                else
+                {
+                    HostForm.Controls.Remove(Editor);
+                    EditorParent.Controls.Add(Editor);
+                    Editor.BringToFront();
+                    HostForm.Hide();
+                }
+            }
+        }
 
         private HostForm HostForm => _HostForm ?? (_HostForm = CreateHostForm());
 
@@ -139,7 +134,7 @@
         #region Private Event Handlers
 
         private void HostController_HostFormClosing(object sender, FormClosingEventArgs e) =>
-            EditControlVisible = false;
+            EditorVisible = false;
 
         private void HostForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -161,12 +156,18 @@
         {
             var hostForm = new HostForm
             {
-                ClientSize = EditControl.Size,
-                Location = EditControl.PointToScreen(new Point()),
-                Text = Caption
+                ClientSize = Editor.Size,
+                Location = Editor.PointToScreen(new Point()),
+                Text = _Caption
             };
             hostForm.FormClosing += HostController_HostFormClosing;
             return hostForm;
+        }
+
+        private void UpdateConfiguration()
+        {
+            Collapse(!(EditorDocked && EditorVisible));
+            FormVisible = EditorVisible && !EditorDocked;
         }
 
         #endregion

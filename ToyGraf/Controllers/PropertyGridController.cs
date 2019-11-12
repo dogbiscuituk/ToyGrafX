@@ -21,10 +21,10 @@
                 HiddenProperties = new[] { "Traces" }
             };
             SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
-            SceneForm.ViewPropertyGrid.Click += ToggleEditControl;
+            SceneForm.ViewPropertyGrid.Click += ToggleEditor;
             SceneForm.PopupPropertyGridMenu.Opening += PopupPropertyGridMenu_Opening;
-            SceneForm.PopupPropertyGridFloat.Click += PopupEditControlFloat_Click;
-            SceneForm.PopupPropertyGridHide.Click += PopupEditControlHide_Click;
+            SceneForm.PopupPropertyGridFloat.Click += PopupEditorFloat_Click;
+            SceneForm.PopupPropertyGridHide.Click += PopupEditorHide_Click;
             SceneForm.PopupSubjectMenu.Opening += PopupSubjectMenu_Opening;
             SceneForm.PopupSubjectScene.Click += PopupSubject_Click;
             SceneForm.PopupSubjectSelectedTraces.Click += PopupSubject_Click;
@@ -69,23 +69,27 @@
 
         #endregion
 
-        protected override Control EditControl => PropertyGrid;
-        protected override Control ParentControl => SceneForm.SplitContainer2.Panel2;
+        #region Protected Properties
+
+        protected override Control Editor => PropertyGrid;
+        protected override Control EditorParent => SceneForm.SplitContainer2.Panel2;
+
+        #endregion
+
+        #region Protected Methods
+
+        protected override void Collapse(bool collapse) => SceneForm.SplitContainer2.Panel2Collapsed = collapse;
 
         protected internal override void Refresh()
         {
-            if (EditControlVisible)
+            if (EditorVisible)
             {
                 RefreshDataSource();
                 PropertyGrid.Refresh();
             }
         }
 
-        protected override void UpdateConfiguration()
-        {
-            SceneForm.SplitContainer2.Panel2Collapsed = !(_EditControlDocked && _EditControlVisible);
-            base.UpdateConfiguration();
-        }
+        #endregion
 
         #region Private Classes
 
@@ -121,7 +125,7 @@
         #region Private Event Handlers
 
         private void PopupPropertyGridMenu_Opening(object sender, CancelEventArgs e) =>
-            SceneForm.PopupPropertyGridFloat.Text = EditControlDocked ? "&Undock" : "&Dock";
+            SceneForm.PopupPropertyGridFloat.Text = EditorDocked ? "&Undock" : "&Dock";
 
         private void PopupSubjectMenu_Opening(object sender, CancelEventArgs e)
         {
@@ -142,7 +146,7 @@
         private void SubjectButton_ButtonClick(object sender, System.EventArgs e) => SelectNextSubject();
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
-            SceneForm.ViewPropertyGrid.Checked = EditControlVisible;
+            SceneForm.ViewPropertyGrid.Checked = EditorVisible;
 
         #endregion
 

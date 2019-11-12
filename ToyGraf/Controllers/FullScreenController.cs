@@ -45,9 +45,9 @@
                 | (Form.MainMenuStrip.Visible ? FormElements.MainMenu : 0)
                 | (Form.Toolbar.Visible ? FormElements.Toolbar : 0)
                 | (Form.StatusBar.Visible ? FormElements.StatusBar : 0)
-                | (EntityEditController.EditControlVisible ? FormElements.EntityEdit : 0)
-                | (PropertyGridController.EditControlVisible ? FormElements.PropertyGrid : 0)
-                | (TraceTableController.EditControlVisible ? FormElements.TraceTable : 0),
+                | (EntityEditController.EditorVisible ? FormElements.EntityEdit : 0)
+                | (PropertyGridController.EditorVisible ? FormElements.PropertyGrid : 0)
+                | (TraceTableController.EditorVisible ? FormElements.TraceTable : 0),
                 WindowState = Form.WindowState
             };
             set
@@ -57,9 +57,9 @@
                 Form.MainMenuStrip.Visible = (elements & FormElements.MainMenu) != 0;
                 Form.Toolbar.Visible = (elements & FormElements.Toolbar) != 0;
                 Form.StatusBar.Visible = (elements & FormElements.StatusBar) != 0;
-                EntityEditController.EditControlVisible = (elements & FormElements.EntityEdit) != 0;
-                PropertyGridController.EditControlVisible = (elements & FormElements.PropertyGrid) != 0;
-                TraceTableController.EditControlVisible = (elements & FormElements.TraceTable) != 0;
+                EntityEditController.EditorVisible = (elements & FormElements.EntityEdit) != 0;
+                PropertyGridController.EditorVisible = (elements & FormElements.PropertyGrid) != 0;
+                TraceTableController.EditorVisible = (elements & FormElements.TraceTable) != 0;
                 Form.WindowState = value.WindowState;
             }
         }

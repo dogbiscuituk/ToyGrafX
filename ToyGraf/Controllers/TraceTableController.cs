@@ -10,7 +10,7 @@
 
     internal class TraceTableController : HostController
     {
-        #region Constructors
+        #region Constructor
 
         internal TraceTableController(SceneController sceneController)
             : base(sceneController, "Trace Table")
@@ -33,26 +33,26 @@
 
         #endregion
 
-        #region Protected Overrides
+        #region Protected Properties
 
-        protected override Control EditControl => TraceTable;
-        protected override Control ParentControl => SceneForm.SplitContainer1.Panel2;
+        protected override Control Editor => TraceTable;
+        protected override Control EditorParent => SceneForm.SplitContainer1.Panel2;
+
+        #endregion
+
+        #region Protected Methods
+
+        protected override void Collapse(bool collapse) => SceneForm.SplitContainer1.Panel2Collapsed = collapse;
 
         protected internal override void Refresh()
         {
-            if (EditControlVisible)
+            if (EditorVisible)
             {
                 TraceTable.DataSource = null;
                 var traces = Scene.Traces;
                 if (traces.Any())
                     TraceTable.DataSource = traces;
             }
-        }
-
-        protected override void UpdateConfiguration()
-        {
-            SceneForm.SplitContainer1.Panel2Collapsed = !(_EditControlDocked && _EditControlVisible);
-            base.UpdateConfiguration();
         }
 
         #endregion
@@ -75,13 +75,13 @@
             new ColumnsController(this).ShowDialog(SceneForm);
 
         private void PopupTraceTableMenu_Opening(object sender, CancelEventArgs e) =>
-            SceneForm.PopupTraceTableFloat.Text = EditControlDocked ? "&Undock" : "&Dock";
+            SceneForm.PopupTraceTableFloat.Text = EditorDocked ? "&Undock" : "&Dock";
 
         private void TraceTable_SelectionChanged(object sender, EventArgs e) =>
             OnSelectionChanged();
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
-            SceneForm.ViewTraceTable.Checked = EditControlVisible;
+            SceneForm.ViewTraceTable.Checked = EditorVisible;
 
         #endregion
 
@@ -118,10 +118,10 @@
             SceneForm.EditSelectAll.Click += EditSelectAll_Click;
             SceneForm.EditInvertSelection.Click += EditInvertSelection_Click;
             SceneForm.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
-            SceneForm.ViewTraceTable.Click += ToggleEditControl;
+            SceneForm.ViewTraceTable.Click += ToggleEditor;
             SceneForm.PopupTraceTableMenu.Opening += PopupTraceTableMenu_Opening;
-            SceneForm.PopupTraceTableFloat.Click += PopupEditControlFloat_Click;
-            SceneForm.PopupTraceTableHide.Click += PopupEditControlHide_Click;
+            SceneForm.PopupTraceTableFloat.Click += PopupEditorFloat_Click;
+            SceneForm.PopupTraceTableHide.Click += PopupEditorHide_Click;
             SceneForm.PopupTraceTableColumns.Click += PopupTraceTableColumns_Click;
         }
 
