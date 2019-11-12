@@ -76,7 +76,7 @@
             SelectAll();
 
         private void PopupTraceTableColumns_Click(object sender, EventArgs e) =>
-            new ColumnsController(this).ShowDialog(SceneForm);
+            new ColumnsController(this).ShowDialog(Editor);
 
         private void PopupTraceTableMenu_Opening(object sender, CancelEventArgs e) =>
             SceneForm.PopupTraceTableFloat.Text = EditorDocked ? "&Undock" : "&Dock";

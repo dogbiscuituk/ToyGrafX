@@ -61,6 +61,7 @@
             this.tpVertex.Size = new System.Drawing.Size(472, 332);
             this.tpVertex.TabIndex = 0;
             this.tpVertex.Text = "Vertex";
+            this.tpVertex.ToolTipText = "Shader 1: Vertex (mandatory)";
             this.tpVertex.UseVisualStyleBackColor = true;
             // 
             // tpTessellationControl
@@ -69,7 +70,8 @@
             this.tpTessellationControl.Name = "tpTessellationControl";
             this.tpTessellationControl.Size = new System.Drawing.Size(472, 332);
             this.tpTessellationControl.TabIndex = 1;
-            this.tpTessellationControl.Text = "Tess Control";
+            this.tpTessellationControl.Text = "Tess Ctrl";
+            this.tpTessellationControl.ToolTipText = "Shader 2: Tessellation Control";
             this.tpTessellationControl.UseVisualStyleBackColor = true;
             // 
             // tpTessellationEvaluation
@@ -78,7 +80,8 @@
             this.tpTessellationEvaluation.Name = "tpTessellationEvaluation";
             this.tpTessellationEvaluation.Size = new System.Drawing.Size(472, 332);
             this.tpTessellationEvaluation.TabIndex = 2;
-            this.tpTessellationEvaluation.Text = "Tess Evaluation";
+            this.tpTessellationEvaluation.Text = "Tess Eval";
+            this.tpTessellationEvaluation.ToolTipText = "Shader 3: Tessellation Evaluation";
             this.tpTessellationEvaluation.UseVisualStyleBackColor = true;
             // 
             // tpGeometry
@@ -88,6 +91,7 @@
             this.tpGeometry.Size = new System.Drawing.Size(472, 332);
             this.tpGeometry.TabIndex = 3;
             this.tpGeometry.Text = "Geometry";
+            this.tpGeometry.ToolTipText = "Shader 4: Geometry";
             this.tpGeometry.UseVisualStyleBackColor = true;
             // 
             // tpFragment
@@ -97,6 +101,7 @@
             this.tpFragment.Size = new System.Drawing.Size(472, 332);
             this.tpFragment.TabIndex = 4;
             this.tpFragment.Text = "Fragment";
+            this.tpFragment.ToolTipText = "Shader 5: Fragment (mandatory)";
             this.tpFragment.UseVisualStyleBackColor = true;
             // 
             // tpCompute
@@ -106,6 +111,7 @@
             this.tpCompute.Size = new System.Drawing.Size(472, 332);
             this.tpCompute.TabIndex = 5;
             this.tpCompute.Text = "Compute";
+            this.tpCompute.ToolTipText = "Shader 6: Compute";
             this.tpCompute.UseVisualStyleBackColor = true;
             // 
             // TgEntityEdit

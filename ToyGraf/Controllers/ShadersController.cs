@@ -16,7 +16,7 @@
         protected override void LoadItems()
         {
             foreach (var tabPage in AllTabs)
-                Items.Add(tabPage.Text, VisibleTabs.Contains(tabPage));
+                Items.Add(tabPage.ToolTipText, VisibleTabs.Contains(tabPage));
         }
 
         protected override void SaveItems()

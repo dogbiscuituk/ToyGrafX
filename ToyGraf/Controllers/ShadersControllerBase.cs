@@ -10,8 +10,7 @@
 
         protected ShadersControllerBase(string caption)
         {
-            ColumnsDialog = new ColumnsDialog();
-            ColumnsDialog.Text = caption;
+            ColumnsDialog = new ColumnsDialog { Text = caption };
             ColumnsDialog.cbAll.CheckedChanged += CbAll_CheckedChanged;
             ColumnsDialog.ColumnsListBox.ItemCheck += ColumnsListBox_ItemCheck;
         }
@@ -20,14 +19,15 @@
 
         #region Internal Methods
 
-        internal void ShowDialog(IWin32Window owner)
+        internal void ShowDialog(Control editor)
         {
             Updating = true;
             LoadItems();
             Updating = false;
             UpdateCbAll();
+            ColumnsDialog.Location = editor.PointToScreen(editor.Location);
             ColumnsDialog.Size = new Size(ColumnsDialog.Width, 18 * Items.Count + 130);
-            if (ColumnsDialog.ShowDialog(owner) == DialogResult.OK)
+            if (ColumnsDialog.ShowDialog(editor.FindForm()) == DialogResult.OK)
                 SaveItems();
         }
 

@@ -52,7 +52,7 @@
         #region Private Event Handlers
 
         private void PopupEntityEditShaders_Click(object sender, EventArgs e) =>
-            new ShadersController(this).ShowDialog(SceneForm);
+            new ShadersController(this).ShowDialog(Editor);
 
         private void PopupEntityEditMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e) =>
             SceneForm.PopupEntityEditFloat.Text = EditorDocked ? "&Undock" : "&Dock";
