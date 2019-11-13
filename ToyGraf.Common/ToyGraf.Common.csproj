@@ -61,6 +61,7 @@
     <Compile Include="Types\ColourFormat.cs" />
     <Compile Include="Types\Euler3f.cs" />
     <Compile Include="Types\FillType.cs" />
+    <Compile Include="Types\GLSL4.60.7.cs" />
     <Compile Include="Types\GPUStatus.cs" />
     <Compile Include="Types\Entity.cs" />
     <Compile Include="Types\Pattern.cs" />
