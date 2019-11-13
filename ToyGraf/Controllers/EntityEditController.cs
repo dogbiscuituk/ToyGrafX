@@ -68,6 +68,7 @@
         {
             InitSceneForm();
             InitTabPages();
+            var controller = new FctbController(EntityEdit.fctbVertex);
         }
 
         private void InitSceneForm()
