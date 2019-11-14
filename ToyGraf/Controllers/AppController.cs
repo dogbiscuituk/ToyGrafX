@@ -4,8 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Windows.Forms;
-    using ToyGraf.Models.Enums;
-    using ToyGraf.Models.Structs;
+    using ToyGraf.Models;
     using ToyGraf.Properties;
     using ToyGraf.Views;
 

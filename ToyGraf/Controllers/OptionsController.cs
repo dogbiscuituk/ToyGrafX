@@ -2,7 +2,7 @@
 {
     using System;
     using System.Windows.Forms;
-    using ToyGraf.Models.Structs;
+    using ToyGraf.Models;
     using ToyGraf.Views;
 
     internal class OptionsController : IDisposable

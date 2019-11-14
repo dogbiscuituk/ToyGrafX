@@ -123,7 +123,7 @@
 
         public static readonly string
             Directives = $@"^\s*#\s*\b{Concat(_Directives)}\b.*$",
-            Functions = $@"^\s*#\s*\b{Concat(_Functions)}\b.*$",
+            Functions = $@"\b{Concat(_Functions)}\b",
             Keywords = $@"\b{Concat(_Keywords)}\b",
             ReservedWords = $@"\b{Concat(_ReservedWords)}\b";
 

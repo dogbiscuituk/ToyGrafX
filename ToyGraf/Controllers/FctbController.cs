@@ -139,9 +139,9 @@
             BlueStyle = NewTextStyle(Brushes.Blue),
             // BoldStyle = NewTextStyle(null, FontStyle.Bold | FontStyle.Underline),
             BrownStyle = NewTextStyle(Brushes.Brown, FontStyle.Italic),
-            CyanStyle = NewTextStyle(Brushes.Cyan),
+            CyanStyle = NewTextStyle(Brushes.DarkTurquoise),
             // GrayStyle = NewTextStyle(Brushes.Gray),
-            GreenStyle = NewTextStyle(Brushes.Green, FontStyle.Italic),
+            GreenStyle = NewTextStyle(Brushes.MediumSeaGreen, FontStyle.Italic),
             MagentaStyle = NewTextStyle(Brushes.Magenta),
             MaroonStyle = NewTextStyle(Brushes.Maroon),
             RedStyle = NewTextStyle(Brushes.Red);

@@ -1,5 +1,7 @@
-﻿namespace ToyGraf.Models.Structs
+﻿namespace ToyGraf.Models
 {
+    using System.Drawing;
+
     public struct Options
     {
         public string FilesFolderPath { get; set; }

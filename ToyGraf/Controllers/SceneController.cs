@@ -12,7 +12,6 @@
     using ToyGraf.Common.Types;
     using ToyGraf.Common.Utility;
     using ToyGraf.Models;
-    using ToyGraf.Models.Enums;
     using ToyGraf.Properties;
     using ToyGraf.Views;
 

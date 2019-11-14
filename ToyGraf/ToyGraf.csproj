@@ -86,7 +86,7 @@
     <Compile Include="Controllers\ShadersController.cs" />
     <Compile Include="Controllers\TraceTableController.cs" />
     <Compile Include="Models\Clock.cs" />
-    <Compile Include="Models\Enums\FilterIndex.cs" />
+    <Compile Include="Models\FilterIndex.cs" />
     <Compile Include="Models\Descriptions.cs" />
     <Compile Include="Models\DisplayNames.cs" />
     <Compile Include="Models\GLInfo.cs" />
@@ -94,7 +94,9 @@
     <Compile Include="Models\GLMode.cs" />
     <Compile Include="Models\GLModeTypeConverter.cs" />
     <Compile Include="Models\Scene.cs" />
-    <Compile Include="Models\Structs\Options.cs" />
+    <Compile Include="Models\Options.cs" />
+    <Compile Include="Models\TextStyleInfo.cs" />
+    <Compile Include="Models\TextStyleInfos.cs" />
     <Compile Include="Models\Trace.cs" />
     <Compile Include="Views\AboutDialog.cs">
       <SubType>Form</SubType>
