@@ -68,7 +68,17 @@
         {
             InitSceneForm();
             InitTabPages();
+            InitFctbControllers();
+        }
+
+        private void InitFctbControllers()
+        {
             new FctbController(EntityEdit.fctbVertex);
+            new FctbController(EntityEdit.fctbTessellationControl);
+            new FctbController(EntityEdit.fctbTessellationEvaluation);
+            new FctbController(EntityEdit.fctbGeometry);
+            new FctbController(EntityEdit.fctbFragment);
+            new FctbController(EntityEdit.fctbCompute);
         }
 
         private void InitSceneForm()

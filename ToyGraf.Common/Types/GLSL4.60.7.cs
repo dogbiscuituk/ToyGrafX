@@ -8,17 +8,60 @@
     /// </summary>
     public class GLSL
     {
-        #region Public Properties
+        #region Private Fields
 
-        protected static readonly string[]
+        private static readonly string[]
 
-            Directives = new[]
+            _Directives = new[]
             {
                 "define", "elif", "else", "endif", "error", "extension", "if", "ifdef", "ifndef",
                 "line", "pragma", "undef", "version"
             },
 
-            Keywords = new[]
+            _Functions = new[]
+            {
+                "abs", "acos", "acosh", "all", "allInvocations", "allInvocationsEqual", "any",
+                "anyInvocation", "asin", "asinh", "atan", "atanh", "atomicAdd", "atomicAnd",
+                "atomicCompSwap", "atomicCounter", "atomicCounterAdd", "atomicCounterAnd",
+                "atomicCounterCompSwap", "atomicCounterDecrement", "atomicCounterExchange",
+                "atomicCounterIncrement", "atomicCounterMax", "atomicCounterMin", "atomicCounterOr",
+                "atomicCounterSubtract", "atomicCounterXor", "atomicExchange", "atomicMax",
+                "atomicMin", "atomicOr", "atomicXor", "barrier", "bitCount", "bitFieldExtract",
+                "bitFieldInsert", "bitFieldReverse", "ceil", "clamp", "cos", "cosh", "cross",
+                "degrees", "determinant", "dFdx", "dFdxCoarse", "dFdxFine", "dFdy", "dFdyCoarse",
+                "dFdyFine", "distance", "dot", "EmitStreamVertex", "EmitVertex", "EndPrimitive",
+                "EndStreamPrimitive", "equal", "exp", "exp2", "faceforward", "findLSB", "findMSB",
+                "floatBitsToInt", "floatBitsToUint", "floor", "fma", "fract", "frexp", "ftransform",
+                "fwidth", "fwidthCoarse", "fwidthFine", "greaterThan", "greaterThanEqual",
+                "groupMemoryBarrier", "imageAtomicAdd", "imageAtomicAnd", "imageAtomicCompSwap",
+                "imageAtomicExchange", "imageAtomicMax", "imageAtomicMin", "imageAtomicOr",
+                "imageAtomicXor", "imageLoad", "imageSamples", "imageSize", "imageStore",
+                "imulExtended", "intBitsToFloat", "interpolateAtCentroid", "interpolateAtOffset",
+                "interpolateAtSample", "inverse", "inversesqrt", "isinf", "isnan", "ldexp",
+                "length", "lessThan", "lessThanEqual", "log", "log2", "matrixCompMult", "max",
+                "memoryBarrier", "memoryBarrierAtomicCounter", "memoryBarrierBuffer",
+                "memoryBarrierImage", "memoryBarrierShared", "min", "mix", "mod", "modf", "noise1",
+                "noise2", "noise3", "noise4", "normalize", "not", "notEqual", "outerProduct",
+                "packDouble2x32", "packHalf2x16", "packSnorm2x16", "packSnorm4x8", "packUnorm2x16",
+                "packUnorm4x8", "pow", "radians", "reflect", "refract", "round", "roundEven",
+                "shadow1D", "shadow1DLod", "shadow1DProj", "shadow1DProjLod", "shadow2D",
+                "shadow2DLod", "shadow2DProj", "shadow2DProjLod", "sign", "sin", "sinh",
+                "smoothstep", "sqrt", "step", "subpassLoad", "tan", "tanh", "texelFetch",
+                "texelFetchOffset", "texture", "texture1D", "texture1DLod", "texture1DProj",
+                "texture1DProjLod", "texture2D", "texture2DLod", "texture2DProj",
+                "texture2DProjLod", "texture3D", "texture3DLod", "texture3DProj",
+                "texture3DProjLod", "textureCube", "textureCubeLod", "textureGather",
+                "textureGatherOffset", "textureGatherOffsets", "textureGrad",
+                "textureGradOffset", "textureLod", "textureLodOffset", "textureOffset",
+                "textureProj", "textureProjGrad", "textureProjGradOffset", "textureProjLod",
+                "textureProjLodOffset", "textureProjOffset", "textureQueryLevels",
+                "textureQueryLod", "textureSize", "transpose", "trunc", "uaddCarry",
+                "uintBitsToFloat", "umulExtended", "unpackDouble2x32", "unpackHalf2x16",
+                "unpackSnorm2x16", "unpackSnorm4x8", "unpackUnorm2x16", "unpackUnorm4x8",
+                "usubBorrow"
+            },
+
+            _Keywords = new[]
             {
                 "atomic_uint", "attribute", "bool", "break", "buffer", "bvec2", "bvec3", "bvec4",
                 "case", "centroid", "coherent", "const", "continue", "default", "discard", "dmat2",
@@ -58,7 +101,7 @@
                 "varying", "vec2", "vec3", "vec4", "void", "volatile", "while", "writeonly"
             },
 
-            ReservedWords = new[]
+            _ReservedWords = new[]
             {
                 "active", "asm", "cast", "class", "common", "enum", "extern", "external", "filter",
                 "fixed", "fvec2", "fvec3", "fvec4", "goto", "half", "hvec2", "hvec3", "hvec4",
@@ -67,23 +110,28 @@
                 "superp", "template", "this", "typedef", "union", "unsigned", "using"
             };
 
+        #endregion
+
+        #region Public Fields
+
         public const string
-            CommentPattern1 = @"//.*$",
-            CommentPattern2 = @"(/\*.*?\*/)|(/\*.*)",
-            CommentPattern3 = @"(/\*.*?\*/)|(.*\*/)",
-            NumberPattern = @"\b\d+[\.]?\d*([eE]\-?\d+)?[lLdDfF]?\b|\b0x[a-fA-F\d]+\b",
-            StringPattern = @"""""|@""""|''|@"".*?""|(?<!@)(?<range>"".*?[^\\]"")|'.*?[^\\]'";
+            Comments1 = @"//.*$",
+            Comments2 = @"(/\*.*?\*/)|(/\*.*)",
+            Comments3 = @"(/\*.*?\*/)|(.*\*/)",
+            Numbers = @"\b\d+[\.]?\d*([eE]\-?\d+)?[lLdDfF]?\b|\b0x[a-fA-F\d]+\b",
+            Strings = @"""""|@""""|''|@"".*?""|(?<!@)(?<range>"".*?[^\\]"")|'.*?[^\\]'";
 
         public static readonly string
-            DirectivePattern = $@"^\s*#\s*\b{MakePattern(Directives)}\b.*$",
-            KeywordPattern = $@"\b{MakePattern(Keywords)}\b",
-            ReservedWordPattern = $@"\b{MakePattern(ReservedWords)}\b";
+            Directives = $@"^\s*#\s*\b{Concat(_Directives)}\b.*$",
+            Functions = $@"^\s*#\s*\b{Concat(_Functions)}\b.*$",
+            Keywords = $@"\b{Concat(_Keywords)}\b",
+            ReservedWords = $@"\b{Concat(_ReservedWords)}\b";
 
         #endregion
 
         #region Private Methods
 
-        private static string MakePattern(IEnumerable<string> words) =>
+        private static string Concat(IEnumerable<string> words) =>
             string.Concat("(", words.Aggregate((s, t) => $"{s}|{t}"), ")");
 
         #endregion

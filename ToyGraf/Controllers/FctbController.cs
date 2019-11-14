@@ -16,10 +16,31 @@
 
         internal FctbController(FastColoredTextBox textBox)
         {
-            TextBox = textBox ?? throw new NullReferenceException("textBox cannot be null.");
+            _TextBox = textBox ?? throw new NullReferenceException("textBox cannot be null.");
             Lingo = "GLSL";
-            TextBox.TextChanged += TextBox_TextChanged;
+            _TextBox.TextChanged += TextBox_TextChanged;
         }
+
+        #endregion
+
+        #region Internal Properties
+
+        internal string Lingo
+        {
+            get => _Lingo;
+            set => SetLingo(value);
+        }
+
+        #endregion
+
+        #region Private Fields
+
+        private string _Lingo;
+        private readonly FastColoredTextBox _TextBox;
+
+        #endregion
+
+        #region Private Event Handlers
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -29,56 +50,83 @@
                     SyntaxHighlightGLSL(e);
                     break;
             }
-            if (TextBox.Text.Trim().StartsWith("<?xml"))
+            if (_TextBox.Text.Trim().StartsWith("<?xml"))
             {
-                TextBox.Language = Language.XML;
-                TextBox.ClearStylesBuffer();
-                TextBox.Range.ClearStyle(StyleIndex.All);
+                _TextBox.Language = Language.XML;
+                _TextBox.ClearStylesBuffer();
+                _TextBox.Range.ClearStyle(StyleIndex.All);
                 InitStylesPriority();
-                TextBox.OnSyntaxHighlight(new TextChangedEventArgs(TextBox.Range));
+                _TextBox.OnSyntaxHighlight(new TextChangedEventArgs(_TextBox.Range));
             }
         }
 
         #endregion
 
-        internal string Lingo
-        {
-            get => _Lingo;
-            set => SetLingo(value);
-        }
+        #region Private Methods
+
+        private void InitStylesPriority() => _TextBox.AddStyle(SameWordsStyle);
+
+        private static TextStyle NewTextStyle(Brush brush, FontStyle style = 0) =>
+            new TextStyle(brush, null, style);
 
         private void SetLingo(string lingo)
         {
             if (Lingo == lingo)
                 return;
             _Lingo = lingo;
-            TextBox.ClearStylesBuffer();
-            TextBox.Range.ClearStyle(StyleIndex.All);
+            _TextBox.ClearStylesBuffer();
+            _TextBox.Range.ClearStyle(StyleIndex.All);
             InitStylesPriority();
             switch (Lingo)
             {
                 case "GLSL":
-                    TextBox.Language = Language.Custom;
-                    TextBox.CommentPrefix = "//";
-                    TextBox.OnTextChanged();
+                    _TextBox.Language = Language.Custom;
+                    _TextBox.CommentPrefix = "//";
+                    _TextBox.OnTextChanged();
                     break;
-                case "C#": TextBox.Language = Language.CSharp; break;
-                case "VB": TextBox.Language = Language.VB; break;
-                case "HTML": TextBox.Language = Language.HTML; break;
-                case "XML": TextBox.Language = Language.XML; break;
-                case "SQL": TextBox.Language = Language.SQL; break;
-                case "PHP": TextBox.Language = Language.PHP; break;
-                case "JS": TextBox.Language = Language.JS; break;
-                case "Lua": TextBox.Language = Language.Lua; break;
+                case "C#": _TextBox.Language = Language.CSharp; break;
+                case "VB": _TextBox.Language = Language.VB; break;
+                case "HTML": _TextBox.Language = Language.HTML; break;
+                case "XML": _TextBox.Language = Language.XML; break;
+                case "SQL": _TextBox.Language = Language.SQL; break;
+                case "PHP": _TextBox.Language = Language.PHP; break;
+                case "JS": _TextBox.Language = Language.JS; break;
+                case "Lua": _TextBox.Language = Language.Lua; break;
             }
-            TextBox.OnSyntaxHighlight(new TextChangedEventArgs(TextBox.Range));
+            _TextBox.OnSyntaxHighlight(new TextChangedEventArgs(_TextBox.Range));
         }
 
-        private readonly FastColoredTextBox TextBox;
+        private void SyntaxHighlightGLSL(TextChangedEventArgs e)
+        {
+            _TextBox.LeftBracket = '(';
+            _TextBox.RightBracket = ')';
+            _TextBox.LeftBracket2 = '\x0';
+            _TextBox.RightBracket2 = '\x0';
 
-        #region Private Properties
+            e.ChangedRange.ClearStyle(
+                BlueStyle,
+                // BoldStyle,
+                BrownStyle,
+                CyanStyle,
+                // GrayStyle,
+                GreenStyle,
+                MagentaStyle,
+                MaroonStyle,
+                RedStyle);
 
-        private string _Lingo;
+            e.ChangedRange.SetStyle(BrownStyle, GLSL.Strings);
+            e.ChangedRange.SetStyle(GreenStyle, GLSL.Comments1, RegexOptions.Multiline);
+            e.ChangedRange.SetStyle(GreenStyle, GLSL.Comments2, RegexOptions.Singleline);
+            e.ChangedRange.SetStyle(GreenStyle, GLSL.Comments3, RegexOptions.Singleline | RegexOptions.RightToLeft);
+            e.ChangedRange.SetStyle(MagentaStyle, GLSL.Numbers);
+            e.ChangedRange.SetStyle(CyanStyle, GLSL.Functions);
+            e.ChangedRange.SetStyle(BlueStyle, GLSL.Keywords);
+            e.ChangedRange.SetStyle(RedStyle, GLSL.ReservedWords);
+            e.ChangedRange.SetStyle(MaroonStyle, GLSL.Directives);
+            e.ChangedRange.ClearFoldingMarkers();
+            e.ChangedRange.SetFoldingMarkers("{", "}");
+            e.ChangedRange.SetFoldingMarkers(@"/\*", @"\*/");
+        }
 
         #endregion
 
@@ -89,52 +137,14 @@
 
         private static readonly TextStyle
             BlueStyle = NewTextStyle(Brushes.Blue),
-            BoldStyle = NewTextStyle(null, FontStyle.Bold | FontStyle.Underline),
+            // BoldStyle = NewTextStyle(null, FontStyle.Bold | FontStyle.Underline),
             BrownStyle = NewTextStyle(Brushes.Brown, FontStyle.Italic),
-            GrayStyle = NewTextStyle(Brushes.Gray),
+            CyanStyle = NewTextStyle(Brushes.Cyan),
+            // GrayStyle = NewTextStyle(Brushes.Gray),
             GreenStyle = NewTextStyle(Brushes.Green, FontStyle.Italic),
             MagentaStyle = NewTextStyle(Brushes.Magenta),
             MaroonStyle = NewTextStyle(Brushes.Maroon),
             RedStyle = NewTextStyle(Brushes.Red);
-
-        #endregion
-
-        #region Private Methods
-
-        private void InitStylesPriority() => TextBox.AddStyle(SameWordsStyle);
-
-        private static TextStyle NewTextStyle(Brush brush, FontStyle style = 0) =>
-            new TextStyle(brush, null, style);
-
-        private void SyntaxHighlightGLSL(TextChangedEventArgs e)
-        {
-            TextBox.LeftBracket = '(';
-            TextBox.RightBracket = ')';
-            TextBox.LeftBracket2 = '\x0';
-            TextBox.RightBracket2 = '\x0';
-
-            e.ChangedRange.ClearStyle(
-                BlueStyle,
-                BoldStyle,
-                BrownStyle,
-                GrayStyle,
-                GreenStyle,
-                MagentaStyle,
-                MaroonStyle,
-                RedStyle);
-
-            e.ChangedRange.SetStyle(BrownStyle, GLSL.StringPattern);
-            e.ChangedRange.SetStyle(GreenStyle, GLSL.CommentPattern1, RegexOptions.Multiline);
-            e.ChangedRange.SetStyle(GreenStyle, GLSL.CommentPattern2, RegexOptions.Singleline);
-            e.ChangedRange.SetStyle(GreenStyle, GLSL.CommentPattern3, RegexOptions.Singleline | RegexOptions.RightToLeft);
-            e.ChangedRange.SetStyle(MagentaStyle, GLSL.NumberPattern);
-            e.ChangedRange.SetStyle(BlueStyle, GLSL.KeywordPattern);
-            e.ChangedRange.SetStyle(RedStyle, GLSL.ReservedWordPattern);
-            e.ChangedRange.SetStyle(MaroonStyle, GLSL.DirectivePattern);
-            e.ChangedRange.ClearFoldingMarkers();
-            e.ChangedRange.SetFoldingMarkers("{", "}");
-            e.ChangedRange.SetFoldingMarkers(@"/\*", @"\*/");
-        }
 
         #endregion
     }
