@@ -42,16 +42,23 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cbShowSystemRO = new System.Windows.Forms.CheckBox();
+            this.TabControl = new System.Windows.Forms.TabControl();
+            this.tpGeneral = new System.Windows.Forms.TabPage();
+            this.tpGLSLStyles = new System.Windows.Forms.TabPage();
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.TabControl.SuspendLayout();
+            this.tpGeneral.SuspendLayout();
+            this.tpGLSLStyles.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.rbWindowReuse);
             this.groupBox1.Controls.Add(this.rbWindowNew);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(441, 76);
             this.groupBox1.TabIndex = 0;
@@ -80,8 +87,9 @@
             // 
             // btnOK
             // 
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(273, 244);
+            this.btnOK.Location = new System.Drawing.Point(289, 284);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(87, 27);
             this.btnOK.TabIndex = 2;
@@ -90,8 +98,9 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(366, 244);
+            this.btnCancel.Location = new System.Drawing.Point(382, 284);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(87, 27);
             this.btnCancel.TabIndex = 3;
@@ -106,7 +115,7 @@
             this.groupBox3.Controls.Add(this.edTemplatesFolder);
             this.groupBox3.Controls.Add(this.edFilesFolder);
             this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Location = new System.Drawing.Point(12, 94);
+            this.groupBox3.Location = new System.Drawing.Point(6, 88);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(441, 87);
             this.groupBox3.TabIndex = 4;
@@ -174,7 +183,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.cbShowSystemRO);
-            this.groupBox2.Location = new System.Drawing.Point(12, 187);
+            this.groupBox2.Location = new System.Drawing.Point(6, 181);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(441, 51);
             this.groupBox2.TabIndex = 5;
@@ -191,18 +200,58 @@
             this.cbShowSystemRO.Text = "&Show Read Only / System properties.";
             this.cbShowSystemRO.UseVisualStyleBackColor = true;
             // 
+            // TabControl
+            // 
+            this.TabControl.Controls.Add(this.tpGeneral);
+            this.TabControl.Controls.Add(this.tpGLSLStyles);
+            this.TabControl.Location = new System.Drawing.Point(12, 12);
+            this.TabControl.Name = "TabControl";
+            this.TabControl.SelectedIndex = 0;
+            this.TabControl.Size = new System.Drawing.Size(461, 266);
+            this.TabControl.TabIndex = 6;
+            // 
+            // tpGeneral
+            // 
+            this.tpGeneral.Controls.Add(this.groupBox1);
+            this.tpGeneral.Controls.Add(this.groupBox2);
+            this.tpGeneral.Controls.Add(this.groupBox3);
+            this.tpGeneral.Location = new System.Drawing.Point(4, 24);
+            this.tpGeneral.Name = "tpGeneral";
+            this.tpGeneral.Padding = new System.Windows.Forms.Padding(3);
+            this.tpGeneral.Size = new System.Drawing.Size(453, 238);
+            this.tpGeneral.TabIndex = 0;
+            this.tpGeneral.Text = "General";
+            this.tpGeneral.UseVisualStyleBackColor = true;
+            // 
+            // tpGLSLStyles
+            // 
+            this.tpGLSLStyles.Controls.Add(this.propertyGrid1);
+            this.tpGLSLStyles.Location = new System.Drawing.Point(4, 24);
+            this.tpGLSLStyles.Name = "tpGLSLStyles";
+            this.tpGLSLStyles.Padding = new System.Windows.Forms.Padding(3);
+            this.tpGLSLStyles.Size = new System.Drawing.Size(453, 238);
+            this.tpGLSLStyles.TabIndex = 1;
+            this.tpGLSLStyles.Text = "GLSL Styles";
+            this.tpGLSLStyles.UseVisualStyleBackColor = true;
+            // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGrid1.Location = new System.Drawing.Point(3, 3);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.Size = new System.Drawing.Size(447, 232);
+            this.propertyGrid1.TabIndex = 0;
+            // 
             // OptionsDialog
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(465, 282);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox3);
+            this.ClientSize = new System.Drawing.Size(482, 320);
+            this.Controls.Add(this.TabControl);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -216,6 +265,9 @@
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.TabControl.ResumeLayout(false);
+            this.tpGeneral.ResumeLayout(false);
+            this.tpGLSLStyles.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -236,5 +288,9 @@
         internal System.Windows.Forms.Label label1;
         internal System.Windows.Forms.GroupBox groupBox2;
         internal System.Windows.Forms.CheckBox cbShowSystemRO;
+        private System.Windows.Forms.TabControl TabControl;
+        private System.Windows.Forms.TabPage tpGeneral;
+        private System.Windows.Forms.TabPage tpGLSLStyles;
+        private System.Windows.Forms.PropertyGrid propertyGrid1;
     }
 }
