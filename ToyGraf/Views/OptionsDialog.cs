@@ -8,7 +8,7 @@
         public OptionsDialog()
         {
             InitializeComponent();
-            propertyGrid1.SelectedObject = new TextStyleInfos();
+            GLSLStylesPropertyGrid.SelectedObject = new TextStyleInfos();
         }
     }
 }

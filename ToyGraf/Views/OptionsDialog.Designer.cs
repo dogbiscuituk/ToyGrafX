@@ -45,7 +45,7 @@
             this.TabControl = new System.Windows.Forms.TabControl();
             this.tpGeneral = new System.Windows.Forms.TabPage();
             this.tpGLSLStyles = new System.Windows.Forms.TabPage();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.GLSLStylesPropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -225,7 +225,7 @@
             // 
             // tpGLSLStyles
             // 
-            this.tpGLSLStyles.Controls.Add(this.propertyGrid1);
+            this.tpGLSLStyles.Controls.Add(this.GLSLStylesPropertyGrid);
             this.tpGLSLStyles.Location = new System.Drawing.Point(4, 24);
             this.tpGLSLStyles.Name = "tpGLSLStyles";
             this.tpGLSLStyles.Padding = new System.Windows.Forms.Padding(3);
@@ -234,13 +234,15 @@
             this.tpGLSLStyles.Text = "GLSL Styles";
             this.tpGLSLStyles.UseVisualStyleBackColor = true;
             // 
-            // propertyGrid1
+            // GLSLStylesPropertyGrid
             // 
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(3, 3);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(447, 232);
-            this.propertyGrid1.TabIndex = 0;
+            this.GLSLStylesPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GLSLStylesPropertyGrid.Location = new System.Drawing.Point(3, 3);
+            this.GLSLStylesPropertyGrid.Name = "GLSLStylesPropertyGrid";
+            this.GLSLStylesPropertyGrid.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
+            this.GLSLStylesPropertyGrid.Size = new System.Drawing.Size(447, 232);
+            this.GLSLStylesPropertyGrid.TabIndex = 0;
+            this.GLSLStylesPropertyGrid.ToolbarVisible = false;
             // 
             // OptionsDialog
             // 
@@ -291,6 +293,6 @@
         private System.Windows.Forms.TabControl TabControl;
         private System.Windows.Forms.TabPage tpGeneral;
         private System.Windows.Forms.TabPage tpGLSLStyles;
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
+        private System.Windows.Forms.PropertyGrid GLSLStylesPropertyGrid;
     }
 }
