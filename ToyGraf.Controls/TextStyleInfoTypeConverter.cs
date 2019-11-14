@@ -1,8 +1,9 @@
-﻿namespace ToyGraf.Models
+﻿namespace ToyGraf.Controls
 {
     using System;
     using System.ComponentModel;
     using System.Globalization;
+    using ToyGraf.Common.Types;
 
     public class TextStyleInfoTypeConverter : TypeConverter
     {

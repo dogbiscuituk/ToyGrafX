@@ -1,7 +1,7 @@
 ﻿namespace ToyGraf.Views
 {
     using System.Windows.Forms;
-    using ToyGraf.Models;
+    using ToyGraf.Controls;
 
     public partial class OptionsDialog : Form
     {

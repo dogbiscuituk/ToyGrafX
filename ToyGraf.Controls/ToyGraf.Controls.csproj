@@ -52,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\CollectionEditedEventArgs.cs" />
+    <Compile Include="TextStyleInfo.cs" />
+    <Compile Include="TextStyleInfos.cs" />
+    <Compile Include="TextStyleInfoTypeConverter.cs" />
     <Compile Include="TgFlagsCheckedListBox.cs">
       <SubType>Component</SubType>
     </Compile>
