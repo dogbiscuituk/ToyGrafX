@@ -74,7 +74,7 @@
             TextBox.OnSyntaxHighlight(new TextChangedEventArgs(TextBox.Range));
         }
 
-        private FastColoredTextBox TextBox;
+        private readonly FastColoredTextBox TextBox;
 
         #region Private Properties
 

@@ -4,18 +4,20 @@
     using System.Linq;
 
     /// <summary>
-    /// https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.40.pdf
+    /// https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.pdf
     /// </summary>
-    public static class GLSL
+    public class GLSL
     {
         #region Public Properties
 
-        private static readonly string[]
+        protected static readonly string[]
+
             Directives = new[]
             {
                 "define", "elif", "else", "endif", "error", "extension", "if", "ifdef", "ifndef",
                 "line", "pragma", "undef", "version"
             },
+
             Keywords = new[]
             {
                 "atomic_uint", "attribute", "bool", "break", "buffer", "bvec2", "bvec3", "bvec4",
@@ -55,6 +57,7 @@
                 "utextureBuffer", "utextureCube", "utextureCubeArray", "uvec2", "uvec3", "uvec4",
                 "varying", "vec2", "vec3", "vec4", "void", "volatile", "while", "writeonly"
             },
+
             ReservedWords = new[]
             {
                 "active", "asm", "cast", "class", "common", "enum", "extern", "external", "filter",
@@ -84,5 +87,6 @@
             string.Concat("(", words.Aggregate((s, t) => $"{s}|{t}"), ")");
 
         #endregion
+
     }
 }
