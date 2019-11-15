@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Windows.Forms;
+    using ToyGraf.Controls;
     using ToyGraf.Models;
     using ToyGraf.Properties;
     using ToyGraf.Views;
@@ -44,7 +45,8 @@
                     OpenInNewWindow = Settings.Options_OpenInNewWindow,
                     FilesFolderPath = Settings.FilesFolderPath,
                     TemplatesFolderPath = Settings.TemplatesFolderPath,
-                    ShowSystemRO = Settings.DeveloperView
+                    ShowSystemRO = Settings.DeveloperView,
+                    SyntaxHighlightStyles = Settings.SyntaxHighlightStyles ?? new TextStyleInfos()
                 };
                 if (string.IsNullOrWhiteSpace(options.FilesFolderPath))
                     options.FilesFolderPath = DefaultFilesFolderPath;
@@ -58,6 +60,7 @@
                 Settings.FilesFolderPath = value.FilesFolderPath;
                 Settings.TemplatesFolderPath = value.TemplatesFolderPath;
                 Settings.DeveloperView = value.ShowSystemRO;
+                Settings.SyntaxHighlightStyles = value.SyntaxHighlightStyles;
                 Settings.Save();
                 ApplyOptions();
             }

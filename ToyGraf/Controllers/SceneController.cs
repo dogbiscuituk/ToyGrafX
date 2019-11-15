@@ -339,7 +339,7 @@
 
         private void EditOptions()
         {
-            using (var optionsController = new OptionsController(this))
+            using (var optionsController = new OptionsController())
                 optionsController.ShowModal(SceneForm);
         }
 

@@ -20,5 +20,8 @@
     <Setting Name="DeveloperView" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="SyntaxHighlightStyles" Type="ToyGraf.Controls.TextStyleInfos" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

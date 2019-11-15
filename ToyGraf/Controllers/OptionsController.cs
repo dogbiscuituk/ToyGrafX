@@ -2,6 +2,7 @@
 {
     using System;
     using System.Windows.Forms;
+    using ToyGraf.Controls;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
@@ -9,9 +10,8 @@
     {
         #region Internal Interface
 
-        internal OptionsController(SceneController sceneController)
+        internal OptionsController()
         {
-            SceneController = sceneController;
             OptionsDialog = new OptionsDialog();
             OptionsDialog.btnFilesFolder.Click += BtnFilesFolder_Click;
             OptionsDialog.btnTemplatesFolder.Click += BtnTemplatesFolder_Click;
@@ -30,7 +30,7 @@
 
         #region Private Properties
 
-        private readonly SceneController SceneController;
+        private PropertyGrid GLSLStylesPropertyGrid => OptionsDialog.GLSLStylesPropertyGrid;
         private OptionsDialog OptionsDialog;
         private Options Options
         {
@@ -71,7 +71,8 @@
             OpenInNewWindow = OptionsDialog.rbWindowNew.Checked,
             FilesFolderPath = OptionsDialog.edFilesFolder.Text,
             TemplatesFolderPath = OptionsDialog.edTemplatesFolder.Text,
-            ShowSystemRO = OptionsDialog.cbShowSystemRO.Checked
+            ShowSystemRO = OptionsDialog.cbShowSystemRO.Checked,
+            SyntaxHighlightStyles = (TextStyleInfos)OptionsDialog.GLSLStylesPropertyGrid.SelectedObject
         };
 
         private void SetOptions(Options options)
@@ -81,6 +82,7 @@
             OptionsDialog.edFilesFolder.Text = options.FilesFolderPath;
             OptionsDialog.edTemplatesFolder.Text = options.TemplatesFolderPath;
             OptionsDialog.cbShowSystemRO.Checked = options.ShowSystemRO;
+            OptionsDialog.GLSLStylesPropertyGrid.SelectedObject = options.SyntaxHighlightStyles;
         }
 
         #endregion

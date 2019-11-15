@@ -290,9 +290,9 @@
         internal System.Windows.Forms.Label label1;
         internal System.Windows.Forms.GroupBox groupBox2;
         internal System.Windows.Forms.CheckBox cbShowSystemRO;
-        private System.Windows.Forms.TabControl TabControl;
-        private System.Windows.Forms.TabPage tpGeneral;
-        private System.Windows.Forms.TabPage tpGLSLStyles;
-        private System.Windows.Forms.PropertyGrid GLSLStylesPropertyGrid;
+        internal System.Windows.Forms.TabControl TabControl;
+        internal System.Windows.Forms.TabPage tpGeneral;
+        internal System.Windows.Forms.TabPage tpGLSLStyles;
+        internal System.Windows.Forms.PropertyGrid GLSLStylesPropertyGrid;
     }
 }
