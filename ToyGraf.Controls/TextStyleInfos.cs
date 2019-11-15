@@ -3,6 +3,7 @@
     using System.ComponentModel;
     using System.Drawing;
 
+    [TypeConverter(typeof(TextStyleInfosTypeConverter))]
     public class TextStyleInfos
     {
         #region Public Properties
@@ -34,6 +35,28 @@
         [Description("The text style used to highlight string literals in the GPU code.")]
         [DisplayName("String Literals")]
         public TextStyleInfo Strings { get; set; } = new TextStyleInfo(Color.Brown);
+
+        #endregion
+
+        #region Public Methods
+
+        public static TextStyleInfos Parse(string s)
+        {
+            var t = s.Split(':');
+            return new TextStyleInfos
+            {
+                Comments = TextStyleInfo.Parse(t[0]),
+                Directives = TextStyleInfo.Parse(t[1]),
+                Functions = TextStyleInfo.Parse(t[2]),
+                Keywords = TextStyleInfo.Parse(t[3]),
+                Numbers = TextStyleInfo.Parse(t[4]),
+                ReservedWords = TextStyleInfo.Parse(t[5]),
+                Strings = TextStyleInfo.Parse(t[6])
+            };
+        }
+
+        public override string ToString() =>
+            $"{Comments}:{Directives}:{Functions}:{Keywords}:{Numbers}:{ReservedWords}:{Strings}";
 
         #endregion
     }
