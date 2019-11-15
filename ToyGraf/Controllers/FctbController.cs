@@ -5,6 +5,8 @@
     using System.Drawing;
     using System.Text.RegularExpressions;
     using ToyGraf.Common.Types;
+    using ToyGraf.Common.Utility;
+    using ToyGraf.Controls;
 
     /// <summary>
     /// FastColoredTextBox controller class.
@@ -16,8 +18,9 @@
 
         internal FctbController(FastColoredTextBox textBox)
         {
+            UpdateStyles();
             _TextBox = textBox ?? throw new NullReferenceException("textBox cannot be null.");
-            Lingo = "GLSL";
+            Language = "GLSL";
             _TextBox.TextChanged += TextBox_TextChanged;
         }
 
@@ -25,17 +28,33 @@
 
         #region Internal Properties
 
-        internal string Lingo
+        internal string Language
         {
-            get => _Lingo;
-            set => SetLingo(value);
+            get => _Language;
+            set => SetLanguage(value);
+        }
+
+        #endregion
+
+        #region Internal Methods
+
+        internal static void UpdateStyles()
+        {
+            var styles = AppController.Options.SyntaxHighlightStyles;
+            CommentStyle = NewTextStyle(styles.Comments);
+            DirectiveStyle = NewTextStyle(styles.Directives);
+            FunctionStyle = NewTextStyle(styles.Functions);
+            KeywordStyle = NewTextStyle(styles.Keywords);
+            NumberStyle = NewTextStyle(styles.Numbers);
+            ReservedWordStyle = NewTextStyle(styles.ReservedWords);
+            StringStyle = NewTextStyle(styles.Strings);
         }
 
         #endregion
 
         #region Private Fields
 
-        private string _Lingo;
+        private string _Language;
         private readonly FastColoredTextBox _TextBox;
 
         #endregion
@@ -44,7 +63,7 @@
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            switch (Lingo)
+            switch (Language)
             {
                 case "GLSL":
                     SyntaxHighlightGLSL(e);
@@ -52,7 +71,7 @@
             }
             if (_TextBox.Text.Trim().StartsWith("<?xml"))
             {
-                _TextBox.Language = Language.XML;
+                _TextBox.Language = FastColoredTextBoxNS.Language.XML;
                 _TextBox.ClearStylesBuffer();
                 _TextBox.Range.ClearStyle(StyleIndex.All);
                 InitStylesPriority();
@@ -66,32 +85,32 @@
 
         private void InitStylesPriority() => _TextBox.AddStyle(SameWordsStyle);
 
-        private static TextStyle NewTextStyle(Brush brush, FontStyle style = 0) =>
-            new TextStyle(brush, null, style);
+        private static TextStyle NewTextStyle(TextStyleInfo style) =>
+            new TextStyle(style.Foreground.ToBrush(), style.Background.ToBrush(), style.FontStyle);
 
-        private void SetLingo(string lingo)
+        private void SetLanguage(string language)
         {
-            if (Lingo == lingo)
+            if (Language == language)
                 return;
-            _Lingo = lingo;
+            _Language = language;
             _TextBox.ClearStylesBuffer();
             _TextBox.Range.ClearStyle(StyleIndex.All);
             InitStylesPriority();
-            switch (Lingo)
+            switch (Language)
             {
                 case "GLSL":
-                    _TextBox.Language = Language.Custom;
+                    _TextBox.Language = FastColoredTextBoxNS.Language.Custom;
                     _TextBox.CommentPrefix = "//";
                     _TextBox.OnTextChanged();
                     break;
-                case "C#": _TextBox.Language = Language.CSharp; break;
-                case "VB": _TextBox.Language = Language.VB; break;
-                case "HTML": _TextBox.Language = Language.HTML; break;
-                case "XML": _TextBox.Language = Language.XML; break;
-                case "SQL": _TextBox.Language = Language.SQL; break;
-                case "PHP": _TextBox.Language = Language.PHP; break;
-                case "JS": _TextBox.Language = Language.JS; break;
-                case "Lua": _TextBox.Language = Language.Lua; break;
+                case "C#": _TextBox.Language = FastColoredTextBoxNS.Language.CSharp; break;
+                case "VB": _TextBox.Language = FastColoredTextBoxNS.Language.VB; break;
+                case "HTML": _TextBox.Language = FastColoredTextBoxNS.Language.HTML; break;
+                case "XML": _TextBox.Language = FastColoredTextBoxNS.Language.XML; break;
+                case "SQL": _TextBox.Language = FastColoredTextBoxNS.Language.SQL; break;
+                case "PHP": _TextBox.Language = FastColoredTextBoxNS.Language.PHP; break;
+                case "JS": _TextBox.Language = FastColoredTextBoxNS.Language.JS; break;
+                case "Lua": _TextBox.Language = FastColoredTextBoxNS.Language.Lua; break;
             }
             _TextBox.OnSyntaxHighlight(new TextChangedEventArgs(_TextBox.Range));
         }
@@ -104,25 +123,23 @@
             _TextBox.RightBracket2 = '\x0';
 
             e.ChangedRange.ClearStyle(
-                BlueStyle,
-                // BoldStyle,
-                BrownStyle,
-                CyanStyle,
-                // GrayStyle,
-                GreenStyle,
-                MagentaStyle,
-                MaroonStyle,
-                RedStyle);
+                CommentStyle,
+                DirectiveStyle,
+                FunctionStyle,
+                KeywordStyle,
+                NumberStyle,
+                ReservedWordStyle,
+                StringStyle);
 
-            e.ChangedRange.SetStyle(BrownStyle, GLSL.Strings);
-            e.ChangedRange.SetStyle(GreenStyle, GLSL.Comments1, RegexOptions.Multiline);
-            e.ChangedRange.SetStyle(GreenStyle, GLSL.Comments2, RegexOptions.Singleline);
-            e.ChangedRange.SetStyle(GreenStyle, GLSL.Comments3, RegexOptions.Singleline | RegexOptions.RightToLeft);
-            e.ChangedRange.SetStyle(MagentaStyle, GLSL.Numbers);
-            e.ChangedRange.SetStyle(CyanStyle, GLSL.Functions);
-            e.ChangedRange.SetStyle(BlueStyle, GLSL.Keywords);
-            e.ChangedRange.SetStyle(RedStyle, GLSL.ReservedWords);
-            e.ChangedRange.SetStyle(MaroonStyle, GLSL.Directives);
+            e.ChangedRange.SetStyle(StringStyle, GLSL.Strings);
+            e.ChangedRange.SetStyle(CommentStyle, GLSL.Comments1, RegexOptions.Multiline);
+            e.ChangedRange.SetStyle(CommentStyle, GLSL.Comments2, RegexOptions.Singleline);
+            e.ChangedRange.SetStyle(CommentStyle, GLSL.Comments3, RegexOptions.Singleline | RegexOptions.RightToLeft);
+            e.ChangedRange.SetStyle(NumberStyle, GLSL.Numbers);
+            e.ChangedRange.SetStyle(FunctionStyle, GLSL.Functions);
+            e.ChangedRange.SetStyle(KeywordStyle, GLSL.Keywords);
+            e.ChangedRange.SetStyle(ReservedWordStyle, GLSL.ReservedWords);
+            e.ChangedRange.SetStyle(DirectiveStyle, GLSL.Directives);
             e.ChangedRange.ClearFoldingMarkers();
             e.ChangedRange.SetFoldingMarkers("{", "}");
             e.ChangedRange.SetFoldingMarkers(@"/\*", @"\*/");
@@ -135,16 +152,14 @@
         private static readonly MarkerStyle
             SameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.Gray)));
 
-        private static readonly TextStyle
-            BlueStyle = NewTextStyle(Brushes.Blue),
-            // BoldStyle = NewTextStyle(null, FontStyle.Bold | FontStyle.Underline),
-            BrownStyle = NewTextStyle(Brushes.Brown, FontStyle.Italic),
-            CyanStyle = NewTextStyle(Brushes.DarkTurquoise),
-            // GrayStyle = NewTextStyle(Brushes.Gray),
-            GreenStyle = NewTextStyle(Brushes.MediumSeaGreen, FontStyle.Italic),
-            MagentaStyle = NewTextStyle(Brushes.Magenta),
-            MaroonStyle = NewTextStyle(Brushes.Maroon),
-            RedStyle = NewTextStyle(Brushes.Red);
+        private static TextStyle
+            CommentStyle,
+            DirectiveStyle,
+            FunctionStyle,
+            KeywordStyle,
+            NumberStyle,
+            ReservedWordStyle,
+            StringStyle;
 
         #endregion
     }
