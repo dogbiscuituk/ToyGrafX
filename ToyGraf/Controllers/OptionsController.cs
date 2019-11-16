@@ -12,8 +12,7 @@
 
         internal OptionsController()
         {
-            OptionsDialog = new OptionsDialog();
-            OptionsDialog.Text = $"{Application.ProductName} Options";
+            OptionsDialog = new OptionsDialog { Text = $"{Application.ProductName} Options" };
             OptionsDialog.btnFilesFolder.Click += BtnFilesFolder_Click;
             OptionsDialog.btnTemplatesFolder.Click += BtnTemplatesFolder_Click;
         }
@@ -31,7 +30,7 @@
 
         #region Private Properties
 
-        private PropertyGrid GLSLStylesPropertyGrid => OptionsDialog.GLSLStylesPropertyGrid;
+        private PropertyGrid StylesGrid => OptionsDialog.GLSLStylesPropertyGrid;
         private OptionsDialog OptionsDialog;
         private Options Options
         {
@@ -61,10 +60,8 @@
                 SelectedPath = textBox.Text,
                 ShowNewFolderButton = true
             })
-            {
                 if (dialog.ShowDialog() == DialogResult.OK)
                     textBox.Text = dialog.SelectedPath;
-            }
         }
 
         private Options GetOptions() => new Options
@@ -73,7 +70,7 @@
             FilesFolderPath = OptionsDialog.edFilesFolder.Text,
             TemplatesFolderPath = OptionsDialog.edTemplatesFolder.Text,
             ShowSystemRO = OptionsDialog.cbShowSystemRO.Checked,
-            SyntaxHighlightStyles = (TextStyleInfos)OptionsDialog.GLSLStylesPropertyGrid.SelectedObject
+            SyntaxHighlightStyles = (TextStyleInfos)StylesGrid.SelectedObject
         };
 
         private void SetOptions(Options options)
@@ -83,7 +80,7 @@
             OptionsDialog.edFilesFolder.Text = options.FilesFolderPath;
             OptionsDialog.edTemplatesFolder.Text = options.TemplatesFolderPath;
             OptionsDialog.cbShowSystemRO.Checked = options.ShowSystemRO;
-            OptionsDialog.GLSLStylesPropertyGrid.SelectedObject = options.SyntaxHighlightStyles;
+            StylesGrid.SelectedObject = options.SyntaxHighlightStyles;
         }
 
         #endregion
