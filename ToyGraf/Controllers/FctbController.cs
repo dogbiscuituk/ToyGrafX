@@ -18,7 +18,6 @@
 
         internal FctbController(FastColoredTextBox textBox)
         {
-            UpdateStyles();
             _TextBox = textBox ?? throw new NullReferenceException("textBox cannot be null.");
             Language = "GLSL";
             _TextBox.TextChanged += TextBox_TextChanged;
@@ -38,16 +37,16 @@
 
         #region Internal Methods
 
-        internal static void UpdateStyles()
+        internal static void ApplyOptions()
         {
             var styles = AppController.Options.SyntaxHighlightStyles;
-            CommentStyle = NewTextStyle(styles.Comments);
-            DirectiveStyle = NewTextStyle(styles.Directives);
-            FunctionStyle = NewTextStyle(styles.Functions);
-            KeywordStyle = NewTextStyle(styles.Keywords);
-            NumberStyle = NewTextStyle(styles.Numbers);
-            ReservedWordStyle = NewTextStyle(styles.ReservedWords);
-            StringStyle = NewTextStyle(styles.Strings);
+            ApplyStyle(styles.Comments, CommentStyle);
+            ApplyStyle(styles.Directives, DirectiveStyle);
+            ApplyStyle(styles.Functions, FunctionStyle);
+            ApplyStyle(styles.Keywords, KeywordStyle);
+            ApplyStyle(styles.Numbers, NumberStyle);
+            ApplyStyle(styles.ReservedWords, ReservedWordStyle);
+            ApplyStyle(styles.Strings, StringStyle);
         }
 
         #endregion
@@ -82,6 +81,15 @@
         #endregion
 
         #region Private Methods
+
+        private static void ApplyStyle(TextStyleInfo info, TextStyle style)
+        {
+            if (((SolidBrush)style.ForeBrush).Color != info.Foreground)
+                style.ForeBrush = info.Foreground.ToBrush();
+            if (((SolidBrush)style.BackgroundBrush).Color != info.Background)
+                style.BackgroundBrush = info.Background.ToBrush();
+            style.FontStyle = info.FontStyle;
+        }
 
         private void InitStylesPriority() => _TextBox.AddStyle(SameWordsStyle);
 
@@ -153,13 +161,13 @@
             SameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.Gray)));
 
         private static TextStyle
-            CommentStyle,
-            DirectiveStyle,
-            FunctionStyle,
-            KeywordStyle,
-            NumberStyle,
-            ReservedWordStyle,
-            StringStyle;
+            CommentStyle = new TextStyle(Brushes.Black, Brushes.Transparent, 0),
+            DirectiveStyle = new TextStyle(Brushes.Black, Brushes.Transparent, 0),
+            FunctionStyle = new TextStyle(Brushes.Black, Brushes.Transparent, 0),
+            KeywordStyle = new TextStyle(Brushes.Black, Brushes.Transparent, 0),
+            NumberStyle = new TextStyle(Brushes.Black, Brushes.Transparent, 0),
+            ReservedWordStyle = new TextStyle(Brushes.Black, Brushes.Transparent, 0),
+            StringStyle = new TextStyle(Brushes.Black, Brushes.Transparent, 0);
 
         #endregion
     }

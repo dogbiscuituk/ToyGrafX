@@ -53,7 +53,11 @@
 
         #region Internal Methods
 
-        internal void ApplyOptions() => PropertyGridController.ApplyOptions();
+        internal void ApplyOptions()
+        {
+            EntityEditController.Redraw();
+            PropertyGridController.ApplyOptions();
+        }
 
         internal void BeginUpdate() => ++UpdateCount;
 

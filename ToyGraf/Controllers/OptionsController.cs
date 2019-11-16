@@ -13,6 +13,7 @@
         internal OptionsController()
         {
             OptionsDialog = new OptionsDialog();
+            OptionsDialog.Text = $"{Application.ProductName} Options";
             OptionsDialog.btnFilesFolder.Click += BtnFilesFolder_Click;
             OptionsDialog.btnTemplatesFolder.Click += BtnTemplatesFolder_Click;
         }

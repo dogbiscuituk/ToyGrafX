@@ -25,14 +25,17 @@
         #region Public Properties
 
         [Description("The foreground colour of the text style.")]
+        [DisplayName("Foreground Colour")]
         public Color Foreground { get; set; }
 
         [DefaultValue(typeof(Color), "Transparent")]
         [Description("The background colour of the text style.")]
+        [DisplayName("Background Colour")]
         public Color Background { get; set; }
 
         [DefaultValue(0)]
         [Description("The font attributes of the text style (bold, italic, etc).")]
+        [DisplayName("Font Attributes")]
         [Editor(typeof(TgFlagsEnumEditor), typeof(UITypeEditor))]
         public FontStyle FontStyle { get; set; }
 

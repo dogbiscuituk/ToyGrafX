@@ -149,7 +149,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(7, 55);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 15);
+            this.label2.Size = new System.Drawing.Size(63, 15);
             this.label2.TabIndex = 3;
             this.label2.Text = "&Templates:";
             // 
@@ -231,7 +231,7 @@
             this.tpGLSLStyles.Padding = new System.Windows.Forms.Padding(3);
             this.tpGLSLStyles.Size = new System.Drawing.Size(453, 238);
             this.tpGLSLStyles.TabIndex = 1;
-            this.tpGLSLStyles.Text = "GLSL Styles";
+            this.tpGLSLStyles.Text = "Editor";
             this.tpGLSLStyles.UseVisualStyleBackColor = true;
             // 
             // GLSLStylesPropertyGrid
@@ -260,7 +260,7 @@
             this.MinimizeBox = false;
             this.Name = "OptionsDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Editor Options";
+            this.Text = "Options";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);

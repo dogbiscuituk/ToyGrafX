@@ -1,11 +1,14 @@
 ﻿namespace ToyGraf.Controllers
 {
+    using FastColoredTextBoxNS;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Forms;
     using ToyGraf.Controls;
     using ToyGraf.Views;
+
+    // https://github.com/PavelTorgashov/FastColoredTextBox/blob/master/Tester/PowerfulSample.cs
 
     internal class EntityEditController : HostController
     {
@@ -36,6 +39,20 @@
 
         #endregion
 
+        #region Internal Methods
+
+        internal void Redraw()
+        {
+            FctbVertex.Invalidate();
+            FctbTessellationControl.Invalidate();
+            FctbTessellationEvaluation.Invalidate();
+            FctbGeometry.Invalidate();
+            FctbFragment.Invalidate();
+            FctbCompute.Invalidate();
+        }
+
+        #endregion
+
         #region Protected Properties
 
         protected override Control Editor => EntityEdit;
@@ -46,6 +63,17 @@
         #region Protected Methods
 
         protected override void Collapse(bool collapse) => SceneForm.SplitContainer3.Panel1Collapsed = collapse;
+
+        #endregion
+
+        #region Private Fields
+
+        private FastColoredTextBox FctbVertex => EntityEdit.fctbVertex;
+        private FastColoredTextBox FctbTessellationControl => EntityEdit.fctbTessellationControl;
+        private FastColoredTextBox FctbTessellationEvaluation => EntityEdit.fctbTessellationEvaluation;
+        private FastColoredTextBox FctbGeometry => EntityEdit.fctbGeometry;
+        private FastColoredTextBox FctbFragment => EntityEdit.fctbFragment;
+        private FastColoredTextBox FctbCompute => EntityEdit.fctbCompute;
 
         #endregion
 
@@ -73,12 +101,12 @@
 
         private void InitFctbControllers()
         {
-            new FctbController(EntityEdit.fctbVertex);
-            new FctbController(EntityEdit.fctbTessellationControl);
-            new FctbController(EntityEdit.fctbTessellationEvaluation);
-            new FctbController(EntityEdit.fctbGeometry);
-            new FctbController(EntityEdit.fctbFragment);
-            new FctbController(EntityEdit.fctbCompute);
+            new FctbController(FctbVertex);
+            new FctbController(FctbTessellationControl);
+            new FctbController(FctbTessellationEvaluation);
+            new FctbController(FctbGeometry);
+            new FctbController(FctbFragment);
+            new FctbController(FctbCompute);
         }
 
         private void InitSceneForm()

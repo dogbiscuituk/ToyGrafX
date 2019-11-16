@@ -139,6 +139,7 @@
                 Directory.CreateDirectory(Options.FilesFolderPath);
             if (!Directory.Exists(Options.TemplatesFolderPath))
                 Directory.CreateDirectory(Options.TemplatesFolderPath);
+            FctbController.ApplyOptions();
             foreach (var sceneController in SceneControllers)
                 ApplyOptions(sceneController);
         }

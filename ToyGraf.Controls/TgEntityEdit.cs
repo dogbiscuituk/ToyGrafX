@@ -8,7 +8,5 @@
         {
             InitializeComponent();
         }
-
-        // https://github.com/PavelTorgashov/FastColoredTextBox/blob/master/Tester/PowerfulSample.cs
     }
 }
