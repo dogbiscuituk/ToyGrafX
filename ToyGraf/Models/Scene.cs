@@ -153,7 +153,7 @@
         [DefaultValue(Defaults.Shader1Vertex)]
         [Description(Descriptions.Shader1Vertex)]
         [DisplayName(DisplayNames.Shader1Vertex)]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        [Editor(typeof(ShaderEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader1Vertex
         {
@@ -165,7 +165,7 @@
         [DefaultValue(Defaults.Shader2TessControl)]
         [Description(Descriptions.Shader2TessControl)]
         [DisplayName(DisplayNames.Shader2TessControl)]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        [Editor(typeof(ShaderEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader2TessControl
         {
@@ -177,7 +177,7 @@
         [DefaultValue(Defaults.Shader3TessEvaluation)]
         [Description(Descriptions.Shader3TessEvaluation)]
         [DisplayName(DisplayNames.Shader3TessEvaluation)]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        [Editor(typeof(ShaderEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader3TessEvaluation
         {
@@ -189,7 +189,7 @@
         [DefaultValue(Defaults.Shader4Geometry)]
         [Description(Descriptions.Shader4Geometry)]
         [DisplayName(DisplayNames.Shader4Geometry)]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        [Editor(typeof(ShaderEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader4Geometry
         {
@@ -201,7 +201,7 @@
         [DefaultValue(Defaults.Shader5Fragment)]
         [Description(Descriptions.Shader5Fragment)]
         [DisplayName(DisplayNames.Shader5Fragment)]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        [Editor(typeof(ShaderEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader5Fragment
         {
@@ -213,7 +213,7 @@
         [DefaultValue(Defaults.Shader6Compute)]
         [Description(Descriptions.Shader6Compute)]
         [DisplayName(DisplayNames.Shader6Compute)]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        [Editor(typeof(ShaderEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string Shader6Compute
         {

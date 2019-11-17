@@ -8,7 +8,6 @@
     using System.Windows.Forms;
     using ToyGraf.Commands;
     using ToyGraf.Controls;
-    using ToyGraf.Controls.Events;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
