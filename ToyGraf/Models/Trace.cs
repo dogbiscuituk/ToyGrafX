@@ -4,12 +4,11 @@
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
     using System.ComponentModel;
-    using System.ComponentModel.Design;
     using System.Drawing.Design;
     using ToyGraf.Commands;
-    using ToyGraf.Controllers;
     using ToyGraf.Common.Types;
     using ToyGraf.Common.Utility;
+    using ToyGraf.Controllers;
 
     public class Trace
     {

@@ -160,7 +160,7 @@
         private static readonly MarkerStyle
             SameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.Gray)));
 
-        private static TextStyle
+        private static readonly TextStyle
             CommentStyle = new TextStyle(Brushes.Black, Brushes.Transparent, 0),
             DirectiveStyle = new TextStyle(Brushes.Black, Brushes.Transparent, 0),
             FunctionStyle = new TextStyle(Brushes.Black, Brushes.Transparent, 0),

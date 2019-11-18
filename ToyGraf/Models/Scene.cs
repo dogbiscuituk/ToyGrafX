@@ -5,15 +5,14 @@
     using OpenTK.Graphics.OpenGL;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.ComponentModel.Design;
     using System.Drawing;
     using System.Drawing.Design;
     using System.Linq;
     using ToyGraf.Commands;
-    using ToyGraf.Controllers;
-    using ToyGraf.Controls;
     using ToyGraf.Common.Types;
     using ToyGraf.Common.Utility;
+    using ToyGraf.Controllers;
+    using ToyGraf.Controls;
 
     public class Scene
     {

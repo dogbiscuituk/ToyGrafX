@@ -4,8 +4,8 @@
     using System.ComponentModel;
     using System.Linq;
     using System.Windows.Forms;
-    using ToyGraf.Controls;
     using ToyGraf.Common.Utility;
+    using ToyGraf.Controls;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
@@ -138,7 +138,7 @@
                 ((ToolStripMenuItem)items[index]).Checked = index == (int)SelectedSubject;
         }
 
-        private void PopupSubject_Click(object sender, System.EventArgs e) =>
+        private void PopupSubject_Click(object sender, EventArgs e) =>
             SelectSubject((ToolStripItem)sender);
 
         private void PropertyGrid_PropertyValueChanged(object sender, PropertyValueChangedEventArgs e) =>
@@ -147,7 +147,7 @@
         private void SceneController_PropertyChanged(object sender, PropertyChangedEventArgs e) =>
             PropertyChanged();
 
-        private void SubjectButton_ButtonClick(object sender, System.EventArgs e) => SelectNextSubject();
+        private void SubjectButton_ButtonClick(object sender, EventArgs e) => SelectNextSubject();
 
         private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
             SceneForm.ViewPropertyGrid.Checked = EditorVisible;

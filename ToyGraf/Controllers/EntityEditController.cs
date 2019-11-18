@@ -3,6 +3,7 @@
     using FastColoredTextBoxNS;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using System.Windows.Forms;
     using ToyGraf.Controls;
@@ -82,10 +83,10 @@
         private void PopupEntityEditShaders_Click(object sender, EventArgs e) =>
             new ShadersController(this).ShowDialog(Editor);
 
-        private void PopupEntityEditMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e) =>
+        private void PopupEntityEditMenu_Opening(object sender, CancelEventArgs e) =>
             SceneForm.PopupEntityEditFloat.Text = EditorDocked ? "&Undock" : "&Dock";
 
-        private void ViewMenu_DropDownOpening(object sender, System.EventArgs e) =>
+        private void ViewMenu_DropDownOpening(object sender, EventArgs e) =>
             SceneForm.ViewEntityEditor.Checked = EditorVisible;
 
         #endregion

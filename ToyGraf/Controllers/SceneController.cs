@@ -8,9 +8,9 @@
     using System.Linq;
     using System.Windows.Forms;
     using ToyGraf.Commands;
-    using ToyGraf.Controls;
     using ToyGraf.Common.Types;
     using ToyGraf.Common.Utility;
+    using ToyGraf.Controls;
     using ToyGraf.Models;
     using ToyGraf.Properties;
     using ToyGraf.Views;
@@ -163,9 +163,9 @@
 
         #region Private Event Handlers
 
-        private void CameraMoveBack_Click(object sender, System.EventArgs e) => Scene.CameraMoveBack();
+        private void CameraMoveBack_Click(object sender, EventArgs e) => Scene.CameraMoveBack();
         private void CameraMoveDown_Click(object sender, EventArgs e) => Scene.CameraMoveDown();
-        private void CameraMoveForward_Click(object sender, System.EventArgs e) => Scene.CameraMoveForward();
+        private void CameraMoveForward_Click(object sender, EventArgs e) => Scene.CameraMoveForward();
         private void CameraMoveLeft_Click(object sender, EventArgs e) => Scene.CameraMoveLeft();
         private void CameraMoveRight_Click(object sender, EventArgs e) => Scene.CameraMoveRight();
         private void CameraMoveUp_Click(object sender, EventArgs e) => Scene.CameraMoveUp();
@@ -175,19 +175,20 @@
         private void CameraRotateUp_Click(object sender, EventArgs e) => Scene.CameraRotateUp();
         private void Clock_Tick(object sender, EventArgs e) { RenderController.Render(); }
         private void EditOptions_Click(object sender, EventArgs e) => EditOptions();
-        private void FileClose_Click(object sender, System.EventArgs e) => SceneForm.Close();
-        private void FileExit_Click(object sender, System.EventArgs e) => AppController.Close();
-        private void FileNewEmptyScene_Click(object sender, System.EventArgs e) => NewEmptyScene();
-        private void FileNewFromTemplate_Click(object sender, System.EventArgs e) => NewFromTemplate();
-        private void FileOpen_Click(object sender, System.EventArgs e) => OpenFile();
-        private void FileSave_Click(object sender, System.EventArgs e) => SaveFile();
-        private void FileSaveAs_Click(object sender, System.EventArgs e) => SaveFileAs();
+        private void EditRefresh_Click(object sender, EventArgs e) => RenderController.Refresh();
+        private void FileClose_Click(object sender, EventArgs e) => SceneForm.Close();
+        private void FileExit_Click(object sender, EventArgs e) => AppController.Close();
+        private void FileNewEmptyScene_Click(object sender, EventArgs e) => NewEmptyScene();
+        private void FileNewFromTemplate_Click(object sender, EventArgs e) => NewFromTemplate();
+        private void FileOpen_Click(object sender, EventArgs e) => OpenFile();
+        private void FileSave_Click(object sender, EventArgs e) => SaveFile();
+        private void FileSaveAs_Click(object sender, EventArgs e) => SaveFileAs();
         private void GLControl_BackColorChanged(object sender, EventArgs e) => BackColorChanged();
         private void GLControl_ClientSizeChanged(object sender, EventArgs e) => Resize();
         private void GLControl_Load(object sender, EventArgs e) { }
         private void GLControl_Paint(object sender, PaintEventArgs e) => RenderController.Render();
         private void GLControl_Resize(object sender, EventArgs e) { }
-        private void HelpAbout_Click(object sender, System.EventArgs e) => HelpAbout();
+        private void HelpAbout_Click(object sender, EventArgs e) => HelpAbout();
         private void HelpTheOpenGLShadingLanguage_Click(object sender, EventArgs e) => ShowOpenGLSLBook(SceneForm.PropertyGrid);
         private void JsonController_FileLoaded(object sender, EventArgs e) => FileLoaded();
         private void JsonController_FilePathChanged(object sender, EventArgs e) => UpdateCaption();
@@ -196,6 +197,7 @@
         private void JsonController_FileSaved(object sender, EventArgs e) => FileSaved();
         private void JsonController_FileSaving(object sender, CancelEventArgs e) => e.Cancel = false;
         private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
+        private void SceneAddNewTrace_Click(object sender, EventArgs e) => CommandProcessor.AppendTrace();
         private void SceneForm_FormClosed(object sender, FormClosedEventArgs e) => FormClosed();
         private void SceneForm_FormClosing(object sender, FormClosingEventArgs e) => e.Cancel = !FormClosing(e.CloseReason);
         private void TbOpen_DropDownOpening(object sender, EventArgs e) => SceneForm.FileReopen.CloneTo(SceneForm.tbOpen);
@@ -254,7 +256,8 @@
                 SceneForm.FileClose.Click += FileClose_Click;
                 SceneForm.FileExit.Click += FileExit_Click;
                 SceneForm.EditOptions.Click += EditOptions_Click;
-                SceneForm.EditRefresh.Click += (sender, e) => RenderController.Refresh();
+                SceneForm.EditRefresh.Click += EditRefresh_Click;
+                SceneForm.SceneAddNewTrace.Click += SceneAddNewTrace_Click;
                 SceneForm.MoveLeft.Click += CameraMoveLeft_Click;
                 SceneForm.MoveRight.Click += CameraMoveRight_Click;
                 SceneForm.ZoomIn.Click += CameraMoveForward_Click;
@@ -267,6 +270,7 @@
                 SceneForm.CircleDown.Click += CameraRotateDown_Click;
                 SceneForm.HelpOpenGLShadingLanguage.Click += HelpTheOpenGLShadingLanguage_Click;
                 SceneForm.HelpAbout.Click += HelpAbout_Click;
+                SceneForm.tbAdd.Click += SceneAddNewTrace_Click;
                 SceneForm.tbNew.ButtonClick += FileNewEmptyScene_Click;
                 SceneForm.tbNewEmptyScene.Click += FileNewEmptyScene_Click;
                 SceneForm.tbNewFromTemplate.Click += FileNewFromTemplate_Click;
@@ -292,7 +296,8 @@
                 SceneForm.FileClose.Click -= FileClose_Click;
                 SceneForm.FileExit.Click -= FileExit_Click;
                 SceneForm.EditOptions.Click -= EditOptions_Click;
-                SceneForm.EditRefresh.Click -= (sender, e) => RenderController.Refresh();
+                SceneForm.EditRefresh.Click -= EditRefresh_Click;
+                SceneForm.SceneAddNewTrace.Click += SceneAddNewTrace_Click;
                 SceneForm.MoveLeft.Click -= CameraMoveLeft_Click;
                 SceneForm.MoveRight.Click -= CameraMoveRight_Click;
                 SceneForm.ZoomIn.Click -= CameraMoveForward_Click;
@@ -305,6 +310,7 @@
                 SceneForm.CircleDown.Click -= CameraRotateDown_Click;
                 SceneForm.HelpOpenGLShadingLanguage.Click -= HelpTheOpenGLShadingLanguage_Click;
                 SceneForm.HelpAbout.Click -= HelpAbout_Click;
+                SceneForm.tbAdd.Click += SceneAddNewTrace_Click;
                 SceneForm.tbNew.ButtonClick -= FileNewEmptyScene_Click;
                 SceneForm.tbNewEmptyScene.Click -= FileNewEmptyScene_Click;
                 SceneForm.tbNewFromTemplate.Click -= FileNewFromTemplate_Click;

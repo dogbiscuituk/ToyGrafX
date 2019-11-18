@@ -1,5 +1,6 @@
 ﻿namespace ToyGraf.Controllers
 {
+    using System;
     using System.Drawing;
     using System.Windows.Forms;
     using ToyGraf.Views;
@@ -56,7 +57,7 @@
 
         #region Private Event Handlers
 
-        private void CbAll_CheckedChanged(object sender, System.EventArgs e) => UpdateCheckBoxes();
+        private void CbAll_CheckedChanged(object sender, EventArgs e) => UpdateCheckBoxes();
         private void ColumnsListBox_ItemCheck(object sender, ItemCheckEventArgs e) => UpdateCbAll(e.Index, e.NewValue);
 
         #endregion
