@@ -99,15 +99,15 @@
         {
             switch (Language)
             {
-                case "GLSL": return Languages.Custom;
                 case "C#": return Languages.CSharp;
-                case "VB": return Languages.VB;
+                case "GLSL": return Languages.Custom;
                 case "HTML": return Languages.HTML;
-                case "XML": return Languages.XML;
-                case "SQL": return Languages.SQL;
-                case "PHP": return Languages.PHP;
                 case "JS": return Languages.JS;
                 case "Lua": return Languages.Lua;
+                case "PHP": return Languages.PHP;
+                case "SQL": return Languages.SQL;
+                case "VB": return Languages.VB;
+                case "XML": return Languages.XML;
                 default: return Languages.Custom;
             }
         }

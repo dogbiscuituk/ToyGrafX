@@ -61,6 +61,7 @@
             this.TextBox.CharWidth = 8;
             this.TextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.TextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.TextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.TextBox.IsReplaceMode = false;
             this.TextBox.Language = FastColoredTextBoxNS.Language.CSharp;
             this.TextBox.LeftBracket = '(';
@@ -73,7 +74,7 @@
             this.TextBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.TextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("TextBox.ServiceColors")));
             this.TextBox.ShowFoldingLines = true;
-            this.TextBox.Size = new System.Drawing.Size(600, 380);
+            this.TextBox.Size = new System.Drawing.Size(600, 388);
             this.TextBox.TabIndex = 1;
             this.TextBox.Zoom = 100;
             // 
@@ -81,9 +82,9 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(511, 398);
+            this.btnCancel.Location = new System.Drawing.Point(537, 406);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(101, 31);
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -92,9 +93,9 @@
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(404, 398);
+            this.btnOK.Location = new System.Drawing.Point(456, 406);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(101, 31);
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 6;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -120,7 +121,7 @@
 
         #endregion
 
-        public FastColoredTextBoxNS.FastColoredTextBox TextBox;
+        internal FastColoredTextBoxNS.FastColoredTextBox TextBox;
         internal System.Windows.Forms.Button btnCancel;
         internal System.Windows.Forms.Button btnOK;
     }
