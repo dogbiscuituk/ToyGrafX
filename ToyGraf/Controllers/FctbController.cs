@@ -19,7 +19,7 @@
 
         internal FctbController(FastColoredTextBox textBox)
         {
-            _TextBox = textBox ?? throw new NullReferenceException("textBox cannot be null.");
+            _TextBox = textBox ?? throw new NullReferenceException($"{nameof(textBox)} cannot be null.");
             Language = "GLSL";
             _TextBox.TextChanged += TextBox_TextChanged;
         }
@@ -63,12 +63,8 @@
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            switch (Language)
-            {
-                case "GLSL":
-                    SyntaxHighlightGLSL(e);
-                    break;
-            }
+            if (Language == "GLSL")
+                SyntaxHighlightGLSL(e);
             if (_TextBox.Text.Trim().StartsWith("<?xml"))
             {
                 _TextBox.Language = Languages.XML;
@@ -92,7 +88,7 @@
             style.FontStyle = info.FontStyle;
         }
 
-        private static TextStyle CreateTextStyle() =>
+        private static TextStyle CreateTextStyle() => 
             new TextStyle(Brushes.Black, Brushes.Transparent, 0);
 
         private Languages GetLanguage()
