@@ -48,6 +48,7 @@
         [DefaultValue(Defaults.GPUCode)]
         [Description(Descriptions.GPUCode)]
         [DisplayName(DisplayNames.GPUCode)]
+        [Editor(typeof(ShaderEditor), typeof(UITypeEditor))]
         [JsonIgnore]
         public string GPUCode => _GPUCode;
 
