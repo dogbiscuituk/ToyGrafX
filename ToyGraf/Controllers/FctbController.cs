@@ -12,7 +12,8 @@
         internal FctbController()
         {
             Editor = new FctbForm();
-            Editor.MainMenu.CloneTo(Editor.PopupMenu);
+            Editor.ActiveControl = MasterTextBox;
+            Editor.SplitContainer.SplitterDistance = 0;
         }
 
         #endregion
@@ -34,6 +35,9 @@
                 Editor.EditUncomment.Click += EditUncomment_Click;
                 Editor.EditIncreaseIndent.Click += EditIncreaseIndent_Click;
                 Editor.EditDecreaseIndent.Click += EditDecreaseIndent_Click;
+                Editor.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
+                Editor.ViewRuler.Click += ViewRuler_Click;
+                Editor.ViewLineNumbers.Click += ViewLineNumbers_Click;
                 Editor.btnOK.Click += BtnOK_Click;
                 Editor.btnCancel.Click += BtnCancel_Click;
             }
@@ -44,7 +48,8 @@
         #region Private Fields & Properties
 
         private FctbForm _Editor;
-        private FastColoredTextBox TextBox => Editor.TextBox2;
+        private FastColoredTextBox MasterTextBox => Editor.MasterTextBox;
+        private FastColoredTextBox SlaveTextBox => Editor.SlaveTextBox;
 
         #endregion
 
@@ -57,25 +62,25 @@
             Editor.DialogResult = DialogResult.Cancel;
 
         private void EditComment_Click(object sender, System.EventArgs e) =>
-            TextBox.InsertLinePrefix(TextBox.CommentPrefix);
+            MasterTextBox.InsertLinePrefix(MasterTextBox.CommentPrefix);
 
         private void EditDecreaseIndent_Click(object sender, System.EventArgs e) =>
-            TextBox.DecreaseIndent();
+            MasterTextBox.DecreaseIndent();
 
         private void EditFind_Click(object sender, System.EventArgs e) =>
-            TextBox.ShowFindDialog();
+            MasterTextBox.ShowFindDialog();
 
         private void EditIncreaseIndent_Click(object sender, System.EventArgs e) =>
-            TextBox.IncreaseIndent();
+            MasterTextBox.IncreaseIndent();
 
         private void EditReplace_Click(object sender, System.EventArgs e) =>
-            TextBox.ShowReplaceDialog();
+            MasterTextBox.ShowReplaceDialog();
 
         private void EditUncomment_Click(object sender, System.EventArgs e) =>
-            TextBox.RemoveLinePrefix(TextBox.CommentPrefix);
+            MasterTextBox.RemoveLinePrefix(MasterTextBox.CommentPrefix);
 
         private void FilePrint_Click(object sender, System.EventArgs e) =>
-            TextBox.Print(new PrintDialogSettings() { ShowPrintPreviewDialog = true });
+            MasterTextBox.Print(new PrintDialogSettings() { ShowPrintPreviewDialog = true });
 
         private void FileSaveAsHTML_Click(object sender, System.EventArgs e)
         {
@@ -88,7 +93,43 @@
         {
             using (var sfd = new SaveFileDialog { Filter = "RTF|*.rtf" })
                 if (sfd.ShowDialog() == DialogResult.OK)
-                    File.WriteAllText(sfd.FileName, TextBox.Rtf);
+                    File.WriteAllText(sfd.FileName, MasterTextBox.Rtf);
+        }
+
+        private void ViewLineNumbers_Click(object sender, System.EventArgs e) =>
+            ShowLineNumbers = !ShowLineNumbers;
+
+        private void ViewMenu_DropDownOpening(object sender, System.EventArgs e)
+        {
+            Editor.ViewRuler.Checked = ShowRuler;
+            Editor.ViewLineNumbers.Checked = ShowLineNumbers;
+        }
+
+        private void ViewRuler_Click(object sender, System.EventArgs e) =>
+            ShowRuler = !ShowRuler;
+
+        #endregion
+
+        #region Private Properties
+
+        private bool ShowLineNumbers
+        {
+            get => MasterTextBox.ShowLineNumbers;
+            set
+            {
+                MasterTextBox.ShowLineNumbers = SlaveTextBox.ShowLineNumbers = value;
+                Editor.Refresh();
+            }
+        }
+
+        private bool ShowRuler
+        {
+            get => Editor.MasterRuler.Visible;
+            set
+            {
+                Editor.MasterRuler.Visible = Editor.SlaveRuler.Visible = value;
+                Editor.Refresh();
+            }
         }
 
         #endregion
@@ -100,7 +141,7 @@
             switch (filterIndex)
             {
                 case 1:
-                    return TextBox.Html;
+                    return MasterTextBox.Html;
                 case 2:
                     ExportToHTML exporter = new ExportToHTML
                     {
@@ -109,7 +150,7 @@
                         UseForwardNbsp = true,
                         UseStyleTag = true
                     };
-                    return exporter.GetHtml(TextBox);
+                    return exporter.GetHtml(MasterTextBox);
                 default:
                     return string.Empty;
             }
