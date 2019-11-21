@@ -72,6 +72,7 @@
     <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\ColumnsController.cs" />
     <Compile Include="Controllers\FctbController.cs" />
+    <Compile Include="Controllers\TextStyleController.cs" />
     <Compile Include="Controllers\HostController.cs" />
     <Compile Include="Controllers\EntityEditController.cs" />
     <Compile Include="Controllers\FullScreenController.cs" />

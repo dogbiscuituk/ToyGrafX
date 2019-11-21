@@ -6,7 +6,6 @@
     using System.Windows.Forms;
     using System.Windows.Forms.Design;
     using ToyGraf.Controllers;
-    using ToyGraf.Views;
 
     public class ShaderEditor : UITypeEditor
     {
@@ -14,14 +13,15 @@
         {
             string text = value as string;
             if (provider.GetService(typeof(IWindowsFormsEditorService)) is IWindowsFormsEditorService service && text != null)
-                using (FctbForm dialog = new FctbForm())
-                {
-                    new FctbController(dialog.TextBox);
-                    dialog.Text = context.PropertyDescriptor.DisplayName;
-                    dialog.TextBox.Text = text;
-                    if (service.ShowDialog(dialog) == DialogResult.OK)
-                        text = dialog.TextBox.Text;
-                }
+            {
+                var controller = new FctbController();
+                var dialog = controller.Editor;
+                //new TextStyleController(dialog.TextBox);
+                dialog.Text = context.PropertyDescriptor.DisplayName;
+                dialog.TextBox2.Text = text;
+                if (service.ShowDialog(dialog) == DialogResult.OK)
+                    text = dialog.TextBox2.Text;
+            }
             return text;
         }
 
