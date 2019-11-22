@@ -9,9 +9,9 @@
     {
         #region Constructor
 
-        internal FctbController()
+        internal FctbController(string caption)
         {
-            Editor = new FctbForm();
+            Editor = new FctbForm() { Text = $"{caption} - GLSL Shader Editor" };
             Editor.ActiveControl = PrimaryTextBox; // Do not add to initializer!
             Splitter.SplitterDistance = 0;
             ShowDocumentMap = false;
@@ -44,7 +44,7 @@
 
         #endregion
 
-        #region Private Fields & Properties
+        #region Private Properties
 
         private Orientation Orientation { get => Splitter.Orientation; set => Splitter.Orientation = value; }
         private SplitContainer PrimarySplitter => Editor.PrimarySplitter;
@@ -172,9 +172,10 @@
         private void SetSplit(Orientation orientation)
         {
             Orientation = orientation;
-            Splitter.SplitterDistance = Orientation == Orientation.Horizontal
-                ? Splitter.Height / 2
-                : Splitter.Width / 2;
+            var size = Orientation == Orientation.Horizontal
+                ? Splitter.Height
+                : Splitter.Width;
+            Splitter.SplitterDistance = size / 2 - 2;
         }
 
         #endregion

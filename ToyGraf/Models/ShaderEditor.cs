@@ -14,11 +14,9 @@
             string text = value as string;
             if (provider.GetService(typeof(IWindowsFormsEditorService)) is IWindowsFormsEditorService service && text != null)
             {
-                var controller = new FctbController();
+                var controller = new FctbController(context.PropertyDescriptor.DisplayName);
                 var dialog = controller.Editor;
-                //new TextStyleController(dialog.TextBox);
-                dialog.Text = context.PropertyDescriptor.DisplayName;
-                dialog.SecondaryTextBox.Text = text;
+                dialog.PrimaryTextBox.Text = text;
                 if (service.ShowDialog(dialog) == DialogResult.OK)
                     text = dialog.SecondaryTextBox.Text;
             }
