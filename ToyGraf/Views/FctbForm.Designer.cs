@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FctbForm));
-            this.SlaveTextBox = new FastColoredTextBoxNS.FastColoredTextBox();
-            this.MasterTextBox = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.SecondaryTextBox = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.PrimaryTextBox = new FastColoredTextBoxNS.FastColoredTextBox();
             this.ToolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.StatusBar = new System.Windows.Forms.StatusStrip();
             this.btnCancel = new System.Windows.Forms.ToolStripDropDownButton();
@@ -58,8 +58,8 @@
             this.ViewRuler = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewLineNumbers = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.SlaveTextBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MasterTextBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SecondaryTextBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PrimaryTextBox)).BeginInit();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -72,9 +72,9 @@
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // SlaveTextBox
+            // SecondaryTextBox
             // 
-            this.SlaveTextBox.AutoCompleteBracketsList = new char[] {
+            this.SecondaryTextBox.AutoCompleteBracketsList = new char[] {
         '(',
         ')',
         '{',
@@ -85,38 +85,37 @@
         '\"',
         '\'',
         '\''};
-            this.SlaveTextBox.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]" +
+            this.SecondaryTextBox.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]" +
     "*(?<range>:)\\s*(?<range>[^;]+);\r\n";
-            this.SlaveTextBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
-            this.SlaveTextBox.BackBrush = null;
-            this.SlaveTextBox.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
-            this.SlaveTextBox.CharHeight = 14;
-            this.SlaveTextBox.CharWidth = 8;
-            this.SlaveTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.SlaveTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.SlaveTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SlaveTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
-            this.SlaveTextBox.IsReplaceMode = false;
-            this.SlaveTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
-            this.SlaveTextBox.LeftBracket = '(';
-            this.SlaveTextBox.LeftBracket2 = '{';
-            this.SlaveTextBox.Location = new System.Drawing.Point(0, 28);
-            this.SlaveTextBox.Name = "SlaveTextBox";
-            this.SlaveTextBox.Paddings = new System.Windows.Forms.Padding(0);
-            this.SlaveTextBox.RightBracket = ')';
-            this.SlaveTextBox.RightBracket2 = '}';
-            this.SlaveTextBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.SlaveTextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("SlaveTextBox.ServiceColors")));
-            this.SlaveTextBox.ShowFoldingLines = true;
-            this.SlaveTextBox.ShowLineNumbers = false;
-            this.SlaveTextBox.Size = new System.Drawing.Size(616, 95);
-            this.SlaveTextBox.SourceTextBox = this.MasterTextBox;
-            this.SlaveTextBox.TabIndex = 1;
-            this.SlaveTextBox.Zoom = 100;
+            this.SecondaryTextBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
+            this.SecondaryTextBox.BackBrush = null;
+            this.SecondaryTextBox.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
+            this.SecondaryTextBox.CharHeight = 14;
+            this.SecondaryTextBox.CharWidth = 8;
+            this.SecondaryTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.SecondaryTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.SecondaryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SecondaryTextBox.IsReplaceMode = false;
+            this.SecondaryTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
+            this.SecondaryTextBox.LeftBracket = '(';
+            this.SecondaryTextBox.LeftBracket2 = '{';
+            this.SecondaryTextBox.Location = new System.Drawing.Point(0, 28);
+            this.SecondaryTextBox.Name = "SecondaryTextBox";
+            this.SecondaryTextBox.Paddings = new System.Windows.Forms.Padding(0);
+            this.SecondaryTextBox.RightBracket = ')';
+            this.SecondaryTextBox.RightBracket2 = '}';
+            this.SecondaryTextBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.SecondaryTextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("SecondaryTextBox.ServiceColors")));
+            this.SecondaryTextBox.ShowFoldingLines = true;
+            this.SecondaryTextBox.ShowLineNumbers = false;
+            this.SecondaryTextBox.Size = new System.Drawing.Size(616, 95);
+            this.SecondaryTextBox.SourceTextBox = this.PrimaryTextBox;
+            this.SecondaryTextBox.TabIndex = 1;
+            this.SecondaryTextBox.Zoom = 100;
             // 
-            // MasterTextBox
+            // PrimaryTextBox
             // 
-            this.MasterTextBox.AutoCompleteBracketsList = new char[] {
+            this.PrimaryTextBox.AutoCompleteBracketsList = new char[] {
         '(',
         ')',
         '{',
@@ -127,33 +126,32 @@
         '\"',
         '\'',
         '\''};
-            this.MasterTextBox.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]" +
+            this.PrimaryTextBox.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]" +
     "*(?<range>:)\\s*(?<range>[^;]+);\r\n";
-            this.MasterTextBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
-            this.MasterTextBox.BackBrush = null;
-            this.MasterTextBox.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
-            this.MasterTextBox.CharHeight = 14;
-            this.MasterTextBox.CharWidth = 8;
-            this.MasterTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.MasterTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.MasterTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MasterTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
-            this.MasterTextBox.IsReplaceMode = false;
-            this.MasterTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
-            this.MasterTextBox.LeftBracket = '(';
-            this.MasterTextBox.LeftBracket2 = '{';
-            this.MasterTextBox.Location = new System.Drawing.Point(0, 28);
-            this.MasterTextBox.Name = "MasterTextBox";
-            this.MasterTextBox.Paddings = new System.Windows.Forms.Padding(0);
-            this.MasterTextBox.RightBracket = ')';
-            this.MasterTextBox.RightBracket2 = '}';
-            this.MasterTextBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.MasterTextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("MasterTextBox.ServiceColors")));
-            this.MasterTextBox.ShowFoldingLines = true;
-            this.MasterTextBox.ShowLineNumbers = false;
-            this.MasterTextBox.Size = new System.Drawing.Size(616, 240);
-            this.MasterTextBox.TabIndex = 2;
-            this.MasterTextBox.Zoom = 100;
+            this.PrimaryTextBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
+            this.PrimaryTextBox.BackBrush = null;
+            this.PrimaryTextBox.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
+            this.PrimaryTextBox.CharHeight = 14;
+            this.PrimaryTextBox.CharWidth = 8;
+            this.PrimaryTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.PrimaryTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.PrimaryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PrimaryTextBox.IsReplaceMode = false;
+            this.PrimaryTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
+            this.PrimaryTextBox.LeftBracket = '(';
+            this.PrimaryTextBox.LeftBracket2 = '{';
+            this.PrimaryTextBox.Location = new System.Drawing.Point(0, 28);
+            this.PrimaryTextBox.Name = "PrimaryTextBox";
+            this.PrimaryTextBox.Paddings = new System.Windows.Forms.Padding(0);
+            this.PrimaryTextBox.RightBracket = ')';
+            this.PrimaryTextBox.RightBracket2 = '}';
+            this.PrimaryTextBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.PrimaryTextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("PrimaryTextBox.ServiceColors")));
+            this.PrimaryTextBox.ShowFoldingLines = true;
+            this.PrimaryTextBox.ShowLineNumbers = false;
+            this.PrimaryTextBox.Size = new System.Drawing.Size(616, 240);
+            this.PrimaryTextBox.TabIndex = 2;
+            this.PrimaryTextBox.Zoom = 100;
             // 
             // ToolStripContainer
             // 
@@ -222,13 +220,13 @@
             // 
             // SplitContainer.Panel1
             // 
-            this.SplitContainer.Panel1.Controls.Add(this.SlaveTextBox);
+            this.SplitContainer.Panel1.Controls.Add(this.SecondaryTextBox);
             this.SplitContainer.Panel1.Controls.Add(this.SlaveRuler);
             this.SplitContainer.Panel1MinSize = 0;
             // 
             // SplitContainer.Panel2
             // 
-            this.SplitContainer.Panel2.Controls.Add(this.MasterTextBox);
+            this.SplitContainer.Panel2.Controls.Add(this.PrimaryTextBox);
             this.SplitContainer.Panel2.Controls.Add(this.MasterRuler);
             this.SplitContainer.Panel2MinSize = 0;
             this.SplitContainer.Size = new System.Drawing.Size(616, 395);
@@ -244,7 +242,7 @@
             this.SlaveRuler.Name = "SlaveRuler";
             this.SlaveRuler.Size = new System.Drawing.Size(616, 28);
             this.SlaveRuler.TabIndex = 4;
-            this.SlaveRuler.Target = this.SlaveTextBox;
+            this.SlaveRuler.Target = this.SecondaryTextBox;
             this.SlaveRuler.Visible = false;
             // 
             // MasterRuler
@@ -256,7 +254,7 @@
             this.MasterRuler.Name = "MasterRuler";
             this.MasterRuler.Size = new System.Drawing.Size(616, 28);
             this.MasterRuler.TabIndex = 3;
-            this.MasterRuler.Target = this.MasterTextBox;
+            this.MasterRuler.Target = this.PrimaryTextBox;
             this.MasterRuler.Visible = false;
             // 
             // MainMenu
@@ -332,7 +330,7 @@
             this.EditFind.Name = "EditFind";
             this.EditFind.ShortcutKeyDisplayString = "^F";
             this.EditFind.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.EditFind.Size = new System.Drawing.Size(224, 22);
+            this.EditFind.Size = new System.Drawing.Size(158, 22);
             this.EditFind.Text = "&Find...";
             // 
             // EditReplace
@@ -340,43 +338,43 @@
             this.EditReplace.Name = "EditReplace";
             this.EditReplace.ShortcutKeyDisplayString = "^H";
             this.EditReplace.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.EditReplace.Size = new System.Drawing.Size(224, 22);
+            this.EditReplace.Size = new System.Drawing.Size(158, 22);
             this.EditReplace.Text = "&Replace...";
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(221, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(155, 6);
             // 
             // EditComment
             // 
             this.EditComment.Name = "EditComment";
-            this.EditComment.Size = new System.Drawing.Size(224, 22);
+            this.EditComment.Size = new System.Drawing.Size(158, 22);
             this.EditComment.Text = "&Comment";
             // 
             // EditUncomment
             // 
             this.EditUncomment.Name = "EditUncomment";
-            this.EditUncomment.Size = new System.Drawing.Size(224, 22);
+            this.EditUncomment.Size = new System.Drawing.Size(158, 22);
             this.EditUncomment.Text = "&Uncomment";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(221, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(155, 6);
             // 
             // EditIncreaseIndent
             // 
             this.EditIncreaseIndent.Name = "EditIncreaseIndent";
             this.EditIncreaseIndent.ShortcutKeyDisplayString = "";
-            this.EditIncreaseIndent.Size = new System.Drawing.Size(180, 22);
+            this.EditIncreaseIndent.Size = new System.Drawing.Size(158, 22);
             this.EditIncreaseIndent.Text = "&Increase Indent";
             // 
             // EditDecreaseIndent
             // 
             this.EditDecreaseIndent.Name = "EditDecreaseIndent";
             this.EditDecreaseIndent.ShortcutKeyDisplayString = "";
-            this.EditDecreaseIndent.Size = new System.Drawing.Size(180, 22);
+            this.EditDecreaseIndent.Size = new System.Drawing.Size(158, 22);
             this.EditDecreaseIndent.Text = "&Decrease Indent";
             // 
             // ViewMenu
@@ -418,8 +416,8 @@
             this.Name = "FctbForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            ((System.ComponentModel.ISupportInitialize)(this.SlaveTextBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MasterTextBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SecondaryTextBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PrimaryTextBox)).EndInit();
             this.ToolStripContainer.BottomToolStripPanel.ResumeLayout(false);
             this.ToolStripContainer.BottomToolStripPanel.PerformLayout();
             this.ToolStripContainer.ContentPanel.ResumeLayout(false);
@@ -441,7 +439,7 @@
 
         #endregion
 
-        internal FastColoredTextBoxNS.FastColoredTextBox SlaveTextBox;
+        internal FastColoredTextBoxNS.FastColoredTextBox SecondaryTextBox;
         internal System.Windows.Forms.ToolStripContainer ToolStripContainer;
         internal System.Windows.Forms.MenuStrip MainMenu;
         internal System.Windows.Forms.ToolStripMenuItem FileMenu;
@@ -463,7 +461,7 @@
         internal System.Windows.Forms.ToolStripMenuItem EditIncreaseIndent;
         internal System.Windows.Forms.ToolStripMenuItem EditDecreaseIndent;
         internal System.Windows.Forms.SplitContainer SplitContainer;
-        internal FastColoredTextBoxNS.FastColoredTextBox MasterTextBox;
+        internal FastColoredTextBoxNS.FastColoredTextBox PrimaryTextBox;
         internal FastColoredTextBoxNS.Ruler MasterRuler;
         internal FastColoredTextBoxNS.Ruler SlaveRuler;
         internal System.Windows.Forms.ToolStripMenuItem ViewMenu;

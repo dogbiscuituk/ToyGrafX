@@ -18,9 +18,9 @@
                 var dialog = controller.Editor;
                 //new TextStyleController(dialog.TextBox);
                 dialog.Text = context.PropertyDescriptor.DisplayName;
-                dialog.SlaveTextBox.Text = text;
+                dialog.SecondaryTextBox.Text = text;
                 if (service.ShowDialog(dialog) == DialogResult.OK)
-                    text = dialog.SlaveTextBox.Text;
+                    text = dialog.SecondaryTextBox.Text;
             }
             return text;
         }

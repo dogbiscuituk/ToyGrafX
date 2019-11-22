@@ -12,8 +12,10 @@
         internal FctbController()
         {
             Editor = new FctbForm();
-            Editor.ActiveControl = MasterTextBox;
+            Editor.ActiveControl = PrimaryTextBox; // Do not add to initializer!
             Editor.SplitContainer.SplitterDistance = 0;
+            new TextStyleController(PrimaryTextBox);
+            new TextStyleController(SecondaryTextBox);
         }
 
         #endregion
@@ -48,8 +50,8 @@
         #region Private Fields & Properties
 
         private FctbForm _Editor;
-        private FastColoredTextBox MasterTextBox => Editor.MasterTextBox;
-        private FastColoredTextBox SlaveTextBox => Editor.SlaveTextBox;
+        private FastColoredTextBox PrimaryTextBox => Editor.PrimaryTextBox;
+        private FastColoredTextBox SecondaryTextBox => Editor.SecondaryTextBox;
 
         #endregion
 
@@ -62,38 +64,38 @@
             Editor.DialogResult = DialogResult.Cancel;
 
         private void EditComment_Click(object sender, System.EventArgs e) =>
-            MasterTextBox.InsertLinePrefix(MasterTextBox.CommentPrefix);
+            PrimaryTextBox.InsertLinePrefix(PrimaryTextBox.CommentPrefix);
 
         private void EditDecreaseIndent_Click(object sender, System.EventArgs e) =>
-            MasterTextBox.DecreaseIndent();
+            PrimaryTextBox.DecreaseIndent();
 
         private void EditFind_Click(object sender, System.EventArgs e) =>
-            MasterTextBox.ShowFindDialog();
+            PrimaryTextBox.ShowFindDialog();
 
         private void EditIncreaseIndent_Click(object sender, System.EventArgs e) =>
-            MasterTextBox.IncreaseIndent();
+            PrimaryTextBox.IncreaseIndent();
 
         private void EditReplace_Click(object sender, System.EventArgs e) =>
-            MasterTextBox.ShowReplaceDialog();
+            PrimaryTextBox.ShowReplaceDialog();
 
         private void EditUncomment_Click(object sender, System.EventArgs e) =>
-            MasterTextBox.RemoveLinePrefix(MasterTextBox.CommentPrefix);
+            PrimaryTextBox.RemoveLinePrefix(PrimaryTextBox.CommentPrefix);
 
         private void FilePrint_Click(object sender, System.EventArgs e) =>
-            MasterTextBox.Print(new PrintDialogSettings() { ShowPrintPreviewDialog = true });
+            PrimaryTextBox.Print(new PrintDialogSettings() { ShowPrintPreviewDialog = true });
 
         private void FileSaveAsHTML_Click(object sender, System.EventArgs e)
         {
-            using (var sfd = new SaveFileDialog { Filter = "HTML with <PRE>|*.html|HTML without <PRE>|*.html" })
-                if (sfd.ShowDialog() == DialogResult.OK)
-                    File.WriteAllText(sfd.FileName, GetHTML(sfd.FilterIndex));
+            using (var dialog = new SaveFileDialog { Filter = "HTML with <PRE>|*.html|HTML without <PRE>|*.html" })
+                if (dialog.ShowDialog() == DialogResult.OK)
+                    File.WriteAllText(dialog.FileName, GetHTML(dialog.FilterIndex));
         }
 
         private void FileSaveAsRTF_Click(object sender, System.EventArgs e)
         {
-            using (var sfd = new SaveFileDialog { Filter = "RTF|*.rtf" })
-                if (sfd.ShowDialog() == DialogResult.OK)
-                    File.WriteAllText(sfd.FileName, MasterTextBox.Rtf);
+            using (var dialog = new SaveFileDialog { Filter = "RTF|*.rtf" })
+                if (dialog.ShowDialog() == DialogResult.OK)
+                    File.WriteAllText(dialog.FileName, PrimaryTextBox.Rtf);
         }
 
         private void ViewLineNumbers_Click(object sender, System.EventArgs e) =>
@@ -114,10 +116,10 @@
 
         private bool ShowLineNumbers
         {
-            get => MasterTextBox.ShowLineNumbers;
+            get => PrimaryTextBox.ShowLineNumbers;
             set
             {
-                MasterTextBox.ShowLineNumbers = SlaveTextBox.ShowLineNumbers = value;
+                PrimaryTextBox.ShowLineNumbers = SecondaryTextBox.ShowLineNumbers = value;
                 Editor.Refresh();
             }
         }
@@ -141,16 +143,9 @@
             switch (filterIndex)
             {
                 case 1:
-                    return MasterTextBox.Html;
+                    return PrimaryTextBox.Html;
                 case 2:
-                    ExportToHTML exporter = new ExportToHTML
-                    {
-                        UseBr = true,
-                        UseNbsp = false,
-                        UseForwardNbsp = true,
-                        UseStyleTag = true
-                    };
-                    return exporter.GetHtml(MasterTextBox);
+                    return new ExportToHTML { UseNbsp = false, UseForwardNbsp = true }.GetHtml(PrimaryTextBox);
                 default:
                     return string.Empty;
             }
