@@ -3,7 +3,9 @@
     using FastColoredTextBoxNS;
     using System;
     using System.Drawing;
+    using System.Linq;
     using System.Text.RegularExpressions;
+    using System.Windows.Forms;
     using ToyGraf.Common.Types;
     using ToyGraf.Common.Utility;
     using ToyGraf.Controls;
@@ -22,6 +24,8 @@
             _TextBox = textBox ?? throw new NullReferenceException($"{nameof(textBox)} cannot be null.");
             Language = "GLSL";
             _TextBox.TextChanged += TextBox_TextChanged;
+            CreateAutocompleteMenu();
+            _TextBox.KeyDown += TextBox_KeyDown;
         }
 
         #endregion
@@ -55,11 +59,22 @@
         #region Private Fields
 
         private string _Language;
+        private AutocompleteMenu _AutocompleteMenu;
         private readonly FastColoredTextBox _TextBox;
 
         #endregion
 
         #region Private Event Handlers
+
+        private void TextBox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyData == (Keys.K | Keys.Control))
+            {
+                //forced show (MinFragmentLength will be ignored)
+                _AutocompleteMenu.Show(true);
+                e.Handled = true;
+            }
+        }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -86,6 +101,18 @@
             if (((SolidBrush)style.BackgroundBrush).Color != info.Background)
                 style.BackgroundBrush = info.Background.ToBrush();
             style.FontStyle = info.FontStyle;
+        }
+
+        private void CreateAutocompleteMenu()
+        {
+            _AutocompleteMenu = new AutocompleteMenu(_TextBox)
+            {
+                MinFragmentLength = 2,
+                SearchPattern = "[#\\w\\.]" // Directives begin with '#'.
+            };
+            _AutocompleteMenu.Items.SetAutocompleteItems(GLSL.AutocompleteItems);
+            _AutocompleteMenu.Items.MaximumSize = new System.Drawing.Size(200, 300);
+            _AutocompleteMenu.Items.Width = 200;
         }
 
         private static TextStyle CreateTextStyle() => 

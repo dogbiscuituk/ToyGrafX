@@ -127,6 +127,9 @@
             Keywords = $@"\b{Concat(_Keywords)}\b",
             ReservedWords = $@"\b{Concat(_ReservedWords)}\b";
 
+        public static List<string> AutocompleteItems =
+            _Directives.Select(p => $"#{p}").Union(_Functions).Union(_Keywords).ToList();
+
         #endregion
 
         #region Private Methods
