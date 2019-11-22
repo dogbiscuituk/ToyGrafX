@@ -14,6 +14,7 @@
             Editor = new FctbForm();
             Editor.ActiveControl = PrimaryTextBox; // Do not add to initializer!
             Splitter.SplitterDistance = 0;
+            ShowDocumentMap = false;
             new TextStyleController(PrimaryTextBox);
             new TextStyleController(SecondaryTextBox);
             Editor.FileSaveAsHTML.Click += FileSaveAsHTML_Click;
@@ -27,9 +28,10 @@
             Editor.EditDecreaseIndent.Click += EditDecreaseIndent_Click;
             Editor.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
             Editor.ViewRuler.Click += ViewRuler_Click;
+            Editor.ViewLineNumbers.Click += ViewLineNumbers_Click;
+            Editor.ViewDocumentMap.Click += ViewDocumentMap_Click;
             Editor.ViewSplitHorizontal.Click += ViewSplitHorizontal_Click;
             Editor.ViewSplitVertical.Click += ViewSplitVertical_Click;
-            Editor.ViewLineNumbers.Click += ViewLineNumbers_Click;
             Editor.btnOK.Click += BtnOK_Click;
             Editor.btnCancel.Click += BtnCancel_Click;
         }
@@ -45,9 +47,11 @@
         #region Private Fields & Properties
 
         private Orientation Orientation { get => Splitter.Orientation; set => Splitter.Orientation = value; }
+        private SplitContainer PrimarySplitter => Editor.PrimarySplitter;
         private FastColoredTextBox PrimaryTextBox => Editor.PrimaryTextBox;
+        private SplitContainer SecondarySplitter => Editor.SecondarySplitter;
         private FastColoredTextBox SecondaryTextBox => Editor.SecondaryTextBox;
-        private SplitContainer Splitter => Editor.SplitContainer;
+        private SplitContainer Splitter => Editor.Splitter;
 
         #endregion
 
@@ -94,6 +98,9 @@
                     File.WriteAllText(dialog.FileName, PrimaryTextBox.Rtf);
         }
 
+        private void ViewDocumentMap_Click(object sender, System.EventArgs e) =>
+            ShowDocumentMap = !ShowDocumentMap;
+
         private void ViewLineNumbers_Click(object sender, System.EventArgs e) =>
             ShowLineNumbers = !ShowLineNumbers;
 
@@ -101,6 +108,7 @@
         {
             Editor.ViewRuler.Checked = ShowRuler;
             Editor.ViewLineNumbers.Checked = ShowLineNumbers;
+            Editor.ViewDocumentMap.Checked = ShowDocumentMap;
             Editor.ViewSplitHorizontal.Checked = Orientation == Orientation.Horizontal;
             Editor.ViewSplitVertical.Checked = Orientation == Orientation.Vertical;
         }
@@ -118,6 +126,12 @@
 
         #region Private Properties
 
+        private bool ShowDocumentMap
+        {
+            get => !PrimarySplitter.Panel2Collapsed;
+            set => PrimarySplitter.Panel2Collapsed = SecondarySplitter.Panel2Collapsed = !value;
+        }
+
         private bool ShowLineNumbers
         {
             get => PrimaryTextBox.ShowLineNumbers;
@@ -130,10 +144,10 @@
 
         private bool ShowRuler
         {
-            get => Editor.MasterRuler.Visible;
+            get => Editor.PrimaryRuler.Visible;
             set
             {
-                Editor.MasterRuler.Visible = Editor.SlaveRuler.Visible = value;
+                Editor.PrimaryRuler.Visible = Editor.SecondaryRuler.Visible = value;
                 Editor.Refresh();
             }
         }

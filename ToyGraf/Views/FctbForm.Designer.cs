@@ -36,9 +36,13 @@
             this.StatusBar = new System.Windows.Forms.StatusStrip();
             this.btnCancel = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnOK = new System.Windows.Forms.ToolStripDropDownButton();
-            this.SplitContainer = new System.Windows.Forms.SplitContainer();
-            this.SlaveRuler = new FastColoredTextBoxNS.Ruler();
-            this.MasterRuler = new FastColoredTextBoxNS.Ruler();
+            this.Splitter = new System.Windows.Forms.SplitContainer();
+            this.SecondarySplitter = new System.Windows.Forms.SplitContainer();
+            this.SecondaryRuler = new FastColoredTextBoxNS.Ruler();
+            this.SecondaryMap = new FastColoredTextBoxNS.DocumentMap();
+            this.PrimarySplitter = new System.Windows.Forms.SplitContainer();
+            this.PrimaryRuler = new FastColoredTextBoxNS.Ruler();
+            this.PrimaryMap = new FastColoredTextBoxNS.DocumentMap();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.FileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.FileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,10 +61,12 @@
             this.ViewMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewRuler = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewLineNumbers = new System.Windows.Forms.ToolStripMenuItem();
-            this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.ViewDocumentMap = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.ViewSplit = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewSplitHorizontal = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewSplitVertical = new System.Windows.Forms.ToolStripMenuItem();
+            this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SecondaryTextBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PrimaryTextBox)).BeginInit();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
@@ -68,10 +74,18 @@
             this.ToolStripContainer.TopToolStripPanel.SuspendLayout();
             this.ToolStripContainer.SuspendLayout();
             this.StatusBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
-            this.SplitContainer.Panel1.SuspendLayout();
-            this.SplitContainer.Panel2.SuspendLayout();
-            this.SplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Splitter)).BeginInit();
+            this.Splitter.Panel1.SuspendLayout();
+            this.Splitter.Panel2.SuspendLayout();
+            this.Splitter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SecondarySplitter)).BeginInit();
+            this.SecondarySplitter.Panel1.SuspendLayout();
+            this.SecondarySplitter.Panel2.SuspendLayout();
+            this.SecondarySplitter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PrimarySplitter)).BeginInit();
+            this.PrimarySplitter.Panel1.SuspendLayout();
+            this.PrimarySplitter.Panel2.SuspendLayout();
+            this.PrimarySplitter.SuspendLayout();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,7 +117,7 @@
             this.SecondaryTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
             this.SecondaryTextBox.LeftBracket = '(';
             this.SecondaryTextBox.LeftBracket2 = '{';
-            this.SecondaryTextBox.Location = new System.Drawing.Point(0, 28);
+            this.SecondaryTextBox.Location = new System.Drawing.Point(0, 24);
             this.SecondaryTextBox.Name = "SecondaryTextBox";
             this.SecondaryTextBox.Paddings = new System.Windows.Forms.Padding(0);
             this.SecondaryTextBox.RightBracket = ')';
@@ -112,7 +126,7 @@
             this.SecondaryTextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("SecondaryTextBox.ServiceColors")));
             this.SecondaryTextBox.ShowFoldingLines = true;
             this.SecondaryTextBox.ShowLineNumbers = false;
-            this.SecondaryTextBox.Size = new System.Drawing.Size(616, 95);
+            this.SecondaryTextBox.Size = new System.Drawing.Size(500, 99);
             this.SecondaryTextBox.SourceTextBox = this.PrimaryTextBox;
             this.SecondaryTextBox.TabIndex = 1;
             this.SecondaryTextBox.Zoom = 100;
@@ -145,7 +159,7 @@
             this.PrimaryTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
             this.PrimaryTextBox.LeftBracket = '(';
             this.PrimaryTextBox.LeftBracket2 = '{';
-            this.PrimaryTextBox.Location = new System.Drawing.Point(0, 28);
+            this.PrimaryTextBox.Location = new System.Drawing.Point(0, 24);
             this.PrimaryTextBox.Name = "PrimaryTextBox";
             this.PrimaryTextBox.Paddings = new System.Windows.Forms.Padding(0);
             this.PrimaryTextBox.RightBracket = ')';
@@ -154,7 +168,7 @@
             this.PrimaryTextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("PrimaryTextBox.ServiceColors")));
             this.PrimaryTextBox.ShowFoldingLines = true;
             this.PrimaryTextBox.ShowLineNumbers = false;
-            this.PrimaryTextBox.Size = new System.Drawing.Size(616, 240);
+            this.PrimaryTextBox.Size = new System.Drawing.Size(500, 244);
             this.PrimaryTextBox.TabIndex = 2;
             this.PrimaryTextBox.Zoom = 100;
             // 
@@ -167,7 +181,7 @@
             // 
             // ToolStripContainer.ContentPanel
             // 
-            this.ToolStripContainer.ContentPanel.Controls.Add(this.SplitContainer);
+            this.ToolStripContainer.ContentPanel.Controls.Add(this.Splitter);
             this.ToolStripContainer.ContentPanel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.ToolStripContainer.ContentPanel.Size = new System.Drawing.Size(624, 395);
             this.ToolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -216,51 +230,109 @@
             this.btnOK.Size = new System.Drawing.Size(27, 20);
             this.btnOK.Text = "OK";
             // 
-            // SplitContainer
+            // Splitter
             // 
-            this.SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SplitContainer.Location = new System.Drawing.Point(4, 0);
-            this.SplitContainer.Name = "SplitContainer";
-            this.SplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.Splitter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Splitter.Location = new System.Drawing.Point(4, 0);
+            this.Splitter.Name = "Splitter";
+            this.Splitter.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // SplitContainer.Panel1
+            // Splitter.Panel1
             // 
-            this.SplitContainer.Panel1.Controls.Add(this.SecondaryTextBox);
-            this.SplitContainer.Panel1.Controls.Add(this.SlaveRuler);
-            this.SplitContainer.Panel1MinSize = 0;
+            this.Splitter.Panel1.Controls.Add(this.SecondarySplitter);
+            this.Splitter.Panel1MinSize = 0;
             // 
-            // SplitContainer.Panel2
+            // Splitter.Panel2
             // 
-            this.SplitContainer.Panel2.Controls.Add(this.PrimaryTextBox);
-            this.SplitContainer.Panel2.Controls.Add(this.MasterRuler);
-            this.SplitContainer.Panel2MinSize = 0;
-            this.SplitContainer.Size = new System.Drawing.Size(616, 395);
-            this.SplitContainer.SplitterDistance = 123;
-            this.SplitContainer.TabIndex = 2;
+            this.Splitter.Panel2.Controls.Add(this.PrimarySplitter);
+            this.Splitter.Panel2MinSize = 0;
+            this.Splitter.Size = new System.Drawing.Size(616, 395);
+            this.Splitter.SplitterDistance = 123;
+            this.Splitter.TabIndex = 2;
             // 
-            // SlaveRuler
+            // SecondarySplitter
             // 
-            this.SlaveRuler.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SlaveRuler.Location = new System.Drawing.Point(0, 0);
-            this.SlaveRuler.MaximumSize = new System.Drawing.Size(1461481856, 32);
-            this.SlaveRuler.MinimumSize = new System.Drawing.Size(0, 28);
-            this.SlaveRuler.Name = "SlaveRuler";
-            this.SlaveRuler.Size = new System.Drawing.Size(616, 28);
-            this.SlaveRuler.TabIndex = 4;
-            this.SlaveRuler.Target = this.SecondaryTextBox;
-            this.SlaveRuler.Visible = false;
+            this.SecondarySplitter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SecondarySplitter.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.SecondarySplitter.Location = new System.Drawing.Point(0, 0);
+            this.SecondarySplitter.Name = "SecondarySplitter";
             // 
-            // MasterRuler
+            // SecondarySplitter.Panel1
             // 
-            this.MasterRuler.Dock = System.Windows.Forms.DockStyle.Top;
-            this.MasterRuler.Location = new System.Drawing.Point(0, 0);
-            this.MasterRuler.MaximumSize = new System.Drawing.Size(1252698752, 28);
-            this.MasterRuler.MinimumSize = new System.Drawing.Size(0, 28);
-            this.MasterRuler.Name = "MasterRuler";
-            this.MasterRuler.Size = new System.Drawing.Size(616, 28);
-            this.MasterRuler.TabIndex = 3;
-            this.MasterRuler.Target = this.PrimaryTextBox;
-            this.MasterRuler.Visible = false;
+            this.SecondarySplitter.Panel1.Controls.Add(this.SecondaryTextBox);
+            this.SecondarySplitter.Panel1.Controls.Add(this.SecondaryRuler);
+            // 
+            // SecondarySplitter.Panel2
+            // 
+            this.SecondarySplitter.Panel2.Controls.Add(this.SecondaryMap);
+            this.SecondarySplitter.Size = new System.Drawing.Size(616, 123);
+            this.SecondarySplitter.SplitterDistance = 500;
+            this.SecondarySplitter.TabIndex = 5;
+            // 
+            // SecondaryRuler
+            // 
+            this.SecondaryRuler.Dock = System.Windows.Forms.DockStyle.Top;
+            this.SecondaryRuler.Location = new System.Drawing.Point(0, 0);
+            this.SecondaryRuler.MaximumSize = new System.Drawing.Size(1252698752, 28);
+            this.SecondaryRuler.MinimumSize = new System.Drawing.Size(0, 24);
+            this.SecondaryRuler.Name = "SecondaryRuler";
+            this.SecondaryRuler.Size = new System.Drawing.Size(500, 24);
+            this.SecondaryRuler.TabIndex = 4;
+            this.SecondaryRuler.Target = this.SecondaryTextBox;
+            this.SecondaryRuler.Visible = false;
+            // 
+            // SecondaryMap
+            // 
+            this.SecondaryMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SecondaryMap.ForeColor = System.Drawing.Color.Maroon;
+            this.SecondaryMap.Location = new System.Drawing.Point(0, 0);
+            this.SecondaryMap.Name = "SecondaryMap";
+            this.SecondaryMap.Size = new System.Drawing.Size(112, 123);
+            this.SecondaryMap.TabIndex = 0;
+            this.SecondaryMap.Target = this.SecondaryTextBox;
+            this.SecondaryMap.Text = "documentMap1";
+            // 
+            // PrimarySplitter
+            // 
+            this.PrimarySplitter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PrimarySplitter.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.PrimarySplitter.Location = new System.Drawing.Point(0, 0);
+            this.PrimarySplitter.Name = "PrimarySplitter";
+            // 
+            // PrimarySplitter.Panel1
+            // 
+            this.PrimarySplitter.Panel1.Controls.Add(this.PrimaryTextBox);
+            this.PrimarySplitter.Panel1.Controls.Add(this.PrimaryRuler);
+            // 
+            // PrimarySplitter.Panel2
+            // 
+            this.PrimarySplitter.Panel2.Controls.Add(this.PrimaryMap);
+            this.PrimarySplitter.Size = new System.Drawing.Size(616, 268);
+            this.PrimarySplitter.SplitterDistance = 500;
+            this.PrimarySplitter.TabIndex = 4;
+            // 
+            // PrimaryRuler
+            // 
+            this.PrimaryRuler.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PrimaryRuler.Location = new System.Drawing.Point(0, 0);
+            this.PrimaryRuler.MaximumSize = new System.Drawing.Size(1073741824, 24);
+            this.PrimaryRuler.MinimumSize = new System.Drawing.Size(0, 24);
+            this.PrimaryRuler.Name = "PrimaryRuler";
+            this.PrimaryRuler.Size = new System.Drawing.Size(500, 24);
+            this.PrimaryRuler.TabIndex = 3;
+            this.PrimaryRuler.Target = this.PrimaryTextBox;
+            this.PrimaryRuler.Visible = false;
+            // 
+            // PrimaryMap
+            // 
+            this.PrimaryMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PrimaryMap.ForeColor = System.Drawing.Color.Maroon;
+            this.PrimaryMap.Location = new System.Drawing.Point(0, 0);
+            this.PrimaryMap.Name = "PrimaryMap";
+            this.PrimaryMap.Size = new System.Drawing.Size(112, 268);
+            this.PrimaryMap.TabIndex = 0;
+            this.PrimaryMap.Target = this.PrimaryTextBox;
+            this.PrimaryMap.Text = "documentMap2";
             // 
             // MainMenu
             // 
@@ -387,6 +459,8 @@
             this.ViewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ViewRuler,
             this.ViewLineNumbers,
+            this.ViewDocumentMap,
+            this.toolStripMenuItem2,
             this.ViewSplit});
             this.ViewMenu.Name = "ViewMenu";
             this.ViewMenu.Size = new System.Drawing.Size(44, 20);
@@ -395,20 +469,25 @@
             // ViewRuler
             // 
             this.ViewRuler.Name = "ViewRuler";
-            this.ViewRuler.Size = new System.Drawing.Size(180, 22);
+            this.ViewRuler.Size = new System.Drawing.Size(157, 22);
             this.ViewRuler.Text = "&Ruler";
             // 
             // ViewLineNumbers
             // 
             this.ViewLineNumbers.Name = "ViewLineNumbers";
-            this.ViewLineNumbers.Size = new System.Drawing.Size(180, 22);
+            this.ViewLineNumbers.Size = new System.Drawing.Size(157, 22);
             this.ViewLineNumbers.Text = "&Line Numbers";
             // 
-            // HelpMenu
+            // ViewDocumentMap
             // 
-            this.HelpMenu.Name = "HelpMenu";
-            this.HelpMenu.Size = new System.Drawing.Size(44, 20);
-            this.HelpMenu.Text = "&Help";
+            this.ViewDocumentMap.Name = "ViewDocumentMap";
+            this.ViewDocumentMap.Size = new System.Drawing.Size(157, 22);
+            this.ViewDocumentMap.Text = "&Document Map";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(154, 6);
             // 
             // ViewSplit
             // 
@@ -416,20 +495,26 @@
             this.ViewSplitHorizontal,
             this.ViewSplitVertical});
             this.ViewSplit.Name = "ViewSplit";
-            this.ViewSplit.Size = new System.Drawing.Size(180, 22);
+            this.ViewSplit.Size = new System.Drawing.Size(157, 22);
             this.ViewSplit.Text = "&Split";
             // 
             // ViewSplitHorizontal
             // 
             this.ViewSplitHorizontal.Name = "ViewSplitHorizontal";
-            this.ViewSplitHorizontal.Size = new System.Drawing.Size(180, 22);
+            this.ViewSplitHorizontal.Size = new System.Drawing.Size(129, 22);
             this.ViewSplitHorizontal.Text = "&Horizontal";
             // 
             // ViewSplitVertical
             // 
             this.ViewSplitVertical.Name = "ViewSplitVertical";
-            this.ViewSplitVertical.Size = new System.Drawing.Size(180, 22);
+            this.ViewSplitVertical.Size = new System.Drawing.Size(129, 22);
             this.ViewSplitVertical.Text = "&Vertical";
+            // 
+            // HelpMenu
+            // 
+            this.HelpMenu.Name = "HelpMenu";
+            this.HelpMenu.Size = new System.Drawing.Size(44, 20);
+            this.HelpMenu.Text = "&Help";
             // 
             // FctbForm
             // 
@@ -454,10 +539,18 @@
             this.ToolStripContainer.PerformLayout();
             this.StatusBar.ResumeLayout(false);
             this.StatusBar.PerformLayout();
-            this.SplitContainer.Panel1.ResumeLayout(false);
-            this.SplitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).EndInit();
-            this.SplitContainer.ResumeLayout(false);
+            this.Splitter.Panel1.ResumeLayout(false);
+            this.Splitter.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Splitter)).EndInit();
+            this.Splitter.ResumeLayout(false);
+            this.SecondarySplitter.Panel1.ResumeLayout(false);
+            this.SecondarySplitter.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SecondarySplitter)).EndInit();
+            this.SecondarySplitter.ResumeLayout(false);
+            this.PrimarySplitter.Panel1.ResumeLayout(false);
+            this.PrimarySplitter.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PrimarySplitter)).EndInit();
+            this.PrimarySplitter.ResumeLayout(false);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
             this.ResumeLayout(false);
@@ -487,15 +580,21 @@
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         internal System.Windows.Forms.ToolStripMenuItem EditIncreaseIndent;
         internal System.Windows.Forms.ToolStripMenuItem EditDecreaseIndent;
-        internal System.Windows.Forms.SplitContainer SplitContainer;
+        internal System.Windows.Forms.SplitContainer Splitter;
         internal FastColoredTextBoxNS.FastColoredTextBox PrimaryTextBox;
-        internal FastColoredTextBoxNS.Ruler MasterRuler;
-        internal FastColoredTextBoxNS.Ruler SlaveRuler;
+        internal FastColoredTextBoxNS.Ruler PrimaryRuler;
+        internal FastColoredTextBoxNS.Ruler SecondaryRuler;
         internal System.Windows.Forms.ToolStripMenuItem ViewMenu;
         internal System.Windows.Forms.ToolStripMenuItem ViewRuler;
         internal System.Windows.Forms.ToolStripMenuItem ViewLineNumbers;
         internal System.Windows.Forms.ToolStripMenuItem ViewSplit;
         internal System.Windows.Forms.ToolStripMenuItem ViewSplitHorizontal;
         internal System.Windows.Forms.ToolStripMenuItem ViewSplitVertical;
+        internal System.Windows.Forms.SplitContainer SecondarySplitter;
+        internal FastColoredTextBoxNS.DocumentMap SecondaryMap;
+        internal System.Windows.Forms.SplitContainer PrimarySplitter;
+        internal FastColoredTextBoxNS.DocumentMap PrimaryMap;
+        internal System.Windows.Forms.ToolStripMenuItem ViewDocumentMap;
+        internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
     }
 }
