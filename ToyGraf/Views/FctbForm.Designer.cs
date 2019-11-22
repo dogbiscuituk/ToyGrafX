@@ -58,6 +58,9 @@
             this.ViewRuler = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewLineNumbers = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.ViewSplit = new System.Windows.Forms.ToolStripMenuItem();
+            this.ViewSplitHorizontal = new System.Windows.Forms.ToolStripMenuItem();
+            this.ViewSplitVertical = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SecondaryTextBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PrimaryTextBox)).BeginInit();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
@@ -95,6 +98,7 @@
             this.SecondaryTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.SecondaryTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.SecondaryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SecondaryTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.SecondaryTextBox.IsReplaceMode = false;
             this.SecondaryTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
             this.SecondaryTextBox.LeftBracket = '(';
@@ -136,6 +140,7 @@
             this.PrimaryTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.PrimaryTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.PrimaryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PrimaryTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.PrimaryTextBox.IsReplaceMode = false;
             this.PrimaryTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
             this.PrimaryTextBox.LeftBracket = '(';
@@ -293,13 +298,13 @@
             // FileSaveAsHTML
             // 
             this.FileSaveAsHTML.Name = "FileSaveAsHTML";
-            this.FileSaveAsHTML.Size = new System.Drawing.Size(116, 22);
+            this.FileSaveAsHTML.Size = new System.Drawing.Size(115, 22);
             this.FileSaveAsHTML.Text = "&HTML...";
             // 
             // FileSaveAsRTF
             // 
             this.FileSaveAsRTF.Name = "FileSaveAsRTF";
-            this.FileSaveAsRTF.Size = new System.Drawing.Size(116, 22);
+            this.FileSaveAsRTF.Size = new System.Drawing.Size(115, 22);
             this.FileSaveAsRTF.Text = "&RTF...";
             // 
             // FilePrint
@@ -381,7 +386,8 @@
             // 
             this.ViewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ViewRuler,
-            this.ViewLineNumbers});
+            this.ViewLineNumbers,
+            this.ViewSplit});
             this.ViewMenu.Name = "ViewMenu";
             this.ViewMenu.Size = new System.Drawing.Size(44, 20);
             this.ViewMenu.Text = "&View";
@@ -389,13 +395,13 @@
             // ViewRuler
             // 
             this.ViewRuler.Name = "ViewRuler";
-            this.ViewRuler.Size = new System.Drawing.Size(148, 22);
+            this.ViewRuler.Size = new System.Drawing.Size(180, 22);
             this.ViewRuler.Text = "&Ruler";
             // 
             // ViewLineNumbers
             // 
             this.ViewLineNumbers.Name = "ViewLineNumbers";
-            this.ViewLineNumbers.Size = new System.Drawing.Size(148, 22);
+            this.ViewLineNumbers.Size = new System.Drawing.Size(180, 22);
             this.ViewLineNumbers.Text = "&Line Numbers";
             // 
             // HelpMenu
@@ -403,6 +409,27 @@
             this.HelpMenu.Name = "HelpMenu";
             this.HelpMenu.Size = new System.Drawing.Size(44, 20);
             this.HelpMenu.Text = "&Help";
+            // 
+            // ViewSplit
+            // 
+            this.ViewSplit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ViewSplitHorizontal,
+            this.ViewSplitVertical});
+            this.ViewSplit.Name = "ViewSplit";
+            this.ViewSplit.Size = new System.Drawing.Size(180, 22);
+            this.ViewSplit.Text = "&Split";
+            // 
+            // ViewSplitHorizontal
+            // 
+            this.ViewSplitHorizontal.Name = "ViewSplitHorizontal";
+            this.ViewSplitHorizontal.Size = new System.Drawing.Size(180, 22);
+            this.ViewSplitHorizontal.Text = "&Horizontal";
+            // 
+            // ViewSplitVertical
+            // 
+            this.ViewSplitVertical.Name = "ViewSplitVertical";
+            this.ViewSplitVertical.Size = new System.Drawing.Size(180, 22);
+            this.ViewSplitVertical.Text = "&Vertical";
             // 
             // FctbForm
             // 
@@ -467,5 +494,8 @@
         internal System.Windows.Forms.ToolStripMenuItem ViewMenu;
         internal System.Windows.Forms.ToolStripMenuItem ViewRuler;
         internal System.Windows.Forms.ToolStripMenuItem ViewLineNumbers;
+        internal System.Windows.Forms.ToolStripMenuItem ViewSplit;
+        internal System.Windows.Forms.ToolStripMenuItem ViewSplitHorizontal;
+        internal System.Windows.Forms.ToolStripMenuItem ViewSplitVertical;
     }
 }
