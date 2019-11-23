@@ -1,8 +1,11 @@
 ﻿namespace ToyGraf.Controllers
 {
     using FastColoredTextBoxNS;
+    using System;
     using System.IO;
     using System.Windows.Forms;
+    using System.Windows.Forms.Design;
+    using ToyGraf.Models;
     using ToyGraf.Views;
 
     internal class FctbController
@@ -12,13 +15,13 @@
         internal FctbController(string caption)
         {
             Editor = new FctbForm() { Text = $"{caption} - GLSL Shader Editor" };
-            Editor.ActiveControl = PrimaryTextBox; // Do not add to initializer!
+            Editor.ActiveControl = PrimaryTextBox;
             Splitter.SplitterDistance = 0;
             ShowDocumentMap = false;
             new TextStyleController(PrimaryTextBox);
             new TextStyleController(SecondaryTextBox);
-            Editor.FileSaveAsHTML.Click += FileSaveAsHTML_Click;
-            Editor.FileSaveAsRTF.Click += FileSaveAsRTF_Click;
+            Editor.FileExportHTML.Click += FileExportHTML_Click;
+            Editor.FileExportRTF.Click += FileExportRTF_Click;
             Editor.FilePrint.Click += FilePrint_Click;
             Editor.EditFind.Click += EditFind_Click;
             Editor.EditReplace.Click += EditReplace_Click;
@@ -34,18 +37,37 @@
             Editor.ViewSplitVertical.Click += ViewSplitVertical_Click;
             Editor.btnOK.Click += BtnOK_Click;
             Editor.btnCancel.Click += BtnCancel_Click;
+            Editor.btnApply.Click += BtnApply_Click;
         }
 
         #endregion
 
         #region Internal Properties
 
-        internal FctbForm Editor { get; set; }
+        internal string Text
+        {
+            get => PrimaryTextBox.Text;
+            set => PrimaryTextBox.Text = value;
+        }
+
+        #endregion
+
+        #region Internal Events
+
+        internal event EventHandler<EditEventArgs> Apply;
+
+        #endregion
+
+        #region Internal Methods
+
+        internal bool Execute(IWindowsFormsEditorService service) =>
+            service.ShowDialog(Editor) == DialogResult.OK;
 
         #endregion
 
         #region Private Properties
 
+        private FctbForm Editor { get; set; }
         private Orientation Orientation { get => Splitter.Orientation; set => Splitter.Orientation = value; }
         private SplitContainer PrimarySplitter => Editor.PrimarySplitter;
         private FastColoredTextBox PrimaryTextBox => Editor.PrimaryTextBox;
@@ -57,11 +79,14 @@
 
         #region Private Event Handlers
 
+        private void BtnApply_Click(object sender, System.EventArgs e) =>
+            OnApply();
+
         private void BtnCancel_Click(object sender, System.EventArgs e) =>
-            Editor.DialogResult = DialogResult.OK;
+            Editor.DialogResult = DialogResult.Cancel;
 
         private void BtnOK_Click(object sender, System.EventArgs e) =>
-            Editor.DialogResult = DialogResult.Cancel;
+            Editor.DialogResult = DialogResult.OK;
 
         private void EditComment_Click(object sender, System.EventArgs e) =>
             PrimaryTextBox.InsertLinePrefix(PrimaryTextBox.CommentPrefix);
@@ -81,22 +106,22 @@
         private void EditUncomment_Click(object sender, System.EventArgs e) =>
             PrimaryTextBox.RemoveLinePrefix(PrimaryTextBox.CommentPrefix);
 
-        private void FilePrint_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.Print(new PrintDialogSettings() { ShowPrintPreviewDialog = true });
-
-        private void FileSaveAsHTML_Click(object sender, System.EventArgs e)
+        private void FileExportHTML_Click(object sender, System.EventArgs e)
         {
             using (var dialog = new SaveFileDialog { Filter = "HTML with <PRE>|*.html|HTML without <PRE>|*.html" })
                 if (dialog.ShowDialog() == DialogResult.OK)
                     File.WriteAllText(dialog.FileName, GetHTML(dialog.FilterIndex));
         }
 
-        private void FileSaveAsRTF_Click(object sender, System.EventArgs e)
+        private void FileExportRTF_Click(object sender, System.EventArgs e)
         {
             using (var dialog = new SaveFileDialog { Filter = "RTF|*.rtf" })
                 if (dialog.ShowDialog() == DialogResult.OK)
                     File.WriteAllText(dialog.FileName, PrimaryTextBox.Rtf);
         }
+
+        private void FilePrint_Click(object sender, System.EventArgs e) =>
+            PrimaryTextBox.Print(new PrintDialogSettings() { ShowPrintPreviewDialog = true });
 
         private void ViewDocumentMap_Click(object sender, System.EventArgs e) =>
             ShowDocumentMap = !ShowDocumentMap;
@@ -168,6 +193,8 @@
                     return string.Empty;
             }
         }
+
+        private void OnApply() => Apply?.Invoke(this, new EditEventArgs(Text));
 
         private void SetSplit(Orientation orientation)
         {

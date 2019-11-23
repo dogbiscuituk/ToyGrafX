@@ -45,9 +45,9 @@
             this.PrimaryMap = new FastColoredTextBoxNS.DocumentMap();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.FileMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.FileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
-            this.FileSaveAsHTML = new System.Windows.Forms.ToolStripMenuItem();
-            this.FileSaveAsRTF = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileExportHTML = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileExportRTF = new System.Windows.Forms.ToolStripMenuItem();
             this.FilePrint = new System.Windows.Forms.ToolStripMenuItem();
             this.EditMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.EditFind = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,6 +67,7 @@
             this.ViewSplitHorizontal = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewSplitVertical = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnApply = new System.Windows.Forms.ToolStripDropDownButton();
             ((System.ComponentModel.ISupportInitialize)(this.SecondaryTextBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PrimaryTextBox)).BeginInit();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
@@ -199,6 +200,7 @@
             // 
             this.StatusBar.Dock = System.Windows.Forms.DockStyle.None;
             this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnApply,
             this.btnCancel,
             this.btnOK});
             this.StatusBar.Location = new System.Drawing.Point(0, 0);
@@ -351,33 +353,33 @@
             // FileMenu
             // 
             this.FileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileSaveAs,
+            this.FileExport,
             this.FilePrint});
             this.FileMenu.Name = "FileMenu";
             this.FileMenu.Size = new System.Drawing.Size(37, 20);
             this.FileMenu.Text = "&File";
             // 
-            // FileSaveAs
+            // FileExport
             // 
-            this.FileSaveAs.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileSaveAsHTML,
-            this.FileSaveAsRTF});
-            this.FileSaveAs.Name = "FileSaveAs";
-            this.FileSaveAs.ShortcutKeyDisplayString = "";
-            this.FileSaveAs.Size = new System.Drawing.Size(130, 22);
-            this.FileSaveAs.Text = "&Save as";
+            this.FileExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.FileExportHTML,
+            this.FileExportRTF});
+            this.FileExport.Name = "FileExport";
+            this.FileExport.ShortcutKeyDisplayString = "";
+            this.FileExport.Size = new System.Drawing.Size(130, 22);
+            this.FileExport.Text = "&Export";
             // 
-            // FileSaveAsHTML
+            // FileExportHTML
             // 
-            this.FileSaveAsHTML.Name = "FileSaveAsHTML";
-            this.FileSaveAsHTML.Size = new System.Drawing.Size(115, 22);
-            this.FileSaveAsHTML.Text = "&HTML...";
+            this.FileExportHTML.Name = "FileExportHTML";
+            this.FileExportHTML.Size = new System.Drawing.Size(115, 22);
+            this.FileExportHTML.Text = "&HTML...";
             // 
-            // FileSaveAsRTF
+            // FileExportRTF
             // 
-            this.FileSaveAsRTF.Name = "FileSaveAsRTF";
-            this.FileSaveAsRTF.Size = new System.Drawing.Size(115, 22);
-            this.FileSaveAsRTF.Text = "&RTF...";
+            this.FileExportRTF.Name = "FileExportRTF";
+            this.FileExportRTF.Size = new System.Drawing.Size(115, 22);
+            this.FileExportRTF.Text = "&RTF...";
             // 
             // FilePrint
             // 
@@ -516,6 +518,16 @@
             this.HelpMenu.Size = new System.Drawing.Size(44, 20);
             this.HelpMenu.Text = "&Help";
             // 
+            // btnApply
+            // 
+            this.btnApply.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnApply.Image = ((System.Drawing.Image)(resources.GetObject("btnApply.Image")));
+            this.btnApply.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnApply.Name = "btnApply";
+            this.btnApply.ShowDropDownArrow = false;
+            this.btnApply.Size = new System.Drawing.Size(42, 20);
+            this.btnApply.Text = "Apply";
+            // 
             // FctbForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -568,9 +580,9 @@
         internal System.Windows.Forms.StatusStrip StatusBar;
         internal System.Windows.Forms.ToolStripDropDownButton btnCancel;
         internal System.Windows.Forms.ToolStripDropDownButton btnOK;
-        internal System.Windows.Forms.ToolStripMenuItem FileSaveAs;
-        internal System.Windows.Forms.ToolStripMenuItem FileSaveAsHTML;
-        internal System.Windows.Forms.ToolStripMenuItem FileSaveAsRTF;
+        internal System.Windows.Forms.ToolStripMenuItem FileExport;
+        internal System.Windows.Forms.ToolStripMenuItem FileExportHTML;
+        internal System.Windows.Forms.ToolStripMenuItem FileExportRTF;
         internal System.Windows.Forms.ToolStripMenuItem FilePrint;
         internal System.Windows.Forms.ToolStripMenuItem EditFind;
         internal System.Windows.Forms.ToolStripMenuItem EditReplace;
@@ -596,5 +608,6 @@
         internal FastColoredTextBoxNS.DocumentMap PrimaryMap;
         internal System.Windows.Forms.ToolStripMenuItem ViewDocumentMap;
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        internal System.Windows.Forms.ToolStripDropDownButton btnApply;
     }
 }

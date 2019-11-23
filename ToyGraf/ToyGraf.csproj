@@ -87,6 +87,7 @@
     <Compile Include="Controllers\ShadersController.cs" />
     <Compile Include="Controllers\TraceTableController.cs" />
     <Compile Include="Models\Clock.cs" />
+    <Compile Include="Models\EditEventArgs.cs" />
     <Compile Include="Models\FilterIndex.cs" />
     <Compile Include="Models\Descriptions.cs" />
     <Compile Include="Models\DisplayNames.cs" />
