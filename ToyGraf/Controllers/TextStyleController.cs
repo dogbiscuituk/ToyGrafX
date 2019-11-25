@@ -3,7 +3,6 @@
     using FastColoredTextBoxNS;
     using System;
     using System.Drawing;
-    using System.Linq;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
     using ToyGraf.Common.Types;
