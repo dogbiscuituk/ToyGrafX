@@ -443,7 +443,7 @@ void main()
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
-                Shader5Fragment = @"",
+                Shader5Fragment = "",
                 Shader6Compute = "",
                 Title = "";
 
