@@ -292,11 +292,55 @@
 
         internal string GetScript(ShaderType shaderType)
         {
-            return $@"/* {GetShaderName(shaderType)} Shader */
+            var scriptDetail = GetScriptDetail(shaderType);
+            switch (shaderType)
+            {
+                case ShaderType.VertexShader:
+                    return $@"/* Vertex Shader */
 
 #version {GLTargetVersion}
 
-{GetScriptDetail(shaderType)}";
+layout (location = 0) in vec3 position;
+out vec3 colour;
+
+uniform mat4 cameraView;
+uniform mat4 projection;
+uniform float timeValue;
+uniform int traceIndex;
+uniform mat4 transform;
+
+{scriptDetail}
+
+void main()
+{{
+ switch (traceIndex)
+ {{";
+                case ShaderType.TessControlShader:
+                    return "";
+                case ShaderType.TessEvaluationShader:
+                    return "";
+                case ShaderType.GeometryShader:
+                    return "";
+                case ShaderType.FragmentShader:
+                    return $@"/* Fragment Shader */
+
+#version {GLTargetVersion}
+
+in vec3 colour;
+out vec4 FragColor;
+
+uniform int traceIndex;
+
+{scriptDetail}
+
+void main()
+{{
+ switch (traceIndex)
+ {{";
+                case ShaderType.ComputeShader:
+                    return "";
+            }
+            return string.Empty;
         }
 
         internal string GetScriptDetail(ShaderType shaderType)
@@ -315,26 +359,6 @@
                     return _Shader5Fragment;
                 case ShaderType.ComputeShader:
                     return _Shader6Compute;
-            }
-            return string.Empty;
-        }
-
-        private string GetShaderName(ShaderType shaderType)
-        {
-            switch (shaderType)
-            {
-                case ShaderType.VertexShader:
-                    return "Vertex";
-                case ShaderType.TessControlShader:
-                    return "Tessellation Control";
-                case ShaderType.TessEvaluationShader:
-                    return "Tessellation Evaluation";
-                case ShaderType.GeometryShader:
-                    return "Geometry";
-                case ShaderType.FragmentShader:
-                    return "Fragment";
-                case ShaderType.ComputeShader:
-                    return "Compute";
             }
             return string.Empty;
         }
@@ -408,40 +432,18 @@
                 GPUCode = "",
                 GPULog = "",
                 GPUStatusString = "OK",
-                Shader1Vertex = @"layout (location = 0) in vec3 position;
-out vec3 colour;
-
-uniform mat4 cameraView;
-uniform mat4 projection;
-uniform float timeValue;
-uniform int traceIndex;
-uniform mat4 transform;
-
-float
+                Shader1Vertex = @"float
  t = timeValue,
  x = position.x,
  y = position.y,
  z = position.z,
  r = 0,
  g = 0,
- b = 0;
-
-void main()
-{
- switch (traceIndex)
- {",
+ b = 0;",
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
-                Shader5Fragment = @"in vec3 colour;
-out vec4 FragColor;
-
-uniform int traceIndex;
-
-void main()
-{
- switch (traceIndex)
- {",
+                Shader5Fragment = @"",
                 Shader6Compute = "",
                 Title = "";
 
