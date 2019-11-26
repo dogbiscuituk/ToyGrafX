@@ -292,59 +292,6 @@
 
         internal string GetScript(ShaderType shaderType)
         {
-            var scriptDetail = GetScriptDetail(shaderType);
-            switch (shaderType)
-            {
-                case ShaderType.VertexShader:
-                    return $@"/* Vertex Shader */
-
-#version {GLTargetVersion}
-
-layout (location = 0) in vec3 position;
-out vec3 colour;
-
-uniform mat4 cameraView;
-uniform mat4 projection;
-uniform float timeValue;
-uniform int traceIndex;
-uniform mat4 transform;
-
-{scriptDetail}
-
-void main()
-{{
- switch (traceIndex)
- {{";
-                case ShaderType.TessControlShader:
-                    return "";
-                case ShaderType.TessEvaluationShader:
-                    return "";
-                case ShaderType.GeometryShader:
-                    return "";
-                case ShaderType.FragmentShader:
-                    return $@"/* Fragment Shader */
-
-#version {GLTargetVersion}
-
-in vec3 colour;
-out vec4 FragColor;
-
-uniform int traceIndex;
-
-{scriptDetail}
-
-void main()
-{{
- switch (traceIndex)
- {{";
-                case ShaderType.ComputeShader:
-                    return "";
-            }
-            return string.Empty;
-        }
-
-        internal string GetScriptDetail(ShaderType shaderType)
-        {
             switch (shaderType)
             {
                 case ShaderType.VertexShader:
@@ -432,7 +379,18 @@ void main()
                 GPUCode = "",
                 GPULog = "",
                 GPUStatusString = "OK",
-                Shader1Vertex = @"float
+                Shader1Vertex = @"#version 330
+
+layout (location = 0) in vec3 position;
+out vec3 colour;
+
+uniform mat4 cameraView;
+uniform mat4 projection;
+uniform float timeValue;
+uniform int traceIndex;
+uniform mat4 transform;
+
+float
  t = timeValue,
  x = position.x,
  y = position.y,
@@ -443,7 +401,12 @@ void main()
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
-                Shader5Fragment = "",
+                Shader5Fragment = @"#version 330
+
+in vec3 colour;
+out vec4 FragColor;
+
+uniform int traceIndex;",
                 Shader6Compute = "",
                 Title = "";
 

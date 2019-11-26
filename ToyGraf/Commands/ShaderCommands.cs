@@ -5,7 +5,7 @@
 
     internal class SceneShaderCommand : ScenePropertyCommand<string>
     {
-        internal SceneShaderCommand(ShaderType shaderType, string value) : base(shaderType.GetShaderName(),
+        internal SceneShaderCommand(ShaderType shaderType, string value) : base(shaderType.GetName(),
             value, s => s.GetScript(shaderType), (s, v) => s.SetScript(shaderType, v))
         { }
     }
@@ -42,7 +42,7 @@
 
     internal class TraceShaderCommand : TracePropertyCommand<string>
     {
-        internal TraceShaderCommand(int index, ShaderType shaderType, string value) : base(index, shaderType.GetShaderName(),
+        internal TraceShaderCommand(int index, ShaderType shaderType, string value) : base(index, shaderType.GetName(),
             value, t => t.GetScript(shaderType), (t, v) => t.SetScript(shaderType, v))
         { }
     }
@@ -79,7 +79,7 @@
 
     internal static class ShaderNames
     {
-        internal static string GetShaderName(this ShaderType shaderType)
+        internal static string GetName(this ShaderType shaderType)
         {
             switch (shaderType)
             {
@@ -89,8 +89,22 @@
                 case ShaderType.GeometryShader: return DisplayNames.Shader4Geometry;
                 case ShaderType.FragmentShader: return DisplayNames.Shader5Fragment;
                 case ShaderType.ComputeShader: return DisplayNames.Shader6Compute;
+                default: return string.Empty;
             }
-            return string.Empty;
+        }
+
+        internal static string GetTag(this ShaderType shaderType)
+        {
+            switch (shaderType)
+            {
+                case ShaderType.VertexShader: return "Vertex";
+                case ShaderType.TessControlShader: return "Tessellation Control";
+                case ShaderType.TessEvaluationShader: return "Tessellation Evaluation";
+                case ShaderType.GeometryShader: return "Geometry";
+                case ShaderType.FragmentShader: return "Fragment";
+                case ShaderType.ComputeShader: return "Compute";
+                default: return string.Empty;
+            }
         }
     }
 }

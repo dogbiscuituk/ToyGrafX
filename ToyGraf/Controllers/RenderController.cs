@@ -236,7 +236,14 @@
                     if (shader == null)
                     {
                         shader = new StringBuilder();
-                        shader.AppendLine(Scene.GetScript(shaderType));
+                        shader.AppendLine($@"/* {shaderType.GetTag()} Shader */
+
+{Scene.GetScript(shaderType)}
+
+void main()
+{{
+ switch (traceIndex)
+ {{");
                     }
                     shader.AppendLine($@"  case {traceIndex}:
 {script}
@@ -247,14 +254,14 @@
             if (shader == null)
             {
                 if (mandatory)
-                    Log($"ERROR: Missing {shaderType.GetShaderName()}.");
+                    Log($"ERROR: Missing {shaderType.GetName()}.");
                 return 0;
             }
             shader.AppendLine(@"  default:
    break;
  }
 }");
-            Log($"Compiling {shaderType.GetShaderName()}...");
+            Log($"Compiling {shaderType.GetName()}...");
             var shaderID = GL.CreateShader(shaderType);
             GpuCode.Append(shader).AppendLine();
             GL.ShaderSource(shaderID, shader.ToString());
