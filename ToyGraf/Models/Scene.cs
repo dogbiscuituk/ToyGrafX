@@ -292,6 +292,15 @@
 
         internal string GetScript(ShaderType shaderType)
         {
+            return $@"/* {GetShaderName(shaderType)} Shader */
+
+#version {GLTargetVersion}
+
+{GetScriptDetail(shaderType)}";
+        }
+
+        internal string GetScriptDetail(ShaderType shaderType)
+        {
             switch (shaderType)
             {
                 case ShaderType.VertexShader:
@@ -306,6 +315,26 @@
                     return _Shader5Fragment;
                 case ShaderType.ComputeShader:
                     return _Shader6Compute;
+            }
+            return string.Empty;
+        }
+
+        private string GetShaderName(ShaderType shaderType)
+        {
+            switch (shaderType)
+            {
+                case ShaderType.VertexShader:
+                    return "Vertex";
+                case ShaderType.TessControlShader:
+                    return "Tessellation Control";
+                case ShaderType.TessEvaluationShader:
+                    return "Tessellation Evaluation";
+                case ShaderType.GeometryShader:
+                    return "Geometry";
+                case ShaderType.FragmentShader:
+                    return "Fragment";
+                case ShaderType.ComputeShader:
+                    return "Compute";
             }
             return string.Empty;
         }
@@ -379,11 +408,7 @@
                 GPUCode = "",
                 GPULog = "",
                 GPUStatusString = "OK",
-                Shader1Vertex = @"/* Vertex Shader */
-
-#version 330 core
-
-layout (location = 0) in vec3 position;
+                Shader1Vertex = @"layout (location = 0) in vec3 position;
 out vec3 colour;
 
 uniform mat4 cameraView;
@@ -392,27 +417,23 @@ uniform float timeValue;
 uniform int traceIndex;
 uniform mat4 transform;
 
+float
+ t = timeValue,
+ x = position.x,
+ y = position.y,
+ z = position.z,
+ r = 0,
+ g = 0,
+ b = 0;
+
 void main()
 {
- float
-  t = timeValue,
-  x = position.x,
-  y = position.y,
-  z = position.z,
-  r = 0,
-  g = 0,
-  b = 0;
-
  switch (traceIndex)
  {",
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
-                Shader5Fragment = @"/* Fragment Shader */
-
-#version 330 core
-
-in vec3 colour;
+                Shader5Fragment = @"in vec3 colour;
 out vec4 FragColor;
 
 uniform int traceIndex;
