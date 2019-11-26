@@ -150,6 +150,16 @@
         #region Shaders
 
         [Category(Categories.ShaderTemplates)]
+        [DefaultValue(Defaults.GLTargetVersion)]
+        [Description(Descriptions.GLTargetVersion)]
+        [DisplayName(DisplayNames.GLTargetVersion)]
+        public string GLTargetVersion
+        {
+            get => _GLTargetVersion;
+            set => Run(new GLTargetVersionCommand(value));
+        }
+
+        [Category(Categories.ShaderTemplates)]
         [DefaultValue(Defaults.Shader1Vertex)]
         [Description(Descriptions.Shader1Vertex)]
         [DisplayName(DisplayNames.Shader1Vertex)]
@@ -247,6 +257,7 @@
         [JsonProperty] internal Color _BackgroundColour;
         [JsonProperty] internal Camera _Camera;
         [JsonProperty] internal double _FPS;
+        [JsonProperty] internal string _GLTargetVersion;
         [JsonProperty] internal Projection _Projection;
         [JsonProperty] internal string _Shader1Vertex;
         [JsonProperty] internal string _Shader2TessControl;
@@ -364,6 +375,7 @@
             public const string
                 BackgroundColourString = "White",
                 CameraString = "0, 0, 2, 0, 0, 0",
+                GLTargetVersion = "330 core",
                 GPUCode = "",
                 GPULog = "",
                 GPUStatusString = "OK",
@@ -477,6 +489,7 @@ void main()
             _BackgroundColour = Defaults.BackgroundColour;
             _Camera = Defaults.Camera;
             _FPS = Defaults.FPS;
+            _GLTargetVersion = Defaults.GLTargetVersion;
             _GPUCode = Defaults.GPUCode;
             _GPULog = Defaults.GPULog;
             _Projection = Defaults.Projection;

@@ -54,6 +54,13 @@
         { }
     }
 
+    internal class GLTargetVersionCommand : ScenePropertyCommand<string>
+    {
+        internal GLTargetVersionCommand(string value) : base(DisplayNames.GLTargetVersion,
+            value, s => s._GLTargetVersion, (s, v) => s._GLTargetVersion = v)
+        { }
+    }
+
     internal class TitleCommand : ScenePropertyCommand<string>
     {
         internal TitleCommand(string value) : base(DisplayNames.Title,

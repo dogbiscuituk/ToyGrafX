@@ -25,6 +25,7 @@
             GLMode_Samples = "Sample Count",
             GLMode_Stencil = "Stencil Bits",
             GLMode_Stereo = "Stereo",
+            GLTargetVersion = "GLSL Target Version",
             GPUCode = "GPU Code",
             GPULog = "GPU Log",
             GPUStatus = "GPU Status",

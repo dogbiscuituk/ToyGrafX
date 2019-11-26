@@ -482,6 +482,7 @@
                     case DisplayNames.Camera:
                         RenderController.InvalidateCameraView();
                         break;
+                    case DisplayNames.GLTargetVersion:
                     case DisplayNames.Shader1Vertex:
                     case DisplayNames.Shader2TessControl:
                     case DisplayNames.Shader3TessEvaluation:
