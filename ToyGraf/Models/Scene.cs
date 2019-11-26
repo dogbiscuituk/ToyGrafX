@@ -390,14 +390,7 @@ uniform float timeValue;
 uniform int traceIndex;
 uniform mat4 transform;
 
-float
- t = timeValue,
- x = position.x,
- y = position.y,
- z = position.z,
- r = 0,
- g = 0,
- b = 0;",
+float x, y, z, t, r, g, b;",
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",

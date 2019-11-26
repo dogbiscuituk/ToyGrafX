@@ -2,6 +2,7 @@
 {
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
+    using Properties;
     using System.Text;
     using ToyGraf.Commands;
     using ToyGraf.Common.Types;
@@ -226,45 +227,36 @@
 
         private int CreateShader(ShaderType shaderType, bool mandatory = false)
         {
-            StringBuilder shader = null;
+            StringBuilder sceneScript = null;
             for (var traceIndex = 0; traceIndex < Scene.Traces.Count; traceIndex++)
             {
                 var trace = Scene.Traces[traceIndex];
-                var script = trace.GetScript(shaderType);
-                if (!string.IsNullOrWhiteSpace(script))
+                var traceScript = trace.GetScript(shaderType);
+                if (!string.IsNullOrWhiteSpace(traceScript))
                 {
-                    if (shader == null)
+                    if (sceneScript == null)
                     {
-                        shader = new StringBuilder();
-                        shader.AppendLine($@"/* {shaderType.GetTag()} Shader */
-
-{Scene.GetScript(shaderType)}
-
-void main()
-{{
- switch (traceIndex)
- {{");
+                        sceneScript = new StringBuilder();
+                        sceneScript.AppendFormat(Resources.ScreenShaderTop, shaderType.GetTag());
+                        sceneScript.AppendLine(Scene.GetScript(shaderType));
+                        sceneScript.AppendLine(Resources.ScreenShaderMiddle);
                     }
-                    shader.AppendLine($@"  case {traceIndex}:
-{script}
-   break;
-");
+                    sceneScript.AppendFormat(Resources.TraceShaderTop, traceIndex);
+                    sceneScript.AppendLine(traceScript);
+                    sceneScript.AppendLine(Resources.TraceShaderBottom);
                 }
             }
-            if (shader == null)
+            if (sceneScript == null)
             {
                 if (mandatory)
                     Log($"ERROR: Missing {shaderType.GetName()}.");
                 return 0;
             }
-            shader.AppendLine(@"  default:
-   break;
- }
-}");
+            sceneScript.AppendLine(Resources.ScreenShaderBottom);
             Log($"Compiling {shaderType.GetName()}...");
             var shaderID = GL.CreateShader(shaderType);
-            GpuCode.Append(shader).AppendLine();
-            GL.ShaderSource(shaderID, shader.ToString());
+            GpuCode.Append(sceneScript).AppendLine();
+            GL.ShaderSource(shaderID, sceneScript.ToString());
             GL.CompileShader(shaderID);
             GL.AttachShader(ProgramID, shaderID);
             Log(GL.GetShaderInfoLog(shaderID));

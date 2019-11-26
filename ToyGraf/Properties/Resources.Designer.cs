@@ -721,6 +721,42 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to   default:
+        ///   break;
+        /// }
+        ///}.
+        /// </summary>
+        internal static string ScreenShaderBottom {
+            get {
+                return ResourceManager.GetString("ScreenShaderBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///void main()
+        ///{
+        /// switch (traceIndex)
+        /// {.
+        /// </summary>
+        internal static string ScreenShaderMiddle {
+            get {
+                return ResourceManager.GetString("ScreenShaderMiddle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /* {0} Shader */
+        ///
+        ///.
+        /// </summary>
+        internal static string ScreenShaderTop {
+            get {
+                return ResourceManager.GetString("ScreenShaderTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap SearchWebHS {
@@ -847,6 +883,26 @@ namespace ToyGraf.Properties {
             get {
                 object obj = ResourceManager.GetObject("TileWindowsHorizontallyHS", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to    break;
+        ///.
+        /// </summary>
+        internal static string TraceShaderBottom {
+            get {
+                return ResourceManager.GetString("TraceShaderBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to   case {0}:
+        ///.
+        /// </summary>
+        internal static string TraceShaderTop {
+            get {
+                return ResourceManager.GetString("TraceShaderTop", resourceCulture);
             }
         }
         

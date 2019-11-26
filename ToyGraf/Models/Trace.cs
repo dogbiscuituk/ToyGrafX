@@ -392,7 +392,10 @@
 
             public const string
                 Description = "",
-                Shader1Vertex = @"   z = sqrt(x * x + y * y);
+                Shader1Vertex = @"   t = timeValue;
+   x = position.x;
+   y = position.y;
+   z = sqrt(x * x + y * y);
    z = cos(20 * z - 10 * t) * exp(-3 * z);
    r = (x + 1) / 2;
    g = (y + 1) / 2;
@@ -402,7 +405,7 @@
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
-                Shader5Fragment = @"   FragColor = vec4(colour, 0.1f);",
+                Shader5Fragment = "   FragColor = vec4(colour, 0.1f);",
                 Shader6Compute = "";
 
             internal const string

@@ -10,7 +10,7 @@
 
         [Description("The text style used to highlight comments in the GPU code.")]
         [DisplayName("Comments")]
-        public TextStyleInfo Comments { get; set; } = new TextStyleInfo(Color.Green, FontStyle.Italic);
+        public TextStyleInfo Comments { get; set; } = new TextStyleInfo(Color.Green);
 
         [Description("The text style used to highlight preprocessor directives in the GPU code.")]
         [DisplayName("Preprocessor Directives")]
