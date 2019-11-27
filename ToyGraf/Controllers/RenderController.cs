@@ -9,7 +9,6 @@
     using ToyGraf.Common.Types;
     using ToyGraf.Common.Utility;
     using ToyGraf.Models;
-    using ToyGraf.Views;
 
     public class RenderController
     {

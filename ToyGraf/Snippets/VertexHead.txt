@@ -8,4 +8,23 @@ uniform mat4
   cameraView,
   projection;
 
-float x, y, z, t, r, g, b;
+vec3 getColour(float x, float y, float z)
+{
+  return vec3((x + 1) / 2, (y + 1) / 2, clamp(abs(5 * z), 0, 1));
+}
+
+mat4 getMatrix()
+{
+  return projection * cameraView * transform;
+}
+
+vec4 getPosition(float x, float y, float z)
+{
+  return getMatrix() * vec4(x, y, z, 1);
+}
+
+float getZ(float x, float y, float t)
+{
+  float z = sqrt(x * x + y * y);
+  return cos(20 * z - 10 * t) * exp(-3 * z);
+}
