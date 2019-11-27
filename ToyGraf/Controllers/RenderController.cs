@@ -269,6 +269,8 @@
 
         private void CreateShaders()
         {
+            Breaks.Clear();
+            Breaks.Add(0);
             VertexShaderID = CreateShader(ShaderType.VertexShader, true);
             TessControlShaderID = CreateShader(ShaderType.TessControlShader);
             TessEvaluationShaderID = CreateShader(ShaderType.TessEvaluationShader);
