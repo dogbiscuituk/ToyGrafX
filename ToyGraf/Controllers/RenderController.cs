@@ -3,6 +3,7 @@
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
     using Properties;
+    using System.Collections.Generic;
     using System.Text;
     using ToyGraf.Commands;
     using ToyGraf.Common.Types;
@@ -178,7 +179,6 @@
         private static readonly object GLModeSyncRoot = new object();
         private Scene Scene => SceneController.Scene;
         private readonly SceneController SceneController;
-        private SceneForm SceneForm => SceneController.SceneForm;
 
         private int
             ProgramID,
@@ -210,6 +210,10 @@
         private StringBuilder
             GpuCode,
             GpuLog;
+
+        private List<int>
+            Breaks = new List<int>();
+
 
         #endregion
 
