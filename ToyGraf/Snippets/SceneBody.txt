@@ -1,5 +1,5 @@
 ﻿
 void main()
 {
- switch (traceIndex)
- {
+  switch (traceIndex)
+  {

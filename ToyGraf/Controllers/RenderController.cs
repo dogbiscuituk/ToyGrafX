@@ -241,7 +241,7 @@
                         sceneScript.AppendLine(Scene.GetScript(shaderType));
                         sceneScript.AppendLine(Resources.SceneBody);
                     }
-                    sceneScript.AppendFormat(Resources.TraceHead, traceIndex);
+                    sceneScript.AppendFormat(Resources.TraceHead, traceIndex, trace.ToString());
                     sceneScript.AppendLine(traceScript);
                     sceneScript.AppendLine(Resources.TraceFoot);
                 }
