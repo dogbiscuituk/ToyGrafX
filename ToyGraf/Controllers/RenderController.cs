@@ -237,7 +237,7 @@
                     if (sceneScript == null)
                     {
                         sceneScript = new StringBuilder();
-                        sceneScript.AppendFormat(Resources.SceneHead, shaderType.GetTag());
+                        sceneScript.AppendFormat(Resources.SceneHead, shaderType.GetTag(), Scene.GLTargetVersion);
                         sceneScript.AppendLine(Scene.GetScript(shaderType));
                         sceneScript.AppendLine(Resources.SceneBody);
                     }

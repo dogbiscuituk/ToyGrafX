@@ -1,2 +1,4 @@
 ﻿/* {0} Shader */
 
+#version {1}
+

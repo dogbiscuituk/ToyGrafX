@@ -10,6 +10,7 @@
     using System.Drawing.Design;
     using System.Linq;
     using ToyGraf.Commands;
+    using ToyGraf.Common.TypeConverters;
     using ToyGraf.Common.Types;
     using ToyGraf.Common.Utility;
     using ToyGraf.Controllers;
@@ -154,6 +155,7 @@
         [DefaultValue(Defaults.GLTargetVersion)]
         [Description(Descriptions.GLTargetVersion)]
         [DisplayName(DisplayNames.GLTargetVersion)]
+        [TypeConverter(typeof(GLSLVersionTypeConverter))]
         public string GLTargetVersion
         {
             get => _GLTargetVersion;
@@ -374,7 +376,7 @@
             public const string
                 BackgroundColourString = "White",
                 CameraString = "0, 0, 2, 0, 0, 0",
-                GLTargetVersion = "330 core",
+                GLTargetVersion = "330",
                 GPUCode = "",
                 GPULog = "",
                 GPUStatusString = "OK",
