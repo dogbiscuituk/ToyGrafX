@@ -3,6 +3,7 @@
     using Newtonsoft.Json;
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
+    using Properties;
     using System.ComponentModel;
     using System.Drawing.Design;
     using ToyGraf.Commands;
@@ -99,7 +100,6 @@
         #region Shaders
 
         [Category(Categories.ShaderCode)]
-        [DefaultValue(Defaults.Shader1Vertex)]
         [Description(Descriptions.Shader1Vertex)]
         [DisplayName(DisplayNames.Shader1Vertex)]
         [Editor(typeof(ShaderEditor), typeof(UITypeEditor))]
@@ -147,7 +147,6 @@
         }
 
         [Category(Categories.ShaderCode)]
-        [DefaultValue(Defaults.Shader5Fragment)]
         [Description(Descriptions.Shader5Fragment)]
         [DisplayName(DisplayNames.Shader5Fragment)]
         [Editor(typeof(ShaderEditor), typeof(UITypeEditor))]
@@ -392,20 +391,9 @@
 
             public const string
                 Description = "",
-                Shader1Vertex = @"   t = timeValue;
-   x = position.x;
-   y = position.y;
-   z = sqrt(x * x + y * y);
-   z = cos(20 * z - 10 * t) * exp(-3 * z);
-   r = (x + 1) / 2;
-   g = (y + 1) / 2;
-   b = clamp(abs(5 * z), 0, 1);
-   gl_Position = projection * cameraView * transform * vec4(x, y, z, 1.0);
-   colour = vec3(r, g, b);",
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
-                Shader5Fragment = "   FragColor = vec4(colour, 0.1f);",
                 Shader6Compute = "";
 
             internal const string
@@ -442,11 +430,11 @@
             _Orientation = Defaults.Orientation;
             _Pattern = Defaults.Pattern;
             _Scale = Defaults.Scale;
-            _Shader1Vertex = Defaults.Shader1Vertex;
+            _Shader1Vertex = Resources.VertexBody;
             _Shader2TessControl = Defaults.Shader2TessControl;
             _Shader3TessEvaluation = Defaults.Shader3TessEvaluation;
             _Shader4Geometry = Defaults.Shader4Geometry;
-            _Shader5Fragment = Defaults.Shader5Fragment;
+            _Shader5Fragment = Resources.FragmentBody;
             _Shader6Compute = Defaults.Shader6Compute;
             _StripCount = Defaults.StripCount;
             _Description = Defaults.Description;

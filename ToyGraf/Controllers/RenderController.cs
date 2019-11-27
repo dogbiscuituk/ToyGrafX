@@ -237,13 +237,13 @@
                     if (sceneScript == null)
                     {
                         sceneScript = new StringBuilder();
-                        sceneScript.AppendFormat(Resources.ScreenShaderTop, shaderType.GetTag());
+                        sceneScript.AppendFormat(Resources.SceneHead, shaderType.GetTag());
                         sceneScript.AppendLine(Scene.GetScript(shaderType));
-                        sceneScript.AppendLine(Resources.ScreenShaderMiddle);
+                        sceneScript.AppendLine(Resources.SceneBody);
                     }
-                    sceneScript.AppendFormat(Resources.TraceShaderTop, traceIndex);
+                    sceneScript.AppendFormat(Resources.TraceHead, traceIndex);
                     sceneScript.AppendLine(traceScript);
-                    sceneScript.AppendLine(Resources.TraceShaderBottom);
+                    sceneScript.AppendLine(Resources.TraceFoot);
                 }
             }
             if (sceneScript == null)
@@ -252,7 +252,7 @@
                     Log($"ERROR: Missing {shaderType.GetName()}.");
                 return 0;
             }
-            sceneScript.AppendLine(Resources.ScreenShaderBottom);
+            sceneScript.AppendLine(Resources.SceneFoot);
             Log($"Compiling {shaderType.GetName()}...");
             var shaderID = GL.CreateShader(shaderType);
             GpuCode.Append(sceneScript).AppendLine();

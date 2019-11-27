@@ -448,11 +448,18 @@
     <None Include="Doc\The Naming Of Parts.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Templates\ScreenShaderTop.txt" />
-    <None Include="Templates\ScreenShaderMiddle.txt" />
-    <None Include="Templates\ScreenShaderBottom.txt" />
-    <None Include="Templates\TraceShaderTop.txt" />
-    <None Include="Templates\TraceShaderBottom.txt" />
+    <None Include="Snippets\SceneHead.txt" />
+    <None Include="Snippets\SceneBody.txt" />
+    <None Include="Snippets\SceneFoot.txt" />
+    <None Include="Snippets\TraceHead.txt" />
+    <None Include="Snippets\TraceFoot.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Snippets\FragmentHead.txt" />
+    <Content Include="Snippets\FragmentBody.txt" />
+    <Content Include="Snippets\ReadMe.txt" />
+    <Content Include="Snippets\VertexHead.txt" />
+    <Content Include="Snippets\VertexBody.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

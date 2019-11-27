@@ -341,6 +341,29 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to    FragColor = vec4(colour, 0.1f);.
+        /// </summary>
+        internal static string FragmentBody {
+            get {
+                return ResourceManager.GetString("FragmentBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330
+        ///
+        ///in vec3 colour;
+        ///out vec4 FragColor;
+        ///
+        ///uniform int traceIndex;.
+        /// </summary>
+        internal static string FragmentHead {
+            get {
+                return ResourceManager.GetString("FragmentHead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap FullScreenHS {
@@ -730,27 +753,27 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to   default:
-        ///   break;
-        /// }
-        ///}.
-        /// </summary>
-        internal static string ScreenShaderBottom {
-            get {
-                return ResourceManager.GetString("ScreenShaderBottom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 
         ///void main()
         ///{
         /// switch (traceIndex)
         /// {.
         /// </summary>
-        internal static string ScreenShaderMiddle {
+        internal static string SceneBody {
             get {
-                return ResourceManager.GetString("ScreenShaderMiddle", resourceCulture);
+                return ResourceManager.GetString("SceneBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to   default:
+        ///   break;
+        /// }
+        ///}.
+        /// </summary>
+        internal static string SceneFoot {
+            get {
+                return ResourceManager.GetString("SceneFoot", resourceCulture);
             }
         }
         
@@ -759,9 +782,9 @@ namespace ToyGraf.Properties {
         ///
         ///.
         /// </summary>
-        internal static string ScreenShaderTop {
+        internal static string SceneHead {
             get {
-                return ResourceManager.GetString("ScreenShaderTop", resourceCulture);
+                return ResourceManager.GetString("SceneHead", resourceCulture);
             }
         }
         
@@ -899,9 +922,9 @@ namespace ToyGraf.Properties {
         ///   Looks up a localized string similar to    break;
         ///.
         /// </summary>
-        internal static string TraceShaderBottom {
+        internal static string TraceFoot {
             get {
-                return ResourceManager.GetString("TraceShaderBottom", resourceCulture);
+                return ResourceManager.GetString("TraceFoot", resourceCulture);
             }
         }
         
@@ -909,9 +932,47 @@ namespace ToyGraf.Properties {
         ///   Looks up a localized string similar to   case {0}:
         ///.
         /// </summary>
-        internal static string TraceShaderTop {
+        internal static string TraceHead {
             get {
-                return ResourceManager.GetString("TraceShaderTop", resourceCulture);
+                return ResourceManager.GetString("TraceHead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to    t = timeValue;
+        ///   x = position.x;
+        ///   y = position.y;
+        ///   z = sqrt(x * x + y * y);
+        ///   z = cos(20 * z - 10 * t) * exp(-3 * z);
+        ///   r = (x + 1) / 2;
+        ///   g = (y + 1) / 2;
+        ///   b = clamp(abs(5 * z), 0, 1);
+        ///   gl_Position = projection * cameraView * transform * vec4(x, y, z, 1.0);
+        ///   colour = vec3(r, g, b);.
+        /// </summary>
+        internal static string VertexBody {
+            get {
+                return ResourceManager.GetString("VertexBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330
+        ///
+        ///layout (location = 0) in vec3 position;
+        ///out vec3 colour;
+        ///
+        ///uniform mat4 cameraView;
+        ///uniform mat4 projection;
+        ///uniform float timeValue;
+        ///uniform int traceIndex;
+        ///uniform mat4 transform;
+        ///
+        ///float x, y, z, t, r, g, b;.
+        /// </summary>
+        internal static string VertexHead {
+            get {
+                return ResourceManager.GetString("VertexHead", resourceCulture);
             }
         }
         

@@ -59,12 +59,6 @@
             Assert.AreEqual(Trace.Defaults.Orientation, p.Orientation);
             Assert.AreEqual(Trace.Defaults.Pattern, p.Pattern);
             Assert.AreEqual(Trace.Defaults.Scale, p.Scale);
-            Assert.AreEqual(Trace.Defaults.Shader1Vertex, p.Shader1Vertex);
-            Assert.AreEqual(Trace.Defaults.Shader2TessControl, p.Shader2TessControl);
-            Assert.AreEqual(Trace.Defaults.Shader3TessEvaluation, p.Shader3TessEvaluation);
-            Assert.AreEqual(Trace.Defaults.Shader4Geometry, p.Shader4Geometry);
-            Assert.AreEqual(Trace.Defaults.Shader5Fragment, p.Shader5Fragment);
-            Assert.AreEqual(Trace.Defaults.Shader6Compute, p.Shader6Compute);
             Assert.AreEqual(Trace.Defaults.StripCount, p.StripCount);
             Assert.AreEqual(Trace.Defaults.Visible, p.Visible);
         }

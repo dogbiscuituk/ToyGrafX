@@ -3,6 +3,7 @@
     using Newtonsoft.Json;
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
+    using Properties;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
@@ -160,7 +161,6 @@
         }
 
         [Category(Categories.ShaderTemplates)]
-        [DefaultValue(Defaults.Shader1Vertex)]
         [Description(Descriptions.Shader1Vertex)]
         [DisplayName(DisplayNames.Shader1Vertex)]
         [Editor(typeof(ShaderEditor), typeof(UITypeEditor))]
@@ -208,7 +208,6 @@
         }
 
         [Category(Categories.ShaderTemplates)]
-        [DefaultValue(Defaults.Shader5Fragment)]
         [Description(Descriptions.Shader5Fragment)]
         [DisplayName(DisplayNames.Shader5Fragment)]
         [Editor(typeof(ShaderEditor), typeof(UITypeEditor))]
@@ -379,27 +378,9 @@
                 GPUCode = "",
                 GPULog = "",
                 GPUStatusString = "OK",
-                Shader1Vertex = @"#version 330
-
-layout (location = 0) in vec3 position;
-out vec3 colour;
-
-uniform mat4 cameraView;
-uniform mat4 projection;
-uniform float timeValue;
-uniform int traceIndex;
-uniform mat4 transform;
-
-float x, y, z, t, r, g, b;",
                 Shader2TessControl = "",
                 Shader3TessEvaluation = "",
                 Shader4Geometry = "",
-                Shader5Fragment = @"#version 330
-
-in vec3 colour;
-out vec4 FragColor;
-
-uniform int traceIndex;",
                 Shader6Compute = "",
                 Title = "";
 
@@ -472,11 +453,11 @@ uniform int traceIndex;",
             _GPUCode = Defaults.GPUCode;
             _GPULog = Defaults.GPULog;
             _Projection = Defaults.Projection;
-            _Shader1Vertex = Defaults.Shader1Vertex;
+            _Shader1Vertex = Resources.VertexHead;
             _Shader2TessControl = Defaults.Shader2TessControl;
             _Shader3TessEvaluation = Defaults.Shader3TessEvaluation;
             _Shader4Geometry = Defaults.Shader4Geometry;
-            _Shader5Fragment = Defaults.Shader5Fragment;
+            _Shader5Fragment = Resources.FragmentHead;
             _Shader6Compute = Defaults.Shader6Compute;
             _Title = Defaults.Title;
             _VSync = Defaults.VSync;
