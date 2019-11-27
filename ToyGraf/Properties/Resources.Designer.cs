@@ -551,6 +551,15 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do not remove! At least one string resource must be present, to force the autogeneration of the Resources.Designer.cs file, which then makes other resources visible..
+        /// </summary>
+        internal static string Placeholder {
+            get {
+                return ResourceManager.GetString("Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap PlayHS {

@@ -361,30 +361,22 @@
   <data name="action_add_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\action_add_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ScreenShaderBottom" xml:space="preserve">
-    <value>  default:
-   break;
- }
-}</value>
+  <data name="ScreenShaderBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Templates\ScreenShaderBottom.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="ScreenShaderMiddle" xml:space="preserve">
-    <value>
-void main()
-{
- switch (traceIndex)
- {</value>
+  <data name="ScreenShaderMiddle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Templates\ScreenShaderMiddle.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="ScreenShaderTop" xml:space="preserve">
-    <value>/* {0} Shader */
-
-</value>
+  <data name="ScreenShaderTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Templates\ScreenShaderTop.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="TraceShaderBottom" xml:space="preserve">
-    <value>   break;
-</value>
+  <data name="TraceShaderBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Templates\TraceShaderBottom.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="TraceShaderTop" xml:space="preserve">
-    <value>  case {0}:
-</value>
+  <data name="TraceShaderTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Templates\TraceShaderTop.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Placeholder" xml:space="preserve">
+    <value>Do not remove! At least one string resource must be present, to force the autogeneration of the Resources.Designer.cs file, which then makes other resources visible.</value>
   </data>
 </root>

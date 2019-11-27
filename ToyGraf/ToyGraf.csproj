@@ -99,6 +99,11 @@
     <Compile Include="Models\Options.cs" />
     <Compile Include="Models\ShaderEditor.cs" />
     <Compile Include="Models\Trace.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Views\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,14 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ToyGraf.Models.Scene.datasource" />
@@ -446,6 +446,13 @@
     <None Include="Doc\Rendering Debug.txt" />
     <None Include="Doc\Sub Properties.txt" />
     <None Include="Doc\The Naming Of Parts.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Templates\ScreenShaderTop.txt" />
+    <None Include="Templates\ScreenShaderMiddle.txt" />
+    <None Include="Templates\ScreenShaderBottom.txt" />
+    <None Include="Templates\TraceShaderTop.txt" />
+    <None Include="Templates\TraceShaderBottom.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
