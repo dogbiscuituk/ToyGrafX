@@ -169,14 +169,10 @@
 
         #endregion
 
-        #region Private Properties
+        #region Private Fields
 
-        private Clock Clock => ClockController.Clock;
-        private ClockController ClockController => SceneController.ClockController;
-        private GLControl GLControl => SceneController.GLControl;
         private static readonly object GLInfoSyncRoot = new object();
         private static readonly object GLModeSyncRoot = new object();
-        private Scene Scene => SceneController.Scene;
         private readonly SceneController SceneController;
 
         private int
@@ -196,6 +192,7 @@
             Loc_Transform;
 
         private int
+            BreakOffset,
             CurrencyCount;
 
         private bool
@@ -203,16 +200,22 @@
             ProgramCompiled,
             ProjectionValid;
 
-        private bool
-            ProgramValid => ProgramCompiled && Scene._GPUStatus == GPUStatus.OK;
-
         private StringBuilder
             GpuCode,
             GpuLog;
 
-        private List<int>
+        private readonly List<int>
             Breaks = new List<int>();
 
+        #endregion
+
+        #region Private Properties
+
+        private Clock Clock => ClockController.Clock;
+        private ClockController ClockController => SceneController.ClockController;
+        private GLControl GLControl => SceneController.GLControl;
+        private bool ProgramValid => ProgramCompiled && Scene._GPUStatus == GPUStatus.OK;
+        private Scene Scene => SceneController.Scene;
 
         #endregion
 
@@ -220,13 +223,16 @@
 
         #region Create / Delete Shaders
 
+        private void AddBreak(StringBuilder builder)
+        {
+            builder.Append("/**/");
+            Breaks.Add(BreakOffset + builder.Length);
+        }
+
         private void BindAttribute(int attributeIndex, string variableName) =>
             GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
 
-        private void BindAttributes()
-        {
-            BindAttribute(0, "position");
-        }
+        private void BindAttributes() => BindAttribute(0, "position");
 
         private int CreateShader(ShaderType shaderType, bool mandatory = false)
         {
@@ -241,12 +247,17 @@
                     {
                         sceneScript = new StringBuilder();
                         sceneScript.AppendFormat(Resources.SceneHead, shaderType.GetTag(), Scene.GLTargetVersion);
+                        AddBreak(sceneScript);
                         sceneScript.AppendLine(Scene.GetScript(shaderType));
+                        AddBreak(sceneScript);
                         sceneScript.AppendLine(Resources.SceneBody);
                     }
                     sceneScript.AppendFormat(Resources.TraceHead, traceIndex, trace.ToString());
+                    AddBreak(sceneScript);
                     sceneScript.AppendLine(traceScript);
+                    AddBreak(sceneScript);
                     sceneScript.AppendLine(Resources.TraceFoot);
+                    BreakOffset += sceneScript.Length;
                 }
             }
             if (sceneScript == null)
@@ -269,6 +280,7 @@
         private void CreateShaders()
         {
             Breaks.Clear();
+            BreakOffset = 0;
             Breaks.Add(0);
             VertexShaderID = CreateShader(ShaderType.VertexShader, true);
             TessControlShaderID = CreateShader(ShaderType.TessControlShader);
@@ -276,6 +288,7 @@
             GeometryShaderID = CreateShader(ShaderType.GeometryShader);
             FragmentShaderID = CreateShader(ShaderType.FragmentShader, true);
             ComputeShaderID = CreateShader(ShaderType.ComputeShader);
+            Breaks.Add(BreakOffset);
         }
 
         private void DeleteShader(ref int shaderID)

@@ -49,5 +49,18 @@
             return Regex.IsMatch(s, @"(^CON$|^PRN$|^AUX$|^CLOCK\$$|^NUL$|^COM[0-9]$|^LPT[0-9]$)",
                 RegexOptions.IgnoreCase) ? s + "_" : s;
         }
+
+        public static int GetCharCount(this string s, char c)
+        {
+            if (string.IsNullOrEmpty(s))
+                return 0;
+            var n = 0;
+            for (int p = -1; (p = s.IndexOf(c, p + 1)) >= 0; n++) ;
+            return n;
+        }
+
+        public static int GetCharCount(this StringBuilder builder, char c) => builder.ToString().GetCharCount(c);
+        public static int GetLineCount(this string s) => string.IsNullOrEmpty(s) ? 0 : s.GetCharCount('\n') + 1;
+        public static int GetLineCount(this StringBuilder builder) => builder.ToString().GetLineCount();
     }
 }

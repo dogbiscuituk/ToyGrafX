@@ -58,6 +58,7 @@
     <Compile Include="MatrixTests.cs" />
     <Compile Include="CameraTests.cs" />
     <Compile Include="Euler3fTests.cs" />
+    <Compile Include="StringTests.cs" />
     <Compile Include="Vector3iTests.cs" />
     <Compile Include="Vector3fTests.cs" />
     <Compile Include="ProjectionTests.cs" />
