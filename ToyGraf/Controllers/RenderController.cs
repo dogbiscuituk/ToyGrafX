@@ -21,6 +21,26 @@
 
         #region Internal Properties
 
+        /// <summary>
+        /// A list of (1-based) line numbers, indicating the first line of each successive section
+        /// in the most recently compiled GPUCode.
+        /// </summary>
+        /// <remarks>
+        /// The GPUCode comprises a sequence of sections, alternating between readonly and editable.
+        /// Breaks[0] = 1, the line number of the 1st line in the 1st readonly section;
+        /// Breaks[1] = the line number of the 1st line in the 1st editable section;
+        /// Breaks[2] = the start of the 2nd readonly section;
+        /// Breaks[3] = the start of the 2nd editable section;
+        /// and so on. The last entry is the highest numbered line in the GPUCode, plus one.
+        /// When no shaders are defined, there is no GPU code, and Breaks[1] will be zero.
+        /// These line numbers can be provided to the FastColouredTextBox-based editor, allowing the
+        /// entire GPUCode to be edited, displaying each shader & trace section in its context,
+        /// while marking its boundaries as readonly (shown in italic) to prevent user editing of
+        /// these parts. After editing, the readonly sections are relocated, allowing the individual
+        /// shader fragments of user code to be retrieved, and their changes effected on the scene.
+        /// </remarks>
+        internal List<int> Breaks { get; } = new List<int>();
+
         internal static GLInfo _GLInfo;
         internal GLInfo GLInfo
         {
@@ -204,9 +224,6 @@
             GpuCode,
             GpuLog;
 
-        private readonly List<int>
-            Breaks = new List<int>();
-
         #endregion
 
         #region Private Properties
@@ -223,11 +240,7 @@
 
         #region Create / Delete Shaders
 
-        private void AddBreak(StringBuilder builder)
-        {
-            builder.Append("/**/");
-            Breaks.Add(BreakOffset + builder.Length);
-        }
+        private void AddBreak(StringBuilder builder) => Breaks.Add(BreakOffset + builder.GetLineCount());
 
         private void BindAttribute(int attributeIndex, string variableName) =>
             GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
@@ -257,7 +270,6 @@
                     sceneScript.AppendLine(traceScript);
                     AddBreak(sceneScript);
                     sceneScript.AppendLine(Resources.TraceFoot);
-                    BreakOffset += sceneScript.Length;
                 }
             }
             if (sceneScript == null)
@@ -269,7 +281,9 @@
             sceneScript.AppendLine(Resources.SceneFoot);
             Log($"Compiling {shaderType.GetName()}...");
             var shaderID = GL.CreateShader(shaderType);
-            GpuCode.Append(sceneScript).AppendLine();
+            GpuCode.Append(sceneScript);
+            BreakOffset = GpuCode.GetLineCount();
+            GpuCode.AppendLine();
             GL.ShaderSource(shaderID, sceneScript.ToString());
             GL.CompileShader(shaderID);
             GL.AttachShader(ProgramID, shaderID);
@@ -281,7 +295,7 @@
         {
             Breaks.Clear();
             BreakOffset = 0;
-            Breaks.Add(0);
+            Breaks.Add(1);
             VertexShaderID = CreateShader(ShaderType.VertexShader, true);
             TessControlShaderID = CreateShader(ShaderType.TessControlShader);
             TessEvaluationShaderID = CreateShader(ShaderType.TessEvaluationShader);
