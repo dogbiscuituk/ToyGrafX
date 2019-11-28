@@ -67,7 +67,7 @@
 
         #endregion
 
-        #region Private Fields
+        #region Private Properties
 
         private FastColoredTextBox FctbVertex => EntityEdit.fctbVertex;
         private FastColoredTextBox FctbTessellationControl => EntityEdit.fctbTessellationControl;

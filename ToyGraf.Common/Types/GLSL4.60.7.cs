@@ -122,7 +122,7 @@
             Strings = @"""""|@""""|''|@"".*?""|(?<!@)(?<range>"".*?[^\\]"")|'.*?[^\\]'";
 
         public static readonly string
-            Directives = $@"^\s*#\s*\b{Concat(_Directives)}\b.*$",
+            Directives = $@"#\s*{Concat(_Directives)}\b",
             Functions = $@"\b{Concat(_Functions)}\b",
             Keywords = $@"\b{Concat(_Keywords)}\b",
             ReservedWords = $@"\b{Concat(_ReservedWords)}\b";

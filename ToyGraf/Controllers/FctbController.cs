@@ -75,6 +75,32 @@
         private FastColoredTextBox SecondaryTextBox => Editor.SecondaryTextBox;
         private SplitContainer Splitter => Editor.Splitter;
 
+        private bool ShowDocumentMap
+        {
+            get => !PrimarySplitter.Panel2Collapsed;
+            set => PrimarySplitter.Panel2Collapsed = SecondarySplitter.Panel2Collapsed = !value;
+        }
+
+        private bool ShowLineNumbers
+        {
+            get => PrimaryTextBox.ShowLineNumbers;
+            set
+            {
+                PrimaryTextBox.ShowLineNumbers = SecondaryTextBox.ShowLineNumbers = value;
+                Editor.Refresh();
+            }
+        }
+
+        private bool ShowRuler
+        {
+            get => Editor.PrimaryRuler.Visible;
+            set
+            {
+                Editor.PrimaryRuler.Visible = Editor.SecondaryRuler.Visible = value;
+                Editor.Refresh();
+            }
+        }
+
         #endregion
 
         #region Private Event Handlers
@@ -146,36 +172,6 @@
 
         private void ViewSplitVertical_Click(object sender, System.EventArgs e) =>
             SetSplit(Orientation.Vertical);
-
-        #endregion
-
-        #region Private Properties
-
-        private bool ShowDocumentMap
-        {
-            get => !PrimarySplitter.Panel2Collapsed;
-            set => PrimarySplitter.Panel2Collapsed = SecondarySplitter.Panel2Collapsed = !value;
-        }
-
-        private bool ShowLineNumbers
-        {
-            get => PrimaryTextBox.ShowLineNumbers;
-            set
-            {
-                PrimaryTextBox.ShowLineNumbers = SecondaryTextBox.ShowLineNumbers = value;
-                Editor.Refresh();
-            }
-        }
-
-        private bool ShowRuler
-        {
-            get => Editor.PrimaryRuler.Visible;
-            set
-            {
-                Editor.PrimaryRuler.Visible = Editor.SecondaryRuler.Visible = value;
-                Editor.Refresh();
-            }
-        }
 
         #endregion
 

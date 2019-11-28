@@ -457,7 +457,6 @@
   <ItemGroup>
     <Content Include="Snippets\FragmentHead.txt" />
     <Content Include="Snippets\FragmentBody.txt" />
-    <Content Include="Snippets\ReadMe.txt" />
     <Content Include="Snippets\VertexHead.txt" />
     <Content Include="Snippets\VertexBody.txt" />
   </ItemGroup>
