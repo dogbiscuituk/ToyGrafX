@@ -1,3 +1,3 @@
 ﻿	  float z = getZ(position.x, position.y, timeValue);
-      gl_Position = getMatrix() * getPosition(position.x, position.y, z);
+      gl_Position = getPosition(position.x, position.y, z);
       colour = getColour(position.x, position.y, z);
