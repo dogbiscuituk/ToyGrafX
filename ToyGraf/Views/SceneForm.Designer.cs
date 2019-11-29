@@ -68,6 +68,21 @@
             this.PopupPropertyGridFloat = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupPropertyGridHide = new System.Windows.Forms.ToolStripMenuItem();
             this.TraceTable = new System.Windows.Forms.DataGridView();
+            this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMaximum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMinimum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrientation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPattern = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colScale = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShader1Vertex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShader2TessControl = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShader3TessEvaluation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShader4Geometry = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShader5Fragment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShader6Compute = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStrip = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.PopupTraceTableMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.PopupTraceTableFloat = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupTraceTableHide = new System.Windows.Forms.ToolStripMenuItem();
@@ -159,21 +174,7 @@
             this.PopupSubjectScene = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupSubjectSelectedTraces = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupSubjectAllTraces = new System.Windows.Forms.ToolStripMenuItem();
-            this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMaximum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMinimum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrientation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPattern = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colScale = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShader1Vertex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShader2TessControl = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShader3TessEvaluation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShader4Geometry = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShader5Fragment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShader6Compute = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStrip = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.SceneEditCode = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
@@ -338,7 +339,7 @@
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.TraceTable);
             this.SplitContainer1.Size = new System.Drawing.Size(751, 515);
-            this.SplitContainer1.SplitterDistance = 367;
+            this.SplitContainer1.SplitterDistance = 366;
             this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
@@ -356,8 +357,8 @@
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(751, 367);
-            this.SplitContainer2.SplitterDistance = 423;
+            this.SplitContainer2.Size = new System.Drawing.Size(751, 366);
+            this.SplitContainer2.SplitterDistance = 422;
             this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
             // 
@@ -376,7 +377,7 @@
             // SplitContainer3.Panel2
             // 
             this.SplitContainer3.Panel2.Controls.Add(this.GLControl);
-            this.SplitContainer3.Size = new System.Drawing.Size(423, 367);
+            this.SplitContainer3.Size = new System.Drawing.Size(422, 366);
             this.SplitContainer3.SplitterDistance = 110;
             this.SplitContainer3.TabIndex = 1;
             // 
@@ -387,7 +388,7 @@
             this.EntityEdit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EntityEdit.Location = new System.Drawing.Point(0, 0);
             this.EntityEdit.Name = "EntityEdit";
-            this.EntityEdit.Size = new System.Drawing.Size(423, 110);
+            this.EntityEdit.Size = new System.Drawing.Size(422, 110);
             this.EntityEdit.TabIndex = 0;
             // 
             // PopupEntityEditMenu
@@ -429,7 +430,7 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(423, 253);
+            this.GLControl.Size = new System.Drawing.Size(422, 252);
             this.GLControl.TabIndex = 0;
             this.GLControl.VSync = false;
             // 
@@ -439,7 +440,7 @@
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(323, 367);
+            this.PropertyGrid.Size = new System.Drawing.Size(324, 366);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -503,8 +504,143 @@
             this.TraceTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.TraceTable.RowHeadersWidth = 20;
             this.TraceTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TraceTable.Size = new System.Drawing.Size(751, 143);
+            this.TraceTable.Size = new System.Drawing.Size(751, 144);
             this.TraceTable.TabIndex = 0;
+            // 
+            // colDescription
+            // 
+            this.colDescription.DataPropertyName = "Description";
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDescription.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colDescription.HeaderText = "Description";
+            this.colDescription.Name = "colDescription";
+            this.colDescription.Width = 92;
+            // 
+            // colLocation
+            // 
+            this.colLocation.DataPropertyName = "Location";
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colLocation.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colLocation.HeaderText = "Location";
+            this.colLocation.Name = "colLocation";
+            this.colLocation.Width = 78;
+            // 
+            // colMaximum
+            // 
+            this.colMaximum.DataPropertyName = "Maximum";
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colMaximum.DefaultCellStyle = dataGridViewCellStyle4;
+            this.colMaximum.HeaderText = "Maximum";
+            this.colMaximum.Name = "colMaximum";
+            this.colMaximum.Width = 86;
+            // 
+            // colMinimum
+            // 
+            this.colMinimum.DataPropertyName = "Minimum";
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colMinimum.DefaultCellStyle = dataGridViewCellStyle5;
+            this.colMinimum.HeaderText = "Minimum";
+            this.colMinimum.Name = "colMinimum";
+            this.colMinimum.Width = 85;
+            // 
+            // colOrientation
+            // 
+            this.colOrientation.DataPropertyName = "Orientation";
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colOrientation.DefaultCellStyle = dataGridViewCellStyle6;
+            this.colOrientation.HeaderText = "Orientation°";
+            this.colOrientation.Name = "colOrientation";
+            this.colOrientation.Width = 97;
+            // 
+            // colPattern
+            // 
+            this.colPattern.DataPropertyName = "Pattern";
+            this.colPattern.HeaderText = "Pattern";
+            this.colPattern.Name = "colPattern";
+            this.colPattern.Width = 70;
+            // 
+            // colScale
+            // 
+            this.colScale.DataPropertyName = "Scale";
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colScale.DefaultCellStyle = dataGridViewCellStyle7;
+            this.colScale.HeaderText = "Scale";
+            this.colScale.Name = "colScale";
+            this.colScale.Width = 59;
+            // 
+            // colShader1Vertex
+            // 
+            this.colShader1Vertex.DataPropertyName = "Shader1Vertex";
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShader1Vertex.DefaultCellStyle = dataGridViewCellStyle8;
+            this.colShader1Vertex.HeaderText = "Shader 1: Vertex (mandatory)";
+            this.colShader1Vertex.Name = "colShader1Vertex";
+            this.colShader1Vertex.Width = 167;
+            // 
+            // colShader2TessControl
+            // 
+            this.colShader2TessControl.DataPropertyName = "Shader2TessControl";
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShader2TessControl.DefaultCellStyle = dataGridViewCellStyle9;
+            this.colShader2TessControl.HeaderText = "Shader 2: Tessellation Control";
+            this.colShader2TessControl.Name = "colShader2TessControl";
+            this.colShader2TessControl.Visible = false;
+            this.colShader2TessControl.Width = 170;
+            // 
+            // colShader3TessEvaluation
+            // 
+            this.colShader3TessEvaluation.DataPropertyName = "Shader3TessEvaluation";
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShader3TessEvaluation.DefaultCellStyle = dataGridViewCellStyle10;
+            this.colShader3TessEvaluation.HeaderText = "Shader 3: Tessellation Evaluation";
+            this.colShader3TessEvaluation.Name = "colShader3TessEvaluation";
+            this.colShader3TessEvaluation.Visible = false;
+            this.colShader3TessEvaluation.Width = 184;
+            // 
+            // colShader4Geometry
+            // 
+            this.colShader4Geometry.DataPropertyName = "Shader4Geometry";
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShader4Geometry.DefaultCellStyle = dataGridViewCellStyle11;
+            this.colShader4Geometry.HeaderText = "Shader 4: Geometry";
+            this.colShader4Geometry.Name = "colShader4Geometry";
+            this.colShader4Geometry.Visible = false;
+            this.colShader4Geometry.Width = 123;
+            // 
+            // colShader5Fragment
+            // 
+            this.colShader5Fragment.DataPropertyName = "Shader5Fragment";
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShader5Fragment.DefaultCellStyle = dataGridViewCellStyle12;
+            this.colShader5Fragment.HeaderText = "Shader 5: Fragment (mandatory)";
+            this.colShader5Fragment.Name = "colShader5Fragment";
+            this.colShader5Fragment.Width = 185;
+            // 
+            // colShader6Compute
+            // 
+            this.colShader6Compute.DataPropertyName = "Shader6Compute";
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShader6Compute.DefaultCellStyle = dataGridViewCellStyle13;
+            this.colShader6Compute.HeaderText = "Shader 6: Compute";
+            this.colShader6Compute.Name = "colShader6Compute";
+            this.colShader6Compute.Visible = false;
+            this.colShader6Compute.Width = 122;
+            // 
+            // colStrip
+            // 
+            this.colStrip.DataPropertyName = "StripCount";
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colStrip.DefaultCellStyle = dataGridViewCellStyle14;
+            this.colStrip.HeaderText = "Strip Count";
+            this.colStrip.Name = "colStrip";
+            this.colStrip.Width = 85;
+            // 
+            // colVisible
+            // 
+            this.colVisible.DataPropertyName = "Visible";
+            this.colVisible.HeaderText = "Visible";
+            this.colVisible.Name = "colVisible";
+            this.colVisible.Width = 47;
             // 
             // PopupTraceTableMenu
             // 
@@ -938,7 +1074,8 @@
             // SceneMenu
             // 
             this.SceneMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SceneAddNewTrace});
+            this.SceneAddNewTrace,
+            this.SceneEditCode});
             this.SceneMenu.Name = "SceneMenu";
             this.SceneMenu.Size = new System.Drawing.Size(50, 20);
             this.SceneMenu.Text = "&Scene";
@@ -1274,140 +1411,11 @@
             this.PopupSubjectAllTraces.Size = new System.Drawing.Size(154, 22);
             this.PopupSubjectAllTraces.Text = "&All Traces";
             // 
-            // colDescription
+            // SceneEditCode
             // 
-            this.colDescription.DataPropertyName = "Description";
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colDescription.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colDescription.HeaderText = "Description";
-            this.colDescription.Name = "colDescription";
-            this.colDescription.Width = 92;
-            // 
-            // colLocation
-            // 
-            this.colLocation.DataPropertyName = "Location";
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colLocation.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colLocation.HeaderText = "Location";
-            this.colLocation.Name = "colLocation";
-            this.colLocation.Width = 78;
-            // 
-            // colMaximum
-            // 
-            this.colMaximum.DataPropertyName = "Maximum";
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colMaximum.DefaultCellStyle = dataGridViewCellStyle4;
-            this.colMaximum.HeaderText = "Maximum";
-            this.colMaximum.Name = "colMaximum";
-            this.colMaximum.Width = 86;
-            // 
-            // colMinimum
-            // 
-            this.colMinimum.DataPropertyName = "Minimum";
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colMinimum.DefaultCellStyle = dataGridViewCellStyle5;
-            this.colMinimum.HeaderText = "Minimum";
-            this.colMinimum.Name = "colMinimum";
-            this.colMinimum.Width = 85;
-            // 
-            // colOrientation
-            // 
-            this.colOrientation.DataPropertyName = "Orientation";
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colOrientation.DefaultCellStyle = dataGridViewCellStyle6;
-            this.colOrientation.HeaderText = "Orientation°";
-            this.colOrientation.Name = "colOrientation";
-            this.colOrientation.Width = 97;
-            // 
-            // colPattern
-            // 
-            this.colPattern.DataPropertyName = "Pattern";
-            this.colPattern.HeaderText = "Pattern";
-            this.colPattern.Name = "colPattern";
-            this.colPattern.Width = 70;
-            // 
-            // colScale
-            // 
-            this.colScale.DataPropertyName = "Scale";
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colScale.DefaultCellStyle = dataGridViewCellStyle7;
-            this.colScale.HeaderText = "Scale";
-            this.colScale.Name = "colScale";
-            this.colScale.Width = 59;
-            // 
-            // colShader1Vertex
-            // 
-            this.colShader1Vertex.DataPropertyName = "Shader1Vertex";
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShader1Vertex.DefaultCellStyle = dataGridViewCellStyle8;
-            this.colShader1Vertex.HeaderText = "Shader 1: Vertex (mandatory)";
-            this.colShader1Vertex.Name = "colShader1Vertex";
-            this.colShader1Vertex.Width = 167;
-            // 
-            // colShader2TessControl
-            // 
-            this.colShader2TessControl.DataPropertyName = "Shader2TessControl";
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShader2TessControl.DefaultCellStyle = dataGridViewCellStyle9;
-            this.colShader2TessControl.HeaderText = "Shader 2: Tessellation Control";
-            this.colShader2TessControl.Name = "colShader2TessControl";
-            this.colShader2TessControl.Visible = false;
-            this.colShader2TessControl.Width = 170;
-            // 
-            // colShader3TessEvaluation
-            // 
-            this.colShader3TessEvaluation.DataPropertyName = "Shader3TessEvaluation";
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShader3TessEvaluation.DefaultCellStyle = dataGridViewCellStyle10;
-            this.colShader3TessEvaluation.HeaderText = "Shader 3: Tessellation Evaluation";
-            this.colShader3TessEvaluation.Name = "colShader3TessEvaluation";
-            this.colShader3TessEvaluation.Visible = false;
-            this.colShader3TessEvaluation.Width = 184;
-            // 
-            // colShader4Geometry
-            // 
-            this.colShader4Geometry.DataPropertyName = "Shader4Geometry";
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShader4Geometry.DefaultCellStyle = dataGridViewCellStyle11;
-            this.colShader4Geometry.HeaderText = "Shader 4: Geometry";
-            this.colShader4Geometry.Name = "colShader4Geometry";
-            this.colShader4Geometry.Visible = false;
-            this.colShader4Geometry.Width = 123;
-            // 
-            // colShader5Fragment
-            // 
-            this.colShader5Fragment.DataPropertyName = "Shader5Fragment";
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShader5Fragment.DefaultCellStyle = dataGridViewCellStyle12;
-            this.colShader5Fragment.HeaderText = "Shader 5: Fragment (mandatory)";
-            this.colShader5Fragment.Name = "colShader5Fragment";
-            this.colShader5Fragment.Width = 185;
-            // 
-            // colShader6Compute
-            // 
-            this.colShader6Compute.DataPropertyName = "Shader6Compute";
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShader6Compute.DefaultCellStyle = dataGridViewCellStyle13;
-            this.colShader6Compute.HeaderText = "Shader 6: Compute";
-            this.colShader6Compute.Name = "colShader6Compute";
-            this.colShader6Compute.Visible = false;
-            this.colShader6Compute.Width = 122;
-            // 
-            // colStrip
-            // 
-            this.colStrip.DataPropertyName = "StripCount";
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colStrip.DefaultCellStyle = dataGridViewCellStyle14;
-            this.colStrip.HeaderText = "Strip Count";
-            this.colStrip.Name = "colStrip";
-            this.colStrip.Width = 85;
-            // 
-            // colVisible
-            // 
-            this.colVisible.DataPropertyName = "Visible";
-            this.colVisible.HeaderText = "Visible";
-            this.colVisible.Name = "colVisible";
-            this.colVisible.Width = 47;
+            this.SceneEditCode.Name = "SceneEditCode";
+            this.SceneEditCode.Size = new System.Drawing.Size(182, 22);
+            this.SceneEditCode.Text = "&Edit Code";
             // 
             // SceneForm
             // 
@@ -1590,5 +1598,6 @@
         internal System.Windows.Forms.DataGridViewTextBoxColumn colShader6Compute;
         internal System.Windows.Forms.DataGridViewTextBoxColumn colStrip;
         internal System.Windows.Forms.DataGridViewCheckBoxColumn colVisible;
+        internal System.Windows.Forms.ToolStripMenuItem SceneEditCode;
     }
 }

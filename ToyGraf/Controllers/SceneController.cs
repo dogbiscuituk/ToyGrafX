@@ -198,6 +198,7 @@
         private void JsonController_FileSaving(object sender, CancelEventArgs e) => e.Cancel = false;
         private void Scene_PropertyChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
         private void SceneAddNewTrace_Click(object sender, EventArgs e) => CommandProcessor.AppendTrace();
+        private void SceneEditCode_Click(object sender, EventArgs e) => EditCode();
         private void SceneForm_FormClosed(object sender, FormClosedEventArgs e) => FormClosed();
         private void SceneForm_FormClosing(object sender, FormClosingEventArgs e) => e.Cancel = !FormClosing(e.CloseReason);
         private void TbOpen_DropDownOpening(object sender, EventArgs e) => SceneForm.FileReopen.CloneTo(SceneForm.tbOpen);
@@ -258,6 +259,7 @@
                 SceneForm.EditOptions.Click += EditOptions_Click;
                 SceneForm.EditRefresh.Click += EditRefresh_Click;
                 SceneForm.SceneAddNewTrace.Click += SceneAddNewTrace_Click;
+                SceneForm.SceneEditCode.Click += SceneEditCode_Click;
                 SceneForm.MoveLeft.Click += CameraMoveLeft_Click;
                 SceneForm.MoveRight.Click += CameraMoveRight_Click;
                 SceneForm.ZoomIn.Click += CameraMoveForward_Click;
@@ -297,7 +299,8 @@
                 SceneForm.FileExit.Click -= FileExit_Click;
                 SceneForm.EditOptions.Click -= EditOptions_Click;
                 SceneForm.EditRefresh.Click -= EditRefresh_Click;
-                SceneForm.SceneAddNewTrace.Click += SceneAddNewTrace_Click;
+                SceneForm.SceneAddNewTrace.Click -= SceneAddNewTrace_Click;
+                SceneForm.SceneEditCode.Click -= SceneEditCode_Click;
                 SceneForm.MoveLeft.Click -= CameraMoveLeft_Click;
                 SceneForm.MoveRight.Click -= CameraMoveRight_Click;
                 SceneForm.ZoomIn.Click -= CameraMoveForward_Click;
@@ -310,7 +313,7 @@
                 SceneForm.CircleDown.Click -= CameraRotateDown_Click;
                 SceneForm.HelpOpenGLShadingLanguage.Click -= HelpTheOpenGLShadingLanguage_Click;
                 SceneForm.HelpAbout.Click -= HelpAbout_Click;
-                SceneForm.tbAdd.Click += SceneAddNewTrace_Click;
+                SceneForm.tbAdd.Click -= SceneAddNewTrace_Click;
                 SceneForm.tbNew.ButtonClick -= FileNewEmptyScene_Click;
                 SceneForm.tbNewEmptyScene.Click -= FileNewEmptyScene_Click;
                 SceneForm.tbNewFromTemplate.Click -= FileNewFromTemplate_Click;
@@ -345,6 +348,11 @@
                 GLControl.Paint -= GLControl_Paint;
                 GLControl.Resize -= GLControl_Resize;
             }
+        }
+
+        private void EditCode()
+        {
+            new FctbController(Scene.Title).Execute(SceneForm);
         }
 
         private void EditOptions()

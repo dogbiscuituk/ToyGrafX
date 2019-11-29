@@ -63,6 +63,9 @@
         internal bool Execute(IWindowsFormsEditorService service) =>
             service.ShowDialog(Editor) == DialogResult.OK;
 
+        internal bool Execute(IWin32Window owner) =>
+            Editor.ShowDialog(owner) == DialogResult.OK;
+
         #endregion
 
         #region Private Properties
