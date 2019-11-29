@@ -28,6 +28,10 @@
         [DisplayName("Numeric Literals")]
         public TextStyleInfo Numbers { get; set; } = new TextStyleInfo(Color.Magenta);
 
+        [Description("The text style used to indicate sections of the GPU code which are not user-editable.")]
+        [DisplayName("Read Only")]
+        public TextStyleInfo ReadOnly { get; set; } = new TextStyleInfo(Color.Gray, FontStyle.Italic);
+
         [Description("The text style used to highlight words in the GPU code which are reserved for future expansion.")]
         [DisplayName("Reserved Words")]
         public TextStyleInfo ReservedWords { get; set; } = new TextStyleInfo(Color.Red);
@@ -50,13 +54,14 @@
                 Functions = TextStyleInfo.Parse(t[2]),
                 Keywords = TextStyleInfo.Parse(t[3]),
                 Numbers = TextStyleInfo.Parse(t[4]),
-                ReservedWords = TextStyleInfo.Parse(t[5]),
-                Strings = TextStyleInfo.Parse(t[6])
+                ReadOnly = TextStyleInfo.Parse(t[5]),
+                ReservedWords = TextStyleInfo.Parse(t[6]),
+                Strings = TextStyleInfo.Parse(t[7])
             };
         }
 
         public override string ToString() =>
-            $"{Comments}:{Directives}:{Functions}:{Keywords}:{Numbers}:{ReservedWords}:{Strings}";
+            $"{Comments}:{Directives}:{Functions}:{Keywords}:{Numbers}:{ReadOnly}:{ReservedWords}:{Strings}";
 
         #endregion
     }

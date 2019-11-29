@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionEditedEventArgs.cs" />
-    <Compile Include="ReadOnlyTextStyle.cs" />
     <Compile Include="TextStyleInfo.cs" />
     <Compile Include="TextStyleInfos.cs" />
     <Compile Include="TextStyleInfosTypeConverter.cs" />

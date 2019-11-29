@@ -369,7 +369,7 @@
             GL.ValidateProgram(ProgramID);
             Log(GL.GetProgramInfoLog(ProgramID));
             Log("Done.");
-            Scene._GPUCode = GpuCode.ToString().TrimEnd();
+            Scene._GPUCode = GpuCode.ToString();
             Scene._GPULog = GpuLog.ToString().TrimEnd();
             SceneController.OnPropertyChanged(
                 Scene,

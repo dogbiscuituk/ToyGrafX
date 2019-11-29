@@ -41,7 +41,11 @@
 
         #region Internal Methods
 
-        internal void AddReadOnlyRange(Range range) => range.SetStyle(ReadOnlyTextStyle);
+        internal void AddReadOnlyRange(Range range)
+        {
+            range.SetStyle(ReadOnlyStyle);
+            range.SetStyle(ReadOnlyTextStyle);
+        }
 
         internal static void ApplyOptions()
         {
@@ -51,6 +55,7 @@
             InitStyle(styles.Functions, FunctionStyle);
             InitStyle(styles.Keywords, KeywordStyle);
             InitStyle(styles.Numbers, NumberStyle);
+            InitStyle(styles.ReadOnly, ReadOnlyTextStyle);
             InitStyle(styles.ReservedWords, ReservedWordStyle);
             InitStyle(styles.Strings, StringStyle);
         }
@@ -69,7 +74,7 @@
 
         private void TextBox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            if (e.KeyData == (Keys.K | Keys.Control))
+            if (e.KeyData == (Keys.Control | Keys.K))
             {
                 //forced show (MinFragmentLength will be ignored)
                 _AutocompleteMenu.Show(true);
@@ -136,7 +141,18 @@
             style.FontStyle = info.FontStyle;
         }
 
-        private void InitStylesPriority() => _TextBox.AddStyle(SameWordsStyle);
+        private void InitStylesPriority()
+        {
+            _TextBox.AddStyle(SameWordsStyle);
+            _TextBox.AddStyle(ReadOnlyTextStyle);
+            _TextBox.AddStyle(StringStyle);
+            _TextBox.AddStyle(CommentStyle);
+            _TextBox.AddStyle(NumberStyle);
+            _TextBox.AddStyle(FunctionStyle);
+            _TextBox.AddStyle(KeywordStyle);
+            _TextBox.AddStyle(ReservedWordStyle);
+            _TextBox.AddStyle(DirectiveStyle);
+        }
 
         private void SetLanguage(string language)
         {
@@ -191,20 +207,18 @@
         private static readonly MarkerStyle
             SameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.Gray)));
 
+        private static readonly ReadOnlyStyle
+            ReadOnlyStyle = new ReadOnlyStyle();
+
         private static readonly TextStyle
             CommentStyle = CreateTextStyle(),
             DirectiveStyle = CreateTextStyle(),
             FunctionStyle = CreateTextStyle(),
             KeywordStyle = CreateTextStyle(),
             NumberStyle = CreateTextStyle(),
+            ReadOnlyTextStyle = CreateTextStyle(),
             ReservedWordStyle = CreateTextStyle(),
             StringStyle = CreateTextStyle();
-
-        private static readonly ReadOnlyTextStyle
-            ReadOnlyTextStyle = new ReadOnlyTextStyle(
-                Brushes.Transparent,
-                Brushes.Transparent,
-                FontStyle.Italic);
 
         #endregion
     }

@@ -218,7 +218,7 @@
 
         private void SetBreaks(List<int> breaks)
         {
-            for (var index = 0; index < breaks.Count - 2; index += 2)
+            for (var index = 0; index < breaks.Count; index += 2)
             {
                 int a = breaks[index] - 1, b = breaks[index + 1] - 1;
                 var range = new Range(PrimaryTextBox, 0, a, 0, b);
