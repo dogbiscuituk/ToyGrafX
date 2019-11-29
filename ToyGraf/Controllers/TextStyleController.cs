@@ -41,16 +41,18 @@
 
         #region Internal Methods
 
+        internal void AddReadOnlyRange(Range range) => range.SetStyle(ReadOnlyTextStyle);
+
         internal static void ApplyOptions()
         {
             var styles = AppController.Options.SyntaxHighlightStyles;
-            ApplyStyle(styles.Comments, CommentStyle);
-            ApplyStyle(styles.Directives, DirectiveStyle);
-            ApplyStyle(styles.Functions, FunctionStyle);
-            ApplyStyle(styles.Keywords, KeywordStyle);
-            ApplyStyle(styles.Numbers, NumberStyle);
-            ApplyStyle(styles.ReservedWords, ReservedWordStyle);
-            ApplyStyle(styles.Strings, StringStyle);
+            InitStyle(styles.Comments, CommentStyle);
+            InitStyle(styles.Directives, DirectiveStyle);
+            InitStyle(styles.Functions, FunctionStyle);
+            InitStyle(styles.Keywords, KeywordStyle);
+            InitStyle(styles.Numbers, NumberStyle);
+            InitStyle(styles.ReservedWords, ReservedWordStyle);
+            InitStyle(styles.Strings, StringStyle);
         }
 
         #endregion
@@ -93,15 +95,6 @@
 
         #region Private Methods
 
-        private static void ApplyStyle(TextStyleInfo info, TextStyle style)
-        {
-            if (((SolidBrush)style.ForeBrush).Color != info.Foreground)
-                style.ForeBrush = info.Foreground.ToBrush();
-            if (((SolidBrush)style.BackgroundBrush).Color != info.Background)
-                style.BackgroundBrush = info.Background.ToBrush();
-            style.FontStyle = info.FontStyle;
-        }
-
         private void CreateAutocompleteMenu()
         {
             _AutocompleteMenu = new AutocompleteMenu(_TextBox)
@@ -132,6 +125,15 @@
                 case "XML": return Languages.XML;
                 default: return Languages.Custom;
             }
+        }
+
+        private static void InitStyle(TextStyleInfo info, TextStyle style)
+        {
+            if (((SolidBrush)style.ForeBrush).Color != info.Foreground)
+                style.ForeBrush = info.Foreground.ToBrush();
+            if (((SolidBrush)style.BackgroundBrush).Color != info.Background)
+                style.BackgroundBrush = info.Background.ToBrush();
+            style.FontStyle = info.FontStyle;
         }
 
         private void InitStylesPriority() => _TextBox.AddStyle(SameWordsStyle);
@@ -197,6 +199,12 @@
             NumberStyle = CreateTextStyle(),
             ReservedWordStyle = CreateTextStyle(),
             StringStyle = CreateTextStyle();
+
+        private static readonly ReadOnlyTextStyle
+            ReadOnlyTextStyle = new ReadOnlyTextStyle(
+                Brushes.Transparent,
+                Brushes.Transparent,
+                FontStyle.Italic);
 
         #endregion
     }

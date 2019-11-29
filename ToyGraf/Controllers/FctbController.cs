@@ -29,8 +29,8 @@
             Editor.ActiveControl = PrimaryTextBox;
             Splitter.SplitterDistance = 0;
             ShowDocumentMap = false;
-            new TextStyleController(PrimaryTextBox);
-            new TextStyleController(SecondaryTextBox);
+            PrimaryTextStyleController = new TextStyleController(PrimaryTextBox);
+            SecondaryTextStyleController = new TextStyleController(SecondaryTextBox);
             Editor.FileExportHTML.Click += FileExportHTML_Click;
             Editor.FileExportRTF.Click += FileExportRTF_Click;
             Editor.FilePrint.Click += FilePrint_Click;
@@ -82,6 +82,7 @@
         #region Private Fields
 
         private SceneController SceneController;
+        private readonly TextStyleController PrimaryTextStyleController, SecondaryTextStyleController;
 
         #endregion
 
@@ -215,14 +216,14 @@
 
         private void OnApply() => Apply?.Invoke(this, new EditEventArgs(Text));
 
-        private void SetBreaks(IEnumerable<int> breaks)
+        private void SetBreaks(List<int> breaks)
         {
-            var readOnlyTextStyle = new ReadOnlyTextStyle(
-                Brushes.Transparent,
-                Brushes.Transparent,
-                FontStyle.Italic);
-            PrimaryTextBox.Selection = new Range(PrimaryTextBox, 0, 0, 0, 4);
-            PrimaryTextBox.Selection.SetStyle(readOnlyTextStyle);
+            for (var index = 0; index < breaks.Count - 2; index += 2)
+            {
+                int a = breaks[index] - 1, b = breaks[index + 1] - 1;
+                var range = new Range(PrimaryTextBox, 0, a, 0, b);
+                PrimaryTextStyleController.AddReadOnlyRange(range);
+            }
         }
 
         private void SetSplit(Orientation orientation)
