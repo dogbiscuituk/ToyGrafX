@@ -352,7 +352,7 @@
 
         private void EditCode()
         {
-            new FctbController(Scene.Title).Execute(SceneForm);
+            new FctbController(this).Execute();
         }
 
         private void EditOptions()

@@ -2,15 +2,26 @@
 {
     using FastColoredTextBoxNS;
     using System;
+    using System.Collections.Generic;
+    using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
     using System.Windows.Forms.Design;
+    using ToyGraf.Controls;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
     internal class FctbController
     {
         #region Constructor
+
+        internal FctbController(SceneController sceneController)
+            : this(Descriptions.GPUCode)
+        {
+            SceneController = sceneController;
+            Text = Scene.GPUCode;
+            SetBreaks(RenderController.Breaks);
+        }
 
         internal FctbController(string caption)
         {
@@ -63,12 +74,21 @@
         internal bool Execute(IWindowsFormsEditorService service) =>
             service.ShowDialog(Editor) == DialogResult.OK;
 
-        internal bool Execute(IWin32Window owner) =>
-            Editor.ShowDialog(owner) == DialogResult.OK;
+        internal bool Execute() =>
+            Editor.ShowDialog(SceneController.SceneForm) == DialogResult.OK;
+
+        #endregion
+
+        #region Private Fields
+
+        private SceneController SceneController;
 
         #endregion
 
         #region Private Properties
+
+        private RenderController RenderController => SceneController.RenderController;
+        private Scene Scene => SceneController.Scene;
 
         private FctbForm Editor { get; set; }
         private Orientation Orientation { get => Splitter.Orientation; set => Splitter.Orientation = value; }
@@ -194,6 +214,16 @@
         }
 
         private void OnApply() => Apply?.Invoke(this, new EditEventArgs(Text));
+
+        private void SetBreaks(IEnumerable<int> breaks)
+        {
+            var readOnlyTextStyle = new ReadOnlyTextStyle(
+                Brushes.Transparent,
+                Brushes.Transparent,
+                FontStyle.Italic);
+            PrimaryTextBox.Selection = new Range(PrimaryTextBox, 0, 0, 0, 4);
+            PrimaryTextBox.Selection.SetStyle(readOnlyTextStyle);
+        }
 
         private void SetSplit(Orientation orientation)
         {
