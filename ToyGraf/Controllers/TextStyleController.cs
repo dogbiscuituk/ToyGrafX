@@ -25,6 +25,7 @@
             _TextBox.TextChanged += TextBox_TextChanged;
             CreateAutocompleteMenu();
             _TextBox.KeyDown += TextBox_KeyDown;
+            _TextBox.PaintLine += TextBox_PaintLine;
         }
 
         #endregion
@@ -80,6 +81,12 @@
                 _AutocompleteMenu.Show(true);
                 e.Handled = true;
             }
+        }
+
+        private void TextBox_PaintLine(object sender, PaintLineEventArgs e)
+        {
+            if (new Range(_TextBox, e.LineIndex).ReadOnly)
+                e.Graphics.FillRectangle(Brushes.WhiteSmoke, e.LineRect);
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
