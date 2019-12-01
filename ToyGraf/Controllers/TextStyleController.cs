@@ -23,9 +23,9 @@
             _TextBox = textBox ?? throw new NullReferenceException($"{nameof(textBox)} cannot be null.");
             Language = "GLSL";
             _TextBox.TextChanged += TextBox_TextChanged;
-            CreateAutocompleteMenu();
             _TextBox.KeyDown += TextBox_KeyDown;
             _TextBox.PaintLine += TextBox_PaintLine;
+            CreateAutocompleteMenu();
         }
 
         #endregion

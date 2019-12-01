@@ -259,7 +259,7 @@
                     if (sceneScript == null)
                     {
                         sceneScript = new StringBuilder();
-                        sceneScript.AppendFormat(Resources.SceneHead, shaderType.GetTag(), Scene.GLTargetVersion);
+                        sceneScript.AppendFormat(Resources.SceneHead, Scene.GLTargetVersion, shaderType.GetTag());
                         AddBreak(sceneScript);
                         sceneScript.AppendLine(Scene.GetScript(shaderType));
                         AddBreak(sceneScript);
