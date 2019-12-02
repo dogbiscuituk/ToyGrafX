@@ -26,7 +26,7 @@
             GLMode_Stencil = "Stencil Bits",
             GLMode_Stereo = "Stereo",
             GLTargetVersion = "GLSL Target Version",
-            GPUCode = "GPU Code",
+            GPUCode = "GPU Source Code",
             GPULog = "GPU Log",
             GPUStatus = "GPU Status",
             Location = "Location",

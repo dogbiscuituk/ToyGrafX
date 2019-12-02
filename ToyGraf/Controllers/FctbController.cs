@@ -3,11 +3,9 @@
     using FastColoredTextBoxNS;
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
     using System.Windows.Forms.Design;
-    using ToyGraf.Controls;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
@@ -16,7 +14,7 @@
         #region Constructor
 
         internal FctbController(SceneController sceneController)
-            : this(Descriptions.GPUCode)
+            : this(DisplayNames.GPUCode)
         {
             SceneController = sceneController;
             Text = Scene.GPUCode;
