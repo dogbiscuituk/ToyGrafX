@@ -1,4 +1,3 @@
 ﻿in vec3 colour;
 out vec4 FragColor;
-
 uniform int traceIndex;

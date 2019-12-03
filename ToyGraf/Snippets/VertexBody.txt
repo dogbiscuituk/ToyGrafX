@@ -6,6 +6,5 @@
 	  r = (x + 1) / 2;
 	  g = (y + 1) / 2;
 	  b = clamp(abs(5 * z), 0, 1);
-
 	  gl_Position = projection * cameraView * transform * vec4(x, y, z, 1);
       colour = vec3(r, g, b);

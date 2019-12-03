@@ -256,7 +256,7 @@
 
         private void SetSceneScript(ShaderType shaderType, Range range)
         {
-            var text = range.Text.Trim();
+            var text = range.Text;
             switch (shaderType)
             {
                 case ShaderType.VertexShader:
@@ -291,7 +291,7 @@
 
         private void SetTraceScript(Trace trace, ShaderType shaderType, Range range)
         {
-            var text = range.Text.Trim();
+            var text = range.Text;
             switch (shaderType)
             {
                 case ShaderType.VertexShader:

@@ -224,7 +224,8 @@
 
         private StringBuilder
             GpuCode,
-            GpuLog;
+            GpuLog,
+            SceneScript;
 
         #endregion
 
@@ -242,7 +243,7 @@
 
         #region Create / Delete Shaders
 
-        private void AddBreak(StringBuilder builder) => Breaks.Add(BreakOffset + builder.GetLineCount());
+        private void AddBreak() => Breaks.Add(BreakOffset + SceneScript.GetLineCount());
 
         private void BindAttribute(int attributeIndex, string variableName) =>
             GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
@@ -251,42 +252,42 @@
 
         private int CreateShader(ShaderType shaderType, bool mandatory = false)
         {
-            StringBuilder sceneScript = null;
+            System.Diagnostics.Debug.Assert(SceneScript == null);
             for (var traceIndex = 0; traceIndex < Scene.Traces.Count; traceIndex++)
             {
                 var trace = Scene.Traces[traceIndex];
                 var traceScript = trace.GetScript(shaderType);
                 if (!string.IsNullOrWhiteSpace(traceScript))
                 {
-                    if (sceneScript == null)
+                    if (SceneScript == null)
                     {
-                        sceneScript = new StringBuilder();
-                        sceneScript.AppendFormat(Resources.SceneHead, shaderType.GetTag(), Scene.GLTargetVersion);
-                        AddBreak(sceneScript);
-                        sceneScript.AppendLine(Scene.GetScript(shaderType));
-                        AddBreak(sceneScript);
-                        sceneScript.AppendLine(Resources.SceneBody);
+                        SceneScript = new StringBuilder();
+                        SceneScript.AppendFormat(Resources.SceneHead, shaderType.GetTag(), Scene.GLTargetVersion);
+                        AddBreak();
+                        SceneScript.AppendLine(Scene.GetScript(shaderType));
+                        AddBreak();
+                        SceneScript.AppendLine(Resources.SceneBody);
                     }
-                    sceneScript.AppendFormat(Resources.TraceHead, traceIndex, trace);
-                    AddBreak(sceneScript);
-                    sceneScript.AppendLine(traceScript);
-                    AddBreak(sceneScript);
-                    sceneScript.AppendLine(Resources.TraceFoot);
+                    SceneScript.AppendFormat(Resources.TraceHead, traceIndex, trace);
+                    AddBreak();
+                    SceneScript.AppendLine(traceScript);
+                    AddBreak();
+                    SceneScript.AppendLine(Resources.TraceFoot);
                 }
             }
-            if (sceneScript == null)
+            if (SceneScript == null)
             {
                 if (mandatory)
                     Log($"ERROR: Missing {shaderType.GetName()}.");
                 return 0;
             }
-            sceneScript.AppendLine(Resources.SceneFoot);
+            SceneScript.AppendLine(Resources.SceneFoot);
             Log($"Compiling {shaderType.GetName()}...");
             var shaderID = GL.CreateShader(shaderType);
-            GpuCode.Append(sceneScript);
-            BreakOffset = GpuCode.GetLineCount();
-            //GpuCode.AppendLine(" ");
-            GL.ShaderSource(shaderID, sceneScript.ToString());
+            GpuCode.Append(SceneScript);
+            BreakOffset = GpuCode.GetLineCount() - 1;
+            GL.ShaderSource(shaderID, SceneScript.ToString());
+            SceneScript = null;
             GL.CompileShader(shaderID);
             GL.AttachShader(ProgramID, shaderID);
             Log(GL.GetShaderInfoLog(shaderID));
@@ -306,7 +307,7 @@
             GeometryShaderID = CreateShader(ShaderType.GeometryShader);
             FragmentShaderID = CreateShader(ShaderType.FragmentShader, true);
             ComputeShaderID = CreateShader(ShaderType.ComputeShader);
-            Breaks.Add(BreakOffset);
+            Breaks.Add(BreakOffset + 1);
         }
 
         private void DeleteShader(ref int shaderID)
