@@ -1,4 +1,4 @@
-﻿// {0} Shader
- 
+﻿//
+// {0} Shader
+//
 #version {1}
-

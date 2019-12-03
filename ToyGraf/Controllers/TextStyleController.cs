@@ -21,11 +21,12 @@
 
         internal TextStyleController(FastColoredTextBox textBox)
         {
-            _TextBox = textBox ?? throw new NullReferenceException($"{nameof(textBox)} cannot be null.");
+            TextBox = textBox ?? throw new NullReferenceException($"{nameof(textBox)} cannot be null.");
             Language = "GLSL";
-            _TextBox.TextChanged += TextBox_TextChanged;
-            _TextBox.KeyDown += TextBox_KeyDown;
-            _TextBox.PaintLine += TextBox_PaintLine;
+            TextBox.KeyDown += TextBox_KeyDown;
+            TextBox.PaintLine += TextBox_PaintLine;
+            TextBox.TextChanged += TextBox_TextChanged;
+            TextBox.TextChanging += TextBox_TextChanging;
             CreateAutocompleteMenu();
         }
 
@@ -35,7 +36,7 @@
 
         internal string Language
         {
-            get => _Language;
+            get => TextBoxLanguage;
             set => SetLanguage(value);
         }
 
@@ -45,7 +46,7 @@
 
         internal void AddReadOnlyRange(Range range)
         {
-            var rangeAll = _TextBox.Range;
+            var rangeAll = TextBox.Range;
             if (range.End.iLine > rangeAll.End.iLine)
                 range.End = rangeAll.End;
             range.SetStyle(ReadOnlyStyle);
@@ -69,9 +70,9 @@
         {
             var ranges = new List<Range>();
             var inRange = false;
-            for (var lineIndex = 0; lineIndex < _TextBox.LinesCount; lineIndex++)
+            for (var lineIndex = 0; lineIndex < TextBox.LinesCount; lineIndex++)
             {
-                var range = _TextBox.GetLine(lineIndex);
+                var range = TextBox.GetLine(lineIndex);
                 if (!range.ReadOnly)
                 {
                     if (!inRange)
@@ -95,9 +96,9 @@
 
         #region Private Fields
 
-        private string _Language;
-        private AutocompleteMenu _AutocompleteMenu;
-        private readonly FastColoredTextBox _TextBox;
+        private AutocompleteMenu AutocompleteMenu;
+        private readonly FastColoredTextBox TextBox;
+        private string TextBoxLanguage;
 
         #endregion
 
@@ -108,14 +109,14 @@
             if (e.KeyData == (Keys.Control | Keys.K))
             {
                 //forced show (MinFragmentLength will be ignored)
-                _AutocompleteMenu.Show(true);
+                AutocompleteMenu.Show(true);
                 e.Handled = true;
             }
         }
 
         private void TextBox_PaintLine(object sender, PaintLineEventArgs e)
         {
-            if (new Range(_TextBox, e.LineIndex).ReadOnly)
+            if (new Range(TextBox, e.LineIndex).ReadOnly)
                 e.Graphics.FillRectangle(Brushes.WhiteSmoke, e.LineRect);
         }
 
@@ -123,14 +124,20 @@
         {
             if (Language == "GLSL")
                 SyntaxHighlightGLSL(e);
-            if (_TextBox.Text.Trim().StartsWith("<?xml"))
+            if (TextBox.Text.Trim().StartsWith("<?xml"))
             {
-                _TextBox.Language = Languages.XML;
-                _TextBox.ClearStylesBuffer();
-                _TextBox.Range.ClearStyle(StyleIndex.All);
+                TextBox.Language = Languages.XML;
+                TextBox.ClearStylesBuffer();
+                TextBox.Range.ClearStyle(StyleIndex.All);
                 InitStylesPriority();
-                _TextBox.OnSyntaxHighlight(new TextChangedEventArgs(_TextBox.Range));
+                TextBox.OnSyntaxHighlight(new TextChangedEventArgs(TextBox.Range));
             }
+        }
+
+        private void TextBox_TextChanging(object sender, TextChangingEventArgs e)
+        {
+            var selection = TextBox.Selection;
+            e.Cancel = selection.IsReadOnlyLeftChar() || selection.IsReadOnlyRightChar();
         }
 
         #endregion
@@ -139,14 +146,14 @@
 
         private void CreateAutocompleteMenu()
         {
-            _AutocompleteMenu = new AutocompleteMenu(_TextBox)
+            AutocompleteMenu = new AutocompleteMenu(TextBox)
             {
                 MinFragmentLength = 2,
                 SearchPattern = "[#\\w\\.]" // Directives begin with '#'.
             };
-            _AutocompleteMenu.Items.SetAutocompleteItems(GLSL.AutocompleteItems);
-            _AutocompleteMenu.Items.MaximumSize = new System.Drawing.Size(200, 300);
-            _AutocompleteMenu.Items.Width = 200;
+            AutocompleteMenu.Items.SetAutocompleteItems(GLSL.AutocompleteItems);
+            AutocompleteMenu.Items.MaximumSize = new System.Drawing.Size(200, 300);
+            AutocompleteMenu.Items.Width = 200;
         }
 
         private static TextStyle CreateTextStyle() => 
@@ -180,40 +187,40 @@
 
         private void InitStylesPriority()
         {
-            _TextBox.AddStyle(SameWordsStyle);
-            _TextBox.AddStyle(ReadOnlyTextStyle);
-            _TextBox.AddStyle(StringStyle);
-            _TextBox.AddStyle(CommentStyle);
-            _TextBox.AddStyle(NumberStyle);
-            _TextBox.AddStyle(FunctionStyle);
-            _TextBox.AddStyle(KeywordStyle);
-            _TextBox.AddStyle(ReservedWordStyle);
-            _TextBox.AddStyle(DirectiveStyle);
+            TextBox.AddStyle(SameWordsStyle);
+            TextBox.AddStyle(ReadOnlyTextStyle);
+            TextBox.AddStyle(StringStyle);
+            TextBox.AddStyle(CommentStyle);
+            TextBox.AddStyle(NumberStyle);
+            TextBox.AddStyle(FunctionStyle);
+            TextBox.AddStyle(KeywordStyle);
+            TextBox.AddStyle(ReservedWordStyle);
+            TextBox.AddStyle(DirectiveStyle);
         }
 
         private void SetLanguage(string language)
         {
             if (Language == language)
                 return;
-            _Language = language;
-            _TextBox.ClearStylesBuffer();
-            _TextBox.Range.ClearStyle(StyleIndex.All);
+            TextBoxLanguage = language;
+            TextBox.ClearStylesBuffer();
+            TextBox.Range.ClearStyle(StyleIndex.All);
             InitStylesPriority();
-            _TextBox.Language = GetLanguage();
+            TextBox.Language = GetLanguage();
             if (Language == "GLSL")
             {
-                _TextBox.CommentPrefix = "//";
-                _TextBox.OnTextChanged();
+                TextBox.CommentPrefix = "//";
+                TextBox.OnTextChanged();
             }
-            _TextBox.OnSyntaxHighlight(new TextChangedEventArgs(_TextBox.Range));
+            TextBox.OnSyntaxHighlight(new TextChangedEventArgs(TextBox.Range));
         }
 
         private void SyntaxHighlightGLSL(TextChangedEventArgs e)
         {
-            _TextBox.LeftBracket = '(';
-            _TextBox.RightBracket = ')';
-            _TextBox.LeftBracket2 = '\x0';
-            _TextBox.RightBracket2 = '\x0';
+            TextBox.LeftBracket = '(';
+            TextBox.RightBracket = ')';
+            TextBox.LeftBracket2 = '\x0';
+            TextBox.RightBracket2 = '\x0';
             var range = e.ChangedRange;
             range.ClearStyle(
                 CommentStyle,

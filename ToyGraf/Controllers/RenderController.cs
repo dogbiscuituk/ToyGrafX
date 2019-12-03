@@ -285,7 +285,7 @@
             var shaderID = GL.CreateShader(shaderType);
             GpuCode.Append(sceneScript);
             BreakOffset = GpuCode.GetLineCount();
-            GpuCode.AppendLine(" ");
+            //GpuCode.AppendLine(" ");
             GL.ShaderSource(shaderID, sceneScript.ToString());
             GL.CompileShader(shaderID);
             GL.AttachShader(ProgramID, shaderID);
