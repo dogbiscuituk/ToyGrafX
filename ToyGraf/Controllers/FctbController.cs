@@ -1,319 +1,268 @@
 ﻿namespace ToyGraf.Controllers
 {
     using FastColoredTextBoxNS;
-    using OpenTK.Graphics.OpenGL;
     using System;
     using System.Collections.Generic;
-    using System.IO;
+    using System.Drawing;
+    using System.Text.RegularExpressions;
     using System.Windows.Forms;
-    using System.Windows.Forms.Design;
-    using ToyGraf.Models;
-    using ToyGraf.Views;
+    using ToyGraf.Common.Types;
+    using ToyGraf.Common.Utility;
+    using ToyGraf.Controls;
+    using Languages = FastColoredTextBoxNS.Language;
 
+    /// <summary>
+    /// FastColoredTextBox controller class.
+    /// Adds GLSL to list of supported languages.
+    /// </summary>
     internal class FctbController
     {
         #region Constructor
 
-        internal FctbController(SceneController sceneController)
-            : this(DisplayNames.GPUCode)
+        internal FctbController(FastColoredTextBox textBox)
         {
-            SceneController = sceneController;
-            LoadAll();
-        }
-
-        internal FctbController(string caption)
-        {
-            Editor = new FctbForm() { Text = $"{caption} - GLSL Shader Editor" };
-            Editor.ActiveControl = PrimaryTextBox;
-            Splitter.SplitterDistance = 0;
-            ShowDocumentMap = false;
-            PrimaryTextStyleController = new TextStyleController(PrimaryTextBox);
-            SecondaryTextStyleController = new TextStyleController(SecondaryTextBox);
-            Editor.FileExportHTML.Click += FileExportHTML_Click;
-            Editor.FileExportRTF.Click += FileExportRTF_Click;
-            Editor.FilePrint.Click += FilePrint_Click;
-            Editor.EditFind.Click += EditFind_Click;
-            Editor.EditReplace.Click += EditReplace_Click;
-            Editor.EditComment.Click += EditComment_Click;
-            Editor.EditUncomment.Click += EditUncomment_Click;
-            Editor.EditIncreaseIndent.Click += EditIncreaseIndent_Click;
-            Editor.EditDecreaseIndent.Click += EditDecreaseIndent_Click;
-            Editor.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
-            Editor.ViewRuler.Click += ViewRuler_Click;
-            Editor.ViewLineNumbers.Click += ViewLineNumbers_Click;
-            Editor.ViewDocumentMap.Click += ViewDocumentMap_Click;
-            Editor.ViewSplitHorizontal.Click += ViewSplitHorizontal_Click;
-            Editor.ViewSplitVertical.Click += ViewSplitVertical_Click;
-            Editor.btnOK.Click += BtnOK_Click;
-            Editor.btnCancel.Click += BtnCancel_Click;
-            Editor.btnApply.Click += BtnApply_Click;
+            TextBox = textBox ?? throw new NullReferenceException($"{nameof(textBox)} cannot be null.");
+            Language = "GLSL";
+            TextBox.KeyDown += TextBox_KeyDown;
+            TextBox.PaintLine += TextBox_PaintLine;
+            TextBox.TextChanged += TextBox_TextChanged;
+            TextBox.TextChanging += TextBox_TextChanging;
+            CreateAutocompleteMenu();
         }
 
         #endregion
 
         #region Internal Properties
 
-        internal string Text
+        internal string Language
         {
-            get => PrimaryTextBox.Text;
-            set => PrimaryTextBox.Text = value;
+            get => TextBoxLanguage;
+            set => SetLanguage(value);
         }
-
-        #endregion
-
-        #region Internal Events
-
-        internal event EventHandler<EditEventArgs> Apply;
 
         #endregion
 
         #region Internal Methods
 
-        internal bool Execute(IWindowsFormsEditorService service) =>
-            service.ShowDialog(Editor) == DialogResult.OK;
-
-        internal bool Execute()
+        internal void AddReadOnlyRange(Range range)
         {
-            var result = Editor.ShowDialog(SceneController.SceneForm) == DialogResult.OK;
-            if (result)
-                SaveAll();
-            return result;
+            var rangeAll = TextBox.Range;
+            if (range.End.iLine > rangeAll.End.iLine)
+                range.End = rangeAll.End;
+            range.SetStyle(ReadOnlyStyle);
+            range.SetStyle(ReadOnlyTextStyle);
+        }
+
+        internal static void ApplyOptions()
+        {
+            var styles = AppController.Options.SyntaxHighlightStyles;
+            InitStyle(styles.Comments, CommentStyle);
+            InitStyle(styles.Directives, DirectiveStyle);
+            InitStyle(styles.Functions, FunctionStyle);
+            InitStyle(styles.Keywords, KeywordStyle);
+            InitStyle(styles.Numbers, NumberStyle);
+            InitStyle(styles.ReadOnly, ReadOnlyTextStyle);
+            InitStyle(styles.ReservedWords, ReservedWordStyle);
+            InitStyle(styles.Strings, StringStyle);
+        }
+
+        internal List<Range> GetEditableRanges()
+        {
+            var ranges = new List<Range>();
+            var inRange = false;
+            for (var lineIndex = 0; lineIndex < TextBox.LinesCount; lineIndex++)
+            {
+                var range = TextBox.GetLine(lineIndex);
+                if (!range.ReadOnly)
+                {
+                    if (!inRange)
+                    {
+                        ranges.Add(range);
+                        inRange = true;
+                    }
+                    else
+                    {
+                        var rangeIndex = ranges.Count - 1;
+                        ranges[rangeIndex] = ranges[rangeIndex].GetUnionWith(range);
+                    }
+                }
+                else
+                    inRange = false;
+            }
+            return ranges;
         }
 
         #endregion
 
         #region Private Fields
 
-        private SceneController SceneController;
-        private readonly TextStyleController PrimaryTextStyleController, SecondaryTextStyleController;
-
-        #endregion
-
-        #region Private Properties
-
-        private RenderController RenderController => SceneController.RenderController;
-        private Scene Scene => SceneController.Scene;
-
-        private FctbForm Editor { get; set; }
-        private Orientation Orientation { get => Splitter.Orientation; set => Splitter.Orientation = value; }
-        private SplitContainer PrimarySplitter => Editor.PrimarySplitter;
-        private FastColoredTextBox PrimaryTextBox => Editor.PrimaryTextBox;
-        private SplitContainer SecondarySplitter => Editor.SecondarySplitter;
-        private FastColoredTextBox SecondaryTextBox => Editor.SecondaryTextBox;
-        private SplitContainer Splitter => Editor.Splitter;
-
-        private bool ShowDocumentMap
-        {
-            get => !PrimarySplitter.Panel2Collapsed;
-            set => PrimarySplitter.Panel2Collapsed = SecondarySplitter.Panel2Collapsed = !value;
-        }
-
-        private bool ShowLineNumbers
-        {
-            get => PrimaryTextBox.ShowLineNumbers;
-            set
-            {
-                PrimaryTextBox.ShowLineNumbers = SecondaryTextBox.ShowLineNumbers = value;
-                Editor.Refresh();
-            }
-        }
-
-        private bool ShowRuler
-        {
-            get => Editor.PrimaryRuler.Visible;
-            set
-            {
-                Editor.PrimaryRuler.Visible = Editor.SecondaryRuler.Visible = value;
-                Editor.Refresh();
-            }
-        }
+        private AutocompleteMenu AutocompleteMenu;
+        private readonly FastColoredTextBox TextBox;
+        private string TextBoxLanguage;
 
         #endregion
 
         #region Private Event Handlers
 
-        private void BtnApply_Click(object sender, System.EventArgs e) =>
-            OnApply();
-
-        private void BtnCancel_Click(object sender, System.EventArgs e) =>
-            Editor.DialogResult = DialogResult.Cancel;
-
-        private void BtnOK_Click(object sender, System.EventArgs e) =>
-            Editor.DialogResult = DialogResult.OK;
-
-        private void EditComment_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.InsertLinePrefix(PrimaryTextBox.CommentPrefix);
-
-        private void EditDecreaseIndent_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.DecreaseIndent();
-
-        private void EditFind_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.ShowFindDialog();
-
-        private void EditIncreaseIndent_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.IncreaseIndent();
-
-        private void EditReplace_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.ShowReplaceDialog();
-
-        private void EditUncomment_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.RemoveLinePrefix(PrimaryTextBox.CommentPrefix);
-
-        private void FileExportHTML_Click(object sender, System.EventArgs e)
+        private void TextBox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            using (var dialog = new SaveFileDialog { Filter = "HTML with <PRE>|*.html|HTML without <PRE>|*.html" })
-                if (dialog.ShowDialog() == DialogResult.OK)
-                    File.WriteAllText(dialog.FileName, GetHTML(dialog.FilterIndex));
+            if (e.KeyData == (Keys.Control | Keys.K))
+            {
+                //forced show (MinFragmentLength will be ignored)
+                AutocompleteMenu.Show(true);
+                e.Handled = true;
+            }
         }
 
-        private void FileExportRTF_Click(object sender, System.EventArgs e)
+        private void TextBox_PaintLine(object sender, PaintLineEventArgs e)
         {
-            using (var dialog = new SaveFileDialog { Filter = "RTF|*.rtf" })
-                if (dialog.ShowDialog() == DialogResult.OK)
-                    File.WriteAllText(dialog.FileName, PrimaryTextBox.Rtf);
+            if (new Range(TextBox, e.LineIndex).ReadOnly)
+                e.Graphics.FillRectangle(Brushes.WhiteSmoke, e.LineRect);
         }
 
-        private void FilePrint_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.Print(new PrintDialogSettings() { ShowPrintPreviewDialog = true });
-
-        private void ViewDocumentMap_Click(object sender, System.EventArgs e) =>
-            ShowDocumentMap = !ShowDocumentMap;
-
-        private void ViewLineNumbers_Click(object sender, System.EventArgs e) =>
-            ShowLineNumbers = !ShowLineNumbers;
-
-        private void ViewMenu_DropDownOpening(object sender, System.EventArgs e)
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Editor.ViewRuler.Checked = ShowRuler;
-            Editor.ViewLineNumbers.Checked = ShowLineNumbers;
-            Editor.ViewDocumentMap.Checked = ShowDocumentMap;
-            Editor.ViewSplitHorizontal.Checked = Orientation == Orientation.Horizontal;
-            Editor.ViewSplitVertical.Checked = Orientation == Orientation.Vertical;
+            if (Language == "GLSL")
+                SyntaxHighlightGLSL(e);
+            if (TextBox.Text.Trim().StartsWith("<?xml"))
+            {
+                TextBox.Language = Languages.XML;
+                TextBox.ClearStylesBuffer();
+                TextBox.Range.ClearStyle(StyleIndex.All);
+                InitStylesPriority();
+                TextBox.OnSyntaxHighlight(new TextChangedEventArgs(TextBox.Range));
+            }
         }
 
-        private void ViewRuler_Click(object sender, System.EventArgs e) =>
-            ShowRuler = !ShowRuler;
-
-        private void ViewSplitHorizontal_Click(object sender, System.EventArgs e) =>
-            SetSplit(Orientation.Horizontal);
-
-        private void ViewSplitVertical_Click(object sender, System.EventArgs e) =>
-            SetSplit(Orientation.Vertical);
+        private void TextBox_TextChanging(object sender, TextChangingEventArgs e)
+        {
+            var selection = TextBox.Selection;
+            e.Cancel = selection.IsReadOnlyLeftChar() || selection.IsReadOnlyRightChar();
+        }
 
         #endregion
 
         #region Private Methods
 
-        private string GetHTML(int filterIndex)
+        private void CreateAutocompleteMenu()
         {
-            switch (filterIndex)
+            AutocompleteMenu = new AutocompleteMenu(TextBox)
             {
-                case 1:
-                    return PrimaryTextBox.Html;
-                case 2:
-                    return new ExportToHTML { UseNbsp = false, UseForwardNbsp = true }.GetHtml(PrimaryTextBox);
-                default:
-                    return string.Empty;
+                MinFragmentLength = 2,
+                SearchPattern = "[#\\w\\.]" // Directives begin with '#'.
+            };
+            AutocompleteMenu.Items.SetAutocompleteItems(GLSL.AutocompleteItems);
+            AutocompleteMenu.Items.MaximumSize = new System.Drawing.Size(200, 300);
+            AutocompleteMenu.Items.Width = 200;
+        }
+
+        private static TextStyle CreateTextStyle() => 
+            new TextStyle(Brushes.Black, Brushes.Transparent, 0);
+
+        private Languages GetLanguage()
+        {
+            switch (Language)
+            {
+                case "C#": return Languages.CSharp;
+                case "GLSL": return Languages.Custom;
+                case "HTML": return Languages.HTML;
+                case "JS": return Languages.JS;
+                case "Lua": return Languages.Lua;
+                case "PHP": return Languages.PHP;
+                case "SQL": return Languages.SQL;
+                case "VB": return Languages.VB;
+                case "XML": return Languages.XML;
+                default: return Languages.Custom;
             }
         }
 
-        private void LoadAll()
+        private static void InitStyle(TextStyleInfo info, TextStyle style)
         {
-            Text = Scene.GPUCode;
-            SetBreaks(RenderController.Breaks);
+            if (((SolidBrush)style.ForeBrush).Color != info.Foreground)
+                style.ForeBrush = info.Foreground.ToBrush();
+            if (((SolidBrush)style.BackgroundBrush).Color != info.Background)
+                style.BackgroundBrush = info.Background.ToBrush();
+            style.FontStyle = info.FontStyle;
         }
 
-        private void OnApply() => Apply?.Invoke(this, new EditEventArgs(Text));
-
-        private bool SaveAll()
+        private void InitStylesPriority()
         {
-            var shaderTypes = RenderController.ShaderTypes;
-            var shaderCount = shaderTypes.Count;
-            var traceCount = Scene.Traces.Count;
-            var ranges = PrimaryTextStyleController.GetEditableRanges();
-            var rangeCount = ranges.Count;
-            if (rangeCount != (traceCount + 1) * shaderCount)
-                throw new FormatException("GPU Code syntax error.");
-            var rangeIndex = 0;
-            foreach (var shaderType in shaderTypes)
+            TextBox.AddStyle(SameWordsStyle);
+            TextBox.AddStyle(ReadOnlyTextStyle);
+            TextBox.AddStyle(StringStyle);
+            TextBox.AddStyle(CommentStyle);
+            TextBox.AddStyle(NumberStyle);
+            TextBox.AddStyle(FunctionStyle);
+            TextBox.AddStyle(KeywordStyle);
+            TextBox.AddStyle(ReservedWordStyle);
+            TextBox.AddStyle(DirectiveStyle);
+        }
+
+        private void SetLanguage(string language)
+        {
+            if (Language == language)
+                return;
+            TextBoxLanguage = language;
+            TextBox.ClearStylesBuffer();
+            TextBox.Range.ClearStyle(StyleIndex.All);
+            InitStylesPriority();
+            TextBox.Language = GetLanguage();
+            if (Language == "GLSL")
             {
-                SetSceneScript(shaderType, ranges[rangeIndex++]);
-                for (var traceIndex = 0; traceIndex < traceCount; traceIndex++)
-                    SetTraceScript(Scene.Traces[traceIndex], shaderType, ranges[rangeIndex++]);
+                TextBox.CommentPrefix = "//";
+                TextBox.OnTextChanged();
             }
-            return true;
+            TextBox.OnSyntaxHighlight(new TextChangedEventArgs(TextBox.Range));
         }
 
-        private void SetBreaks(List<int> breaks)
+        private void SyntaxHighlightGLSL(TextChangedEventArgs e)
         {
-            for (var index = 0; index < breaks.Count; index += 2)
-            {
-                int a = breaks[index] - 1, b = breaks[index + 1] - 1;
-                var range = new Range(PrimaryTextBox, 0, a, 0, b);
-                PrimaryTextStyleController.AddReadOnlyRange(range);
-            }
+            TextBox.LeftBracket = '(';
+            TextBox.RightBracket = ')';
+            TextBox.LeftBracket2 = '\x0';
+            TextBox.RightBracket2 = '\x0';
+            var range = e.ChangedRange;
+            range.ClearStyle(
+                CommentStyle,
+                DirectiveStyle,
+                FunctionStyle,
+                KeywordStyle,
+                NumberStyle,
+                ReservedWordStyle,
+                StringStyle);
+            range.SetStyle(StringStyle, GLSL.Strings);
+            range.SetStyle(CommentStyle, GLSL.Comments1, RegexOptions.Multiline);
+            range.SetStyle(CommentStyle, GLSL.Comments2, RegexOptions.Singleline);
+            range.SetStyle(CommentStyle, GLSL.Comments3, RegexOptions.Singleline | RegexOptions.RightToLeft);
+            range.SetStyle(NumberStyle, GLSL.Numbers);
+            range.SetStyle(FunctionStyle, GLSL.Functions);
+            range.SetStyle(KeywordStyle, GLSL.Keywords);
+            range.SetStyle(ReservedWordStyle, GLSL.ReservedWords);
+            range.SetStyle(DirectiveStyle, GLSL.Directives);
+            range.ClearFoldingMarkers();
+            range.SetFoldingMarkers("{", "}");
+            range.SetFoldingMarkers(@"/\*", @"\*/");
         }
 
-        private void SetSceneScript(ShaderType shaderType, Range range)
-        {
-            var text = range.Text;
-            switch (shaderType)
-            {
-                case ShaderType.VertexShader:
-                    Scene.Shader1Vertex = text;
-                    break;
-                case ShaderType.TessControlShader:
-                    Scene.Shader2TessControl = text;
-                    break;
-                case ShaderType.TessEvaluationShader:
-                    Scene.Shader3TessEvaluation = text;
-                    break;
-                case ShaderType.GeometryShader:
-                    Scene.Shader4Geometry = text;
-                    break;
-                case ShaderType.FragmentShader:
-                    Scene.Shader5Fragment = text;
-                    break;
-                case ShaderType.ComputeShader:
-                    Scene.Shader6Compute = text;
-                    break;
-            }
-        }
+        #endregion
 
-        private void SetSplit(Orientation orientation)
-        {
-            Orientation = orientation;
-            var size = Orientation == Orientation.Horizontal
-                ? Splitter.Height
-                : Splitter.Width;
-            Splitter.SplitterDistance = size / 2 - 2;
-        }
+        #region Private Styles
 
-        private void SetTraceScript(Trace trace, ShaderType shaderType, Range range)
-        {
-            var text = range.Text;
-            switch (shaderType)
-            {
-                case ShaderType.VertexShader:
-                    trace.Shader1Vertex = text;
-                    break;
-                case ShaderType.TessControlShader:
-                    trace.Shader2TessControl = text;
-                    break;
-                case ShaderType.TessEvaluationShader:
-                    trace.Shader3TessEvaluation = text;
-                    break;
-                case ShaderType.GeometryShader:
-                    trace.Shader4Geometry = text;
-                    break;
-                case ShaderType.FragmentShader:
-                    trace.Shader5Fragment = text;
-                    break;
-                case ShaderType.ComputeShader:
-                    trace.Shader6Compute = text;
-                    break;
-            }
-        }
+        private static readonly MarkerStyle
+            SameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.Gray)));
+
+        private static readonly ReadOnlyStyle
+            ReadOnlyStyle = new ReadOnlyStyle();
+
+        private static readonly TextStyle
+            CommentStyle = CreateTextStyle(),
+            DirectiveStyle = CreateTextStyle(),
+            FunctionStyle = CreateTextStyle(),
+            KeywordStyle = CreateTextStyle(),
+            NumberStyle = CreateTextStyle(),
+            ReadOnlyTextStyle = CreateTextStyle(),
+            ReservedWordStyle = CreateTextStyle(),
+            StringStyle = CreateTextStyle();
 
         #endregion
     }

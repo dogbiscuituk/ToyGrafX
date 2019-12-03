@@ -352,7 +352,7 @@
 
         private void EditCode()
         {
-            new FctbController(this).Execute();
+            new FctbEditController(this).Execute();
         }
 
         private void EditOptions()

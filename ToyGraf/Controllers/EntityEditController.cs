@@ -102,12 +102,12 @@
 
         private void InitFctbControllers()
         {
-            new TextStyleController(FctbVertex);
-            new TextStyleController(FctbTessellationControl);
-            new TextStyleController(FctbTessellationEvaluation);
-            new TextStyleController(FctbGeometry);
-            new TextStyleController(FctbFragment);
-            new TextStyleController(FctbCompute);
+            new FctbController(FctbVertex);
+            new FctbController(FctbTessellationControl);
+            new FctbController(FctbTessellationEvaluation);
+            new FctbController(FctbGeometry);
+            new FctbController(FctbFragment);
+            new FctbController(FctbCompute);
         }
 
         private void InitSceneForm()
