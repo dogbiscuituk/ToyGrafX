@@ -1,6 +1,7 @@
 ﻿namespace ToyGraf.Controllers
 {
     using FastColoredTextBoxNS;
+    using OpenTK.Graphics.OpenGL;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -17,8 +18,7 @@
             : this(DisplayNames.GPUCode)
         {
             SceneController = sceneController;
-            Text = Scene.GPUCode;
-            SetBreaks(RenderController.Breaks);
+            LoadAll();
         }
 
         internal FctbController(string caption)
@@ -72,8 +72,13 @@
         internal bool Execute(IWindowsFormsEditorService service) =>
             service.ShowDialog(Editor) == DialogResult.OK;
 
-        internal bool Execute() =>
-            Editor.ShowDialog(SceneController.SceneForm) == DialogResult.OK;
+        internal bool Execute()
+        {
+            var result = Editor.ShowDialog(SceneController.SceneForm) == DialogResult.OK;
+            if (result)
+                SaveAll();
+            return result;
+        }
 
         #endregion
 
@@ -212,7 +217,32 @@
             }
         }
 
+        private void LoadAll()
+        {
+            Text = Scene.GPUCode;
+            SetBreaks(RenderController.Breaks);
+        }
+
         private void OnApply() => Apply?.Invoke(this, new EditEventArgs(Text));
+
+        private bool SaveAll()
+        {
+            var shaderTypes = RenderController.ShaderTypes;
+            var shaderCount = shaderTypes.Count;
+            var traceCount = Scene.Traces.Count;
+            var ranges = PrimaryTextStyleController.GetEditableRanges();
+            var rangeCount = ranges.Count;
+            if (rangeCount != (traceCount + 1) * shaderCount)
+                throw new FormatException("GPU Code syntax error.");
+            var rangeIndex = 0;
+            foreach (var shaderType in shaderTypes)
+            {
+                SetSceneScript(shaderType, ranges[rangeIndex++]);
+                for (var traceIndex = 0; traceIndex < traceCount; traceIndex++)
+                    SetTraceScript(Scene.Traces[traceIndex], shaderType, ranges[rangeIndex++]);
+            }
+            return true;
+        }
 
         private void SetBreaks(List<int> breaks)
         {
@@ -224,6 +254,32 @@
             }
         }
 
+        private void SetSceneScript(ShaderType shaderType, Range range)
+        {
+            var text = range.Text.Trim();
+            switch (shaderType)
+            {
+                case ShaderType.VertexShader:
+                    Scene.Shader1Vertex = text;
+                    break;
+                case ShaderType.TessControlShader:
+                    Scene.Shader2TessControl = text;
+                    break;
+                case ShaderType.TessEvaluationShader:
+                    Scene.Shader3TessEvaluation = text;
+                    break;
+                case ShaderType.GeometryShader:
+                    Scene.Shader4Geometry = text;
+                    break;
+                case ShaderType.FragmentShader:
+                    Scene.Shader5Fragment = text;
+                    break;
+                case ShaderType.ComputeShader:
+                    Scene.Shader6Compute = text;
+                    break;
+            }
+        }
+
         private void SetSplit(Orientation orientation)
         {
             Orientation = orientation;
@@ -231,6 +287,32 @@
                 ? Splitter.Height
                 : Splitter.Width;
             Splitter.SplitterDistance = size / 2 - 2;
+        }
+
+        private void SetTraceScript(Trace trace, ShaderType shaderType, Range range)
+        {
+            var text = range.Text.Trim();
+            switch (shaderType)
+            {
+                case ShaderType.VertexShader:
+                    trace.Shader1Vertex = text;
+                    break;
+                case ShaderType.TessControlShader:
+                    trace.Shader2TessControl = text;
+                    break;
+                case ShaderType.TessEvaluationShader:
+                    trace.Shader3TessEvaluation = text;
+                    break;
+                case ShaderType.GeometryShader:
+                    trace.Shader4Geometry = text;
+                    break;
+                case ShaderType.FragmentShader:
+                    trace.Shader5Fragment = text;
+                    break;
+                case ShaderType.ComputeShader:
+                    trace.Shader6Compute = text;
+                    break;
+            }
         }
 
         #endregion

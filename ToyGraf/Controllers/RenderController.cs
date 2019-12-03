@@ -73,6 +73,8 @@
             }
         }
 
+        internal List<ShaderType> ShaderTypes { get; } = new List<ShaderType>();
+
         #endregion
 
         #region Internal Methods
@@ -288,6 +290,7 @@
             GL.CompileShader(shaderID);
             GL.AttachShader(ProgramID, shaderID);
             Log(GL.GetShaderInfoLog(shaderID));
+            ShaderTypes.Add(shaderType);
             return shaderID;
         }
 
@@ -296,6 +299,7 @@
             Breaks.Clear();
             BreakOffset = 0;
             Breaks.Add(1);
+            ShaderTypes.Clear();
             VertexShaderID = CreateShader(ShaderType.VertexShader, true);
             TessControlShaderID = CreateShader(ShaderType.TessControlShader);
             TessEvaluationShaderID = CreateShader(ShaderType.TessEvaluationShader);
@@ -369,7 +373,7 @@
             GL.ValidateProgram(ProgramID);
             Log(GL.GetProgramInfoLog(ProgramID));
             Log("Done.");
-            Scene._GPUCode = GpuCode.ToString();
+            Scene._GPUCode = GpuCode.ToString().TrimEnd();
             Scene._GPULog = GpuLog.ToString().TrimEnd();
             SceneController.OnPropertyChanged(
                 Scene,

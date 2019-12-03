@@ -2,6 +2,7 @@
 {
     using FastColoredTextBoxNS;
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
@@ -44,6 +45,9 @@
 
         internal void AddReadOnlyRange(Range range)
         {
+            var rangeAll = _TextBox.Range;
+            if (range.End.iLine > rangeAll.End.iLine)
+                range.End = rangeAll.End;
             range.SetStyle(ReadOnlyStyle);
             range.SetStyle(ReadOnlyTextStyle);
         }
@@ -59,6 +63,32 @@
             InitStyle(styles.ReadOnly, ReadOnlyTextStyle);
             InitStyle(styles.ReservedWords, ReservedWordStyle);
             InitStyle(styles.Strings, StringStyle);
+        }
+
+        internal List<Range> GetEditableRanges()
+        {
+            var ranges = new List<Range>();
+            var inRange = false;
+            for (var lineIndex = 0; lineIndex < _TextBox.LinesCount; lineIndex++)
+            {
+                var range = _TextBox.GetLine(lineIndex);
+                if (!range.ReadOnly)
+                {
+                    if (!inRange)
+                    {
+                        ranges.Add(range);
+                        inRange = true;
+                    }
+                    else
+                    {
+                        var rangeIndex = ranges.Count - 1;
+                        ranges[rangeIndex] = ranges[rangeIndex].GetUnionWith(range);
+                    }
+                }
+                else
+                    inRange = false;
+            }
+            return ranges;
         }
 
         #endregion
