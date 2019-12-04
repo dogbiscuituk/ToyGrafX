@@ -225,6 +225,7 @@
         private StringBuilder
             GpuCode,
             GpuLog,
+            MainBody,
             SceneScript;
 
         #endregion
@@ -266,7 +267,7 @@
                         AddBreak();
                         SceneScript.AppendLine(Scene.GetScript(shaderType));
                         AddBreak();
-                        SceneScript.AppendLine(Resources.SceneBody);
+                        MainBody = new StringBuilder();
                     }
                     SceneScript.AppendFormat(Resources.TraceHead, traceIndex, trace);
                     AddBreak();
@@ -281,12 +282,16 @@
                     Log($"ERROR: Missing {shaderType.GetName()}.");
                 return 0;
             }
+            SceneScript.AppendLine(Resources.SceneBody);
+            for (var traceIndex = 0; traceIndex < Scene.Traces.Count; traceIndex++)
+                SceneScript.AppendFormat(Resources.MainBody, traceIndex);
             SceneScript.AppendLine(Resources.SceneFoot);
             Log($"Compiling {shaderType.GetName()}...");
             var shaderID = GL.CreateShader(shaderType);
             GpuCode.Append(SceneScript);
             BreakOffset = GpuCode.GetLineCount() - 1;
             GL.ShaderSource(shaderID, SceneScript.ToString());
+            MainBody = null;
             SceneScript = null;
             GL.CompileShader(shaderID);
             GL.AttachShader(ProgramID, shaderID);

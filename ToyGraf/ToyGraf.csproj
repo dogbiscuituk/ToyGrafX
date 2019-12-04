@@ -468,6 +468,7 @@
     <None Include="Images\info.png" />
     <Content Include="Snippets\FragmentHead.txt" />
     <Content Include="Snippets\FragmentBody.txt" />
+    <Content Include="Snippets\MainBody.txt" />
     <Content Include="Snippets\VertexHead.txt" />
     <Content Include="Snippets\VertexBody.txt" />
   </ItemGroup>

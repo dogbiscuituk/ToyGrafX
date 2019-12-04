@@ -471,6 +471,15 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to case {0}: run_trace_{0}(); break;.
+        /// </summary>
+        internal static string MainBody {
+            get {
+                return ResourceManager.GetString("MainBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap NewDocumentHS {
