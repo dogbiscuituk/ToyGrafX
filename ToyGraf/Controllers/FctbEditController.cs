@@ -139,7 +139,7 @@
         {
             using (var dialog = new SaveFileDialog
             {
-                Filter = "RTF|*.rtf",
+                Filter = "Rich Text Format|*.rtf",
                 Title="Export As RTF"
             })
                 if (dialog.ShowDialog() == DialogResult.OK)
