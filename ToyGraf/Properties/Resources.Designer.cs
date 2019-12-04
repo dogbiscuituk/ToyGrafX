@@ -341,7 +341,7 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to    FragColor = vec4(colour, 0.1f);.
+        ///   Looks up a localized string similar to       FragColor = vec4(colour, 0.1);.
         /// </summary>
         internal static string FragmentBody {
             get {
@@ -350,11 +350,8 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to #version 330
-        ///
-        ///in vec3 colour;
+        ///   Looks up a localized string similar to in vec3 colour;
         ///out vec4 FragColor;
-        ///
         ///uniform int traceIndex;.
         /// </summary>
         internal static string FragmentHead {
@@ -460,6 +457,15 @@ namespace ToyGraf.Properties {
             get {
                 object obj = ResourceManager.GetObject("LineColorHS", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to case {0}: run_trace_{0}(); break;.
+        /// </summary>
+        internal static string MainBody {
+            get {
+                return ResourceManager.GetString("MainBody", resourceCulture);
             }
         }
         
@@ -753,11 +759,10 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 
-        ///void main()
+        ///   Looks up a localized string similar to void main()
         ///{
-        /// switch (traceIndex)
-        /// {.
+        ///  switch (traceIndex)
+        ///  {.
         /// </summary>
         internal static string SceneBody {
             get {
@@ -766,9 +771,9 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to   default:
-        ///   break;
-        /// }
+        ///   Looks up a localized string similar to     default:
+        ///      break;
+        ///  }
         ///}.
         /// </summary>
         internal static string SceneFoot {
@@ -778,8 +783,10 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /* {0} Shader */
-        ///
+        ///   Looks up a localized string similar to //
+        ///// {0} Shader
+        /////
+        ///#version {1}
         ///.
         /// </summary>
         internal static string SceneHead {
@@ -919,8 +926,7 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to    break;
-        ///.
+        ///   Looks up a localized string similar to       break;.
         /// </summary>
         internal static string TraceFoot {
             get {
@@ -929,7 +935,7 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to   case {0}:
+        ///   Looks up a localized string similar to     case {0}: // {1}
         ///.
         /// </summary>
         internal static string TraceHead {
@@ -939,16 +945,16 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to    t = timeValue;
-        ///   x = position.x;
-        ///   y = position.y;
-        ///   z = sqrt(x * x + y * y);
-        ///   z = cos(20 * z - 10 * t) * exp(-3 * z);
-        ///   r = (x + 1) / 2;
-        ///   g = (y + 1) / 2;
-        ///   b = clamp(abs(5 * z), 0, 1);
-        ///   gl_Position = projection * cameraView * transform * vec4(x, y, z, 1.0);
-        ///   colour = vec3(r, g, b);.
+        ///   Looks up a localized string similar to       t = timeValue;
+        ///	  x = position.x;
+        ///	  y = position.y;
+        ///      z = sqrt(x * x + y * y);
+        ///	  z = cos(20 * z - 10 * t) * exp(-3 * z);
+        ///	  r = (x + 1) / 2;
+        ///	  g = (y + 1) / 2;
+        ///	  b = clamp(abs(5 * z), 0, 1);
+        ///	  gl_Position = projection * cameraView * transform * vec4(x, y, z, 1);
+        ///      colour = vec3(r, g, b);.
         /// </summary>
         internal static string VertexBody {
             get {
@@ -957,18 +963,15 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to #version 330
-        ///
-        ///layout (location = 0) in vec3 position;
+        ///   Looks up a localized string similar to layout (location = 0) in vec3 position;
         ///out vec3 colour;
-        ///
-        ///uniform mat4 cameraView;
-        ///uniform mat4 projection;
         ///uniform float timeValue;
         ///uniform int traceIndex;
-        ///uniform mat4 transform;
-        ///
-        ///float x, y, z, t, r, g, b;.
+        ///uniform mat4
+        ///  transform,
+        ///  cameraView,
+        ///  projection;
+        ///float t, x, y, z, r, g, b;.
         /// </summary>
         internal static string VertexHead {
             get {
