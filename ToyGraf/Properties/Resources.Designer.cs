@@ -341,7 +341,7 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to       FragColor = vec4(colour, 0.1);.
+        ///   Looks up a localized string similar to   FragColor = vec4(colour, 0.1);.
         /// </summary>
         internal static string FragmentBody {
             get {
@@ -431,6 +431,50 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        ///
+        ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///&lt;head&gt;
+        ///    &lt;meta charset=&quot;utf-8&quot; /&gt;
+        ///    &lt;title&gt;&lt;/title&gt;
+        ///&lt;/head&gt;
+        ///&lt;body&gt;
+        ///&lt;b&gt;^X&lt;/b&gt; cut
+        ///^C copy
+        ///^V paste
+        ///^A select all
+        ///
+        ///^Z, Alt+Backspace undo
+        ///^R redo
+        ///
+        ///^F find
+        ///^H replace
+        ///F3 find next
+        ///^G goto
+        ///
+        ///^U, Shift+^U convert case
+        ///
+        ///^+ navigate forward
+        ///^- navigate back
+        ///
+        ///^B, Shift+^B bookmark
+        ///^N, Shift+^N navigate to bookmark
+        ///
+        ///^M start/stop macro
+        ///^E execute macro
+        ///
+        ///^I auto indent
+        ///Tab, Shift+Tab indent
+        ///
+        ///^wheel, ^Num+, ^Nu [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Hotkeys {
+            get {
+                return ResourceManager.GetString("Hotkeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap info {
@@ -471,7 +515,8 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to case {0}: run_trace_{0}(); break;.
+        ///   Looks up a localized string similar to     case {0}: execTrace{0}(); break;
+        ///.
         /// </summary>
         internal static string MainBody {
             get {
@@ -781,8 +826,7 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to     default:
-        ///      break;
+        ///   Looks up a localized string similar to     default: break;
         ///  }
         ///}.
         /// </summary>
@@ -793,9 +837,9 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to //
-        ///// {0} Shader
-        /////
+        ///   Looks up a localized string similar to /*
+        ///  {0} Shader
+        ///*/
         ///#version {1}
         ///.
         /// </summary>
@@ -936,7 +980,7 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to       break;.
+        ///   Looks up a localized string similar to }.
         /// </summary>
         internal static string TraceFoot {
             get {
@@ -945,7 +989,8 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to     case {0}: // {1}
+        ///   Looks up a localized string similar to void execTrace{0}() // {1}
+        ///{{
         ///.
         /// </summary>
         internal static string TraceHead {
@@ -955,16 +1000,16 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to       t = timeValue;
-        ///	  x = position.x;
-        ///	  y = position.y;
-        ///      z = sqrt(x * x + y * y);
-        ///	  z = cos(20 * z - 10 * t) * exp(-3 * z);
-        ///	  r = (x + 1) / 2;
-        ///	  g = (y + 1) / 2;
-        ///	  b = clamp(abs(5 * z), 0, 1);
-        ///	  gl_Position = projection * cameraView * transform * vec4(x, y, z, 1);
-        ///      colour = vec3(r, g, b);.
+        ///   Looks up a localized string similar to   t = timeValue;
+        ///  x = position.x;
+        ///  y = position.y;
+        ///  z = sqrt(x * x + y * y);
+        ///  z = cos(20 * z - 10 * t) * exp(-3 * z);
+        ///  r = (x + 1) / 2;
+        ///  g = (y + 1) / 2;
+        ///  b = clamp(abs(5 * z), 0, 1);
+        ///  gl_Position = projection * cameraView * transform * vec4(x, y, z, 1);
+        ///  colour = vec3(r, g, b);.
         /// </summary>
         internal static string VertexBody {
             get {

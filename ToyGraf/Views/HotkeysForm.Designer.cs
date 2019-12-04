@@ -1,6 +1,6 @@
 ﻿namespace ToyGraf.Views
 {
-    partial class EditorHelp
+    partial class HotkeysForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,26 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditorHelp));
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.WebBrowser = new System.Windows.Forms.WebBrowser();
             this.SuspendLayout();
             // 
-            // richTextBox1
+            // WebBrowser
             // 
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(312, 362);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            this.WebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.WebBrowser.Location = new System.Drawing.Point(0, 0);
+            this.WebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.WebBrowser.Name = "WebBrowser";
+            this.WebBrowser.Size = new System.Drawing.Size(312, 362);
+            this.WebBrowser.TabIndex = 0;
             // 
             // EditorHelp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(312, 362);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.WebBrowser);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -60,6 +58,6 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        internal System.Windows.Forms.WebBrowser WebBrowser;
     }
 }

@@ -36,7 +36,13 @@
             Editor.ViewRuler.Click += ViewRuler_Click;
             Editor.ViewLineNumbers.Click += ViewLineNumbers_Click;
             Editor.ViewDocumentMap.Click += ViewDocumentMap_Click;
+            Editor.btnHelp.Click += BtnHelp_Click;
             Editor.btnApply.Click += BtnApply_Click;
+        }
+
+        private void BtnHelp_Click(object sender, EventArgs e)
+        {
+            new HotkeysController().Show();
         }
 
         #endregion

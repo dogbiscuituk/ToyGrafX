@@ -117,30 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="richTextBox1.Text" xml:space="preserve">
-    <value>^X cut
-^C copy
-^V paste
-^A select all
-^Z, Alt+Backspace undo
-^R redo
-^F find
-^H replace
-F3 find next
-^G goto
-^U, Shift+^U convert case
-^+ navigate forward
-^- navigate back
-^B, Shift+^B bookmark
-^N, Shift+^N navigate to bookmark
-^M start/stop macro
-^E execute macro
-^I auto indent
-Tab, Shift+Tab indent
-^wheel, ^Num+, ^Num-, ^0 zoom
-Shift+^C comment/uncomment
-Alt+F [char] find char
-Alt+Up/Down move selected lines
-Alt+Mouse, Alt+Shift+Up/Down/Left/Right column select</value>
-  </data>
 </root>
