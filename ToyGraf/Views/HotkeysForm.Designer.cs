@@ -40,17 +40,17 @@
             this.WebBrowser.Size = new System.Drawing.Size(312, 362);
             this.WebBrowser.TabIndex = 0;
             // 
-            // EditorHelp
+            // HotkeysForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(312, 362);
             this.Controls.Add(this.WebBrowser);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "EditorHelp";
+            this.Name = "HotkeysForm";
             this.Text = "GLSL Editor Hotkeys";
             this.ResumeLayout(false);
 
