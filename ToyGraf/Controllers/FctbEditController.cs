@@ -31,21 +31,11 @@
             SecondaryTextStyleController = new FctbController(SecondaryTextBox);
             Editor.FileExportHTML.Click += FileExportHTML_Click;
             Editor.FileExportRTF.Click += FileExportRTF_Click;
-            Editor.FilePrint.Click += FilePrint_Click;
-            Editor.EditFind.Click += EditFind_Click;
-            Editor.EditReplace.Click += EditReplace_Click;
-            Editor.EditComment.Click += EditComment_Click;
-            Editor.EditUncomment.Click += EditUncomment_Click;
-            Editor.EditIncreaseIndent.Click += EditIncreaseIndent_Click;
-            Editor.EditDecreaseIndent.Click += EditDecreaseIndent_Click;
-            Editor.ViewMenu.DropDownOpening += ViewMenu_DropDownOpening;
+            Editor.btnPrint.Click += FilePrint_Click;
+            Editor.btnOptions.DropDownOpening += ViewMenu_DropDownOpening;
             Editor.ViewRuler.Click += ViewRuler_Click;
             Editor.ViewLineNumbers.Click += ViewLineNumbers_Click;
             Editor.ViewDocumentMap.Click += ViewDocumentMap_Click;
-            Editor.ViewSplitHorizontal.Click += ViewSplitHorizontal_Click;
-            Editor.ViewSplitVertical.Click += ViewSplitVertical_Click;
-            Editor.btnOK.Click += BtnOK_Click;
-            Editor.btnCancel.Click += BtnCancel_Click;
             Editor.btnApply.Click += BtnApply_Click;
         }
 
@@ -132,43 +122,26 @@
 
         #region Private Event Handlers
 
-        private void BtnApply_Click(object sender, System.EventArgs e) =>
-            OnApply();
-
-        private void BtnCancel_Click(object sender, System.EventArgs e) =>
-            Editor.DialogResult = DialogResult.Cancel;
-
-        private void BtnOK_Click(object sender, System.EventArgs e) =>
-            Editor.DialogResult = DialogResult.OK;
-
-        private void EditComment_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.InsertLinePrefix(PrimaryTextBox.CommentPrefix);
-
-        private void EditDecreaseIndent_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.DecreaseIndent();
-
-        private void EditFind_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.ShowFindDialog();
-
-        private void EditIncreaseIndent_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.IncreaseIndent();
-
-        private void EditReplace_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.ShowReplaceDialog();
-
-        private void EditUncomment_Click(object sender, System.EventArgs e) =>
-            PrimaryTextBox.RemoveLinePrefix(PrimaryTextBox.CommentPrefix);
+        private void BtnApply_Click(object sender, System.EventArgs e) => OnApply();
 
         private void FileExportHTML_Click(object sender, System.EventArgs e)
         {
-            using (var dialog = new SaveFileDialog { Filter = "HTML with <PRE>|*.html|HTML without <PRE>|*.html" })
+            using (var dialog = new SaveFileDialog
+            {
+                Filter = "HTML with <PRE>|*.html|HTML without <PRE>|*.html",
+                Title="Export as HTML"
+            })
                 if (dialog.ShowDialog() == DialogResult.OK)
                     File.WriteAllText(dialog.FileName, GetHTML(dialog.FilterIndex));
         }
 
         private void FileExportRTF_Click(object sender, System.EventArgs e)
         {
-            using (var dialog = new SaveFileDialog { Filter = "RTF|*.rtf" })
+            using (var dialog = new SaveFileDialog
+            {
+                Filter = "RTF|*.rtf",
+                Title="Export As RTF"
+            })
                 if (dialog.ShowDialog() == DialogResult.OK)
                     File.WriteAllText(dialog.FileName, PrimaryTextBox.Rtf);
         }
@@ -187,18 +160,11 @@
             Editor.ViewRuler.Checked = ShowRuler;
             Editor.ViewLineNumbers.Checked = ShowLineNumbers;
             Editor.ViewDocumentMap.Checked = ShowDocumentMap;
-            Editor.ViewSplitHorizontal.Checked = Orientation == Orientation.Horizontal;
-            Editor.ViewSplitVertical.Checked = Orientation == Orientation.Vertical;
+            Editor.btnSplit.Checked = Orientation == Orientation.Vertical;
         }
 
         private void ViewRuler_Click(object sender, System.EventArgs e) =>
             ShowRuler = !ShowRuler;
-
-        private void ViewSplitHorizontal_Click(object sender, System.EventArgs e) =>
-            SetSplit(Orientation.Horizontal);
-
-        private void ViewSplitVertical_Click(object sender, System.EventArgs e) =>
-            SetSplit(Orientation.Vertical);
 
         #endregion
 

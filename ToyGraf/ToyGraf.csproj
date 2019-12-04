@@ -117,6 +117,12 @@
     <Compile Include="Views\ColumnsDialog.Designer.cs">
       <DependentUpon>ColumnsDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditorHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\EditorHelp.Designer.cs">
+      <DependentUpon>EditorHelp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\FctbForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ColumnsDialog.resx">
       <DependentUpon>ColumnsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\EditorHelp.resx">
+      <DependentUpon>EditorHelp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FctbForm.resx">
       <DependentUpon>FctbForm.cs</DependentUpon>
@@ -456,6 +465,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Controllers\Hotkeys.txt" />
+    <None Include="Images\info.png" />
     <Content Include="Snippets\FragmentHead.txt" />
     <Content Include="Snippets\FragmentBody.txt" />
     <Content Include="Snippets\VertexHead.txt" />

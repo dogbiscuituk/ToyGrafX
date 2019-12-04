@@ -33,9 +33,6 @@
             this.SecondaryTextBox = new FastColoredTextBoxNS.FastColoredTextBox();
             this.PrimaryTextBox = new FastColoredTextBoxNS.FastColoredTextBox();
             this.ToolStripContainer = new System.Windows.Forms.ToolStripContainer();
-            this.StatusBar = new System.Windows.Forms.StatusStrip();
-            this.btnCancel = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnOK = new System.Windows.Forms.ToolStripDropDownButton();
             this.Splitter = new System.Windows.Forms.SplitContainer();
             this.SecondarySplitter = new System.Windows.Forms.SplitContainer();
             this.SecondaryRuler = new FastColoredTextBoxNS.Ruler();
@@ -43,38 +40,26 @@
             this.PrimarySplitter = new System.Windows.Forms.SplitContainer();
             this.PrimaryRuler = new FastColoredTextBoxNS.Ruler();
             this.PrimaryMap = new FastColoredTextBoxNS.DocumentMap();
-            this.MainMenu = new System.Windows.Forms.MenuStrip();
-            this.FileMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.FileExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStrip = new ToyGraf.Controls.TgToolStrip();
+            this.btnExport = new System.Windows.Forms.ToolStripDropDownButton();
             this.FileExportHTML = new System.Windows.Forms.ToolStripMenuItem();
             this.FileExportRTF = new System.Windows.Forms.ToolStripMenuItem();
-            this.FilePrint = new System.Windows.Forms.ToolStripMenuItem();
-            this.EditMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.EditFind = new System.Windows.Forms.ToolStripMenuItem();
-            this.EditReplace = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.EditComment = new System.Windows.Forms.ToolStripMenuItem();
-            this.EditUncomment = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.EditIncreaseIndent = new System.Windows.Forms.ToolStripMenuItem();
-            this.EditDecreaseIndent = new System.Windows.Forms.ToolStripMenuItem();
-            this.ViewMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnPrint = new System.Windows.Forms.ToolStripButton();
+            this.btnOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.ViewRuler = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewLineNumbers = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewDocumentMap = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.ViewSplit = new System.Windows.Forms.ToolStripMenuItem();
-            this.ViewSplitHorizontal = new System.Windows.Forms.ToolStripMenuItem();
-            this.ViewSplitVertical = new System.Windows.Forms.ToolStripMenuItem();
-            this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnApply = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnSplit = new System.Windows.Forms.ToolStripButton();
+            this.btnHelp = new System.Windows.Forms.ToolStripButton();
+            this.ButtonPanel = new System.Windows.Forms.Panel();
+            this.btnApply = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.SecondaryTextBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PrimaryTextBox)).BeginInit();
-            this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.TopToolStripPanel.SuspendLayout();
             this.ToolStripContainer.SuspendLayout();
-            this.StatusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Splitter)).BeginInit();
             this.Splitter.Panel1.SuspendLayout();
             this.Splitter.Panel2.SuspendLayout();
@@ -87,7 +72,8 @@
             this.PrimarySplitter.Panel1.SuspendLayout();
             this.PrimarySplitter.Panel2.SuspendLayout();
             this.PrimarySplitter.SuspendLayout();
-            this.MainMenu.SuspendLayout();
+            this.ToolStrip.SuspendLayout();
+            this.ButtonPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // SecondaryTextBox
@@ -113,7 +99,6 @@
             this.SecondaryTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.SecondaryTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.SecondaryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SecondaryTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.SecondaryTextBox.IsReplaceMode = false;
             this.SecondaryTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
             this.SecondaryTextBox.LeftBracket = '(';
@@ -127,7 +112,7 @@
             this.SecondaryTextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("SecondaryTextBox.ServiceColors")));
             this.SecondaryTextBox.ShowFoldingLines = true;
             this.SecondaryTextBox.ShowLineNumbers = false;
-            this.SecondaryTextBox.Size = new System.Drawing.Size(500, 99);
+            this.SecondaryTextBox.Size = new System.Drawing.Size(500, 93);
             this.SecondaryTextBox.SourceTextBox = this.PrimaryTextBox;
             this.SecondaryTextBox.TabIndex = 1;
             this.SecondaryTextBox.Zoom = 100;
@@ -155,7 +140,6 @@
             this.PrimaryTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.PrimaryTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.PrimaryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PrimaryTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.PrimaryTextBox.IsReplaceMode = false;
             this.PrimaryTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
             this.PrimaryTextBox.LeftBracket = '(';
@@ -169,68 +153,28 @@
             this.PrimaryTextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("PrimaryTextBox.ServiceColors")));
             this.PrimaryTextBox.ShowFoldingLines = true;
             this.PrimaryTextBox.ShowLineNumbers = false;
-            this.PrimaryTextBox.Size = new System.Drawing.Size(500, 244);
+            this.PrimaryTextBox.Size = new System.Drawing.Size(500, 231);
             this.PrimaryTextBox.TabIndex = 2;
             this.PrimaryTextBox.Zoom = 100;
             // 
             // ToolStripContainer
             // 
             // 
-            // ToolStripContainer.BottomToolStripPanel
-            // 
-            this.ToolStripContainer.BottomToolStripPanel.Controls.Add(this.StatusBar);
-            // 
             // ToolStripContainer.ContentPanel
             // 
             this.ToolStripContainer.ContentPanel.Controls.Add(this.Splitter);
             this.ToolStripContainer.ContentPanel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.ToolStripContainer.ContentPanel.Size = new System.Drawing.Size(624, 395);
+            this.ToolStripContainer.ContentPanel.Size = new System.Drawing.Size(624, 376);
             this.ToolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ToolStripContainer.Location = new System.Drawing.Point(0, 0);
             this.ToolStripContainer.Name = "ToolStripContainer";
-            this.ToolStripContainer.Size = new System.Drawing.Size(624, 441);
+            this.ToolStripContainer.Size = new System.Drawing.Size(624, 401);
             this.ToolStripContainer.TabIndex = 8;
             this.ToolStripContainer.Text = "toolStripContainer1";
             // 
             // ToolStripContainer.TopToolStripPanel
             // 
-            this.ToolStripContainer.TopToolStripPanel.Controls.Add(this.MainMenu);
-            // 
-            // StatusBar
-            // 
-            this.StatusBar.Dock = System.Windows.Forms.DockStyle.None;
-            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnApply,
-            this.btnCancel,
-            this.btnOK});
-            this.StatusBar.Location = new System.Drawing.Point(0, 0);
-            this.StatusBar.Name = "StatusBar";
-            this.StatusBar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.StatusBar.Size = new System.Drawing.Size(624, 22);
-            this.StatusBar.SizingGrip = false;
-            this.StatusBar.TabIndex = 0;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnCancel.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.Image")));
-            this.btnCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.ShowDropDownArrow = false;
-            this.btnCancel.Size = new System.Drawing.Size(47, 20);
-            this.btnCancel.Text = "Cancel";
-            // 
-            // btnOK
-            // 
-            this.btnOK.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnOK.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnOK.Image = ((System.Drawing.Image)(resources.GetObject("btnOK.Image")));
-            this.btnOK.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOK.Name = "btnOK";
-            this.btnOK.ShowDropDownArrow = false;
-            this.btnOK.Size = new System.Drawing.Size(27, 20);
-            this.btnOK.Text = "OK";
+            this.ToolStripContainer.TopToolStripPanel.Controls.Add(this.ToolStrip);
             // 
             // Splitter
             // 
@@ -248,8 +192,8 @@
             // 
             this.Splitter.Panel2.Controls.Add(this.PrimarySplitter);
             this.Splitter.Panel2MinSize = 0;
-            this.Splitter.Size = new System.Drawing.Size(616, 395);
-            this.Splitter.SplitterDistance = 123;
+            this.Splitter.Size = new System.Drawing.Size(616, 376);
+            this.Splitter.SplitterDistance = 117;
             this.Splitter.TabIndex = 2;
             // 
             // SecondarySplitter
@@ -267,7 +211,7 @@
             // SecondarySplitter.Panel2
             // 
             this.SecondarySplitter.Panel2.Controls.Add(this.SecondaryMap);
-            this.SecondarySplitter.Size = new System.Drawing.Size(616, 123);
+            this.SecondarySplitter.Size = new System.Drawing.Size(616, 117);
             this.SecondarySplitter.SplitterDistance = 500;
             this.SecondarySplitter.TabIndex = 5;
             // 
@@ -289,7 +233,7 @@
             this.SecondaryMap.ForeColor = System.Drawing.Color.Maroon;
             this.SecondaryMap.Location = new System.Drawing.Point(0, 0);
             this.SecondaryMap.Name = "SecondaryMap";
-            this.SecondaryMap.Size = new System.Drawing.Size(112, 123);
+            this.SecondaryMap.Size = new System.Drawing.Size(112, 117);
             this.SecondaryMap.TabIndex = 0;
             this.SecondaryMap.Target = this.SecondaryTextBox;
             this.SecondaryMap.Text = "documentMap1";
@@ -309,7 +253,7 @@
             // PrimarySplitter.Panel2
             // 
             this.PrimarySplitter.Panel2.Controls.Add(this.PrimaryMap);
-            this.PrimarySplitter.Size = new System.Drawing.Size(616, 268);
+            this.PrimarySplitter.Size = new System.Drawing.Size(616, 255);
             this.PrimarySplitter.SplitterDistance = 500;
             this.PrimarySplitter.TabIndex = 4;
             // 
@@ -331,142 +275,69 @@
             this.PrimaryMap.ForeColor = System.Drawing.Color.Maroon;
             this.PrimaryMap.Location = new System.Drawing.Point(0, 0);
             this.PrimaryMap.Name = "PrimaryMap";
-            this.PrimaryMap.Size = new System.Drawing.Size(112, 268);
+            this.PrimaryMap.Size = new System.Drawing.Size(112, 255);
             this.PrimaryMap.TabIndex = 0;
             this.PrimaryMap.Target = this.PrimaryTextBox;
             this.PrimaryMap.Text = "documentMap2";
             // 
-            // MainMenu
+            // ToolStrip
             // 
-            this.MainMenu.Dock = System.Windows.Forms.DockStyle.None;
-            this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileMenu,
-            this.EditMenu,
-            this.ViewMenu,
-            this.HelpMenu});
-            this.MainMenu.Location = new System.Drawing.Point(0, 0);
-            this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(624, 24);
-            this.MainMenu.TabIndex = 0;
-            this.MainMenu.Text = "menuStrip1";
+            this.ToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.ToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnExport,
+            this.btnPrint,
+            this.btnOptions,
+            this.btnSplit,
+            this.btnHelp});
+            this.ToolStrip.Location = new System.Drawing.Point(3, 0);
+            this.ToolStrip.Name = "ToolStrip";
+            this.ToolStrip.Size = new System.Drawing.Size(139, 25);
+            this.ToolStrip.TabIndex = 1;
             // 
-            // FileMenu
+            // btnExport
             // 
-            this.FileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileExport,
-            this.FilePrint});
-            this.FileMenu.Name = "FileMenu";
-            this.FileMenu.Size = new System.Drawing.Size(37, 20);
-            this.FileMenu.Text = "&File";
-            // 
-            // FileExport
-            // 
-            this.FileExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileExportHTML,
             this.FileExportRTF});
-            this.FileExport.Name = "FileExport";
-            this.FileExport.ShortcutKeyDisplayString = "";
-            this.FileExport.Size = new System.Drawing.Size(130, 22);
-            this.FileExport.Text = "&Export";
+            this.btnExport.Image = global::ToyGraf.Properties.Resources.saveHS;
+            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(29, 22);
+            this.btnExport.ToolTipText = "Export";
             // 
             // FileExportHTML
             // 
             this.FileExportHTML.Name = "FileExportHTML";
-            this.FileExportHTML.Size = new System.Drawing.Size(115, 22);
-            this.FileExportHTML.Text = "&HTML...";
+            this.FileExportHTML.Size = new System.Drawing.Size(180, 22);
+            this.FileExportHTML.Text = "Export as &HTML...";
             // 
             // FileExportRTF
             // 
             this.FileExportRTF.Name = "FileExportRTF";
-            this.FileExportRTF.Size = new System.Drawing.Size(115, 22);
-            this.FileExportRTF.Text = "&RTF...";
+            this.FileExportRTF.Size = new System.Drawing.Size(180, 22);
+            this.FileExportRTF.Text = "Export as &RTF...";
             // 
-            // FilePrint
+            // btnPrint
             // 
-            this.FilePrint.Name = "FilePrint";
-            this.FilePrint.ShortcutKeyDisplayString = "^P";
-            this.FilePrint.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.FilePrint.Size = new System.Drawing.Size(130, 22);
-            this.FilePrint.Text = "&Print...";
+            this.btnPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPrint.Image = global::ToyGraf.Properties.Resources.PrintHS;
+            this.btnPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(23, 22);
             // 
-            // EditMenu
+            // btnOptions
             // 
-            this.EditMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.EditFind,
-            this.EditReplace,
-            this.toolStripMenuItem4,
-            this.EditComment,
-            this.EditUncomment,
-            this.toolStripMenuItem1,
-            this.EditIncreaseIndent,
-            this.EditDecreaseIndent});
-            this.EditMenu.Name = "EditMenu";
-            this.EditMenu.Size = new System.Drawing.Size(39, 20);
-            this.EditMenu.Text = "&Edit";
-            // 
-            // EditFind
-            // 
-            this.EditFind.Name = "EditFind";
-            this.EditFind.ShortcutKeyDisplayString = "^F";
-            this.EditFind.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.EditFind.Size = new System.Drawing.Size(158, 22);
-            this.EditFind.Text = "&Find...";
-            // 
-            // EditReplace
-            // 
-            this.EditReplace.Name = "EditReplace";
-            this.EditReplace.ShortcutKeyDisplayString = "^H";
-            this.EditReplace.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.EditReplace.Size = new System.Drawing.Size(158, 22);
-            this.EditReplace.Text = "&Replace...";
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(155, 6);
-            // 
-            // EditComment
-            // 
-            this.EditComment.Name = "EditComment";
-            this.EditComment.Size = new System.Drawing.Size(158, 22);
-            this.EditComment.Text = "&Comment";
-            // 
-            // EditUncomment
-            // 
-            this.EditUncomment.Name = "EditUncomment";
-            this.EditUncomment.Size = new System.Drawing.Size(158, 22);
-            this.EditUncomment.Text = "&Uncomment";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(155, 6);
-            // 
-            // EditIncreaseIndent
-            // 
-            this.EditIncreaseIndent.Name = "EditIncreaseIndent";
-            this.EditIncreaseIndent.ShortcutKeyDisplayString = "";
-            this.EditIncreaseIndent.Size = new System.Drawing.Size(158, 22);
-            this.EditIncreaseIndent.Text = "&Increase Indent";
-            // 
-            // EditDecreaseIndent
-            // 
-            this.EditDecreaseIndent.Name = "EditDecreaseIndent";
-            this.EditDecreaseIndent.ShortcutKeyDisplayString = "";
-            this.EditDecreaseIndent.Size = new System.Drawing.Size(158, 22);
-            this.EditDecreaseIndent.Text = "&Decrease Indent";
-            // 
-            // ViewMenu
-            // 
-            this.ViewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ViewRuler,
             this.ViewLineNumbers,
-            this.ViewDocumentMap,
-            this.toolStripMenuItem2,
-            this.ViewSplit});
-            this.ViewMenu.Name = "ViewMenu";
-            this.ViewMenu.Size = new System.Drawing.Size(44, 20);
-            this.ViewMenu.Text = "&View";
+            this.ViewDocumentMap});
+            this.btnOptions.Image = global::ToyGraf.Properties.Resources.OptionsHS;
+            this.btnOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOptions.Name = "btnOptions";
+            this.btnOptions.Size = new System.Drawing.Size(29, 22);
+            this.btnOptions.ToolTipText = "Options";
             // 
             // ViewRuler
             // 
@@ -486,47 +357,66 @@
             this.ViewDocumentMap.Size = new System.Drawing.Size(157, 22);
             this.ViewDocumentMap.Text = "&Document Map";
             // 
-            // toolStripMenuItem2
+            // btnSplit
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(154, 6);
+            this.btnSplit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSplit.Image = global::ToyGraf.Properties.Resources.TileWindowsHorizontallyHS;
+            this.btnSplit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSplit.Name = "btnSplit";
+            this.btnSplit.Size = new System.Drawing.Size(23, 22);
+            this.btnSplit.ToolTipText = "Split";
             // 
-            // ViewSplit
+            // btnHelp
             // 
-            this.ViewSplit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ViewSplitHorizontal,
-            this.ViewSplitVertical});
-            this.ViewSplit.Name = "ViewSplit";
-            this.ViewSplit.Size = new System.Drawing.Size(157, 22);
-            this.ViewSplit.Text = "&Split";
+            this.btnHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnHelp.Image = global::ToyGraf.Properties.Resources.info;
+            this.btnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(23, 22);
+            this.btnHelp.ToolTipText = "Help";
             // 
-            // ViewSplitHorizontal
+            // ButtonPanel
             // 
-            this.ViewSplitHorizontal.Name = "ViewSplitHorizontal";
-            this.ViewSplitHorizontal.Size = new System.Drawing.Size(129, 22);
-            this.ViewSplitHorizontal.Text = "&Horizontal";
-            // 
-            // ViewSplitVertical
-            // 
-            this.ViewSplitVertical.Name = "ViewSplitVertical";
-            this.ViewSplitVertical.Size = new System.Drawing.Size(129, 22);
-            this.ViewSplitVertical.Text = "&Vertical";
-            // 
-            // HelpMenu
-            // 
-            this.HelpMenu.Name = "HelpMenu";
-            this.HelpMenu.Size = new System.Drawing.Size(44, 20);
-            this.HelpMenu.Text = "&Help";
+            this.ButtonPanel.Controls.Add(this.btnApply);
+            this.ButtonPanel.Controls.Add(this.btnCancel);
+            this.ButtonPanel.Controls.Add(this.btnOK);
+            this.ButtonPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ButtonPanel.Location = new System.Drawing.Point(0, 401);
+            this.ButtonPanel.Name = "ButtonPanel";
+            this.ButtonPanel.Size = new System.Drawing.Size(624, 40);
+            this.ButtonPanel.TabIndex = 9;
             // 
             // btnApply
             // 
-            this.btnApply.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnApply.Image = ((System.Drawing.Image)(resources.GetObject("btnApply.Image")));
-            this.btnApply.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnApply.Location = new System.Drawing.Point(537, 6);
             this.btnApply.Name = "btnApply";
-            this.btnApply.ShowDropDownArrow = false;
-            this.btnApply.Size = new System.Drawing.Size(42, 20);
+            this.btnApply.Size = new System.Drawing.Size(75, 23);
+            this.btnApply.TabIndex = 2;
             this.btnApply.Text = "Apply";
+            this.btnApply.UseVisualStyleBackColor = true;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(456, 6);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // btnOK
+            // 
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Location = new System.Drawing.Point(375, 6);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 0;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
             // 
             // FctbForm
             // 
@@ -534,23 +424,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 441);
             this.Controls.Add(this.ToolStripContainer);
+            this.Controls.Add(this.ButtonPanel);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MainMenuStrip = this.MainMenu;
             this.MinimizeBox = false;
             this.Name = "FctbForm";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             ((System.ComponentModel.ISupportInitialize)(this.SecondaryTextBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PrimaryTextBox)).EndInit();
-            this.ToolStripContainer.BottomToolStripPanel.ResumeLayout(false);
-            this.ToolStripContainer.BottomToolStripPanel.PerformLayout();
             this.ToolStripContainer.ContentPanel.ResumeLayout(false);
             this.ToolStripContainer.TopToolStripPanel.ResumeLayout(false);
             this.ToolStripContainer.TopToolStripPanel.PerformLayout();
             this.ToolStripContainer.ResumeLayout(false);
             this.ToolStripContainer.PerformLayout();
-            this.StatusBar.ResumeLayout(false);
-            this.StatusBar.PerformLayout();
             this.Splitter.Panel1.ResumeLayout(false);
             this.Splitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Splitter)).EndInit();
@@ -563,8 +449,9 @@
             this.PrimarySplitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PrimarySplitter)).EndInit();
             this.PrimarySplitter.ResumeLayout(false);
-            this.MainMenu.ResumeLayout(false);
-            this.MainMenu.PerformLayout();
+            this.ToolStrip.ResumeLayout(false);
+            this.ToolStrip.PerformLayout();
+            this.ButtonPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -573,41 +460,28 @@
 
         internal FastColoredTextBoxNS.FastColoredTextBox SecondaryTextBox;
         internal System.Windows.Forms.ToolStripContainer ToolStripContainer;
-        internal System.Windows.Forms.MenuStrip MainMenu;
-        internal System.Windows.Forms.ToolStripMenuItem FileMenu;
-        internal System.Windows.Forms.ToolStripMenuItem EditMenu;
-        internal System.Windows.Forms.ToolStripMenuItem HelpMenu;
-        internal System.Windows.Forms.StatusStrip StatusBar;
-        internal System.Windows.Forms.ToolStripDropDownButton btnCancel;
-        internal System.Windows.Forms.ToolStripDropDownButton btnOK;
-        internal System.Windows.Forms.ToolStripMenuItem FileExport;
-        internal System.Windows.Forms.ToolStripMenuItem FileExportHTML;
-        internal System.Windows.Forms.ToolStripMenuItem FileExportRTF;
-        internal System.Windows.Forms.ToolStripMenuItem FilePrint;
-        internal System.Windows.Forms.ToolStripMenuItem EditFind;
-        internal System.Windows.Forms.ToolStripMenuItem EditReplace;
-        internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
-        internal System.Windows.Forms.ToolStripMenuItem EditComment;
-        internal System.Windows.Forms.ToolStripMenuItem EditUncomment;
-        internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        internal System.Windows.Forms.ToolStripMenuItem EditIncreaseIndent;
-        internal System.Windows.Forms.ToolStripMenuItem EditDecreaseIndent;
         internal System.Windows.Forms.SplitContainer Splitter;
         internal FastColoredTextBoxNS.FastColoredTextBox PrimaryTextBox;
         internal FastColoredTextBoxNS.Ruler PrimaryRuler;
         internal FastColoredTextBoxNS.Ruler SecondaryRuler;
-        internal System.Windows.Forms.ToolStripMenuItem ViewMenu;
-        internal System.Windows.Forms.ToolStripMenuItem ViewRuler;
-        internal System.Windows.Forms.ToolStripMenuItem ViewLineNumbers;
-        internal System.Windows.Forms.ToolStripMenuItem ViewSplit;
-        internal System.Windows.Forms.ToolStripMenuItem ViewSplitHorizontal;
-        internal System.Windows.Forms.ToolStripMenuItem ViewSplitVertical;
         internal System.Windows.Forms.SplitContainer SecondarySplitter;
         internal FastColoredTextBoxNS.DocumentMap SecondaryMap;
         internal System.Windows.Forms.SplitContainer PrimarySplitter;
         internal FastColoredTextBoxNS.DocumentMap PrimaryMap;
+        internal Controls.TgToolStrip ToolStrip;
+        internal System.Windows.Forms.ToolStripDropDownButton btnExport;
+        internal System.Windows.Forms.ToolStripMenuItem FileExportHTML;
+        internal System.Windows.Forms.ToolStripMenuItem FileExportRTF;
+        internal System.Windows.Forms.ToolStripButton btnPrint;
+        internal System.Windows.Forms.ToolStripDropDownButton btnOptions;
+        internal System.Windows.Forms.ToolStripMenuItem ViewRuler;
+        internal System.Windows.Forms.ToolStripMenuItem ViewLineNumbers;
         internal System.Windows.Forms.ToolStripMenuItem ViewDocumentMap;
-        internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        internal System.Windows.Forms.ToolStripDropDownButton btnApply;
+        internal System.Windows.Forms.ToolStripButton btnSplit;
+        internal System.Windows.Forms.Panel ButtonPanel;
+        internal System.Windows.Forms.Button btnApply;
+        internal System.Windows.Forms.Button btnCancel;
+        internal System.Windows.Forms.Button btnOK;
+        internal System.Windows.Forms.ToolStripButton btnHelp;
     }
 }
