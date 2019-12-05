@@ -465,7 +465,6 @@
     <None Include="Snippets\TraceFoot.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Controllers\Hotkeys.txt" />
     <None Include="Images\info.png" />
     <Content Include="Controllers\Hotkeys.html" />
     <Content Include="Snippets\FragmentHead.txt" />
