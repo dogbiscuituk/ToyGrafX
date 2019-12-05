@@ -40,10 +40,8 @@
             Editor.btnApply.Click += BtnApply_Click;
         }
 
-        private void BtnHelp_Click(object sender, EventArgs e)
-        {
-            new HotkeysController().Show();
-        }
+        private void BtnHelp_Click(object sender, EventArgs e) =>
+            HotkeysController.Show(Editor);
 
         #endregion
 
