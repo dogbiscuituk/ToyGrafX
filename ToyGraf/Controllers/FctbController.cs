@@ -106,11 +106,13 @@
 
         private void TextBox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            if (e.KeyData == (Keys.Control | Keys.K))
+            switch (e.KeyData)
             {
-                //forced show (MinFragmentLength will be ignored)
-                AutocompleteMenu.Show(true);
-                e.Handled = true;
+                case Keys.Control | Keys.K:
+                    // forced show (MinFragmentLength will be ignored)
+                    AutocompleteMenu.Show(true);
+                    e.Handled = true;
+                    break;
             }
         }
 

@@ -42,13 +42,13 @@
             this.PrimaryMap = new FastColoredTextBoxNS.DocumentMap();
             this.ToolStrip = new ToyGraf.Controls.TgToolStrip();
             this.btnExport = new System.Windows.Forms.ToolStripDropDownButton();
-            this.FileExportHTML = new System.Windows.Forms.ToolStripMenuItem();
-            this.FileExportRTF = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnExportHTML = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnExportRTF = new System.Windows.Forms.ToolStripMenuItem();
             this.btnPrint = new System.Windows.Forms.ToolStripButton();
             this.btnOptions = new System.Windows.Forms.ToolStripDropDownButton();
-            this.ViewRuler = new System.Windows.Forms.ToolStripMenuItem();
-            this.ViewLineNumbers = new System.Windows.Forms.ToolStripMenuItem();
-            this.ViewDocumentMap = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnRuler = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnLineNumbers = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnDocumentMap = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSplit = new System.Windows.Forms.ToolStripButton();
             this.btnHelp = new System.Windows.Forms.ToolStripButton();
             this.ButtonPanel = new System.Windows.Forms.Panel();
@@ -99,6 +99,7 @@
             this.SecondaryTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.SecondaryTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.SecondaryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SecondaryTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.SecondaryTextBox.IsReplaceMode = false;
             this.SecondaryTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
             this.SecondaryTextBox.LeftBracket = '(';
@@ -140,6 +141,7 @@
             this.PrimaryTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.PrimaryTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.PrimaryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PrimaryTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.PrimaryTextBox.IsReplaceMode = false;
             this.PrimaryTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
             this.PrimaryTextBox.LeftBracket = '(';
@@ -298,25 +300,25 @@
             // 
             this.btnExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileExportHTML,
-            this.FileExportRTF});
+            this.btnExportHTML,
+            this.btnExportRTF});
             this.btnExport.Image = global::ToyGraf.Properties.Resources.saveHS;
             this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(29, 22);
             this.btnExport.ToolTipText = "Export";
             // 
-            // FileExportHTML
+            // btnExportHTML
             // 
-            this.FileExportHTML.Name = "FileExportHTML";
-            this.FileExportHTML.Size = new System.Drawing.Size(180, 22);
-            this.FileExportHTML.Text = "Export as &HTML...";
+            this.btnExportHTML.Name = "btnExportHTML";
+            this.btnExportHTML.Size = new System.Drawing.Size(180, 22);
+            this.btnExportHTML.Text = "Export as &HTML...";
             // 
-            // FileExportRTF
+            // btnExportRTF
             // 
-            this.FileExportRTF.Name = "FileExportRTF";
-            this.FileExportRTF.Size = new System.Drawing.Size(180, 22);
-            this.FileExportRTF.Text = "Export as &RTF...";
+            this.btnExportRTF.Name = "btnExportRTF";
+            this.btnExportRTF.Size = new System.Drawing.Size(180, 22);
+            this.btnExportRTF.Text = "Export as &RTF...";
             // 
             // btnPrint
             // 
@@ -330,32 +332,32 @@
             // 
             this.btnOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ViewRuler,
-            this.ViewLineNumbers,
-            this.ViewDocumentMap});
+            this.btnRuler,
+            this.btnLineNumbers,
+            this.btnDocumentMap});
             this.btnOptions.Image = global::ToyGraf.Properties.Resources.OptionsHS;
             this.btnOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOptions.Name = "btnOptions";
             this.btnOptions.Size = new System.Drawing.Size(29, 22);
             this.btnOptions.ToolTipText = "Options";
             // 
-            // ViewRuler
+            // btnRuler
             // 
-            this.ViewRuler.Name = "ViewRuler";
-            this.ViewRuler.Size = new System.Drawing.Size(157, 22);
-            this.ViewRuler.Text = "&Ruler";
+            this.btnRuler.Name = "btnRuler";
+            this.btnRuler.Size = new System.Drawing.Size(180, 22);
+            this.btnRuler.Text = "&Ruler";
             // 
-            // ViewLineNumbers
+            // btnLineNumbers
             // 
-            this.ViewLineNumbers.Name = "ViewLineNumbers";
-            this.ViewLineNumbers.Size = new System.Drawing.Size(157, 22);
-            this.ViewLineNumbers.Text = "&Line Numbers";
+            this.btnLineNumbers.Name = "btnLineNumbers";
+            this.btnLineNumbers.Size = new System.Drawing.Size(180, 22);
+            this.btnLineNumbers.Text = "&Line Numbers";
             // 
-            // ViewDocumentMap
+            // btnDocumentMap
             // 
-            this.ViewDocumentMap.Name = "ViewDocumentMap";
-            this.ViewDocumentMap.Size = new System.Drawing.Size(157, 22);
-            this.ViewDocumentMap.Text = "&Document Map";
+            this.btnDocumentMap.Name = "btnDocumentMap";
+            this.btnDocumentMap.Size = new System.Drawing.Size(180, 22);
+            this.btnDocumentMap.Text = "&Document Map";
             // 
             // btnSplit
             // 
@@ -470,13 +472,13 @@
         internal FastColoredTextBoxNS.DocumentMap PrimaryMap;
         internal Controls.TgToolStrip ToolStrip;
         internal System.Windows.Forms.ToolStripDropDownButton btnExport;
-        internal System.Windows.Forms.ToolStripMenuItem FileExportHTML;
-        internal System.Windows.Forms.ToolStripMenuItem FileExportRTF;
+        internal System.Windows.Forms.ToolStripMenuItem btnExportHTML;
+        internal System.Windows.Forms.ToolStripMenuItem btnExportRTF;
         internal System.Windows.Forms.ToolStripButton btnPrint;
         internal System.Windows.Forms.ToolStripDropDownButton btnOptions;
-        internal System.Windows.Forms.ToolStripMenuItem ViewRuler;
-        internal System.Windows.Forms.ToolStripMenuItem ViewLineNumbers;
-        internal System.Windows.Forms.ToolStripMenuItem ViewDocumentMap;
+        internal System.Windows.Forms.ToolStripMenuItem btnRuler;
+        internal System.Windows.Forms.ToolStripMenuItem btnLineNumbers;
+        internal System.Windows.Forms.ToolStripMenuItem btnDocumentMap;
         internal System.Windows.Forms.ToolStripButton btnSplit;
         internal System.Windows.Forms.Panel ButtonPanel;
         internal System.Windows.Forms.Button btnApply;

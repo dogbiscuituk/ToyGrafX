@@ -52,11 +52,11 @@
             this.ClientSize = new System.Drawing.Size(304, 411);
             this.Controls.Add(this.WebBrowser);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "HotkeysForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.ShowIcon = false;
             this.Text = "GLSL Editor Hotkeys";
             this.ResumeLayout(false);
 

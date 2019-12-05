@@ -29,19 +29,16 @@
             ShowDocumentMap = false;
             PrimaryTextStyleController = new FctbController(PrimaryTextBox);
             SecondaryTextStyleController = new FctbController(SecondaryTextBox);
-            Editor.FileExportHTML.Click += FileExportHTML_Click;
-            Editor.FileExportRTF.Click += FileExportRTF_Click;
+            Editor.btnExportHTML.Click += FileExportHTML_Click;
+            Editor.btnExportRTF.Click += FileExportRTF_Click;
             Editor.btnPrint.Click += FilePrint_Click;
             Editor.btnOptions.DropDownOpening += ViewMenu_DropDownOpening;
-            Editor.ViewRuler.Click += ViewRuler_Click;
-            Editor.ViewLineNumbers.Click += ViewLineNumbers_Click;
-            Editor.ViewDocumentMap.Click += ViewDocumentMap_Click;
+            Editor.btnRuler.Click += ViewRuler_Click;
+            Editor.btnLineNumbers.Click += ViewLineNumbers_Click;
+            Editor.btnDocumentMap.Click += ViewDocumentMap_Click;
             Editor.btnHelp.Click += BtnHelp_Click;
             Editor.btnApply.Click += BtnApply_Click;
         }
-
-        private void BtnHelp_Click(object sender, EventArgs e) =>
-            HotkeysController.Show(Editor);
 
         #endregion
 
@@ -127,6 +124,7 @@
         #region Private Event Handlers
 
         private void BtnApply_Click(object sender, System.EventArgs e) => OnApply();
+        private void BtnHelp_Click(object sender, EventArgs e) => HotkeysController.Show(Editor);
 
         private void FileExportHTML_Click(object sender, System.EventArgs e)
         {
@@ -161,9 +159,9 @@
 
         private void ViewMenu_DropDownOpening(object sender, System.EventArgs e)
         {
-            Editor.ViewRuler.Checked = ShowRuler;
-            Editor.ViewLineNumbers.Checked = ShowLineNumbers;
-            Editor.ViewDocumentMap.Checked = ShowDocumentMap;
+            Editor.btnRuler.Checked = ShowRuler;
+            Editor.btnLineNumbers.Checked = ShowLineNumbers;
+            Editor.btnDocumentMap.Checked = ShowDocumentMap;
             Editor.btnSplit.Checked = Orientation == Orientation.Vertical;
         }
 
