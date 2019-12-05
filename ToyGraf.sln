@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGraf.Common.Tests", "Toy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyGraf.Models.Tests", "ToyGraf.Models.Tests\ToyGraf.Models.Tests.csproj", "{C291DC3E-7FEB-4D80-B85B-8FABCA5727AA}"
 EndProject
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "ToyGraf.Help", "Help\ToyGraf.Help.shfbproj", "{DBFEBB80-5A2A-45E1-9E3A-DFE492602246}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,8 @@ Global
 		{C291DC3E-7FEB-4D80-B85B-8FABCA5727AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C291DC3E-7FEB-4D80-B85B-8FABCA5727AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C291DC3E-7FEB-4D80-B85B-8FABCA5727AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBFEBB80-5A2A-45E1-9E3A-DFE492602246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBFEBB80-5A2A-45E1-9E3A-DFE492602246}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

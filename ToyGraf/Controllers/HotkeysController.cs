@@ -8,24 +8,24 @@
     {
         internal static void Show(IWin32Window owner)
         {
-            if (Form.Visible)
-                Form.BringToFront();
+            if (HotkeysForm.Visible)
+                HotkeysForm.BringToFront();
             else
-                Form.Show(owner);
+                HotkeysForm.Show(owner);
         }
 
-        private static HotkeysForm _Form;
-        private static HotkeysForm Form
+        private static HotkeysForm _HotkeysForm;
+        private static HotkeysForm HotkeysForm
         {
             get
             {
-                if (_Form == null)
+                if (_HotkeysForm == null)
                 {
-                    _Form = new HotkeysForm();
-                    Form.WebBrowser.DocumentText = Resources.Hotkeys;
-                    Form.FormClosing += Form_FormClosing;
+                    _HotkeysForm = new HotkeysForm();
+                    _HotkeysForm.WebBrowser.DocumentText = Resources.Hotkeys;
+                    _HotkeysForm.FormClosing += Form_FormClosing;
                 }
-                return _Form;
+                return _HotkeysForm;
             }
         }
 
@@ -33,7 +33,7 @@
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                Form.Hide();
+                HotkeysForm.Hide();
                 e.Cancel = true;
             }
         }
