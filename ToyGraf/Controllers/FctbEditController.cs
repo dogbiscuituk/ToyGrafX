@@ -23,7 +23,7 @@
 
         internal FctbEditController(string caption)
         {
-            Editor = new FctbForm() { Text = $"{caption} - GLSL Shader Editor" };
+            Editor = new FctbForm() { Text = $"{caption} - GLSL Editor" };
             Editor.ActiveControl = PrimaryTextBox;
             Splitter.SplitterDistance = 0;
             ShowDocumentMap = false;
