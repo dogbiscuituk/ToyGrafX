@@ -431,50 +431,6 @@ namespace ToyGraf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
-        ///
-        ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-        ///&lt;head&gt;
-        ///    &lt;meta charset=&quot;utf-8&quot; /&gt;
-        ///    &lt;title&gt;&lt;/title&gt;
-        ///&lt;/head&gt;
-        ///&lt;body&gt;
-        ///&lt;b&gt;^X&lt;/b&gt; cut
-        ///^C copy
-        ///^V paste
-        ///^A select all
-        ///
-        ///^Z, Alt+Backspace undo
-        ///^R redo
-        ///
-        ///^F find
-        ///^H replace
-        ///F3 find next
-        ///^G goto
-        ///
-        ///^U, Shift+^U convert case
-        ///
-        ///^+ navigate forward
-        ///^- navigate back
-        ///
-        ///^B, Shift+^B bookmark
-        ///^N, Shift+^N navigate to bookmark
-        ///
-        ///^M start/stop macro
-        ///^E execute macro
-        ///
-        ///^I auto indent
-        ///Tab, Shift+Tab indent
-        ///
-        ///^wheel, ^Num+, ^Nu [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string Hotkeys {
-            get {
-                return ResourceManager.GetString("Hotkeys", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap info {

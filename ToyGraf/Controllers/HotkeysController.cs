@@ -22,7 +22,6 @@
                 if (_HotkeysForm == null)
                 {
                     _HotkeysForm = new HotkeysForm();
-                    _HotkeysForm.WebBrowser.DocumentText = Resources.Hotkeys;
                     _HotkeysForm.FormClosing += Form_FormClosing;
                 }
                 return _HotkeysForm;

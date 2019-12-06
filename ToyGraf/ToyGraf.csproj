@@ -466,7 +466,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\info.png" />
-    <Content Include="Controllers\Hotkeys.html" />
     <Content Include="Snippets\FragmentHead.txt" />
     <Content Include="Snippets\FragmentBody.txt" />
     <Content Include="Snippets\MainBody.txt" />
