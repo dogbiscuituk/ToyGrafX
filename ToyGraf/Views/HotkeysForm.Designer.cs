@@ -276,7 +276,7 @@
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(3, 148);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(55, 15);
+            this.label12.Size = new System.Drawing.Size(56, 15);
             this.label12.TabIndex = 11;
             this.label12.Text = "Find next";
             // 
@@ -413,9 +413,9 @@
             this.label27.AutoSize = true;
             this.label27.Location = new System.Drawing.Point(147, 201);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(47, 15);
+            this.label27.Size = new System.Drawing.Size(76, 15);
             this.label27.TabIndex = 26;
-            this.label27.Text = "^+ / ^-";
+            this.label27.Text = "^- / Shift+^-";
             // 
             // label28
             // 
@@ -521,7 +521,7 @@
             this.label39.AutoSize = true;
             this.label39.Location = new System.Drawing.Point(3, 397);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(84, 15);
+            this.label39.Size = new System.Drawing.Size(85, 15);
             this.label39.TabIndex = 38;
             this.label39.Text = "Execute macro";
             // 
