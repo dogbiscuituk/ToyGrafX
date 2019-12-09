@@ -276,7 +276,7 @@
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(3, 148);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(56, 15);
+            this.label12.Size = new System.Drawing.Size(55, 15);
             this.label12.TabIndex = 11;
             this.label12.Text = "Find next";
             // 
@@ -361,7 +361,7 @@
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(22, 15);
             this.label21.TabIndex = 20;
-            this.label21.Text = "^R";
+            this.label21.Text = "^Y";
             // 
             // label22
             // 
@@ -521,7 +521,7 @@
             this.label39.AutoSize = true;
             this.label39.Location = new System.Drawing.Point(3, 397);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(85, 15);
+            this.label39.Size = new System.Drawing.Size(84, 15);
             this.label39.TabIndex = 38;
             this.label39.Text = "Execute macro";
             // 

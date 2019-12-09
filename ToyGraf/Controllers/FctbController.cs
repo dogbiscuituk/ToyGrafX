@@ -23,6 +23,8 @@
         {
             TextBox = textBox ?? throw new NullReferenceException($"{nameof(textBox)} cannot be null.");
             Language = "GLSL";
+            TextBox.HotkeysMapping.Remove(Keys.Control | Keys.R);
+            TextBox.HotkeysMapping.Add(Keys.Control | Keys.Y, FCTBAction.Redo);
             TextBox.KeyDown += TextBox_KeyDown;
             TextBox.PaintLine += TextBox_PaintLine;
             TextBox.TextChanged += TextBox_TextChanged;
