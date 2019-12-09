@@ -52,6 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionEditedEventArgs.cs" />
+    <Compile Include="GLSLShaderEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GLSLShaderEditor.Designer.cs">
+      <DependentUpon>GLSLShaderEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="TextStyleInfo.cs" />
     <Compile Include="TextStyleInfos.cs" />
     <Compile Include="TextStyleInfosTypeConverter.cs" />
@@ -98,6 +104,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GLSLShaderEditor.resx">
+      <DependentUpon>GLSLShaderEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TgEntityEdit.resx">
       <DependentUpon>TgEntityEdit.cs</DependentUpon>
     </EmbeddedResource>
