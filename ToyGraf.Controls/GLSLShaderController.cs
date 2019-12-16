@@ -3,9 +3,9 @@
     using FastColoredTextBoxNS;
     using System;
 
-    internal class GLSLShaderController
+    public class GLSLShaderController
     {
-        internal GLSLShaderController(GLSLShaderEditor editor)
+        public GLSLShaderController(GLSLShaderEditor editor)
         {
             Add(editor.tbInitHeader);
             Add(editor.tbInit);

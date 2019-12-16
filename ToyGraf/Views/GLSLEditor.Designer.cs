@@ -30,16 +30,16 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.glslShaderEditor1 = new ToyGraf.Controls.GLSLShaderEditor();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.glslShaderEditor2 = new ToyGraf.Controls.GLSLShaderEditor();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.glslShaderEditor3 = new ToyGraf.Controls.GLSLShaderEditor();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.glslShaderEditor4 = new ToyGraf.Controls.GLSLShaderEditor();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.glslShaderEditor5 = new ToyGraf.Controls.GLSLShaderEditor();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.glslShaderEditor6 = new ToyGraf.Controls.GLSLShaderEditor();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -70,22 +70,36 @@
             this.tabPage1.Controls.Add(this.glslShaderEditor1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(616, 575);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Vertex";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // glslShaderEditor1
+            // 
+            this.glslShaderEditor1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.glslShaderEditor1.Location = new System.Drawing.Point(0, 0);
+            this.glslShaderEditor1.Name = "glslShaderEditor1";
+            this.glslShaderEditor1.Size = new System.Drawing.Size(616, 474);
+            this.glslShaderEditor1.TabIndex = 1;
             // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.glslShaderEditor2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(616, 575);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Tess Ctrl";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // glslShaderEditor2
+            // 
+            this.glslShaderEditor2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.glslShaderEditor2.Location = new System.Drawing.Point(0, 0);
+            this.glslShaderEditor2.Name = "glslShaderEditor2";
+            this.glslShaderEditor2.Size = new System.Drawing.Size(616, 474);
+            this.glslShaderEditor2.TabIndex = 1;
             // 
             // tabPage3
             // 
@@ -97,6 +111,14 @@
             this.tabPage3.Text = "Tess Eval";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // glslShaderEditor3
+            // 
+            this.glslShaderEditor3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.glslShaderEditor3.Location = new System.Drawing.Point(0, 0);
+            this.glslShaderEditor3.Name = "glslShaderEditor3";
+            this.glslShaderEditor3.Size = new System.Drawing.Size(616, 474);
+            this.glslShaderEditor3.TabIndex = 1;
+            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.glslShaderEditor4);
@@ -106,6 +128,14 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Geometry";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // glslShaderEditor4
+            // 
+            this.glslShaderEditor4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.glslShaderEditor4.Location = new System.Drawing.Point(0, 0);
+            this.glslShaderEditor4.Name = "glslShaderEditor4";
+            this.glslShaderEditor4.Size = new System.Drawing.Size(616, 474);
+            this.glslShaderEditor4.TabIndex = 1;
             // 
             // tabPage5
             // 
@@ -117,6 +147,14 @@
             this.tabPage5.Text = "Fragment";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // glslShaderEditor5
+            // 
+            this.glslShaderEditor5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.glslShaderEditor5.Location = new System.Drawing.Point(0, 0);
+            this.glslShaderEditor5.Name = "glslShaderEditor5";
+            this.glslShaderEditor5.Size = new System.Drawing.Size(616, 474);
+            this.glslShaderEditor5.TabIndex = 1;
+            // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.glslShaderEditor6);
@@ -126,46 +164,6 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Compute";
             this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // glslShaderEditor1
-            // 
-            this.glslShaderEditor1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.glslShaderEditor1.Location = new System.Drawing.Point(3, 3);
-            this.glslShaderEditor1.Name = "glslShaderEditor1";
-            this.glslShaderEditor1.Size = new System.Drawing.Size(610, 474);
-            this.glslShaderEditor1.TabIndex = 1;
-            // 
-            // glslShaderEditor2
-            // 
-            this.glslShaderEditor2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.glslShaderEditor2.Location = new System.Drawing.Point(3, 3);
-            this.glslShaderEditor2.Name = "glslShaderEditor2";
-            this.glslShaderEditor2.Size = new System.Drawing.Size(610, 474);
-            this.glslShaderEditor2.TabIndex = 1;
-            // 
-            // glslShaderEditor3
-            // 
-            this.glslShaderEditor3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.glslShaderEditor3.Location = new System.Drawing.Point(0, 0);
-            this.glslShaderEditor3.Name = "glslShaderEditor3";
-            this.glslShaderEditor3.Size = new System.Drawing.Size(616, 474);
-            this.glslShaderEditor3.TabIndex = 1;
-            // 
-            // glslShaderEditor4
-            // 
-            this.glslShaderEditor4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.glslShaderEditor4.Location = new System.Drawing.Point(0, 0);
-            this.glslShaderEditor4.Name = "glslShaderEditor4";
-            this.glslShaderEditor4.Size = new System.Drawing.Size(616, 474);
-            this.glslShaderEditor4.TabIndex = 1;
-            // 
-            // glslShaderEditor5
-            // 
-            this.glslShaderEditor5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.glslShaderEditor5.Location = new System.Drawing.Point(0, 0);
-            this.glslShaderEditor5.Name = "glslShaderEditor5";
-            this.glslShaderEditor5.Size = new System.Drawing.Size(616, 474);
-            this.glslShaderEditor5.TabIndex = 1;
             // 
             // glslShaderEditor6
             // 

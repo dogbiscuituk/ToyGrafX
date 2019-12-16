@@ -1,3 +1,11 @@
+GLSLController - GLSLEditor
+ \
+  GLSLShaderController - GLSLShaderEditor
+   \
+    GLSLSnippetController - FastColoredTextBox
+
+
+
 Assembling a Shader
 ===================
 
