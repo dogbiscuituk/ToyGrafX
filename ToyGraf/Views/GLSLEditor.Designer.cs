@@ -196,18 +196,18 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
-        private Controls.GLSLShaderEditor glslShaderEditor1;
-        private Controls.GLSLShaderEditor glslShaderEditor2;
-        private Controls.GLSLShaderEditor glslShaderEditor3;
-        private Controls.GLSLShaderEditor glslShaderEditor4;
-        private Controls.GLSLShaderEditor glslShaderEditor5;
-        private Controls.GLSLShaderEditor glslShaderEditor6;
+        internal System.Windows.Forms.TabControl tabControl1;
+        internal System.Windows.Forms.TabPage tabPage1;
+        internal System.Windows.Forms.TabPage tabPage2;
+        internal System.Windows.Forms.TabPage tabPage3;
+        internal System.Windows.Forms.TabPage tabPage4;
+        internal System.Windows.Forms.TabPage tabPage5;
+        internal System.Windows.Forms.TabPage tabPage6;
+        internal Controls.GLSLShaderEditor glslShaderEditor1;
+        internal Controls.GLSLShaderEditor glslShaderEditor2;
+        internal Controls.GLSLShaderEditor glslShaderEditor3;
+        internal Controls.GLSLShaderEditor glslShaderEditor4;
+        internal Controls.GLSLShaderEditor glslShaderEditor5;
+        internal Controls.GLSLShaderEditor glslShaderEditor6;
     }
 }

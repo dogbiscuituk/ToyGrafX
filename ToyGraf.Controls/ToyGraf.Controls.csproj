@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionEditedEventArgs.cs" />
+    <Compile Include="GLSLSnippetController.cs" />
+    <Compile Include="GLSLShaderController.cs" />
     <Compile Include="GLSLShaderEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -79,12 +81,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TgPropertyGridAdapter.cs" />
-    <Compile Include="TgEntityEdit.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TgEntityEdit.Designer.cs">
-      <DependentUpon>TgEntityEdit.cs</DependentUpon>
-    </Compile>
     <Compile Include="TgWrap.cs" />
     <Compile Include="TgStatusStrip.cs">
       <SubType>Component</SubType>
@@ -106,9 +102,6 @@
   <ItemGroup>
     <EmbeddedResource Include="GLSLShaderEditor.resx">
       <DependentUpon>GLSLShaderEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TgEntityEdit.resx">
-      <DependentUpon>TgEntityEdit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

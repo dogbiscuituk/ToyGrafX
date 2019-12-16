@@ -25,7 +25,6 @@
             Scene = new Scene(this);
             ClockController = new ClockController(this);
             CommandProcessor = new CommandProcessor(this);
-            EntityEditController = new EntityEditController(this);
             new FullScreenController(this);
             JsonController = new JsonController(this);
             PropertyGridController = new PropertyGridController(this);
@@ -40,7 +39,6 @@
 
         internal ClockController ClockController;
         internal CommandProcessor CommandProcessor { get; private set; }
-        internal EntityEditController EntityEditController;
         internal GLControl GLControl => GLControlParent[0] as GLControl;
         internal GLMode GLMode => RenderController._GLMode ?? RenderController?.GLMode;
         internal readonly PropertyGridController PropertyGridController;
@@ -55,7 +53,6 @@
 
         internal void ApplyOptions()
         {
-            EntityEditController.Redraw();
             PropertyGridController.ApplyOptions();
         }
 
@@ -152,7 +149,7 @@
         private readonly List<string> ChangedPropertyNames = new List<string>();
         private object ChangedSubject;
         private Clock Clock => ClockController.Clock;
-        private Control.ControlCollection GLControlParent => SceneForm?.SplitContainer3.Panel2.Controls;
+        private Control.ControlCollection GLControlParent => SceneForm?.SplitContainer2.Panel1.Controls;
         private const string GLSLUrl = "https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html";
         private readonly JsonController JsonController;
         private TgPropertyGridAdapter PropertyGridAdapter => PropertyGridController.PropertyGridAdapter;
@@ -352,7 +349,8 @@
 
         private void EditCode()
         {
-            new FctbEditController(this).Execute();
+            //new FctbEditController(this).Execute();
+            new GLSLController().Execute();
         }
 
         private void EditOptions()

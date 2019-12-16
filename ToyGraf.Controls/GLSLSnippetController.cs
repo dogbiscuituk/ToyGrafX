@@ -1,4 +1,4 @@
-﻿namespace ToyGraf.Controllers
+﻿namespace ToyGraf.Controls
 {
     using FastColoredTextBoxNS;
     using System;
@@ -8,18 +8,17 @@
     using System.Windows.Forms;
     using ToyGraf.Common.Types;
     using ToyGraf.Common.Utility;
-    using ToyGraf.Controls;
     using Languages = FastColoredTextBoxNS.Language;
 
     /// <summary>
     /// FastColoredTextBox controller class.
     /// Adds GLSL to list of supported languages.
     /// </summary>
-    internal class FctbController
+    public class GLSLSnippetController
     {
         #region Constructor
 
-        internal FctbController(FastColoredTextBox textBox)
+        public GLSLSnippetController(FastColoredTextBox textBox)
         {
             TextBox = textBox ?? throw new NullReferenceException($"{nameof(textBox)} cannot be null.");
             Language = "GLSL";
@@ -46,7 +45,7 @@
 
         #region Internal Methods
 
-        internal void AddReadOnlyRange(Range range)
+        public void AddReadOnlyRange(Range range)
         {
             var rangeAll = TextBox.Range;
             if (range.End.iLine > rangeAll.End.iLine)
@@ -55,9 +54,8 @@
             range.SetStyle(ReadOnlyTextStyle);
         }
 
-        internal static void ApplyOptions()
+        public static void ApplyStyles(TextStyleInfos styles)
         {
-            var styles = AppController.Options.SyntaxHighlightStyles;
             InitStyle(styles.Comments, CommentStyle);
             InitStyle(styles.Directives, DirectiveStyle);
             InitStyle(styles.Functions, FunctionStyle);
@@ -68,7 +66,7 @@
             InitStyle(styles.Strings, StringStyle);
         }
 
-        internal List<Range> GetEditableRanges()
+        public List<Range> GetEditableRanges()
         {
             var ranges = new List<Range>();
             var inRange = false;

@@ -55,13 +55,6 @@
             this.Tlabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
             this.SplitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.SplitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.EntityEdit = new ToyGraf.Controls.TgEntityEdit();
-            this.PopupEntityEditMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.PopupEntityEditFloat = new System.Windows.Forms.ToolStripMenuItem();
-            this.PopupEntityEditHide = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
-            this.PopupEntityEditVisibleTabs = new System.Windows.Forms.ToolStripMenuItem();
             this.GLControl = new OpenTK.GLControl();
             this.PropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.PopupPropertyGridMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -134,10 +127,10 @@
             this.EditOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.SceneMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.SceneAddNewTrace = new System.Windows.Forms.ToolStripMenuItem();
+            this.SceneEditCode = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewFullScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-            this.ViewEntityEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewPropertyGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewTraceTable = new System.Windows.Forms.ToolStripMenuItem();
             this.TimeMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -170,11 +163,15 @@
             this.HelpOpenGLShadingLanguage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripSeparator();
             this.HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.PopupEntityEditMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.PopupEntityEditFloat = new System.Windows.Forms.ToolStripMenuItem();
+            this.PopupEntityEditHide = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
+            this.PopupEntityEditVisibleTabs = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupSubjectMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.PopupSubjectScene = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupSubjectSelectedTraces = new System.Windows.Forms.ToolStripMenuItem();
             this.PopupSubjectAllTraces = new System.Windows.Forms.ToolStripMenuItem();
-            this.SceneEditCode = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
             this.ToolStripContainer.LeftToolStripPanel.SuspendLayout();
@@ -189,11 +186,6 @@
             this.SplitContainer2.Panel1.SuspendLayout();
             this.SplitContainer2.Panel2.SuspendLayout();
             this.SplitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SplitContainer3)).BeginInit();
-            this.SplitContainer3.Panel1.SuspendLayout();
-            this.SplitContainer3.Panel2.SuspendLayout();
-            this.SplitContainer3.SuspendLayout();
-            this.PopupEntityEditMenu.SuspendLayout();
             this.PopupPropertyGridMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TraceTable)).BeginInit();
             this.PopupTraceTableMenu.SuspendLayout();
@@ -201,6 +193,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SceneBindingSource)).BeginInit();
             this.Toolbar.SuspendLayout();
             this.MainMenu.SuspendLayout();
+            this.PopupEntityEditMenu.SuspendLayout();
             this.PopupSubjectMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -339,7 +332,7 @@
             // 
             this.SplitContainer1.Panel2.Controls.Add(this.TraceTable);
             this.SplitContainer1.Size = new System.Drawing.Size(751, 515);
-            this.SplitContainer1.SplitterDistance = 366;
+            this.SplitContainer1.SplitterDistance = 364;
             this.SplitContainer1.SplitterWidth = 5;
             this.SplitContainer1.TabIndex = 2;
             // 
@@ -352,77 +345,15 @@
             // 
             // SplitContainer2.Panel1
             // 
-            this.SplitContainer2.Panel1.Controls.Add(this.SplitContainer3);
+            this.SplitContainer2.Panel1.Controls.Add(this.GLControl);
             // 
             // SplitContainer2.Panel2
             // 
             this.SplitContainer2.Panel2.Controls.Add(this.PropertyGrid);
-            this.SplitContainer2.Size = new System.Drawing.Size(751, 366);
-            this.SplitContainer2.SplitterDistance = 422;
+            this.SplitContainer2.Size = new System.Drawing.Size(751, 364);
+            this.SplitContainer2.SplitterDistance = 420;
             this.SplitContainer2.SplitterWidth = 5;
             this.SplitContainer2.TabIndex = 0;
-            // 
-            // SplitContainer3
-            // 
-            this.SplitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SplitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.SplitContainer3.Location = new System.Drawing.Point(0, 0);
-            this.SplitContainer3.Name = "SplitContainer3";
-            this.SplitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // SplitContainer3.Panel1
-            // 
-            this.SplitContainer3.Panel1.Controls.Add(this.EntityEdit);
-            // 
-            // SplitContainer3.Panel2
-            // 
-            this.SplitContainer3.Panel2.Controls.Add(this.GLControl);
-            this.SplitContainer3.Size = new System.Drawing.Size(422, 366);
-            this.SplitContainer3.SplitterDistance = 110;
-            this.SplitContainer3.TabIndex = 1;
-            // 
-            // EntityEdit
-            // 
-            this.EntityEdit.ContextMenuStrip = this.PopupEntityEditMenu;
-            this.EntityEdit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.EntityEdit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EntityEdit.Location = new System.Drawing.Point(0, 0);
-            this.EntityEdit.Name = "EntityEdit";
-            this.EntityEdit.Size = new System.Drawing.Size(422, 110);
-            this.EntityEdit.TabIndex = 0;
-            // 
-            // PopupEntityEditMenu
-            // 
-            this.PopupEntityEditMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.PopupEntityEditFloat,
-            this.PopupEntityEditHide,
-            this.toolStripMenuItem11,
-            this.PopupEntityEditVisibleTabs});
-            this.PopupEntityEditMenu.Name = "PopupEntityEditMenu";
-            this.PopupEntityEditMenu.Size = new System.Drawing.Size(145, 76);
-            // 
-            // PopupEntityEditFloat
-            // 
-            this.PopupEntityEditFloat.Name = "PopupEntityEditFloat";
-            this.PopupEntityEditFloat.Size = new System.Drawing.Size(144, 22);
-            this.PopupEntityEditFloat.Text = "&Undock";
-            // 
-            // PopupEntityEditHide
-            // 
-            this.PopupEntityEditHide.Name = "PopupEntityEditHide";
-            this.PopupEntityEditHide.Size = new System.Drawing.Size(144, 22);
-            this.PopupEntityEditHide.Text = "&Hide";
-            // 
-            // toolStripMenuItem11
-            // 
-            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(141, 6);
-            // 
-            // PopupEntityEditVisibleTabs
-            // 
-            this.PopupEntityEditVisibleTabs.Name = "PopupEntityEditVisibleTabs";
-            this.PopupEntityEditVisibleTabs.Size = new System.Drawing.Size(144, 22);
-            this.PopupEntityEditVisibleTabs.Text = "&Visible Tabs...";
             // 
             // GLControl
             // 
@@ -430,8 +361,8 @@
             this.GLControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GLControl.Location = new System.Drawing.Point(0, 0);
             this.GLControl.Name = "GLControl";
-            this.GLControl.Size = new System.Drawing.Size(422, 252);
-            this.GLControl.TabIndex = 0;
+            this.GLControl.Size = new System.Drawing.Size(420, 364);
+            this.GLControl.TabIndex = 2;
             this.GLControl.VSync = false;
             // 
             // PropertyGrid
@@ -440,7 +371,7 @@
             this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyGrid.Location = new System.Drawing.Point(0, 0);
             this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(324, 366);
+            this.PropertyGrid.Size = new System.Drawing.Size(326, 364);
             this.PropertyGrid.TabIndex = 0;
             // 
             // PopupPropertyGridMenu
@@ -504,7 +435,7 @@
             this.TraceTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.TraceTable.RowHeadersWidth = 20;
             this.TraceTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TraceTable.Size = new System.Drawing.Size(751, 144);
+            this.TraceTable.Size = new System.Drawing.Size(751, 146);
             this.TraceTable.TabIndex = 0;
             // 
             // colDescription
@@ -532,7 +463,7 @@
             this.colMaximum.DefaultCellStyle = dataGridViewCellStyle4;
             this.colMaximum.HeaderText = "Maximum";
             this.colMaximum.Name = "colMaximum";
-            this.colMaximum.Width = 86;
+            this.colMaximum.Width = 87;
             // 
             // colMinimum
             // 
@@ -575,7 +506,7 @@
             this.colShader1Vertex.DefaultCellStyle = dataGridViewCellStyle8;
             this.colShader1Vertex.HeaderText = "Shader 1: Vertex (mandatory)";
             this.colShader1Vertex.Name = "colShader1Vertex";
-            this.colShader1Vertex.Width = 167;
+            this.colShader1Vertex.Width = 168;
             // 
             // colShader2TessControl
             // 
@@ -871,7 +802,7 @@
             this.FileNew.ImageTransparentColor = System.Drawing.Color.White;
             this.FileNew.Name = "FileNew";
             this.FileNew.ShortcutKeyDisplayString = "";
-            this.FileNew.Size = new System.Drawing.Size(196, 22);
+            this.FileNew.Size = new System.Drawing.Size(197, 22);
             this.FileNew.Text = "&New";
             // 
             // FileNewEmptyScene
@@ -895,19 +826,19 @@
             this.FileOpen.Name = "FileOpen";
             this.FileOpen.ShortcutKeyDisplayString = "^O";
             this.FileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.FileOpen.Size = new System.Drawing.Size(196, 22);
+            this.FileOpen.Size = new System.Drawing.Size(197, 22);
             this.FileOpen.Text = "&Open...";
             // 
             // FileReopen
             // 
             this.FileReopen.Name = "FileReopen";
-            this.FileReopen.Size = new System.Drawing.Size(196, 22);
+            this.FileReopen.Size = new System.Drawing.Size(197, 22);
             this.FileReopen.Text = "&Reopen";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(193, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(194, 6);
             // 
             // FileSave
             // 
@@ -916,33 +847,33 @@
             this.FileSave.Name = "FileSave";
             this.FileSave.ShortcutKeyDisplayString = "^S";
             this.FileSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.FileSave.Size = new System.Drawing.Size(196, 22);
+            this.FileSave.Size = new System.Drawing.Size(197, 22);
             this.FileSave.Text = "&Save";
             // 
             // FileSaveAs
             // 
             this.FileSaveAs.Name = "FileSaveAs";
-            this.FileSaveAs.Size = new System.Drawing.Size(196, 22);
+            this.FileSaveAs.Size = new System.Drawing.Size(197, 22);
             this.FileSaveAs.Text = "&Save As...";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(193, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(194, 6);
             // 
             // FileClose
             // 
             this.FileClose.Name = "FileClose";
             this.FileClose.ShortcutKeyDisplayString = "^F4";
             this.FileClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
-            this.FileClose.Size = new System.Drawing.Size(196, 22);
+            this.FileClose.Size = new System.Drawing.Size(197, 22);
             this.FileClose.Text = "&Close";
             // 
             // FileExit
             // 
             this.FileExit.Name = "FileExit";
             this.FileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.FileExit.Size = new System.Drawing.Size(196, 22);
+            this.FileExit.Size = new System.Drawing.Size(197, 22);
             this.FileExit.Text = "Close All && E&xit";
             // 
             // EditMenu
@@ -1086,15 +1017,20 @@
             this.SceneAddNewTrace.ImageTransparentColor = System.Drawing.Color.White;
             this.SceneAddNewTrace.Name = "SceneAddNewTrace";
             this.SceneAddNewTrace.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.SceneAddNewTrace.Size = new System.Drawing.Size(182, 22);
+            this.SceneAddNewTrace.Size = new System.Drawing.Size(181, 22);
             this.SceneAddNewTrace.Text = "&Add a New Trace";
+            // 
+            // SceneEditCode
+            // 
+            this.SceneEditCode.Name = "SceneEditCode";
+            this.SceneEditCode.Size = new System.Drawing.Size(181, 22);
+            this.SceneEditCode.Text = "&Edit Code";
             // 
             // ViewMenu
             // 
             this.ViewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ViewFullScreen,
             this.toolStripMenuItem3,
-            this.ViewEntityEditor,
             this.ViewPropertyGrid,
             this.ViewTraceTable});
             this.ViewMenu.Name = "ViewMenu";
@@ -1107,30 +1043,24 @@
             this.ViewFullScreen.ImageTransparentColor = System.Drawing.Color.White;
             this.ViewFullScreen.Name = "ViewFullScreen";
             this.ViewFullScreen.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.ViewFullScreen.Size = new System.Drawing.Size(156, 22);
+            this.ViewFullScreen.Size = new System.Drawing.Size(180, 22);
             this.ViewFullScreen.Text = "&Full Screen";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(153, 6);
-            // 
-            // ViewEntityEditor
-            // 
-            this.ViewEntityEditor.Name = "ViewEntityEditor";
-            this.ViewEntityEditor.Size = new System.Drawing.Size(156, 22);
-            this.ViewEntityEditor.Text = "&Entity Editor";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
             // 
             // ViewPropertyGrid
             // 
             this.ViewPropertyGrid.Name = "ViewPropertyGrid";
-            this.ViewPropertyGrid.Size = new System.Drawing.Size(156, 22);
+            this.ViewPropertyGrid.Size = new System.Drawing.Size(180, 22);
             this.ViewPropertyGrid.Text = "&Property Grid";
             // 
             // ViewTraceTable
             // 
             this.ViewTraceTable.Name = "ViewTraceTable";
-            this.ViewTraceTable.Size = new System.Drawing.Size(156, 22);
+            this.ViewTraceTable.Size = new System.Drawing.Size(180, 22);
             this.ViewTraceTable.Text = "&Trace Table";
             // 
             // TimeMenu
@@ -1144,7 +1074,7 @@
             this.TimeForward,
             this.TimeAccelerate});
             this.TimeMenu.Name = "TimeMenu";
-            this.TimeMenu.Size = new System.Drawing.Size(46, 20);
+            this.TimeMenu.Size = new System.Drawing.Size(45, 20);
             this.TimeMenu.Text = "&Time";
             // 
             // TimeDecelerate
@@ -1384,6 +1314,39 @@
             this.HelpAbout.Size = new System.Drawing.Size(229, 22);
             this.HelpAbout.Text = "&About";
             // 
+            // PopupEntityEditMenu
+            // 
+            this.PopupEntityEditMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.PopupEntityEditFloat,
+            this.PopupEntityEditHide,
+            this.toolStripMenuItem11,
+            this.PopupEntityEditVisibleTabs});
+            this.PopupEntityEditMenu.Name = "PopupEntityEditMenu";
+            this.PopupEntityEditMenu.Size = new System.Drawing.Size(144, 76);
+            // 
+            // PopupEntityEditFloat
+            // 
+            this.PopupEntityEditFloat.Name = "PopupEntityEditFloat";
+            this.PopupEntityEditFloat.Size = new System.Drawing.Size(143, 22);
+            this.PopupEntityEditFloat.Text = "&Undock";
+            // 
+            // PopupEntityEditHide
+            // 
+            this.PopupEntityEditHide.Name = "PopupEntityEditHide";
+            this.PopupEntityEditHide.Size = new System.Drawing.Size(143, 22);
+            this.PopupEntityEditHide.Text = "&Hide";
+            // 
+            // toolStripMenuItem11
+            // 
+            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(140, 6);
+            // 
+            // PopupEntityEditVisibleTabs
+            // 
+            this.PopupEntityEditVisibleTabs.Name = "PopupEntityEditVisibleTabs";
+            this.PopupEntityEditVisibleTabs.Size = new System.Drawing.Size(143, 22);
+            this.PopupEntityEditVisibleTabs.Text = "&Visible Tabs...";
+            // 
             // PopupSubjectMenu
             // 
             this.PopupSubjectMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1391,31 +1354,25 @@
             this.PopupSubjectSelectedTraces,
             this.PopupSubjectAllTraces});
             this.PopupSubjectMenu.Name = "PopupMenu";
-            this.PopupSubjectMenu.Size = new System.Drawing.Size(155, 70);
+            this.PopupSubjectMenu.Size = new System.Drawing.Size(154, 70);
             // 
             // PopupSubjectScene
             // 
             this.PopupSubjectScene.Name = "PopupSubjectScene";
-            this.PopupSubjectScene.Size = new System.Drawing.Size(154, 22);
+            this.PopupSubjectScene.Size = new System.Drawing.Size(153, 22);
             this.PopupSubjectScene.Text = "&Scene";
             // 
             // PopupSubjectSelectedTraces
             // 
             this.PopupSubjectSelectedTraces.Name = "PopupSubjectSelectedTraces";
-            this.PopupSubjectSelectedTraces.Size = new System.Drawing.Size(154, 22);
+            this.PopupSubjectSelectedTraces.Size = new System.Drawing.Size(153, 22);
             this.PopupSubjectSelectedTraces.Text = "Selected &Traces";
             // 
             // PopupSubjectAllTraces
             // 
             this.PopupSubjectAllTraces.Name = "PopupSubjectAllTraces";
-            this.PopupSubjectAllTraces.Size = new System.Drawing.Size(154, 22);
+            this.PopupSubjectAllTraces.Size = new System.Drawing.Size(153, 22);
             this.PopupSubjectAllTraces.Text = "&All Traces";
-            // 
-            // SceneEditCode
-            // 
-            this.SceneEditCode.Name = "SceneEditCode";
-            this.SceneEditCode.Size = new System.Drawing.Size(182, 22);
-            this.SceneEditCode.Text = "&Edit Code";
             // 
             // SceneForm
             // 
@@ -1447,11 +1404,6 @@
             this.SplitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer2)).EndInit();
             this.SplitContainer2.ResumeLayout(false);
-            this.SplitContainer3.Panel1.ResumeLayout(false);
-            this.SplitContainer3.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SplitContainer3)).EndInit();
-            this.SplitContainer3.ResumeLayout(false);
-            this.PopupEntityEditMenu.ResumeLayout(false);
             this.PopupPropertyGridMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TraceTable)).EndInit();
             this.PopupTraceTableMenu.ResumeLayout(false);
@@ -1461,6 +1413,7 @@
             this.Toolbar.PerformLayout();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
+            this.PopupEntityEditMenu.ResumeLayout(false);
             this.PopupSubjectMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -1574,15 +1527,11 @@
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
         internal System.Windows.Forms.ToolStripMenuItem RollClockwise;
         internal System.Windows.Forms.ToolStripMenuItem RollAnticlockwise;
-        internal OpenTK.GLControl GLControl;
-        internal System.Windows.Forms.SplitContainer SplitContainer3;
-        internal Controls.TgEntityEdit EntityEdit;
         internal System.Windows.Forms.ContextMenuStrip PopupEntityEditMenu;
         internal System.Windows.Forms.ToolStripMenuItem PopupEntityEditFloat;
         internal System.Windows.Forms.ToolStripMenuItem PopupEntityEditHide;
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem11;
         internal System.Windows.Forms.ToolStripMenuItem PopupEntityEditVisibleTabs;
-        internal System.Windows.Forms.ToolStripMenuItem ViewEntityEditor;
         internal System.Windows.Forms.DataGridViewTextBoxColumn colDescription;
         internal System.Windows.Forms.DataGridViewTextBoxColumn colLocation;
         internal System.Windows.Forms.DataGridViewTextBoxColumn colMaximum;
@@ -1599,5 +1548,6 @@
         internal System.Windows.Forms.DataGridViewTextBoxColumn colStrip;
         internal System.Windows.Forms.DataGridViewCheckBoxColumn colVisible;
         internal System.Windows.Forms.ToolStripMenuItem SceneEditCode;
+        internal OpenTK.GLControl GLControl;
     }
 }

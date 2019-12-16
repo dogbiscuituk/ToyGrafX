@@ -7,6 +7,7 @@
     using System.IO;
     using System.Windows.Forms;
     using System.Windows.Forms.Design;
+    using ToyGraf.Controls;
     using ToyGraf.Models;
     using ToyGraf.Views;
 
@@ -27,8 +28,8 @@
             Editor.ActiveControl = PrimaryTextBox;
             Splitter.SplitterDistance = 0;
             ShowDocumentMap = false;
-            PrimaryTextStyleController = new FctbController(PrimaryTextBox);
-            SecondaryTextStyleController = new FctbController(SecondaryTextBox);
+            PrimaryTextStyleController = new GLSLSnippetController(PrimaryTextBox);
+            SecondaryTextStyleController = new GLSLSnippetController(SecondaryTextBox);
             Editor.btnExportHTML.Click += FileExportHTML_Click;
             Editor.btnExportRTF.Click += FileExportRTF_Click;
             Editor.btnPrint.Click += FilePrint_Click;
@@ -76,7 +77,7 @@
         #region Private Fields
 
         private SceneController SceneController;
-        private readonly FctbController PrimaryTextStyleController, SecondaryTextStyleController;
+        private readonly GLSLSnippetController PrimaryTextStyleController, SecondaryTextStyleController;
 
         #endregion
 

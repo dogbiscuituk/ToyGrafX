@@ -64,13 +64,13 @@
             this.TableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
             this.TableLayoutPanel.Name = "TableLayoutPanel";
             this.TableLayoutPanel.RowCount = 7;
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 140F));
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 96F));
+            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TableLayoutPanel.Size = new System.Drawing.Size(631, 475);
             this.TableLayoutPanel.TabIndex = 2;
             // 
@@ -95,7 +95,6 @@
             this.tbFooter.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbFooter.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbFooter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbFooter.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbFooter.IsReplaceMode = false;
             this.tbFooter.Location = new System.Drawing.Point(0, 378);
             this.tbFooter.Margin = new System.Windows.Forms.Padding(0);
@@ -109,7 +108,6 @@
             this.tbFooter.TabIndex = 6;
             this.tbFooter.Text = "      break;\r\n    default:\r\n      break;\r\n  }\r\n}";
             this.tbFooter.Zoom = 100;
-            this.tbFooter.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.TextBox_TextChanged);
             // 
             // tbCase
             // 
@@ -131,7 +129,6 @@
             this.tbCase.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbCase.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbCase.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbCase.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbCase.IsReplaceMode = false;
             this.tbCase.Location = new System.Drawing.Point(48, 238);
             this.tbCase.Margin = new System.Windows.Forms.Padding(48, 0, 0, 0);
@@ -144,7 +141,6 @@
             this.tbCase.TabIndex = 5;
             this.tbCase.Text = resources.GetString("tbCase.Text");
             this.tbCase.Zoom = 100;
-            this.tbCase.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.TextBox_TextChanged);
             // 
             // tbCaseHeader
             // 
@@ -167,7 +163,6 @@
             this.tbCaseHeader.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbCaseHeader.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbCaseHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbCaseHeader.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbCaseHeader.IsReplaceMode = false;
             this.tbCaseHeader.Location = new System.Drawing.Point(16, 196);
             this.tbCaseHeader.Margin = new System.Windows.Forms.Padding(16, 0, 0, 0);
@@ -181,7 +176,6 @@
             this.tbCaseHeader.TabIndex = 4;
             this.tbCaseHeader.Text = "switch (traceIndex)\r\n{\r\n  case 0:";
             this.tbCaseHeader.Zoom = 100;
-            this.tbCaseHeader.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.TextBox_TextChanged);
             // 
             // tbMain
             // 
@@ -203,7 +197,6 @@
             this.tbMain.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbMain.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMain.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbMain.IsReplaceMode = false;
             this.tbMain.Location = new System.Drawing.Point(16, 182);
             this.tbMain.Margin = new System.Windows.Forms.Padding(16, 0, 0, 0);
@@ -215,7 +208,6 @@
             this.tbMain.Size = new System.Drawing.Size(617, 14);
             this.tbMain.TabIndex = 3;
             this.tbMain.Zoom = 100;
-            this.tbMain.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.TextBox_TextChanged);
             // 
             // tbMainHeader
             // 
@@ -238,7 +230,6 @@
             this.tbMainHeader.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbMainHeader.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbMainHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMainHeader.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbMainHeader.IsReplaceMode = false;
             this.tbMainHeader.Location = new System.Drawing.Point(0, 154);
             this.tbMainHeader.Margin = new System.Windows.Forms.Padding(0);
@@ -252,7 +243,6 @@
             this.tbMainHeader.TabIndex = 2;
             this.tbMainHeader.Text = "void main()\r\n{";
             this.tbMainHeader.Zoom = 100;
-            this.tbMainHeader.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.TextBox_TextChanged);
             // 
             // tbInit
             // 
@@ -274,7 +264,6 @@
             this.tbInit.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbInit.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbInit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbInit.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbInit.IsReplaceMode = false;
             this.tbInit.Location = new System.Drawing.Point(0, 28);
             this.tbInit.Margin = new System.Windows.Forms.Padding(0);
@@ -289,7 +278,6 @@
     "e;\r\nuniform int traceIndex;\r\nuniform mat4\r\n  transform,\r\n  cameraView,\r\n  projec" +
     "tion;\r\nfloat t, x, y, z, r, g, b;";
             this.tbInit.Zoom = 100;
-            this.tbInit.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.TextBox_TextChanged);
             // 
             // tbInitHeader
             // 
@@ -312,7 +300,6 @@
             this.tbInitHeader.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbInitHeader.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbInitHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbInitHeader.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbInitHeader.IsReplaceMode = false;
             this.tbInitHeader.Location = new System.Drawing.Point(0, 0);
             this.tbInitHeader.Margin = new System.Windows.Forms.Padding(0);
@@ -326,7 +313,6 @@
             this.tbInitHeader.TabIndex = 0;
             this.tbInitHeader.Text = "// Vertex Shader\r\n#version 330";
             this.tbInitHeader.Zoom = 100;
-            this.tbInitHeader.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.TextBox_TextChanged);
             // 
             // GLSLShaderEditor
             // 
@@ -349,13 +335,13 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel TableLayoutPanel;
-        private FastColoredTextBoxNS.FastColoredTextBox tbFooter;
-        private FastColoredTextBoxNS.FastColoredTextBox tbCase;
-        private FastColoredTextBoxNS.FastColoredTextBox tbCaseHeader;
-        private FastColoredTextBoxNS.FastColoredTextBox tbMain;
-        private FastColoredTextBoxNS.FastColoredTextBox tbMainHeader;
-        private FastColoredTextBoxNS.FastColoredTextBox tbInit;
-        private FastColoredTextBoxNS.FastColoredTextBox tbInitHeader;
+        internal System.Windows.Forms.TableLayoutPanel TableLayoutPanel;
+        internal FastColoredTextBoxNS.FastColoredTextBox tbFooter;
+        internal FastColoredTextBoxNS.FastColoredTextBox tbCase;
+        internal FastColoredTextBoxNS.FastColoredTextBox tbCaseHeader;
+        internal FastColoredTextBoxNS.FastColoredTextBox tbMain;
+        internal FastColoredTextBoxNS.FastColoredTextBox tbMainHeader;
+        internal FastColoredTextBoxNS.FastColoredTextBox tbInit;
+        internal FastColoredTextBoxNS.FastColoredTextBox tbInitHeader;
     }
 }
