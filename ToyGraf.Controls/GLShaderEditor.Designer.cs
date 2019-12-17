@@ -1,6 +1,6 @@
 ﻿namespace ToyGraf.Controls
 {
-    partial class GLSLShaderEditor
+    partial class GLShaderEditor
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GLSLShaderEditor));
-            this.TableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GLShaderEditor));
+            this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tbFooter = new FastColoredTextBoxNS.FastColoredTextBox();
             this.tbCase = new FastColoredTextBoxNS.FastColoredTextBox();
             this.tbCaseHeader = new FastColoredTextBoxNS.FastColoredTextBox();
@@ -38,7 +38,7 @@
             this.tbMainHeader = new FastColoredTextBoxNS.FastColoredTextBox();
             this.tbInit = new FastColoredTextBoxNS.FastColoredTextBox();
             this.tbInitHeader = new FastColoredTextBoxNS.FastColoredTextBox();
-            this.TableLayoutPanel.SuspendLayout();
+            this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbFooter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCase)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCaseHeader)).BeginInit();
@@ -48,31 +48,31 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbInitHeader)).BeginInit();
             this.SuspendLayout();
             // 
-            // TableLayoutPanel
+            // LayoutPanel
             // 
-            this.TableLayoutPanel.ColumnCount = 1;
-            this.TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.TableLayoutPanel.Controls.Add(this.tbFooter, 0, 6);
-            this.TableLayoutPanel.Controls.Add(this.tbCase, 0, 5);
-            this.TableLayoutPanel.Controls.Add(this.tbCaseHeader, 0, 4);
-            this.TableLayoutPanel.Controls.Add(this.tbMain, 0, 3);
-            this.TableLayoutPanel.Controls.Add(this.tbMainHeader, 0, 2);
-            this.TableLayoutPanel.Controls.Add(this.tbInit, 0, 1);
-            this.TableLayoutPanel.Controls.Add(this.tbInitHeader, 0, 0);
-            this.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TableLayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this.TableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.TableLayoutPanel.Name = "TableLayoutPanel";
-            this.TableLayoutPanel.RowCount = 7;
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TableLayoutPanel.Size = new System.Drawing.Size(631, 475);
-            this.TableLayoutPanel.TabIndex = 2;
+            this.LayoutPanel.ColumnCount = 1;
+            this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.LayoutPanel.Controls.Add(this.tbFooter, 0, 6);
+            this.LayoutPanel.Controls.Add(this.tbCase, 0, 5);
+            this.LayoutPanel.Controls.Add(this.tbCaseHeader, 0, 4);
+            this.LayoutPanel.Controls.Add(this.tbMain, 0, 3);
+            this.LayoutPanel.Controls.Add(this.tbMainHeader, 0, 2);
+            this.LayoutPanel.Controls.Add(this.tbInit, 0, 1);
+            this.LayoutPanel.Controls.Add(this.tbInitHeader, 0, 0);
+            this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.LayoutPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.LayoutPanel.Name = "LayoutPanel";
+            this.LayoutPanel.RowCount = 7;
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.LayoutPanel.Size = new System.Drawing.Size(631, 475);
+            this.LayoutPanel.TabIndex = 2;
             // 
             // tbFooter
             // 
@@ -95,6 +95,7 @@
             this.tbFooter.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbFooter.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbFooter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbFooter.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbFooter.IsReplaceMode = false;
             this.tbFooter.Location = new System.Drawing.Point(0, 378);
             this.tbFooter.Margin = new System.Windows.Forms.Padding(0);
@@ -129,6 +130,7 @@
             this.tbCase.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbCase.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbCase.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbCase.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbCase.IsReplaceMode = false;
             this.tbCase.Location = new System.Drawing.Point(48, 238);
             this.tbCase.Margin = new System.Windows.Forms.Padding(48, 0, 0, 0);
@@ -163,6 +165,7 @@
             this.tbCaseHeader.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbCaseHeader.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbCaseHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbCaseHeader.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbCaseHeader.IsReplaceMode = false;
             this.tbCaseHeader.Location = new System.Drawing.Point(16, 196);
             this.tbCaseHeader.Margin = new System.Windows.Forms.Padding(16, 0, 0, 0);
@@ -197,6 +200,7 @@
             this.tbMain.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbMain.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbMain.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbMain.IsReplaceMode = false;
             this.tbMain.Location = new System.Drawing.Point(16, 182);
             this.tbMain.Margin = new System.Windows.Forms.Padding(16, 0, 0, 0);
@@ -230,6 +234,7 @@
             this.tbMainHeader.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbMainHeader.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbMainHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbMainHeader.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbMainHeader.IsReplaceMode = false;
             this.tbMainHeader.Location = new System.Drawing.Point(0, 154);
             this.tbMainHeader.Margin = new System.Windows.Forms.Padding(0);
@@ -264,6 +269,7 @@
             this.tbInit.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbInit.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbInit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbInit.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbInit.IsReplaceMode = false;
             this.tbInit.Location = new System.Drawing.Point(0, 28);
             this.tbInit.Margin = new System.Windows.Forms.Padding(0);
@@ -300,6 +306,7 @@
             this.tbInitHeader.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbInitHeader.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbInitHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbInitHeader.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbInitHeader.IsReplaceMode = false;
             this.tbInitHeader.Location = new System.Drawing.Point(0, 0);
             this.tbInitHeader.Margin = new System.Windows.Forms.Padding(0);
@@ -314,14 +321,14 @@
             this.tbInitHeader.Text = "// Vertex Shader\r\n#version 330";
             this.tbInitHeader.Zoom = 100;
             // 
-            // GLSLShaderEditor
+            // GLShaderEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.TableLayoutPanel);
-            this.Name = "GLSLShaderEditor";
+            this.Controls.Add(this.LayoutPanel);
+            this.Name = "GLShaderEditor";
             this.Size = new System.Drawing.Size(631, 475);
-            this.TableLayoutPanel.ResumeLayout(false);
+            this.LayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tbFooter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCase)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbCaseHeader)).EndInit();
@@ -335,13 +342,13 @@
 
         #endregion
 
-        internal System.Windows.Forms.TableLayoutPanel TableLayoutPanel;
-        internal FastColoredTextBoxNS.FastColoredTextBox tbFooter;
-        internal FastColoredTextBoxNS.FastColoredTextBox tbCase;
-        internal FastColoredTextBoxNS.FastColoredTextBox tbCaseHeader;
-        internal FastColoredTextBoxNS.FastColoredTextBox tbMain;
-        internal FastColoredTextBoxNS.FastColoredTextBox tbMainHeader;
-        internal FastColoredTextBoxNS.FastColoredTextBox tbInit;
-        internal FastColoredTextBoxNS.FastColoredTextBox tbInitHeader;
+        public System.Windows.Forms.TableLayoutPanel LayoutPanel;
+        public FastColoredTextBoxNS.FastColoredTextBox tbFooter;
+        public FastColoredTextBoxNS.FastColoredTextBox tbCase;
+        public FastColoredTextBoxNS.FastColoredTextBox tbCaseHeader;
+        public FastColoredTextBoxNS.FastColoredTextBox tbMain;
+        public FastColoredTextBoxNS.FastColoredTextBox tbMainHeader;
+        public FastColoredTextBoxNS.FastColoredTextBox tbInit;
+        public FastColoredTextBoxNS.FastColoredTextBox tbInitHeader;
     }
 }

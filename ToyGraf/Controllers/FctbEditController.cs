@@ -28,8 +28,8 @@
             Editor.ActiveControl = PrimaryTextBox;
             Splitter.SplitterDistance = 0;
             ShowDocumentMap = false;
-            PrimaryTextStyleController = new GLSLSnippetController(PrimaryTextBox);
-            SecondaryTextStyleController = new GLSLSnippetController(SecondaryTextBox);
+            PrimaryTextStyleController = new GLSnippetController(PrimaryTextBox);
+            SecondaryTextStyleController = new GLSnippetController(SecondaryTextBox);
             Editor.btnExportHTML.Click += FileExportHTML_Click;
             Editor.btnExportRTF.Click += FileExportRTF_Click;
             Editor.btnPrint.Click += FilePrint_Click;
@@ -77,7 +77,7 @@
         #region Private Fields
 
         private SceneController SceneController;
-        private readonly GLSLSnippetController PrimaryTextStyleController, SecondaryTextStyleController;
+        private readonly GLSnippetController PrimaryTextStyleController, SecondaryTextStyleController;
 
         #endregion
 

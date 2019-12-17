@@ -2,9 +2,9 @@
 {
     using System.Windows.Forms;
 
-    public partial class GLSLEditor : Form
+    public partial class GLProgramEditor : Form
     {
-        public GLSLEditor()
+        public GLProgramEditor()
         {
             InitializeComponent();
         }

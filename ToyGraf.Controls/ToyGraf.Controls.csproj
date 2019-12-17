@@ -52,13 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionEditedEventArgs.cs" />
-    <Compile Include="GLSLSnippetController.cs" />
-    <Compile Include="GLSLShaderController.cs" />
-    <Compile Include="GLSLShaderEditor.cs">
+    <Compile Include="GLShaderEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GLSLShaderEditor.Designer.cs">
-      <DependentUpon>GLSLShaderEditor.cs</DependentUpon>
+    <Compile Include="GLShaderEditor.Designer.cs">
+      <DependentUpon>GLShaderEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="TextStyleInfo.cs" />
     <Compile Include="TextStyleInfos.cs" />
@@ -100,8 +98,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GLSLShaderEditor.resx">
-      <DependentUpon>GLSLShaderEditor.cs</DependentUpon>
+    <EmbeddedResource Include="GLShaderEditor.resx">
+      <DependentUpon>GLShaderEditor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

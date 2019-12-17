@@ -1,21 +1,5 @@
-GLSLController - GLSLEditor
+GLSLProgramController - GLSLProgramEditor
  \
   GLSLShaderController - GLSLShaderEditor
    \
     GLSLSnippetController - FastColoredTextBox
-
-
-
-Assembling a Shader
-===================
-
-
-Target Properties
------------------
-
-
-Source Properties
------------------
-Scene.Projection
-Scene.CameraView
-Trace.Transform

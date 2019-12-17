@@ -1,6 +1,6 @@
 ﻿namespace ToyGraf.Views
 {
-    partial class GLSLEditor
+    partial class GLProgramEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -30,17 +30,17 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.glslShaderEditor1 = new ToyGraf.Controls.GLSLShaderEditor();
+            this.glslShaderEditor1 = new ToyGraf.Controls.GLShaderEditor();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.glslShaderEditor2 = new ToyGraf.Controls.GLSLShaderEditor();
+            this.glslShaderEditor2 = new ToyGraf.Controls.GLShaderEditor();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.glslShaderEditor3 = new ToyGraf.Controls.GLSLShaderEditor();
+            this.glslShaderEditor3 = new ToyGraf.Controls.GLShaderEditor();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.glslShaderEditor4 = new ToyGraf.Controls.GLSLShaderEditor();
+            this.glslShaderEditor4 = new ToyGraf.Controls.GLShaderEditor();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.glslShaderEditor5 = new ToyGraf.Controls.GLSLShaderEditor();
+            this.glslShaderEditor5 = new ToyGraf.Controls.GLShaderEditor();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.glslShaderEditor6 = new ToyGraf.Controls.GLSLShaderEditor();
+            this.glslShaderEditor6 = new ToyGraf.Controls.GLShaderEditor();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -67,6 +67,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.AutoScroll = true;
             this.tabPage1.Controls.Add(this.glslShaderEditor1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -85,6 +86,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.AutoScroll = true;
             this.tabPage2.Controls.Add(this.glslShaderEditor2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -103,6 +105,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.AutoScroll = true;
             this.tabPage3.Controls.Add(this.glslShaderEditor3);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
@@ -121,6 +124,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.AutoScroll = true;
             this.tabPage4.Controls.Add(this.glslShaderEditor4);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -139,6 +143,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.AutoScroll = true;
             this.tabPage5.Controls.Add(this.glslShaderEditor5);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
@@ -157,6 +162,7 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.AutoScroll = true;
             this.tabPage6.Controls.Add(this.glslShaderEditor6);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
@@ -173,13 +179,13 @@
             this.glslShaderEditor6.Size = new System.Drawing.Size(616, 474);
             this.glslShaderEditor6.TabIndex = 1;
             // 
-            // GLSLEditor
+            // GLSLProgramEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 601);
             this.Controls.Add(this.tabControl1);
-            this.Name = "GLSLEditor";
+            this.Name = "GLSLProgramEditor";
             this.Text = "Shader Editor";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -201,11 +207,11 @@
         internal System.Windows.Forms.TabPage tabPage4;
         internal System.Windows.Forms.TabPage tabPage5;
         internal System.Windows.Forms.TabPage tabPage6;
-        internal Controls.GLSLShaderEditor glslShaderEditor1;
-        internal Controls.GLSLShaderEditor glslShaderEditor2;
-        internal Controls.GLSLShaderEditor glslShaderEditor3;
-        internal Controls.GLSLShaderEditor glslShaderEditor4;
-        internal Controls.GLSLShaderEditor glslShaderEditor5;
-        internal Controls.GLSLShaderEditor glslShaderEditor6;
+        internal Controls.GLShaderEditor glslShaderEditor1;
+        internal Controls.GLShaderEditor glslShaderEditor2;
+        internal Controls.GLShaderEditor glslShaderEditor3;
+        internal Controls.GLShaderEditor glslShaderEditor4;
+        internal Controls.GLShaderEditor glslShaderEditor5;
+        internal Controls.GLShaderEditor glslShaderEditor6;
     }
 }

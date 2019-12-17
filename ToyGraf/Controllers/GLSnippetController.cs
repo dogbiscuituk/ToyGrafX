@@ -1,4 +1,4 @@
-﻿namespace ToyGraf.Controls
+﻿namespace ToyGraf.Controllers
 {
     using FastColoredTextBoxNS;
     using System;
@@ -8,27 +8,21 @@
     using System.Windows.Forms;
     using ToyGraf.Common.Types;
     using ToyGraf.Common.Utility;
+    using ToyGraf.Controls;
     using Languages = FastColoredTextBoxNS.Language;
 
     /// <summary>
     /// FastColoredTextBox controller class.
     /// Adds GLSL to list of supported languages.
     /// </summary>
-    public class GLSLSnippetController
+    public class GLSnippetController
     {
         #region Constructor
 
-        public GLSLSnippetController(FastColoredTextBox textBox)
+        public GLSnippetController(FastColoredTextBox textBox)
         {
             TextBox = textBox ?? throw new NullReferenceException($"{nameof(textBox)} cannot be null.");
-            Language = "GLSL";
-            TextBox.HotkeysMapping.Remove(Keys.Control | Keys.R);
-            TextBox.HotkeysMapping.Add(Keys.Control | Keys.Y, FCTBAction.Redo);
-            TextBox.KeyDown += TextBox_KeyDown;
-            TextBox.PaintLine += TextBox_PaintLine;
-            TextBox.TextChanged += TextBox_TextChanged;
-            TextBox.TextChanging += TextBox_TextChanging;
-            CreateAutocompleteMenu();
+            Init();
         }
 
         #endregion
@@ -40,6 +34,8 @@
             get => TextBoxLanguage;
             set => SetLanguage(value);
         }
+
+        internal readonly FastColoredTextBox TextBox;
 
         #endregion
 
@@ -97,7 +93,6 @@
         #region Private Fields
 
         private AutocompleteMenu AutocompleteMenu;
-        private readonly FastColoredTextBox TextBox;
         private string TextBoxLanguage;
 
         #endregion
@@ -176,6 +171,19 @@
                 case "XML": return Languages.XML;
                 default: return Languages.Custom;
             }
+        }
+
+        private void Init()
+        {
+            Language = "GLSL";
+            TextBox.HotkeysMapping.Remove(Keys.Control | Keys.R);
+            TextBox.HotkeysMapping.Add(Keys.Control | Keys.Y, FCTBAction.Redo);
+            TextBox.KeyDown += TextBox_KeyDown;
+            TextBox.PaintLine += TextBox_PaintLine;
+            TextBox.TextChanged += TextBox_TextChanged;
+            TextBox.TextChanging += TextBox_TextChanging;
+            CreateAutocompleteMenu();
+            TextBox_TextChanged(this, new TextChangedEventArgs(TextBox.Range));
         }
 
         private static void InitStyle(TextStyleInfo info, TextStyle style)

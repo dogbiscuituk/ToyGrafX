@@ -350,7 +350,7 @@
         private void EditCode()
         {
             //new FctbEditController(this).Execute();
-            new GLSLController().Execute();
+            new GLProgramController().Execute();
         }
 
         private void EditOptions()

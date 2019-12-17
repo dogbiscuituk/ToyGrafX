@@ -138,6 +138,5 @@
             string.Concat("(", words.Aggregate((s, t) => $"{s}|{t}"), ")");
 
         #endregion
-
     }
 }
