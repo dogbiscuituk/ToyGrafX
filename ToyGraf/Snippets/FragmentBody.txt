@@ -1,1 +1,2 @@
-﻿  FragColor = vec4(colour, 0.1);
+﻿
+  FragColor = vec4(colour, 0.1);

@@ -25,7 +25,7 @@
         {
             Editor = new FctbForm() { Text = $"{caption} - GLSL Editor" };
             Editor.ActiveControl = PrimaryTextBox;
-            Splitter.SplitterDistance = 0;
+            SetSplitSize(0);
             ShowDocumentMap = false;
             PrimaryTextStyleController = new GLSnippetController(PrimaryTextBox);
             SecondaryTextStyleController = new GLSnippetController(SecondaryTextBox);
@@ -36,6 +36,7 @@
             Editor.btnRuler.Click += ViewRuler_Click;
             Editor.btnLineNumbers.Click += ViewLineNumbers_Click;
             Editor.btnDocumentMap.Click += ViewDocumentMap_Click;
+            Editor.btnSplit.Click += BtnSplit_Click;
             Editor.btnHelp.Click += BtnHelp_Click;
             Editor.btnApply.Click += BtnApply_Click;
         }
@@ -86,7 +87,7 @@
         private Scene Scene => SceneController.Scene;
 
         private FctbForm Editor { get; set; }
-        private Orientation Orientation { get => Splitter.Orientation; set => Splitter.Orientation = value; }
+        private Orientation Orientation { get => Splitter.Orientation; set => SetSplit(value); }
         private SplitContainer PrimarySplitter => Editor.PrimarySplitter;
         private FastColoredTextBox PrimaryTextBox => Editor.PrimaryTextBox;
         private SplitContainer SecondarySplitter => Editor.SecondarySplitter;
@@ -124,6 +125,7 @@
         #region Private Event Handlers
 
         private void BtnApply_Click(object sender, System.EventArgs e) => OnApply();
+        private void BtnSplit_Click(object sender, EventArgs e) => ToggleSplit();
         private void BtnHelp_Click(object sender, EventArgs e) => HotkeysController.Show(Editor);
 
         private void FileExportHTML_Click(object sender, System.EventArgs e)
@@ -250,12 +252,14 @@
 
         private void SetSplit(Orientation orientation)
         {
-            Orientation = orientation;
+            Splitter.Orientation = orientation;
             var size = Orientation == Orientation.Horizontal
                 ? Splitter.Height
                 : Splitter.Width;
-            Splitter.SplitterDistance = size / 2 - 2;
+            SetSplitSize(size / 2 - 2);
         }
+
+        private void SetSplitSize(int size) => Splitter.SplitterDistance = size;
 
         private void SetTraceScript(Trace trace, ShaderType shaderType, Range range)
         {
@@ -282,6 +286,11 @@
                     break;
             }
         }
+
+        private void ToggleSplit() =>
+            SetSplit(Splitter.SplitterDistance == 0 || Orientation == Orientation.Vertical
+                ? Orientation.Horizontal
+                : Orientation.Vertical);
 
         #endregion
     }
