@@ -7,7 +7,6 @@
     using System.IO;
     using System.Windows.Forms;
     using System.Windows.Forms.Design;
-    using ToyGraf.Controls;
     using ToyGraf.Models;
     using ToyGraf.Views;
 

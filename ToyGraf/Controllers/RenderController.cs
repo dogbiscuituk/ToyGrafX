@@ -26,18 +26,19 @@
         /// in the most recently compiled GPUCode.
         /// </summary>
         /// <remarks>
-        /// The GPUCode comprises a sequence of sections, alternating between readonly and editable.
-        /// Breaks[0] = 1, the line number of the 1st line in the 1st readonly section;
-        /// Breaks[1] = the line number of the 1st line in the 1st editable section;
-        /// Breaks[2] = the start of the 2nd readonly section;
-        /// Breaks[3] = the start of the 2nd editable section;
+        /// The GPUCode comprises a sequence of sections, alternating between system and user.
+        /// Breaks[0] = 1, the line number of the 1st line in the 1st system section;
+        /// Breaks[1] = the line number of the 1st line in the 1st user section;
+        /// Breaks[2] = the start of the 2nd system section;
+        /// Breaks[3] = the start of the 2nd user section;
         /// and so on. The last entry is the highest numbered line in the GPUCode, plus one.
         /// When no shaders are defined, there is no GPU code, and Breaks[1] will be zero.
         /// These line numbers can be provided to the FastColouredTextBox-based editor, allowing the
         /// entire GPUCode to be edited, displaying each shader & trace section in its context,
-        /// while marking its boundaries as readonly (shown in italic) to prevent user editing of
-        /// these parts. After editing, the readonly sections are relocated, allowing the individual
-        /// shader fragments of user code to be retrieved, and their changes effected on the scene.
+        /// while marking its boundaries (shown in italic) as system, or possibly even readonly, to
+        /// prevent user editing of these parts. After editing, the system sections are relocated,
+        /// allowing the individual shader fragments of user code to be retrieved, and their changes
+        /// effected on the scene.
         /// </remarks>
         internal List<int> Breaks { get; } = new List<int>();
 
