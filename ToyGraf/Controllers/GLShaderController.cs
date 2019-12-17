@@ -41,6 +41,7 @@
 
         private void AdjustHeight()
         {
+            System.Diagnostics.Debug.WriteLine(SnippetControllers.Select(p => p.TextBox.Height.ToString()).Aggregate((p, q) => $"{p}, {q}"));
             var h = SnippetControllers.Sum(p => p.TextBox.Height);
             Editor.LayoutPanel.Height = Editor.Height = h;
         }

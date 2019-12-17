@@ -63,7 +63,7 @@
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Margin = new System.Windows.Forms.Padding(0);
             this.LayoutPanel.Name = "LayoutPanel";
-            this.LayoutPanel.RowCount = 7;
+            this.LayoutPanel.RowCount = 8;
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -71,6 +71,7 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
             this.LayoutPanel.Size = new System.Drawing.Size(631, 475);
             this.LayoutPanel.TabIndex = 2;
             // 
