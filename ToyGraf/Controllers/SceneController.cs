@@ -349,8 +349,8 @@
 
         private void EditCode()
         {
-            new GLProgramController(this).Execute();
-            //new GLProgramController().Execute();
+            var programController = new GLProgramController(this);
+            programController.Execute();
         }
 
         private void EditOptions()

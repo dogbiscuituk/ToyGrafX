@@ -193,7 +193,13 @@
             SetBreaks(RenderController.Breaks);
         }
 
-        private void OnApply() => Apply?.Invoke(this, new EditEventArgs(Text));
+        private void OnApply()
+        {
+            if (Apply == null)
+                SaveAll();
+            else
+                Apply.Invoke(this, new EditEventArgs(Text));
+        }
 
         private bool SaveAll()
         {
