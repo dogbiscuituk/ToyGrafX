@@ -200,7 +200,7 @@
             var shaderTypes = RenderController.ShaderTypes;
             var shaderCount = shaderTypes.Count;
             var traceCount = Scene.Traces.Count;
-            var ranges = PageController.GetEditableRanges();
+            var ranges = PageController.GetUserRanges();
             var rangeCount = ranges.Count;
             if (rangeCount != (traceCount + 1) * shaderCount)
                 throw new FormatException("GPU Code syntax error.");
@@ -220,13 +220,13 @@
             {
                 int a = breaks[index] - 1, b = breaks[index + 1] - 1;
                 var range = new Range(PrimaryTextBox, 0, a, 0, b);
-                PageController.AddReadOnlyRange(range);
+                PageController.AddSystemRange(range);
             }
         }
 
         private void SetSceneScript(ShaderType shaderType, Range range)
         {
-            var text = range.Text;
+            var text = range.Text.Trim();
             switch (shaderType)
             {
                 case ShaderType.VertexShader:
@@ -263,7 +263,7 @@
 
         private void SetTraceScript(Trace trace, ShaderType shaderType, Range range)
         {
-            var text = range.Text;
+            var text = range.Text.Trim();
             switch (shaderType)
             {
                 case ShaderType.VertexShader:

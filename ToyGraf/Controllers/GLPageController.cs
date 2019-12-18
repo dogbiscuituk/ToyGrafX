@@ -41,7 +41,7 @@
 
         #region Internal Methods
 
-        public void AddReadOnlyRange(Range range)
+        public void AddSystemRange(Range range)
         {
             var rangeAll = TextBox.Range;
             if (range.End.iLine > rangeAll.End.iLine)
@@ -50,7 +50,7 @@
             range.SetStyle(ReadOnlyTextStyle);
         }
 
-        public List<Range> GetEditableRanges()
+        public List<Range> GetUserRanges()
         {
             var ranges = new List<Range>();
             var inRange = false;
