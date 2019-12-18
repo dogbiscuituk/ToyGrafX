@@ -2,9 +2,9 @@
 {
     using System.Windows.Forms;
 
-    public partial class FctbForm : Form
+    public partial class GLProgramDialog : Form
     {
-        public FctbForm()
+        public GLProgramDialog()
         {
             InitializeComponent();
         }

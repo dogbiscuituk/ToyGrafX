@@ -71,8 +71,8 @@
     <Compile Include="Controllers\ClockController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\ColumnsController.cs" />
-    <Compile Include="Controllers\FctbEditController.cs" />
-    <Compile Include="Controllers\GLSnippetController.cs" />
+    <Compile Include="Controllers\GLProgramController.cs" />
+    <Compile Include="Controllers\GLPageController.cs" />
     <Compile Include="Controllers\HostController.cs" />
     <Compile Include="Controllers\FullScreenController.cs" />
     <Compile Include="Controllers\HotkeysController.cs" />
@@ -122,11 +122,11 @@
     <Compile Include="Views\HotkeysForm.Designer.cs">
       <DependentUpon>HotkeysForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\FctbForm.cs">
+    <Compile Include="Views\GLProgramDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\FctbForm.Designer.cs">
-      <DependentUpon>FctbForm.cs</DependentUpon>
+    <Compile Include="Views\GLProgramDialog.Designer.cs">
+      <DependentUpon>GLProgramDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\HostForm.cs">
       <SubType>Form</SubType>
@@ -157,8 +157,8 @@
     <EmbeddedResource Include="Views\HotkeysForm.resx">
       <DependentUpon>HotkeysForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\FctbForm.resx">
-      <DependentUpon>FctbForm.cs</DependentUpon>
+    <EmbeddedResource Include="Views\GLProgramDialog.resx">
+      <DependentUpon>GLProgramDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\HostForm.resx">
       <DependentUpon>HostForm.cs</DependentUpon>

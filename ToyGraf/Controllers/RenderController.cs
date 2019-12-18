@@ -247,6 +247,13 @@
 
         private void AddBreak() => Breaks.Add(BreakOffset + SceneScript.GetLineCount());
 
+        private void AddScript(string script)
+        {
+            AddBreak();
+            SceneScript.AppendLine($"\n{script}\n");
+            AddBreak();
+        }
+
         private void BindAttribute(int attributeIndex, string variableName) =>
             GL.BindAttribLocation(ProgramID, attributeIndex, variableName);
 
@@ -265,15 +272,11 @@
                     {
                         SceneScript = new StringBuilder();
                         SceneScript.AppendFormat(Resources.SceneHead, shaderType.GetTag(), Scene.GLTargetVersion);
-                        AddBreak();
-                        SceneScript.AppendLine(Scene.GetScript(shaderType));
-                        AddBreak();
+                        AddScript(Scene.GetScript(shaderType));
                         MainBody = new StringBuilder();
                     }
                     SceneScript.AppendFormat(Resources.TraceHead, traceIndex, trace);
-                    AddBreak();
-                    SceneScript.AppendLine(traceScript);
-                    AddBreak();
+                    AddScript(traceScript);
                     SceneScript.AppendLine(Resources.TraceFoot);
                 }
             }

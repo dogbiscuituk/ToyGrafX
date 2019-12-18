@@ -349,7 +349,7 @@
 
         private void EditCode()
         {
-            new FctbEditController(this).Execute();
+            new GLProgramController(this).Execute();
             //new GLProgramController().Execute();
         }
 

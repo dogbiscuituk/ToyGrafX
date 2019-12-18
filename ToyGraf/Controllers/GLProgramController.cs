@@ -10,35 +10,35 @@
     using ToyGraf.Models;
     using ToyGraf.Views;
 
-    internal class FctbEditController
+    internal class GLProgramController
     {
         #region Constructor
 
-        internal FctbEditController(SceneController sceneController)
+        internal GLProgramController(SceneController sceneController)
             : this(DisplayNames.GPUCode)
         {
             SceneController = sceneController;
             LoadAll();
         }
 
-        internal FctbEditController(string caption)
+        internal GLProgramController(string caption)
         {
-            Editor = new FctbForm() { Text = $"{caption} - GLSL Editor" };
-            Editor.ActiveControl = PrimaryTextBox;
+            Form = new GLProgramDialog() { Text = $"{caption} - GLSL Editor" };
+            Form.ActiveControl = PrimaryTextBox;
             SetSplitSize(0);
             ShowDocumentMap = false;
-            PrimaryTextStyleController = new GLSnippetController(PrimaryTextBox);
-            SecondaryTextStyleController = new GLSnippetController(SecondaryTextBox);
-            Editor.btnExportHTML.Click += FileExportHTML_Click;
-            Editor.btnExportRTF.Click += FileExportRTF_Click;
-            Editor.btnPrint.Click += FilePrint_Click;
-            Editor.btnOptions.DropDownOpening += ViewMenu_DropDownOpening;
-            Editor.btnRuler.Click += ViewRuler_Click;
-            Editor.btnLineNumbers.Click += ViewLineNumbers_Click;
-            Editor.btnDocumentMap.Click += ViewDocumentMap_Click;
-            Editor.btnSplit.Click += BtnSplit_Click;
-            Editor.btnHelp.Click += BtnHelp_Click;
-            Editor.btnApply.Click += BtnApply_Click;
+            PageController = new GLPageController(PrimaryTextBox);
+            new GLPageController(SecondaryTextBox);
+            Form.btnExportHTML.Click += FileExportHTML_Click;
+            Form.btnExportRTF.Click += FileExportRTF_Click;
+            Form.btnPrint.Click += FilePrint_Click;
+            Form.btnOptions.DropDownOpening += ViewMenu_DropDownOpening;
+            Form.btnRuler.Click += ViewRuler_Click;
+            Form.btnLineNumbers.Click += ViewLineNumbers_Click;
+            Form.btnDocumentMap.Click += ViewDocumentMap_Click;
+            Form.btnSplit.Click += BtnSplit_Click;
+            Form.btnHelp.Click += BtnHelp_Click;
+            Form.btnApply.Click += BtnApply_Click;
         }
 
         #endregion
@@ -62,11 +62,11 @@
         #region Internal Methods
 
         internal bool Execute(IWindowsFormsEditorService service) =>
-            service.ShowDialog(Editor) == DialogResult.OK;
+            service.ShowDialog(Form) == DialogResult.OK;
 
         internal bool Execute()
         {
-            var result = Editor.ShowDialog(SceneController.SceneForm) == DialogResult.OK;
+            var result = Form.ShowDialog(SceneController.SceneForm) == DialogResult.OK;
             if (result)
                 SaveAll();
             return result;
@@ -76,8 +76,8 @@
 
         #region Private Fields
 
-        private SceneController SceneController;
-        private readonly GLSnippetController PrimaryTextStyleController, SecondaryTextStyleController;
+        private readonly GLPageController PageController;
+        private readonly SceneController SceneController;
 
         #endregion
 
@@ -86,13 +86,13 @@
         private RenderController RenderController => SceneController.RenderController;
         private Scene Scene => SceneController.Scene;
 
-        private FctbForm Editor { get; set; }
+        private GLProgramDialog Form { get; set; }
         private Orientation Orientation { get => Splitter.Orientation; set => SetSplit(value); }
-        private SplitContainer PrimarySplitter => Editor.PrimarySplitter;
-        private FastColoredTextBox PrimaryTextBox => Editor.PrimaryTextBox;
-        private SplitContainer SecondarySplitter => Editor.SecondarySplitter;
-        private FastColoredTextBox SecondaryTextBox => Editor.SecondaryTextBox;
-        private SplitContainer Splitter => Editor.Splitter;
+        private SplitContainer PrimarySplitter => Form.PrimarySplitter;
+        private FastColoredTextBox PrimaryTextBox => Form.PrimaryTextBox;
+        private SplitContainer SecondarySplitter => Form.SecondarySplitter;
+        private FastColoredTextBox SecondaryTextBox => Form.SecondaryTextBox;
+        private SplitContainer Splitter => Form.Splitter;
 
         private bool ShowDocumentMap
         {
@@ -106,17 +106,17 @@
             set
             {
                 PrimaryTextBox.ShowLineNumbers = SecondaryTextBox.ShowLineNumbers = value;
-                Editor.Refresh();
+                Form.Refresh();
             }
         }
 
         private bool ShowRuler
         {
-            get => Editor.PrimaryRuler.Visible;
+            get => Form.PrimaryRuler.Visible;
             set
             {
-                Editor.PrimaryRuler.Visible = Editor.SecondaryRuler.Visible = value;
-                Editor.Refresh();
+                Form.PrimaryRuler.Visible = Form.SecondaryRuler.Visible = value;
+                Form.Refresh();
             }
         }
 
@@ -126,7 +126,7 @@
 
         private void BtnApply_Click(object sender, System.EventArgs e) => OnApply();
         private void BtnSplit_Click(object sender, EventArgs e) => ToggleSplit();
-        private void BtnHelp_Click(object sender, EventArgs e) => HotkeysController.Show(Editor);
+        private void BtnHelp_Click(object sender, EventArgs e) => HotkeysController.Show(Form);
 
         private void FileExportHTML_Click(object sender, System.EventArgs e)
         {
@@ -161,10 +161,10 @@
 
         private void ViewMenu_DropDownOpening(object sender, System.EventArgs e)
         {
-            Editor.btnRuler.Checked = ShowRuler;
-            Editor.btnLineNumbers.Checked = ShowLineNumbers;
-            Editor.btnDocumentMap.Checked = ShowDocumentMap;
-            Editor.btnSplit.Checked = Orientation == Orientation.Vertical;
+            Form.btnRuler.Checked = ShowRuler;
+            Form.btnLineNumbers.Checked = ShowLineNumbers;
+            Form.btnDocumentMap.Checked = ShowDocumentMap;
+            Form.btnSplit.Checked = Orientation == Orientation.Vertical;
         }
 
         private void ViewRuler_Click(object sender, System.EventArgs e) =>
@@ -200,7 +200,7 @@
             var shaderTypes = RenderController.ShaderTypes;
             var shaderCount = shaderTypes.Count;
             var traceCount = Scene.Traces.Count;
-            var ranges = PrimaryTextStyleController.GetEditableRanges();
+            var ranges = PageController.GetEditableRanges();
             var rangeCount = ranges.Count;
             if (rangeCount != (traceCount + 1) * shaderCount)
                 throw new FormatException("GPU Code syntax error.");
@@ -220,7 +220,7 @@
             {
                 int a = breaks[index] - 1, b = breaks[index + 1] - 1;
                 var range = new Range(PrimaryTextBox, 0, a, 0, b);
-                PrimaryTextStyleController.AddReadOnlyRange(range);
+                PageController.AddReadOnlyRange(range);
             }
         }
 

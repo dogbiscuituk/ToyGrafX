@@ -15,11 +15,11 @@
     /// FastColoredTextBox controller class.
     /// Adds GLSL to list of supported languages.
     /// </summary>
-    public class GLSnippetController
+    public class GLPageController
     {
         #region Constructor
 
-        public GLSnippetController(FastColoredTextBox textBox)
+        public GLPageController(FastColoredTextBox textBox)
         {
             TextBox = textBox ?? throw new NullReferenceException($"{nameof(textBox)} cannot be null.");
             Init();
@@ -48,18 +48,6 @@
                 range.End = rangeAll.End;
             range.SetStyle(ReadOnlyStyle);
             range.SetStyle(ReadOnlyTextStyle);
-        }
-
-        public static void ApplyStyles(TextStyleInfos styles)
-        {
-            InitStyle(styles.Comments, CommentStyle);
-            InitStyle(styles.Directives, DirectiveStyle);
-            InitStyle(styles.Functions, FunctionStyle);
-            InitStyle(styles.Keywords, KeywordStyle);
-            InitStyle(styles.Numbers, NumberStyle);
-            InitStyle(styles.ReadOnly, ReadOnlyTextStyle);
-            InitStyle(styles.ReservedWords, ReservedWordStyle);
-            InitStyle(styles.Strings, StringStyle);
         }
 
         public List<Range> GetEditableRanges()
@@ -124,9 +112,7 @@
             if (TextBox.Text.Trim().StartsWith("<?xml"))
             {
                 TextBox.Language = Languages.XML;
-                TextBox.ClearStylesBuffer();
-                TextBox.Range.ClearStyle(StyleIndex.All);
-                InitStylesPriority();
+                InitStylesPriority(TextBox);
                 TextBox.OnSyntaxHighlight(new TextChangedEventArgs(TextBox.Range));
             }
         }
@@ -153,25 +139,7 @@
             AutocompleteMenu.Items.Width = 200;
         }
 
-        private static TextStyle CreateTextStyle() => 
-            new TextStyle(Brushes.Black, Brushes.Transparent, 0);
-
-        private Languages GetLanguage()
-        {
-            switch (Language)
-            {
-                case "C#": return Languages.CSharp;
-                case "GLSL": return Languages.Custom;
-                case "HTML": return Languages.HTML;
-                case "JS": return Languages.JS;
-                case "Lua": return Languages.Lua;
-                case "PHP": return Languages.PHP;
-                case "SQL": return Languages.SQL;
-                case "VB": return Languages.VB;
-                case "XML": return Languages.XML;
-                default: return Languages.Custom;
-            }
-        }
+        private Languages GetLanguage() => GetLanguage(Language);
 
         private void Init()
         {
@@ -186,36 +154,12 @@
             TextBox_TextChanged(this, new TextChangedEventArgs(TextBox.Range));
         }
 
-        private static void InitStyle(TextStyleInfo info, TextStyle style)
-        {
-            if (((SolidBrush)style.ForeBrush).Color != info.Foreground)
-                style.ForeBrush = info.Foreground.ToBrush();
-            if (((SolidBrush)style.BackgroundBrush).Color != info.Background)
-                style.BackgroundBrush = info.Background.ToBrush();
-            style.FontStyle = info.FontStyle;
-        }
-
-        private void InitStylesPriority()
-        {
-            TextBox.AddStyle(SameWordsStyle);
-            TextBox.AddStyle(ReadOnlyTextStyle);
-            TextBox.AddStyle(StringStyle);
-            TextBox.AddStyle(CommentStyle);
-            TextBox.AddStyle(NumberStyle);
-            TextBox.AddStyle(FunctionStyle);
-            TextBox.AddStyle(KeywordStyle);
-            TextBox.AddStyle(ReservedWordStyle);
-            TextBox.AddStyle(DirectiveStyle);
-        }
-
         private void SetLanguage(string language)
         {
             if (Language == language)
                 return;
             TextBoxLanguage = language;
-            TextBox.ClearStylesBuffer();
-            TextBox.Range.ClearStyle(StyleIndex.All);
-            InitStylesPriority();
+            InitStylesPriority(TextBox);
             TextBox.Language = GetLanguage();
             if (Language == "GLSL")
             {
@@ -231,7 +175,64 @@
             TextBox.RightBracket = ')';
             TextBox.LeftBracket2 = '\x0';
             TextBox.RightBracket2 = '\x0';
-            var range = e.ChangedRange;
+            ApplyStylesGLSL(e.ChangedRange);
+        }
+
+        #endregion
+
+        #region Private Static Language Resources
+
+        private static Languages GetLanguage(string language)
+        {
+            switch (language)
+            {
+                case "C#": return Languages.CSharp;
+                case "GLSL": return Languages.Custom;
+                case "HTML": return Languages.HTML;
+                case "JS": return Languages.JS;
+                case "Lua": return Languages.Lua;
+                case "PHP": return Languages.PHP;
+                case "SQL": return Languages.SQL;
+                case "VB": return Languages.VB;
+                case "XML": return Languages.XML;
+                default: return Languages.Custom;
+            }
+        }
+
+        #endregion
+
+        #region Private Static Style Resources
+
+        private static readonly MarkerStyle
+            SameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.Gray)));
+
+        private static readonly ReadOnlyStyle
+            ReadOnlyStyle = new ReadOnlyStyle();
+
+        private static readonly TextStyle
+            CommentStyle = NewTextStyle(),
+            DirectiveStyle = NewTextStyle(),
+            FunctionStyle = NewTextStyle(),
+            KeywordStyle = NewTextStyle(),
+            NumberStyle = NewTextStyle(),
+            ReadOnlyTextStyle = NewTextStyle(),
+            ReservedWordStyle = NewTextStyle(),
+            StringStyle = NewTextStyle();
+
+        public static void ApplyStyles(TextStyleInfos styles)
+        {
+            InitStyle(styles.Comments, CommentStyle);
+            InitStyle(styles.Directives, DirectiveStyle);
+            InitStyle(styles.Functions, FunctionStyle);
+            InitStyle(styles.Keywords, KeywordStyle);
+            InitStyle(styles.Numbers, NumberStyle);
+            InitStyle(styles.ReadOnly, ReadOnlyTextStyle);
+            InitStyle(styles.ReservedWords, ReservedWordStyle);
+            InitStyle(styles.Strings, StringStyle);
+        }
+
+        private static void ApplyStylesGLSL(Range range)
+        {
             range.ClearStyle(
                 CommentStyle,
                 DirectiveStyle,
@@ -254,25 +255,32 @@
             range.SetFoldingMarkers(@"/\*", @"\*/");
         }
 
-        #endregion
+        private static void InitStyle(TextStyleInfo info, TextStyle style)
+        {
+            if (((SolidBrush)style.ForeBrush).Color != info.Foreground)
+                style.ForeBrush = info.Foreground.ToBrush();
+            if (((SolidBrush)style.BackgroundBrush).Color != info.Background)
+                style.BackgroundBrush = info.Background.ToBrush();
+            style.FontStyle = info.FontStyle;
+        }
 
-        #region Private Styles
+        private static void InitStylesPriority(FastColoredTextBox textBox)
+        {
+            textBox.ClearStylesBuffer();
+            textBox.Range.ClearStyle(StyleIndex.All);
+            textBox.AddStyle(SameWordsStyle);
+            textBox.AddStyle(ReadOnlyTextStyle);
+            textBox.AddStyle(StringStyle);
+            textBox.AddStyle(CommentStyle);
+            textBox.AddStyle(NumberStyle);
+            textBox.AddStyle(FunctionStyle);
+            textBox.AddStyle(KeywordStyle);
+            textBox.AddStyle(ReservedWordStyle);
+            textBox.AddStyle(DirectiveStyle);
+        }
 
-        private static readonly MarkerStyle
-            SameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.Gray)));
-
-        private static readonly ReadOnlyStyle
-            ReadOnlyStyle = new ReadOnlyStyle();
-
-        private static readonly TextStyle
-            CommentStyle = CreateTextStyle(),
-            DirectiveStyle = CreateTextStyle(),
-            FunctionStyle = CreateTextStyle(),
-            KeywordStyle = CreateTextStyle(),
-            NumberStyle = CreateTextStyle(),
-            ReadOnlyTextStyle = CreateTextStyle(),
-            ReservedWordStyle = CreateTextStyle(),
-            StringStyle = CreateTextStyle();
+        private static TextStyle NewTextStyle() =>
+            new TextStyle(Brushes.Black, Brushes.Transparent, 0);
 
         #endregion
     }

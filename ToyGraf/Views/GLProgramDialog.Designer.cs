@@ -1,6 +1,6 @@
 ﻿namespace ToyGraf.Views
 {
-    partial class FctbForm
+    partial class GLProgramDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FctbForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GLProgramDialog));
             this.SecondaryTextBox = new FastColoredTextBoxNS.FastColoredTextBox();
             this.PrimaryTextBox = new FastColoredTextBoxNS.FastColoredTextBox();
             this.ToolStripContainer = new System.Windows.Forms.ToolStripContainer();
@@ -40,6 +40,10 @@
             this.PrimarySplitter = new System.Windows.Forms.SplitContainer();
             this.PrimaryRuler = new FastColoredTextBoxNS.Ruler();
             this.PrimaryMap = new FastColoredTextBoxNS.DocumentMap();
+            this.ButtonPanel = new System.Windows.Forms.Panel();
+            this.btnApply = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
             this.ToolStrip = new ToyGraf.Controls.TgToolStrip();
             this.btnExport = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnExportHTML = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,10 +55,6 @@
             this.btnDocumentMap = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSplit = new System.Windows.Forms.ToolStripButton();
             this.btnHelp = new System.Windows.Forms.ToolStripButton();
-            this.ButtonPanel = new System.Windows.Forms.Panel();
-            this.btnApply = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.SecondaryTextBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PrimaryTextBox)).BeginInit();
             this.ToolStripContainer.ContentPanel.SuspendLayout();
@@ -72,8 +72,8 @@
             this.PrimarySplitter.Panel1.SuspendLayout();
             this.PrimarySplitter.Panel2.SuspendLayout();
             this.PrimarySplitter.SuspendLayout();
-            this.ToolStrip.SuspendLayout();
             this.ButtonPanel.SuspendLayout();
+            this.ToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // SecondaryTextBox
@@ -91,7 +91,7 @@
         '\''};
             this.SecondaryTextBox.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]" +
     "*(?<range>:)\\s*(?<range>[^;]+);\r\n";
-            this.SecondaryTextBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
+            this.SecondaryTextBox.AutoScrollMinSize = new System.Drawing.Size(0, 14);
             this.SecondaryTextBox.BackBrush = null;
             this.SecondaryTextBox.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
             this.SecondaryTextBox.CharHeight = 14;
@@ -99,12 +99,13 @@
             this.SecondaryTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.SecondaryTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.SecondaryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SecondaryTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.SecondaryTextBox.IsReplaceMode = false;
             this.SecondaryTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
             this.SecondaryTextBox.LeftBracket = '(';
             this.SecondaryTextBox.LeftBracket2 = '{';
+            this.SecondaryTextBox.LeftPadding = 16;
             this.SecondaryTextBox.Location = new System.Drawing.Point(0, 24);
+            this.SecondaryTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.SecondaryTextBox.Name = "SecondaryTextBox";
             this.SecondaryTextBox.Paddings = new System.Windows.Forms.Padding(0);
             this.SecondaryTextBox.RightBracket = ')';
@@ -116,6 +117,8 @@
             this.SecondaryTextBox.Size = new System.Drawing.Size(500, 93);
             this.SecondaryTextBox.SourceTextBox = this.PrimaryTextBox;
             this.SecondaryTextBox.TabIndex = 1;
+            this.SecondaryTextBox.TabLength = 2;
+            this.SecondaryTextBox.WordWrap = true;
             this.SecondaryTextBox.Zoom = 100;
             // 
             // PrimaryTextBox
@@ -133,7 +136,7 @@
         '\''};
             this.PrimaryTextBox.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]" +
     "*(?<range>:)\\s*(?<range>[^;]+);\r\n";
-            this.PrimaryTextBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
+            this.PrimaryTextBox.AutoScrollMinSize = new System.Drawing.Size(0, 14);
             this.PrimaryTextBox.BackBrush = null;
             this.PrimaryTextBox.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
             this.PrimaryTextBox.CharHeight = 14;
@@ -141,12 +144,13 @@
             this.PrimaryTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.PrimaryTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.PrimaryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PrimaryTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.PrimaryTextBox.IsReplaceMode = false;
             this.PrimaryTextBox.Language = FastColoredTextBoxNS.Language.CSharp;
             this.PrimaryTextBox.LeftBracket = '(';
             this.PrimaryTextBox.LeftBracket2 = '{';
+            this.PrimaryTextBox.LeftPadding = 16;
             this.PrimaryTextBox.Location = new System.Drawing.Point(0, 24);
+            this.PrimaryTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.PrimaryTextBox.Name = "PrimaryTextBox";
             this.PrimaryTextBox.Paddings = new System.Windows.Forms.Padding(0);
             this.PrimaryTextBox.RightBracket = ')';
@@ -157,6 +161,8 @@
             this.PrimaryTextBox.ShowLineNumbers = false;
             this.PrimaryTextBox.Size = new System.Drawing.Size(500, 231);
             this.PrimaryTextBox.TabIndex = 2;
+            this.PrimaryTextBox.TabLength = 2;
+            this.PrimaryTextBox.WordWrap = true;
             this.PrimaryTextBox.Zoom = 100;
             // 
             // ToolStripContainer
@@ -180,6 +186,7 @@
             // 
             // Splitter
             // 
+            this.Splitter.BackColor = System.Drawing.SystemColors.ControlDark;
             this.Splitter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Splitter.Location = new System.Drawing.Point(4, 0);
             this.Splitter.Name = "Splitter";
@@ -282,101 +289,6 @@
             this.PrimaryMap.Target = this.PrimaryTextBox;
             this.PrimaryMap.Text = "documentMap2";
             // 
-            // ToolStrip
-            // 
-            this.ToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.ToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnExport,
-            this.btnPrint,
-            this.btnOptions,
-            this.btnSplit,
-            this.btnHelp});
-            this.ToolStrip.Location = new System.Drawing.Point(3, 0);
-            this.ToolStrip.Name = "ToolStrip";
-            this.ToolStrip.Size = new System.Drawing.Size(139, 25);
-            this.ToolStrip.TabIndex = 1;
-            // 
-            // btnExport
-            // 
-            this.btnExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnExportHTML,
-            this.btnExportRTF});
-            this.btnExport.Image = global::ToyGraf.Properties.Resources.saveHS;
-            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(29, 22);
-            this.btnExport.ToolTipText = "Export";
-            // 
-            // btnExportHTML
-            // 
-            this.btnExportHTML.Name = "btnExportHTML";
-            this.btnExportHTML.Size = new System.Drawing.Size(180, 22);
-            this.btnExportHTML.Text = "Export as &HTML...";
-            // 
-            // btnExportRTF
-            // 
-            this.btnExportRTF.Name = "btnExportRTF";
-            this.btnExportRTF.Size = new System.Drawing.Size(180, 22);
-            this.btnExportRTF.Text = "Export as &RTF...";
-            // 
-            // btnPrint
-            // 
-            this.btnPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnPrint.Image = global::ToyGraf.Properties.Resources.PrintHS;
-            this.btnPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(23, 22);
-            // 
-            // btnOptions
-            // 
-            this.btnOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnRuler,
-            this.btnLineNumbers,
-            this.btnDocumentMap});
-            this.btnOptions.Image = global::ToyGraf.Properties.Resources.OptionsHS;
-            this.btnOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOptions.Name = "btnOptions";
-            this.btnOptions.Size = new System.Drawing.Size(29, 22);
-            this.btnOptions.ToolTipText = "Options";
-            // 
-            // btnRuler
-            // 
-            this.btnRuler.Name = "btnRuler";
-            this.btnRuler.Size = new System.Drawing.Size(180, 22);
-            this.btnRuler.Text = "&Ruler";
-            // 
-            // btnLineNumbers
-            // 
-            this.btnLineNumbers.Name = "btnLineNumbers";
-            this.btnLineNumbers.Size = new System.Drawing.Size(180, 22);
-            this.btnLineNumbers.Text = "&Line Numbers";
-            // 
-            // btnDocumentMap
-            // 
-            this.btnDocumentMap.Name = "btnDocumentMap";
-            this.btnDocumentMap.Size = new System.Drawing.Size(180, 22);
-            this.btnDocumentMap.Text = "&Document Map";
-            // 
-            // btnSplit
-            // 
-            this.btnSplit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSplit.Image = global::ToyGraf.Properties.Resources.TileWindowsHorizontallyHS;
-            this.btnSplit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSplit.Name = "btnSplit";
-            this.btnSplit.Size = new System.Drawing.Size(23, 22);
-            this.btnSplit.ToolTipText = "Split";
-            // 
-            // btnHelp
-            // 
-            this.btnHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnHelp.Image = global::ToyGraf.Properties.Resources.info;
-            this.btnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(23, 22);
-            this.btnHelp.ToolTipText = "Help";
-            // 
             // ButtonPanel
             // 
             this.ButtonPanel.Controls.Add(this.btnApply);
@@ -420,7 +332,102 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
-            // FctbForm
+            // ToolStrip
+            // 
+            this.ToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.ToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnExport,
+            this.btnPrint,
+            this.btnOptions,
+            this.btnSplit,
+            this.btnHelp});
+            this.ToolStrip.Location = new System.Drawing.Point(3, 0);
+            this.ToolStrip.Name = "ToolStrip";
+            this.ToolStrip.Size = new System.Drawing.Size(139, 25);
+            this.ToolStrip.TabIndex = 1;
+            // 
+            // btnExport
+            // 
+            this.btnExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnExportHTML,
+            this.btnExportRTF});
+            this.btnExport.Image = global::ToyGraf.Properties.Resources.saveHS;
+            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(29, 22);
+            this.btnExport.ToolTipText = "Export";
+            // 
+            // btnExportHTML
+            // 
+            this.btnExportHTML.Name = "btnExportHTML";
+            this.btnExportHTML.Size = new System.Drawing.Size(166, 22);
+            this.btnExportHTML.Text = "Export as &HTML...";
+            // 
+            // btnExportRTF
+            // 
+            this.btnExportRTF.Name = "btnExportRTF";
+            this.btnExportRTF.Size = new System.Drawing.Size(166, 22);
+            this.btnExportRTF.Text = "Export as &RTF...";
+            // 
+            // btnPrint
+            // 
+            this.btnPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPrint.Image = global::ToyGraf.Properties.Resources.PrintHS;
+            this.btnPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(23, 22);
+            // 
+            // btnOptions
+            // 
+            this.btnOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnRuler,
+            this.btnLineNumbers,
+            this.btnDocumentMap});
+            this.btnOptions.Image = global::ToyGraf.Properties.Resources.OptionsHS;
+            this.btnOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOptions.Name = "btnOptions";
+            this.btnOptions.Size = new System.Drawing.Size(29, 22);
+            this.btnOptions.ToolTipText = "Options";
+            // 
+            // btnRuler
+            // 
+            this.btnRuler.Name = "btnRuler";
+            this.btnRuler.Size = new System.Drawing.Size(157, 22);
+            this.btnRuler.Text = "&Ruler";
+            // 
+            // btnLineNumbers
+            // 
+            this.btnLineNumbers.Name = "btnLineNumbers";
+            this.btnLineNumbers.Size = new System.Drawing.Size(157, 22);
+            this.btnLineNumbers.Text = "&Line Numbers";
+            // 
+            // btnDocumentMap
+            // 
+            this.btnDocumentMap.Name = "btnDocumentMap";
+            this.btnDocumentMap.Size = new System.Drawing.Size(157, 22);
+            this.btnDocumentMap.Text = "&Document Map";
+            // 
+            // btnSplit
+            // 
+            this.btnSplit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSplit.Image = global::ToyGraf.Properties.Resources.TileWindowsHorizontallyHS;
+            this.btnSplit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSplit.Name = "btnSplit";
+            this.btnSplit.Size = new System.Drawing.Size(23, 22);
+            this.btnSplit.ToolTipText = "Split";
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnHelp.Image = global::ToyGraf.Properties.Resources.info;
+            this.btnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(23, 22);
+            this.btnHelp.ToolTipText = "Help";
+            // 
+            // GLProgramDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -429,7 +436,7 @@
             this.Controls.Add(this.ButtonPanel);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MinimizeBox = false;
-            this.Name = "FctbForm";
+            this.Name = "GLProgramDialog";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             ((System.ComponentModel.ISupportInitialize)(this.SecondaryTextBox)).EndInit();
@@ -451,9 +458,9 @@
             this.PrimarySplitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PrimarySplitter)).EndInit();
             this.PrimarySplitter.ResumeLayout(false);
+            this.ButtonPanel.ResumeLayout(false);
             this.ToolStrip.ResumeLayout(false);
             this.ToolStrip.PerformLayout();
-            this.ButtonPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

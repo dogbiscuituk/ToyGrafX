@@ -139,7 +139,7 @@
                 Directory.CreateDirectory(Options.FilesFolderPath);
             if (!Directory.Exists(Options.TemplatesFolderPath))
                 Directory.CreateDirectory(Options.TemplatesFolderPath);
-            GLSnippetController.ApplyStyles(Options.SyntaxHighlightStyles);
+            GLPageController.ApplyStyles(Options.SyntaxHighlightStyles);
             foreach (var sceneController in SceneControllers)
                 ApplyOptions(sceneController);
         }

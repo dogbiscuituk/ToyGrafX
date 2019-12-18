@@ -16,7 +16,7 @@
             if (provider.GetService(typeof(IWindowsFormsEditorService)) is IWindowsFormsEditorService service)
             {
                 Context = context;
-                var editor = new FctbEditController(context.PropertyDescriptor.DisplayName) { Text = Text };
+                var editor = new GLProgramController(context.PropertyDescriptor.DisplayName) { Text = Text };
                 editor.Apply += Editor_Apply;
                 if (editor.Execute(service))
                     Text = editor.Text;
