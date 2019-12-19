@@ -1,0 +1,64 @@
+Things you might want to edit:
+
+Scene
+ \
+  Title					string
+  Background Colour		Color
+  FPS					int
+  VSync					bool
+  GLSL Target Version	enum
+  Shaders				text
+  Graphics Mode
+  |\
+  | Sample Count		int
+  |
+  Placement
+   \
+    Projection
+    |\
+    | Projection Type	enum
+    | Field of View		float
+    | FrustumMin		Vector3
+    | FrustumMax		Vector3
+    | 
+    Camera
+     \
+      Position			Vector3
+      Focus				Vector3
+
+Trace
+ \
+  Description			string
+  Pattern				enum
+  Minimum				Vector3
+  Maximum				Vector3
+  Strip Count			Vector3i
+  Shaders				text
+  Placement
+   \
+    Location			Vector3
+    Orientation			Vector3
+    Scale				Vector3
+    Visible?			bool
+
+
+Scene				Trace				Type
+
+Title				Description			string
+					Visible?			bool
+Camera Position		Location			Vector3
+Camera Focus		Orientation			Vector3
+					Scale				Vector3
+Projection Type		Pattern				enum
+Field of View							float
+FrustrumMin			Minimum				Vector3
+FrustrumMax			Maximum				Vector3
+					Strip Count			Vector3i
+
+Shaders				Shaders				text[]
+
+Background Colour
+FPS
+Sample Count
+VSync
+GLSL Target Version		
