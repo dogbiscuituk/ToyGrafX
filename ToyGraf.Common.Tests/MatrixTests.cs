@@ -6,7 +6,7 @@
     using ToyGraf.Common.Utility;
 
     /// <summary>
-    /// Get the projection matrix for a general frustrum.
+    /// Get the projection matrix for a general frustum.
     /// </summary>
     [TestClass]
     public class MatrixTests

@@ -16,7 +16,7 @@
         public override PropertyDescriptorCollection GetProperties(
             ITypeDescriptorContext context, object value, Attribute[] attributes) =>
             TypeDescriptor.GetProperties(typeof(Projection), attributes)
-                .Sort(new string[] { "ProjectionType", "FieldOfView", "FrustrumMin", "FrustrumMax" });
+                .Sort(new string[] { "ProjectionType", "FieldOfView", "FrustumMin", "FrustumMax" });
 
         public override bool GetPropertiesSupported(ITypeDescriptorContext context) => true;
     }
