@@ -53,8 +53,8 @@ Camera Focus		Orientation			Vector3
 					Scale				Vector3
 Projection Type		Pattern				enum
 Field of View							float
-FrustrumMin			Minimum				Vector3
-FrustrumMax			Maximum				Vector3
+FrustumMin			Minimum				Vector3
+FrustumMax			Maximum				Vector3
 					Strip Count			Vector3i
 
 Shaders				Shaders				text[]
